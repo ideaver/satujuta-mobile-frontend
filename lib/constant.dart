@@ -15,6 +15,9 @@ const Color kColorSea = Color(0xFF08CCCC);
 const Color kColorYellow = Color(0xFFFFB800);
 const Color kColorPink = Color(0xFFFF61D3);
 const Color kColorRed = Color(0xFFFE1A59);
+// Gradient Text
+const Color kColorBlueLight = Color(0xFF0500FF);
+const Color kColorBlueDark = Color(0xFF01C8F4);
 
 TextStyle darkJakartaText =
     const TextStyle(fontFamily: 'Plus Jakarta Sans', color: kColorBase);
