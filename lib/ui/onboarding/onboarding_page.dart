@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/constant.dart';
 import 'package:satujuta_app_mobile/shared/link_images_utils.dart';
+import 'package:satujuta_app_mobile/ui/authentication/login_page.dart';
 
 import 'widgets/button_authentication.dart';
 import 'widgets/onboarding_title.dart';
@@ -73,7 +74,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     right: 10,
                     top: 35,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _pageController.jumpToPage(3);
+                        },
                         child: Text(
                           "Lewati",
                           style: darkJakartaText.copyWith(fontWeight: semiBold),
@@ -144,7 +147,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     right: 10,
                     top: 35,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _pageController.jumpToPage(3);
+                        },
                         child: Text(
                           "Lewati",
                           style: darkJakartaText.copyWith(fontWeight: semiBold),
@@ -201,7 +206,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     right: 10,
                     top: 35,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _pageController.jumpToPage(3);
+                        },
                         child: Text(
                           "Lewati",
                           style: darkJakartaText.copyWith(fontWeight: semiBold),
@@ -267,23 +274,30 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             child: Column(
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * .4,
-                  height: 50,
-                  child: ElevatedButton(
-                      style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(kColorPrimary)),
-                      onPressed: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Bergabung Sekarang",
-                          style: whiteJakartaText.copyWith(
-                              fontWeight: bold,
-                              letterSpacing: 1,
-                              fontSize: kFontSizeMediumLarge),
-                        ),
-                      )),
+                  width: MediaQuery.of(context).size.width * .5,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        )),
+                    child: ElevatedButton(
+                        style: const ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(kColorPrimary)),
+                        onPressed: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Bergabung Sekarang",
+                            textAlign: TextAlign.center,
+                            style: whiteJakartaText.copyWith(
+                                fontWeight: bold,
+                                letterSpacing: 1,
+                                fontSize: kFontSizeMediumLarge),
+                          ),
+                        )),
+                  ),
                 ),
                 TextButton(
                     onPressed: () {},

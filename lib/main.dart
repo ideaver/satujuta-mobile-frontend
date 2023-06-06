@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/constant.dart';
+import 'package:satujuta_app_mobile/ui/authentication/login_page.dart';
 
 import 'ui/ui.dart';
 
@@ -15,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: kColorPrimary),
         useMaterial3: true,
       ),
-      home: const SplashScreenPage(),
+      home: const LoginPage(),
     );
   }
 }

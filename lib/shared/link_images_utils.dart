@@ -82,4 +82,10 @@ class LinkImageUtils {
   static const _baseLogoUrl = '${_baseAssetsUrl}logo/';
   static const longLogoUrl = '${_baseLogoUrl}long-logo.png';
   static const shortLogoUrl = '${_baseLogoUrl}short-logo.png';
+
+  // icons
+  static const _baseIconUrl = '${_baseAssetsUrl}icons/';
+  static const lockFormIconUrl = '${_baseIconUrl}lock-form.png';
+  static const lockIconUrl = '${_baseIconUrl}lock.png';
+  static const contactFormIconUrl = '${_baseIconUrl}contact-form.png';
 }

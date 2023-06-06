@@ -6,8 +6,10 @@ const kFontSizeTitle = 20.0;
 const kFontSizeNormal = 12.0;
 const kFontSizeMedium = 14.0;
 const kFontSizeMediumLarge = 16.0;
+const kFontSizeTitleLarge = 24.0;
 
 const Color kColorBase = Color(0xFF141416);
+const Color kColorGrey = Color(0xFFE6E8EC);
 const Color kColorWhite = Color(0xFFFFFFFF);
 const Color kColorPrimary = Color(0xFF3757FF);
 const Color kColorSecondary = Color(0xFF36D362);
