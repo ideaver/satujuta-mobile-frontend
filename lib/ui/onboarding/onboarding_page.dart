@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/constant.dart';
 import 'package:satujuta_app_mobile/shared/link_images_utils.dart';
 
+import 'widgets/button_authentication.dart';
+import 'widgets/onboarding_title.dart';
+
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
 
@@ -26,7 +29,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 setState(() {
                   pageNumber = value;
                 });
-                print(value);
               },
               children: [
                 onBoardin1(),
@@ -54,7 +56,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             child: Stack(
               children: [
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * .25,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,7 +127,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             child: Stack(
               children: [
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * .25,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,7 +152,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
             child: OnBoardingTitle(
               textTitle: 'Liburan',
               textSubTitle: 'Kapanpun',
@@ -182,7 +184,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             child: Stack(
               children: [
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * .25,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,8 +209,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ],
             ),
           ),
-          Expanded(
-            child: const OnBoardingTitle(
+          const Expanded(
+            child: OnBoardingTitle(
                 textTitle: 'Reward', textSubTitle: 'Keliling Dunia'),
           ),
           Expanded(
@@ -292,78 +294,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ],
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class OnBoardingTitle extends StatelessWidget {
-  const OnBoardingTitle({
-    super.key,
-    required this.textTitle,
-    required this.textSubTitle,
-  });
-  final String textTitle;
-  final String textSubTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [kColorBlueDark, kColorBlueLight],
-          ).createShader(bounds),
-          child: Text(
-            textTitle,
-            style: whiteJakartaText.copyWith(fontSize: 48, fontWeight: bold),
-          ),
-        ),
-        Text(
-          textSubTitle,
-          style: darkJakartaText.copyWith(fontSize: 32, fontWeight: bold),
-        ),
-      ],
-    );
-  }
-}
-
-class ButtonAuthentication extends StatelessWidget {
-  const ButtonAuthentication({
-    super.key,
-    required this.context,
-  });
-
-  final BuildContext context;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * .4,
-            height: 50,
-            child: ElevatedButton(
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(kColorBase)),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Mulai",
-                    style: whiteJakartaText.copyWith(
-                        fontWeight: semiBold, letterSpacing: 1),
-                  ),
-                )),
-          ),
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "Login",
-                style: darkJakartaText.copyWith(fontWeight: bold),
-              ))
         ],
       ),
     );
