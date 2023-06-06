@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/constant.dart';
 
 class MyTextField extends StatefulWidget {
   final String lableText;
@@ -28,15 +29,14 @@ class _MyTextFieldState extends State<MyTextField> {
       onTap: () {
         widget.click();
       },
-      style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 14),
+      style: darkJakartaText.copyWith(fontSize: 14, fontWeight: semiBold),
       decoration: InputDecoration(
         labelText: widget.lableText,
         suffixIcon: widget.suffixIcon,
         border: InputBorder.none,
-        labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontSize: 14,
-              color: Theme.of(context).primaryColor,
-            ),
+        labelStyle: darkJakartaText.copyWith(
+          fontSize: 14,
+        ),
       ),
     );
   }
