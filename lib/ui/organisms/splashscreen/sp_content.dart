@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
-
-import '../../../constant.dart';
+import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 
 class SpContent extends StatelessWidget {
   const SpContent({super.key, required this.sizeQuery});
@@ -23,7 +22,8 @@ class SpContent extends StatelessWidget {
                 width: sizeQuery.width * .7,
                 height: sizeQuery.width * .7,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(kHeight * 20),
+                  borderRadius: BorderRadius.circular(
+                      FoundationSize.sizeHeightDefault * 20),
                   color: FoundationColor.bgRectangleSplashScreen,
                 ),
               ),

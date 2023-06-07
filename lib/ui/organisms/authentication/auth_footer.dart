@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_text_custom.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
-import '../../../constant.dart';
-
 class AuthFooter extends StatelessWidget {
   const AuthFooter({super.key});
 
@@ -17,7 +15,7 @@ class AuthFooter extends StatelessWidget {
             MyTextCustom(
               text: "Belum memiliki Akses?",
               style: FoundationTyphography.darkFontSemibold
-                  .copyWith(fontSize: kFontSizeMedium),
+                  .copyWith(fontSize: FoundationTyphography.fontSizeH4),
             ),
             InkWell(
               onTap: () {
@@ -31,8 +29,7 @@ class AuthFooter extends StatelessWidget {
               child: MyTextCustom(
                 text: " Daftar",
                 style: FoundationTyphography.darkFontSemibold.copyWith(
-                  color: kColorPrimary,
-                  fontSize: kFontSizeMedium,
+                  fontSize: FoundationTyphography.fontSizeH4,
                 ),
               ),
             ),

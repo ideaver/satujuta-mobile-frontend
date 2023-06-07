@@ -5,7 +5,6 @@ import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 import 'package:satujuta_app_mobile/ui/molecules/separated.dart';
 
-import '../../constant.dart';
 import '../molecules/auth_topbar.dart';
 
 class AuthHeader extends StatelessWidget {
@@ -38,7 +37,8 @@ class AuthHeader extends StatelessWidget {
         Center(
           child: Container(
             width: sizeWidth * .7,
-            margin: const EdgeInsets.symmetric(vertical: kPadding * 4),
+            margin: const EdgeInsets.symmetric(
+                vertical: FoundationSize.sizePadding * 4),
             child: MyAssetImage(
               path: pathLogo,
               widthImage: FoundationSize.sizeHeightDefault * 15,
@@ -48,19 +48,19 @@ class AuthHeader extends StatelessWidget {
         MyTextCustom(
             text: textTitle,
             style: FoundationTyphography.darkFontBold
-                .copyWith(fontSize: kFontSizeTitleLarge)),
+                .copyWith(fontSize: FoundationTyphography.fontSizeH1)),
         const Separated(
-          height: kHeight / 2,
-          width: kHeight,
+          height: FoundationSize.sizeHeightDefault / 2,
+          width: FoundationSize.sizeHeightDefault,
         ),
         MyTextCustom(
           text: textSubTitle,
           style: FoundationTyphography.darkFontRegular
-              .copyWith(fontSize: kFontSizeMedium),
+              .copyWith(fontSize: FoundationTyphography.fontSizeH4),
         ),
         const Separated(
-          height: kHeight * 4 + 2,
-          width: kHeight,
+          height: FoundationSize.sizeHeightDefault * 4 + 2,
+          width: FoundationSize.sizeHeightDefault,
         ),
       ],
     );

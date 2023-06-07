@@ -16,7 +16,7 @@ class ObCircleMarkMove extends StatelessWidget {
               ? FoundationColor.markedColorOnboarding
               : FoundationColor.unmarkedColorOnboarding,
           border: Border.all(
-            color: FoundationColor.primaryApp,
+            color: FoundationColor.bgColorBase,
             width: FoundationSize.sizeWidthBorder,
           ),
           borderRadius: BorderRadius.circular(50)),

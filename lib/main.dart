@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/constant.dart';
+import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 
 import 'ui/ui.dart';
 
@@ -10,14 +10,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: kColorPrimary),
+        colorScheme: ColorScheme.fromSeed(seedColor: FoundationColor.bgPrimary),
         useMaterial3: true,
       ),
       home: const SplashScreenScreen(),

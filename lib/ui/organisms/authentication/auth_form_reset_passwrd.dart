@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
+import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 
-import '../../../constant.dart';
 import '../../atoms/my_form_custom.dart';
 
 class AuthFormResetPassword extends StatelessWidget {
@@ -12,10 +13,11 @@ class AuthFormResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(kPadding + 8),
+      padding: const EdgeInsets.all(FoundationSize.sizePadding + 8),
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: kColorGrey),
-          borderRadius: BorderRadius.circular(kHeight)),
+          border: Border.all(width: 1, color: FoundationColor.bgColorGrey),
+          borderRadius:
+              BorderRadius.circular(FoundationSize.sizeHeightDefault)),
       child: MyFormCustom(
         lableText: "Email",
         suffixIcon: Image.asset(FoundationLinks.linkContactLogo),

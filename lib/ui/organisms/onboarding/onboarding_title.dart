@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
-
-import '../../../constant.dart';
 
 class OnBoardingTitle extends StatelessWidget {
   const OnBoardingTitle({
@@ -18,16 +17,19 @@ class OnBoardingTitle extends StatelessWidget {
       children: [
         ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
-            colors: [kColorBlueDark, kColorBlueLight],
+            colors: [
+              FoundationColor.bgColorTextBlueDark,
+              FoundationColor.bgColorTextBlueLight
+            ],
           ).createShader(bounds),
           child: Text(
             textTitle,
-            style: whiteJakartaText.copyWith(fontSize: 48, fontWeight: bold),
+            style: FoundationTyphography.lightFontBold.copyWith(fontSize: 48),
           ),
         ),
         Text(
           textSubTitle,
-          style: darkJakartaText.copyWith(fontSize: 24, fontWeight: bold),
+          style: FoundationTyphography.darkFontBold.copyWith(fontSize: 24),
         ),
       ],
     );
@@ -51,7 +53,11 @@ class OnBoardingTitleNext extends StatelessWidget {
       children: [
         ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
-            colors: [kColorPinkLight, kColorPurple],
+            // colors: [kColorPinkLight, kColorPurple],
+            colors: [
+              FoundationColor.bgColorTextPink,
+              FoundationColor.bgColorTextPurple
+            ],
           ).createShader(bounds),
           child: Text(
             textTitle,
@@ -62,8 +68,8 @@ class OnBoardingTitleNext extends StatelessWidget {
         Text(
           textSubTitle,
           textAlign: TextAlign.center,
-          style: FoundationTyphography.darkFontBold.copyWith(
-              fontSize: FoundationTyphography.fontSizeH1, fontWeight: bold),
+          style: FoundationTyphography.darkFontBold
+              .copyWith(fontSize: FoundationTyphography.fontSizeH1),
         ),
       ],
     );
