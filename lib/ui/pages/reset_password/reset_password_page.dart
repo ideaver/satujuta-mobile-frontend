@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/authentication/login_page.dart';
 import 'package:satujuta_app_mobile/widgets/button_widget.dart';
 import 'package:satujuta_app_mobile/widgets/my_text_field.dart';
 
-import '../../constant.dart';
-import '../../shared/link_images_utils.dart';
+import '../../../constant.dart';
+import '../../../tokens/links.dart';
+import '../../ui.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({super.key});
@@ -38,7 +38,7 @@ class ResetPasswordContent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(kHeight)),
                 child: MyTextField(
                   lableText: "Email",
-                  suffixIcon: Image.asset(LinkImageUtils.contactFormIconUrl),
+                  suffixIcon: Image.asset(Links.contactFormIconUrl),
                   click: () {},
                 ),
               ),
@@ -66,8 +66,7 @@ class ResetPasswordContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(LinkImageUtils.lockIconUrl)),
+                  onPressed: () {}, icon: Image.asset(Links.lockIconUrl)),
               ElevatedButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const LoginPage(),
@@ -94,7 +93,7 @@ class ResetPasswordContent extends StatelessWidget {
             width: sizeWidth * .7,
             margin: const EdgeInsets.symmetric(vertical: kPadding * 4),
             child: Image.asset(
-              LinkImageUtils.longLogoUrl,
+              Links.longLogoUrl,
               width: double.infinity,
             ),
           ),

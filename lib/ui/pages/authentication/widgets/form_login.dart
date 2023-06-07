@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../constant.dart';
-import '../../../shared/link_images_utils.dart';
-import '../../../widgets/button_widget.dart';
-import '../../../widgets/my_text_field.dart';
+import '../../../../constant.dart';
+import '../../../../tokens/links.dart';
+import '../../../../widgets/button_widget.dart';
+import '../../../../widgets/my_text_field.dart';
 
 class FormLogin extends StatelessWidget {
   const FormLogin({
@@ -40,8 +40,7 @@ class FormLogin extends StatelessWidget {
                         padding: const EdgeInsets.all(15),
                         child: MyTextField(
                           suffixIcon: IconButton(
-                            icon:
-                                Image.asset(LinkImageUtils.contactFormIconUrl),
+                            icon: Image.asset(Links.contactFormIconUrl),
                             onPressed: () {},
                           ),
                           click: () {},
@@ -55,7 +54,7 @@ class FormLogin extends StatelessWidget {
                         padding: const EdgeInsets.all(15),
                         child: MyTextField(
                           suffixIcon: IconButton(
-                            icon: Image.asset(LinkImageUtils.lockFormIconUrl),
+                            icon: Image.asset(Links.lockFormIconUrl),
                             onPressed: () {},
                           ),
                           click: () {},

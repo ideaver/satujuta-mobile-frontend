@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/constant.dart';
-import 'package:satujuta_app_mobile/shared/link_images_utils.dart';
+import 'package:satujuta_app_mobile/tokens/links.dart';
 import 'package:satujuta_app_mobile/ui/ui.dart';
 
 import 'footer_login.dart';
@@ -39,8 +39,7 @@ class LoginContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(LinkImageUtils.lockIconUrl)),
+                  onPressed: () {}, icon: Image.asset(Links.lockIconUrl)),
               ElevatedButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ResetPasswordPage(),
@@ -66,7 +65,7 @@ class LoginContent extends StatelessWidget {
           width: sizeWidth * .7,
           margin: const EdgeInsets.symmetric(vertical: kPadding * 4),
           child: Image.asset(
-            LinkImageUtils.longLogoUrl,
+            Links.longLogoUrl,
             width: double.infinity,
           ),
         ),

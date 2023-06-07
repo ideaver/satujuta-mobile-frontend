@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/constant.dart';
-import 'package:satujuta_app_mobile/shared/link_images_utils.dart';
-import 'package:satujuta_app_mobile/ui/authentication/login_page.dart';
+import 'package:satujuta_app_mobile/tokens/links.dart';
 
+import '../../ui.dart';
 import 'widgets/button_authentication.dart';
 import 'widgets/onboarding_title.dart';
 
@@ -93,7 +93,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           Expanded(
             flex: 3,
             child: Image.asset(
-              LinkImageUtils.onBoardingFirstIlusUrl,
+              Links.onBoardingFirstIlusUrl,
               width: MediaQuery.of(context).size.width,
             ),
           ),
@@ -166,7 +166,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           Expanded(
             flex: 3,
             child: Image.asset(
-              LinkImageUtils.onBoardingSecondIlusUrl,
+              Links.onBoardingSecondIlusUrl,
               width: MediaQuery.of(context).size.width,
             ),
           ),
@@ -223,7 +223,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           Expanded(
             flex: 3,
             child: Image.asset(
-              LinkImageUtils.onBoardingThirdIlusUrl,
+              Links.onBoardingThirdIlusUrl,
               width: MediaQuery.of(context).size.width,
             ),
           ),
@@ -266,7 +266,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           Expanded(
             flex: 3,
             child: Image.asset(
-              LinkImageUtils.onBoardingFourthIlusUrl,
+              Links.onBoardingFourthIlusUrl,
               width: MediaQuery.of(context).size.width,
             ),
           ),

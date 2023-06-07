@@ -1,4 +1,4 @@
-class LinkImageUtils {
+class Links {
   static const _baseAssetsUrl = 'assets/';
 
   // backgrounds
