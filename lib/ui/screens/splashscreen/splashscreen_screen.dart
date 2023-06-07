@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import '../../organisms/splashscreen/sp_content.dart';
 import '../../ui.dart';
 
-class SplashScreenPage extends StatefulWidget {
-  const SplashScreenPage({super.key});
+class SplashScreenScreen extends StatefulWidget {
+  const SplashScreenScreen({super.key});
 
   @override
-  State<SplashScreenPage> createState() => _SplashScreenPageState();
+  State<SplashScreenScreen> createState() => _SplashScreenScreenState();
 }
 
-class _SplashScreenPageState extends State<SplashScreenPage> {
+class _SplashScreenScreenState extends State<SplashScreenScreen> {
   _loadNextScreen() async {
     await Future.delayed(const Duration(milliseconds: 3000));
     // ignore: use_build_context_synchronously
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const OnBoardingPage(),
+          builder: (context) => const OnBoardingScreen(),
         ),
         (route) => false);
   }

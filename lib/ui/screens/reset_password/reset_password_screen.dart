@@ -6,8 +6,8 @@ import '../../../constant.dart';
 import '../../../tokens/links.dart';
 import '../../ui.dart';
 
-class ResetPasswordPage extends StatelessWidget {
-  const ResetPasswordPage({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class ResetPasswordContent extends StatelessWidget {
                   onPressed: () {}, icon: Image.asset(Links.lockIconUrl)),
               ElevatedButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
+                        builder: (context) => const LoginScreen(),
                       )),
                   child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

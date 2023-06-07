@@ -67,7 +67,7 @@ class ObSlideClose extends StatelessWidget {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
+                          builder: (context) => const LoginScreen(),
                         )),
                     child: ElevatedButton(
                         style: const ButtonStyle(

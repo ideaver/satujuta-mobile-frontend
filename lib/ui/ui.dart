@@ -1,4 +1,4 @@
-export 'pages/splashscreen/splashscreen_page.dart';
-export 'pages/onboarding/onboarding_page.dart';
-export 'pages/authentication/login_page.dart';
-export 'pages/reset_password/reset_password_page.dart';
+export 'screens/splashscreen/splashscreen_screen.dart';
+export 'screens/onboarding/onboarding_screen.dart';
+export 'screens/authentication/login_screen.dart';
+export 'screens/reset_password/reset_password_screen.dart';

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_form_custom.dart';
+import 'package:satujuta_app_mobile/ui/molecules/authentications/auth_separated.dart';
 
-import '../../../../constant.dart';
-import '../../../../tokens/links.dart';
-import '../../../../widgets/button_widget.dart';
-import '../../../../widgets/my_text_field.dart';
+import '../../../constant.dart';
+import '../../../tokens/links.dart';
 
-class FormLogin extends StatelessWidget {
-  const FormLogin({
-    super.key,
-  });
+class AuthForm extends StatelessWidget {
+  const AuthForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class FormLogin extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(15),
-                        child: MyTextField(
+                        child: MyFormCustom(
                           suffixIcon: IconButton(
                             icon: Image.asset(Links.contactFormIconUrl),
                             onPressed: () {},
@@ -52,7 +51,7 @@ class FormLogin extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(15),
-                        child: MyTextField(
+                        child: MyFormCustom(
                           suffixIcon: IconButton(
                             icon: Image.asset(Links.lockFormIconUrl),
                             onPressed: () {},
@@ -68,12 +67,14 @@ class FormLogin extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
+        const AuthSeparated(
           height: kHeight * 6,
+          width: kHeight,
         ),
-        ButtonWidget(onPressed: () {}, text: "Masuk"),
-        const SizedBox(
-          height: 20,
+        MyCustomButton(onPressed: () {}, text: "Masuk"),
+        const AuthSeparated(
+          height: kHeight * 2,
+          width: kHeight,
         ),
       ],
     );
