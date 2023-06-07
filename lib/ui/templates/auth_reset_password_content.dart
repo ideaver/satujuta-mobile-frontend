@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 
 import '../foundations/foundation_colors.dart';
 import '../foundations/foundation_links.dart';
-import '../molecules/separated.dart';
 import '../organisms/auth_header.dart';
-import '../organisms/authentication/auth_form_reset_passwrd.dart';
+import '../organisms/authentication/auth_form_reset_password.dart';
 import '../ui.dart';
 
 class AuthResetPasswordContent extends StatelessWidget {
@@ -32,9 +32,9 @@ class AuthResetPasswordContent extends StatelessWidget {
                   builder: (context) => const LoginScreen(),
                 )),
               ),
-              const Separated(
-                height: FoundationSize.sizeHeightDefault + 2,
-                width: FoundationSize.sizeHeightDefault,
+              const MySeparated(
+                sizeHeight: FoundationSize.sizeHeightDefault + 2,
+                sizeWidth: FoundationSize.sizeHeightDefault,
               ),
               const AuthFormResetPassword(),
               const SizedBox(

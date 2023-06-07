@@ -3,7 +3,7 @@ import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 
-import '../../atoms/my_form_custom.dart';
+import '../../atoms/my_custom_form.dart';
 
 class AuthFormResetPassword extends StatelessWidget {
   const AuthFormResetPassword({
@@ -18,7 +18,7 @@ class AuthFormResetPassword extends StatelessWidget {
           border: Border.all(width: 1, color: FoundationColor.bgColorGrey),
           borderRadius:
               BorderRadius.circular(FoundationSize.sizeHeightDefault)),
-      child: MyFormCustom(
+      child: MyCustomForm(
         lableText: "Email",
         suffixIcon: Image.asset(FoundationLinks.linkContactLogo),
         click: () {},

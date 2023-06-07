@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_text_custom.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
 class AuthFooter extends StatelessWidget {
@@ -12,7 +12,7 @@ class AuthFooter extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MyTextCustom(
+            MyCustomText(
               text: "Belum memiliki Akses?",
               style: FoundationTyphography.darkFontSemibold
                   .copyWith(fontSize: FoundationTyphography.fontSizeH4),
@@ -26,7 +26,7 @@ class AuthFooter extends StatelessWidget {
                 //   ),
                 // );
               },
-              child: MyTextCustom(
+              child: MyCustomText(
                 text: " Daftar",
                 style: FoundationTyphography.darkFontSemibold.copyWith(
                   fontSize: FoundationTyphography.fontSizeH4,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_asset_image.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_text_custom.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
-import 'package:satujuta_app_mobile/ui/molecules/separated.dart';
 
 import '../molecules/auth_topbar.dart';
 
@@ -45,22 +45,22 @@ class AuthHeader extends StatelessWidget {
             ),
           ),
         ),
-        MyTextCustom(
+        MyCustomText(
             text: textTitle,
             style: FoundationTyphography.darkFontBold
                 .copyWith(fontSize: FoundationTyphography.fontSizeH1)),
-        const Separated(
-          height: FoundationSize.sizeHeightDefault / 2,
-          width: FoundationSize.sizeHeightDefault,
+        const MySeparated(
+          sizeHeight: FoundationSize.sizeHeightDefault / 2,
+          sizeWidth: FoundationSize.sizeHeightDefault,
         ),
-        MyTextCustom(
+        MyCustomText(
           text: textSubTitle,
           style: FoundationTyphography.darkFontRegular
               .copyWith(fontSize: FoundationTyphography.fontSizeH4),
         ),
-        const Separated(
-          height: FoundationSize.sizeHeightDefault * 4 + 2,
-          width: FoundationSize.sizeHeightDefault,
+        const MySeparated(
+          sizeHeight: FoundationSize.sizeHeightDefault * 4 + 2,
+          sizeWidth: FoundationSize.sizeHeightDefault,
         ),
       ],
     );

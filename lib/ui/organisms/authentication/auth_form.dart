@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_form_custom.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_custom_form.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
-import 'package:satujuta_app_mobile/ui/molecules/separated.dart';
 
 import '../../../tokens/links.dart';
 
@@ -32,7 +32,7 @@ class AuthForm extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(15),
-                      child: MyFormCustom(
+                      child: MyCustomForm(
                         suffixIcon: IconButton(
                           icon: Image.asset(Links.contactFormIconUrl),
                           onPressed: () {},
@@ -46,7 +46,7 @@ class AuthForm extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15),
-                      child: MyFormCustom(
+                      child: MyCustomForm(
                         suffixIcon: IconButton(
                           icon: Image.asset(Links.lockFormIconUrl),
                           onPressed: () {},
@@ -73,14 +73,14 @@ class AuthForm extends StatelessWidget {
         //     child: ,
         //   ),
         // ),
-        const Separated(
-          height: FoundationSize.sizeHeightDefault * 6,
-          width: FoundationSize.sizeHeightDefault,
+        const MySeparated(
+          sizeHeight: FoundationSize.sizeHeightDefault * 6,
+          sizeWidth: FoundationSize.sizeHeightDefault,
         ),
         MyCustomButton(onPressed: () {}, text: "Masuk"),
-        const Separated(
-          height: FoundationSize.sizeHeightDefault * 2,
-          width: FoundationSize.sizeHeightDefault,
+        const MySeparated(
+          sizeHeight: FoundationSize.sizeHeightDefault * 2,
+          sizeWidth: FoundationSize.sizeHeightDefault,
         ),
       ],
     );

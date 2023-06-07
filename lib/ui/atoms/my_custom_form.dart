@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
-class MyFormCustom extends StatelessWidget {
-  const MyFormCustom(
+class MyCustomForm extends StatelessWidget {
+  const MyCustomForm(
       {super.key,
       required this.lableText,
       required this.suffixIcon,
