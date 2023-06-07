@@ -8,6 +8,7 @@ class FoundationLinks {
   static const String linkOnBoardingThird = Links.onBoardingThirdIlusUrl;
   static const String linkOnBoardingFourth = Links.onBoardingFourthIlusUrl;
   static const String linkLongLogo = Links.longLogoUrl;
+  static const String linkContactLogo = Links.contactFormIconUrl;
   static const String linkShortLogo = Links.shortLogoUrl;
   static const String linkLockIconLogo = Links.lockIconUrl;
 }

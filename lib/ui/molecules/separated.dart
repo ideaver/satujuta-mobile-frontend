@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ObSeparated extends StatelessWidget {
-  const ObSeparated({super.key, required this.width, required this.height});
+class Separated extends StatelessWidget {
+  const Separated({super.key, required this.width, required this.height});
   final double width;
   final double height;
   @override

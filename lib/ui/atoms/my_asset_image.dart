@@ -10,7 +10,7 @@ class MyAssetImage extends StatelessWidget {
     return Image.asset(
       path,
       width: widthImage,
-      height: widthImage,
+      height: widthImage / 2,
     );
   }
 }
