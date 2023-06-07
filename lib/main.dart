@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
+import 'package:satujuta_app_mobile/ui/screens/register/register_screen.dart';
 
 import 'ui/ui.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: FoundationColor.bgPrimary),
         useMaterial3: true,
       ),
-      home: const SplashScreenScreen(),
+      home: RegisterScreen(),
     );
   }
 }
