@@ -23,4 +23,6 @@ class FoundationLinks {
   static const String linkSuccessIconLogo = Links.successIconUrl;
   static const String linkUnSuccessIconLogo = Links.unsuccessIconUrl;
   static const String linkFailedIconLogo = Links.failedIconUrl;
+  static const String linkHotelImage = Links.imageHotelUrl;
+  static const String linkEmptyEmoji = Links.emptyEmojiUrl;
 }

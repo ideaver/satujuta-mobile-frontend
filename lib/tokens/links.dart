@@ -27,6 +27,8 @@ class Links {
 
   // images
   static const baseImageUrl = '${_baseAssetsUrl}images/';
+  static const imageHotelUrl = '${baseImageUrl}hotel-image.png';
+  static const emptyEmojiUrl = '${baseImageUrl}empty-emoji.png';
   // BANK
   static const _baseBankUrl = '${baseImageUrl}bank/';
   static const bankAnzImgUrl = '${_baseBankUrl}anz.png';
