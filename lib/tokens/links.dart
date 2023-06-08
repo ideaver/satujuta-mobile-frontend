@@ -103,4 +103,6 @@ class Links {
   static const successIconUrl = '${_baseIconUrl}success-icon.png';
   static const unsuccessIconUrl = '${_baseIconUrl}unsuccess-icon.png';
   static const failedIconUrl = '${_baseIconUrl}failed-icon.png';
+  static const warningIconUrl = '${_baseIconUrl}warning-icon.png';
+  static const phoneIconUrl = '${_baseIconUrl}phone-icon.png';
 }
