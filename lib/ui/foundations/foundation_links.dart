@@ -7,8 +7,20 @@ class FoundationLinks {
   static const String linkOnBoardingSecond = Links.onBoardingSecondIlusUrl;
   static const String linkOnBoardingThird = Links.onBoardingThirdIlusUrl;
   static const String linkOnBoardingFourth = Links.onBoardingFourthIlusUrl;
+  static const String linkbackgroundAestheticFourth = Links.backgroundUrl;
   static const String linkLongLogo = Links.longLogoUrl;
   static const String linkContactLogo = Links.contactFormIconUrl;
   static const String linkShortLogo = Links.shortLogoUrl;
   static const String linkLockIconLogo = Links.lockIconUrl;
+  static const String linkDropdownIconLogo = Links.dropdownRectangleFormIconUrl;
+  static const String linkLocationIconLogo = Links.locationFormIconUrl;
+  static const String linkPersonIconLogo = Links.personFormIconUrl;
+  static const String linkSomePersonIconLogo = Links.somePersonFormIconUrl;
+  static const String linkCoinIconLogo = Links.coinFormIconUrl;
+  static const String linkEditIconLogo = Links.editIconUrl;
+  static const String linkSchoolIconLogo = Links.schoolIconUrl;
+  static const String linkPasswordIconLogo = Links.passwordIconUrl;
+  static const String linkSuccessIconLogo = Links.successIconUrl;
+  static const String linkUnSuccessIconLogo = Links.unsuccessIconUrl;
+  static const String linkFailedIconLogo = Links.failedIconUrl;
 }

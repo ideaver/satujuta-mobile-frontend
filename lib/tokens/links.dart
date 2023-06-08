@@ -88,4 +88,17 @@ class Links {
   static const lockFormIconUrl = '${_baseIconUrl}lock-form.png';
   static const lockIconUrl = '${_baseIconUrl}lock.png';
   static const contactFormIconUrl = '${_baseIconUrl}contact-form.png';
+  static const dropdownRectangleFormIconUrl =
+      '${_baseIconUrl}dropdown-rectangle-icon.png';
+  static const locationFormIconUrl = '${_baseIconUrl}location-icon.png';
+  static const personFormIconUrl = '${_baseIconUrl}person-icon.png';
+  static const phoneFormIconUrl = '${_baseIconUrl}phone-icon.png';
+  static const somePersonFormIconUrl = '${_baseIconUrl}some-person-icon.png';
+  static const coinFormIconUrl = '${_baseIconUrl}coin-icon.png';
+  static const editIconUrl = '${_baseIconUrl}edit-icon.png';
+  static const schoolIconUrl = '${_baseIconUrl}school-icon.png';
+  static const passwordIconUrl = '${_baseIconUrl}password-unhide-icon.png';
+  static const successIconUrl = '${_baseIconUrl}success-icon.png';
+  static const unsuccessIconUrl = '${_baseIconUrl}unsuccess-icon.png';
+  static const failedIconUrl = '${_baseIconUrl}failed-icon.png';
 }
