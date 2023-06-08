@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_button_with_icon.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_custom_form.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
@@ -21,205 +22,201 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(
-            left: 18,
-            right: 18,
-            top: MediaQuery.of(context).padding.top + 50,
-            bottom: MediaQuery.of(context).padding.bottom + 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.only(
+              left: 18,
+              right: 18,
+              top: MediaQuery.of(context).padding.top + 50,
+            ),
+            child: Column(
               children: [
-                Image.asset(
-                  FoundationLinks.linkLockIconLogo,
-                  height: 30,
+                Row(
+                  children: [
+                    Image.asset(
+                      FoundationLinks.linkLockIconLogo,
+                      height: 30,
+                    ),
+                    const Spacer(),
+                    MyButtonWithIcon(
+                        onPressed: () {},
+                        text: "Login",
+                        buttonStyle: ButtonStyle())
+                  ],
                 ),
-                const Spacer(),
-                MyButtonWithIcon(
-                    onPressed: () {}, text: "Login", buttonStyle: ButtonStyle())
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  Text(
-                    "Registrasi",
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Bergabung menjadi anggota SatuJuta!",
-                    style: FoundationTyphography.darkFontRegular
-                        .copyWith(fontSize: FoundationTyphography.fontSizeH5),
-                  ),
-                  SizedBox(
-                    height: FoundationSize.sizeHeightDefault * 5,
-                  ),
-                  Center(
-                    child: MyCustomText(
-                        text: 'Upload Foto Profile Anda',
-                        style: FoundationTyphography.darkFontBold.copyWith(
-                            fontSize: FoundationTyphography.fontSizeH3)),
-                  ),
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: FoundationSize.sizeHeightDefault * 5),
-                      width: MediaQuery.of(context).size.width * .5,
-                      height: 150,
-                      child: Center(
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: double.infinity,
-                              width: double.infinity,
-                              child: const CircleAvatar(
-                                child: Icon(Icons.person),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Registrasi",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Bergabung menjadi anggota SatuJuta!",
+                  style: FoundationTyphography.darkFontRegular
+                      .copyWith(fontSize: FoundationTyphography.fontSizeH5),
+                ),
+                SizedBox(
+                  height: FoundationSize.sizeHeightDefault * 5,
+                ),
+                Center(
+                  child: MyCustomText(
+                      text: 'Upload Foto Profile Anda',
+                      style: FoundationTyphography.darkFontBold.copyWith(
+                          fontSize: FoundationTyphography.fontSizeH3)),
+                ),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: FoundationSize.sizeHeightDefault * 5),
+                    width: MediaQuery.of(context).size.width * .5,
+                    height: 150,
+                    child: Center(
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: const CircleAvatar(
+                              child: Icon(Icons.person),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 20,
+                            child: Container(
+                              width: FoundationSize.sizeIcon,
+                              height: FoundationSize.sizeIcon,
+                              decoration: BoxDecoration(
+                                  color: FoundationColor.bgPrimary,
+                                  borderRadius: BorderRadius.circular(
+                                      FoundationSize.sizeHeightDefault * 5)),
+                              child: Icon(
+                                Icons.abc,
+                                color: FoundationColor.bgWhite,
                               ),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              right: 20,
-                              child: Container(
-                                width: FoundationSize.sizeIcon,
-                                height: FoundationSize.sizeIcon,
-                                decoration: BoxDecoration(
-                                    color: FoundationColor.bgPrimary,
-                                    borderRadius: BorderRadius.circular(
-                                        FoundationSize.sizeHeightDefault * 5)),
-                                child: Icon(
-                                  Icons.abc,
-                                  color: FoundationColor.bgWhite,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  Container(
-                    height: 300,
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                SizedBox(
+                  height: 600,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
                       // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        // ignore: prefer_const_literals_to_create_immutables
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.red),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: FoundationColor.bgColorGrey),
+                        child: Container(
+                          width: double.infinity,
                           child: TabBar(
                             controller: tabController,
                             indicator: BoxDecoration(
-                              color: Colors.red[800],
+                              color: FoundationColor.bgColorBase,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            labelColor: Colors.black,
-                            dividerColor: Colors.black,
+                            labelColor: Colors.white,
+                            indicatorColor: Colors.white,
                             // ignore: prefer_const_literals_to_create_immutables
                             tabs: [
-                              Tab(
-                                icon: Icon(
-                                  Icons.add_box,
-                                  color: Colors.black,
+                              const Tab(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.add_box,
+                                      color: Colors.black,
+                                    ),
+                                    Text("Data Diri")
+                                  ],
                                 ),
                               ),
                               Tab(
-                                icon: Icon(
-                                  Icons.video_call,
-                                  color: Colors.black,
+                                  child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.add_box,
+                                    color: Colors.black,
+                                  ),
+                                  Text("Akun")
+                                ],
+                              )),
+                              Tab(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.add_box,
+                                      color: Colors.black,
+                                    ),
+                                    Text("Komisi")
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child:
-                              TabBarView(controller: tabController, children: [
-                            MyTabOne(),
-                            MyTabTwo(),
-                          ]),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            InkWell(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (_) => CreatePasswordScreen(),
-                //   ),
-                // );
-              },
-              child: Center(
-                child: Container(
-                  height: 60,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Continue",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                    ),
+                      ),
+
+                      SizedBox(
+                        height: FoundationSize.sizeHeightDefault,
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: TabBarView(
+                            controller: tabController,
+                            children: const [
+                              BiodataSection(),
+                              AccountSection(),
+                              AccountSection(),
+                            ]),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            )
-          ],
-        ),
+              ],
+            )),
       ),
     );
   }
 }
 
-class MyTabOne extends StatelessWidget {
-  const MyTabOne({super.key});
+class BiodataSection extends StatefulWidget {
+  const BiodataSection({super.key});
 
+  @override
+  State<BiodataSection> createState() => _BiodataSectionState();
+}
+
+class _BiodataSectionState extends State<BiodataSection> {
+  int value = 0;
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
       Container(
-        height: 370,
+        height: 700,
         width: double.infinity,
         decoration: BoxDecoration(
           color: FoundationColor.bgWhite,
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: FoundationColor.bgColorGrey),
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         child: Column(
@@ -230,12 +227,12 @@ class MyTabOne extends StatelessWidget {
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     FoundationLinks.linkContactLogo,
-                    height: 25,
+                    height: FoundationSize.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
                 click: () {},
-                lableText: 'Your name',
+                lableText: 'Nama Lengkap',
               ),
             ),
             Divider(),
@@ -243,370 +240,399 @@ class MyTabOne extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: MyCustomForm(
                 suffixIcon: IconButton(
-                  icon: Image.asset(
-                    FoundationLinks.linkContactLogo,
-                    height: 25,
+                  icon: const Icon(
+                    Icons.location_on_rounded,
+                    size: FoundationSize.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
                 click: () {},
-                lableText: 'Email',
+                lableText: 'Alamat',
               ),
             ),
+            Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
               child: MyCustomForm(
                 suffixIcon: IconButton(
-                  icon: Image.asset(
-                    FoundationLinks.linkContactLogo,
-                    height: 25,
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    size: FoundationSize.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
                 click: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ListView(
-                        children: [
-                          Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Image.asset(
-                                          FoundationLinks.linkContactLogo,
-                                          height: 30,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Image.asset(
-                                    FoundationLinks.linkContactLogo,
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "What grade are you in?",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "or What grade is your child in?",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(
-                                          fontSize: 10,
-                                          color:
-                                              Theme.of(context).disabledColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Image.asset(
-                                    FoundationLinks.linkContactLogo,
-                                    height: 100,
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Center(
-                                    child: InkWell(
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (_) =>
-                                        //         CreatePasswordScreen(),
-                                        //   ),
-                                        // );
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        width: 225,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).primaryColor,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30)),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "Continue",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .copyWith(
-                                                  fontSize: 12,
-                                                  color: Colors.white,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              // border: Border.all(
-                              //     color: HexColor("#EBEBF0")),
-                              borderRadius: BorderRadius.only(
-                                topLeft: const Radius.circular(25.0),
-                                topRight: const Radius.circular(25.0),
-                              ),
-                            ),
+                  modalBottom(
+                    context,
+                    [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          // border: Border.all(
+                          //     color: HexColor("#EBEBF0")),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
                           ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                lableText: 'Grade',
-              ),
-            ),
-            Divider(),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.abc_outlined),
-                  onPressed: () {},
-                ),
-                click: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ListView(
-                        children: [
-                          Container(
-                            child: Column(
-                              children: [
-                                Stack(
-                                  alignment: Alignment.bottomCenter,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: FoundationSize.sizeIcon,
+                                width: double.infinity,
+                                child: Stack(
                                   children: [
-                                    Icon(Icons.abc),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "Choose your location",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1!
-                                              .copyWith(
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Pick on map or select",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1!
-                                              .copyWith(
-                                                fontSize: 10,
-                                                color: Theme.of(context)
-                                                    .disabledColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ],
+                                    Center(
+                                      child: MyCustomText(
+                                        text: "Kota",
+                                        style: FoundationTyphography
+                                            .darkFontBold
+                                            .copyWith(
+                                                fontSize: FoundationTyphography
+                                                    .fontSizeH3,
+                                                fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                    SizedBox(
-                                      height: 40,
-                                    ),
+                                    Positioned(
+                                        top: 12,
+                                        right: 10,
+                                        child: GestureDetector(
+                                            onTap: () => Navigator.of(context)
+                                                .pop(context),
+                                            child: Icon(Icons.close)))
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Container(
-                                    height: 100,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 61, 61, 61),
-                                      border: Border.all(color: Colors.black),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(30)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(15),
-                                          child: MyCustomForm(
-                                            suffixIcon: IconButton(
-                                              icon: Icon(Icons.abc),
-                                              onPressed: () {},
-                                            ),
-                                            click: () {},
-                                            lableText: 'Location',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Center(
-                                  child: Container(
-                                    height: 60,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(30)),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Continue",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Center(
-                                  child: Text(
-                                    "Setup later",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                  color: FoundationColor.bgColorGrey),
-                              borderRadius: BorderRadius.only(
-                                topLeft: const Radius.circular(25.0),
-                                topRight: const Radius.circular(25.0),
                               ),
-                            ),
+                              SizedBox(
+                                height: FoundationSize.sizeHeightDefault,
+                              ),
+                              customRadioButton("Bandung", 0),
+                              customRadioButton("Surabaya", 1),
+                              customRadioButton("Banten", 2),
+                              customRadioButton("Jakarta", 3),
+                              customRadioButton("Yogyakarta", 4),
+                              SizedBox(
+                                height: FoundationSize.sizeHeightDefault,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: MyCustomButton(
+                                    text: "Pilih",
+                                    decoration: BoxDecoration(
+                                        color: FoundationColor.bgPrimary,
+                                        borderRadius: BorderRadius.circular(
+                                            FoundationSize.sizePadding))),
+                              )
+                            ],
                           ),
-                        ],
-                      );
-                    },
+                        ),
+                      ),
+                    ],
                   );
                 },
-                lableText: 'Location',
+                lableText: 'Kota',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: MyCustomForm(
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    size: FoundationSize.sizeIconMini,
+                  ),
+                  onPressed: () {},
+                ),
+                click: () {
+                  modalBottom(
+                    context,
+                    [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          // border: Border.all(
+                          //     color: HexColor("#EBEBF0")),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: FoundationSize.sizeIcon,
+                                width: double.infinity,
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: MyCustomText(
+                                        text: "Kecamatan",
+                                        style: FoundationTyphography
+                                            .darkFontBold
+                                            .copyWith(
+                                                fontSize: FoundationTyphography
+                                                    .fontSizeH3,
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: 12,
+                                        right: 10,
+                                        child: GestureDetector(
+                                            onTap: () => Navigator.of(context)
+                                                .pop(context),
+                                            child: Icon(Icons.close)))
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: FoundationSize.sizeHeightDefault,
+                              ),
+                              customRadioButton("Tambaksari", 0),
+                              customRadioButton("Lidah Wetan", 1),
+                              customRadioButton("Benowo", 2),
+                              customRadioButton("Kaliasin", 3),
+                              customRadioButton("Gubeng", 4),
+                              SizedBox(
+                                height: FoundationSize.sizeHeightDefault,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: MyCustomButton(
+                                    text: "Pilih",
+                                    decoration: BoxDecoration(
+                                        color: FoundationColor.bgPrimary,
+                                        borderRadius: BorderRadius.circular(
+                                            FoundationSize.sizePadding))),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                lableText: 'Kecamatan',
+              ),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: MyCustomForm(
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                  onPressed: () {},
+                ),
+                click: () {},
+                lableText: 'Kode Pos',
+              ),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: MyCustomForm(
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                  onPressed: () {},
+                ),
+                click: () {
+                  modalBottom(
+                    context,
+                    [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          // border: Border.all(
+                          //     color: HexColor("#EBEBF0")),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: FoundationSize.sizeIcon,
+                                width: double.infinity,
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: MyCustomText(
+                                        text: "Role",
+                                        style: FoundationTyphography
+                                            .darkFontBold
+                                            .copyWith(
+                                                fontSize: FoundationTyphography
+                                                    .fontSizeH3,
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: 12,
+                                        right: 10,
+                                        child: GestureDetector(
+                                            onTap: () => Navigator.of(context)
+                                                .pop(context),
+                                            child: Icon(Icons.close)))
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: FoundationSize.sizeHeightDefault,
+                              ),
+                              customRadioButton("Siswa", 0),
+                              customRadioButton("Guru", 1),
+                              customRadioButton("Kepala Sekolah", 2),
+                              customRadioButton("Orang Tua", 3),
+                              customRadioButton("Lainnya", 4),
+                              SizedBox(
+                                height: FoundationSize.sizeHeightDefault,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: MyCustomButton(
+                                    text: "Pilih",
+                                    decoration: BoxDecoration(
+                                        color: FoundationColor.bgPrimary,
+                                        borderRadius: BorderRadius.circular(
+                                            FoundationSize.sizePadding))),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                lableText: 'Role',
+              ),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: MyCustomForm(
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.school),
+                  onPressed: () {},
+                ),
+                click: () {},
+                lableText: 'Sekolah',
               ),
             ),
           ],
         ),
+      ),
+      SizedBox(
+        height: 20,
+      ),
+      InkWell(
+        onTap: () {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (_) => CreatePasswordScreen(),
+          //   ),
+          // );
+        },
+        child: Center(
+          child: Container(
+            height: 60,
+            width: 200,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+            ),
+            child: Center(
+              child: Text(
+                "Continue",
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 10,
       )
     ]);
   }
+
+  Future<void> modalBottom(BuildContext context, List<Widget> list) {
+    return showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: FoundationColor.bgColorGrey,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 1.2,
+          child: ListView(children: list),
+        );
+      },
+    );
+  }
+
+  Widget customRadioButton(String text, int index) {
+    return Container(
+      width: double.infinity,
+      margin:
+          EdgeInsets.symmetric(vertical: FoundationSize.sizeHeightDefault / 2),
+      child: ElevatedButton(
+        onPressed: () {
+          setState(() {
+            value = index;
+            print(value);
+            print("INDEX $index");
+          });
+        },
+        style: ButtonStyle(
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)))),
+        child: Container(
+          padding: const EdgeInsets.all(FoundationSize.sizeHeightDefault * 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: FoundationTyphography.darkFontBold.copyWith(
+                  color: (value == index) ? Colors.green : Colors.black,
+                ),
+              ),
+              Container(
+                width: FoundationSize.sizeIconMini / 2,
+                height: FoundationSize.sizeIconMini / 2,
+                decoration: BoxDecoration(
+                    color: index == value
+                        ? FoundationColor.bgPrimary
+                        : FoundationColor.bgWhite,
+                    borderRadius: BorderRadius.circular(
+                        FoundationSize.sizeHeightDefault * 5),
+                    border: Border.all(
+                        color: FoundationColor.bgColorGrey,
+                        style: BorderStyle.solid,
+                        width: 2)),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class MyTabTwo extends StatelessWidget {
-  const MyTabTwo({super.key});
+class AccountSection extends StatelessWidget {
+  const AccountSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text("HAHAH");
-    // return DefaultTabController(
-    //   length: 2,
-    //   child: Container(
-    //     child: Column(
-    //       // ignore: prefer_const_literals_to_create_immutables
-    //       children: [
-    //         // SwitcherButton(
-    //         //   value: true,
-    //         //   onChange: (value) {
-    //         //     print(value);
-    //         //   },
-    //         // ),
-    //         Padding(
-    //           padding: const EdgeInsets.all(8.0),
-    //           child: Container(
-    //             height: 30,
-    //             width: 150,
-    //             decoration: BoxDecoration(
-    //                 borderRadius: BorderRadius.circular(20),
-    //                 color: Colors.white),
-    //             child: TabBar(
-    //               indicator: BoxDecoration(
-    //                 color: Colors.red[800],
-    //                 borderRadius: BorderRadius.circular(20),
-    //               ),
-    //               labelColor: Colors.black,
-    //               dividerColor: Colors.black,
-    //               // ignore: prefer_const_literals_to_create_immutables
-    //               tabs: [
-    //                 Tab(
-    //                   text: "Live",
-    //                 ),
-    //                 Tab(
-    //                   text: "Result",
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //         SizedBox(
-    //           height: 10,
-    //         ),
-    //         Expanded(
-    //           // ignore: prefer_const_literals_to_create_immutables
-    //           child: TabBarView(children: [
-    //             // MyLivePage(),
-    //             // MyResultPage(),
-    //           ]),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

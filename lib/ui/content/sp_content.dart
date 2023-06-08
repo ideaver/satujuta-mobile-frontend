@@ -19,11 +19,11 @@ class SpContent extends StatelessWidget {
             child: Transform.rotate(
               angle: .6,
               child: Container(
-                width: sizeQuery.width * .7,
-                height: sizeQuery.width * .7,
+                width: sizeQuery.width * 2.6,
+                height: sizeQuery.width * 1.2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                      FoundationSize.sizeHeightDefault * 20),
+                      FoundationSize.sizeHeightDefault * 9),
                   color: FoundationColor.bgRectangleSplashScreen,
                 ),
               ),

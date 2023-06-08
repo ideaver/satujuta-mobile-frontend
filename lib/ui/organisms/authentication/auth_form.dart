@@ -61,23 +61,18 @@ class AuthForm extends StatelessWidget {
             ],
           ),
         ),
-        // ConstrainedBox(
-        //   constraints: const BoxConstraints(maxHeight: 220, minHeight: 220),
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //         border: Border.all(
-        //           width: 1,
-        //           color: kColorGrey,
-        //         ),
-        //         borderRadius: BorderRadius.circular(kHeight)),
-        //     child: ,
-        //   ),
-        // ),
         const MySeparated(
           sizeHeight: FoundationSize.sizeHeightDefault * 6,
           sizeWidth: FoundationSize.sizeHeightDefault,
         ),
-        MyCustomButton(onPressed: () {}, text: "Masuk"),
+        MyCustomButton(
+          onPressed: () {},
+          text: "Masuk",
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
+          ),
+        ),
         const MySeparated(
           sizeHeight: FoundationSize.sizeHeightDefault * 2,
           sizeWidth: FoundationSize.sizeHeightDefault,

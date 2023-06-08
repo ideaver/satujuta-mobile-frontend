@@ -5,7 +5,8 @@ import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
 class ObButtonElevated extends StatelessWidget {
-  const ObButtonElevated({super.key});
+  const ObButtonElevated({super.key, required this.onPressed});
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ObButtonElevated extends StatelessWidget {
         text: "Mulai",
         textStyle:
             FoundationTyphography.lightFontSemibold.copyWith(letterSpacing: 1),
-        onPressed: () {},
+        onPressed: onPressed,
         buttonStyle: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(
                 FoundationColor.btnElevatedColorOnboarding)));

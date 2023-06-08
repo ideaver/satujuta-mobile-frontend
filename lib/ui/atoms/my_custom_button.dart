@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/tokens/typography.dart';
 
 class MyCustomButton extends StatelessWidget {
-  const MyCustomButton({super.key, required this.text, this.onPressed});
+  const MyCustomButton(
+      {super.key,
+      required this.text,
+      this.onPressed,
+      required this.decoration});
 
   final String text;
   final VoidCallback? onPressed;
+  final BoxDecoration decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +20,7 @@ class MyCustomButton extends StatelessWidget {
         child: Container(
           height: 60,
           width: MediaQuery.of(context).size.width * .8,
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
-          ),
+          decoration: decoration,
           child: Center(
             child: Text(
               text,

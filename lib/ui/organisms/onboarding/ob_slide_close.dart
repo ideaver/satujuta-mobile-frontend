@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/tokens/typography.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
+import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
 import 'onboarding_title.dart';
@@ -69,22 +67,33 @@ class ObSlideClose extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => const LoginScreen(),
                         )),
-                    child: ElevatedButton(
-                        style: const ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                FoundationColor.bgColorBtnGetstarted)),
-                        onPressed: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: FoundationSize.sizeLeftPadding),
-                          child: Text(
-                            "Bergabung Sekarang",
-                            textAlign: TextAlign.center,
-                            style: FoundationTyphography.lightFontBold.copyWith(
-                                letterSpacing: .5,
-                                fontSize: AppTypography.kFontSizeMediumLarge),
-                          ),
-                        )),
+                    child: MyCustomButton(
+                      text: "Bergabung sekarang",
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      )),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                      ),
+                      // style: const ButtonStyle(
+                      //     backgroundColor: MaterialStatePropertyAll(
+                      //         FoundationColor.bgColorBtnGetstarted)),
+                      // onPressed: () {},
+                      // child: Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       vertical: FoundationSize.sizeLeftPadding),
+                      //   child: Text(
+                      //     "Bergabung Sekarang",
+                      //     textAlign: TextAlign.center,
+                      //     style: FoundationTyphography.lightFontBold.copyWith(
+                      //         letterSpacing: .5,
+                      //         fontSize: AppTypography.kFontSizeMediumLarge),
+                      //   ),
+                      // )
+                    ),
                   ),
                 ),
                 TextButton(

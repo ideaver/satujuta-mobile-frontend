@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: FoundationColor.bgPrimary),
         useMaterial3: true,
       ),
-      home: RegisterScreen(),
+      home: const SplashScreen(),
     );
   }
 }

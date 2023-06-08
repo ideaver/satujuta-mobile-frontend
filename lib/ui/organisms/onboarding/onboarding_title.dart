@@ -7,20 +7,19 @@ class OnBoardingTitle extends StatelessWidget {
     super.key,
     required this.textTitle,
     required this.textSubTitle,
+    required this.listColor,
   });
   final String textTitle;
   final String textSubTitle;
+  final List<Color> listColor;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [
-              FoundationColor.bgColorTextBlueDark,
-              FoundationColor.bgColorTextBlueLight
-            ],
+          shaderCallback: (bounds) => LinearGradient(
+            colors: listColor,
           ).createShader(bounds),
           child: Text(
             textTitle,

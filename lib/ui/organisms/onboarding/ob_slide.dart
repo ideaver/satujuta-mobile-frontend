@@ -14,7 +14,8 @@ class ObSlide extends StatelessWidget {
       required this.textTitle,
       required this.subTitle,
       required this.path,
-      required this.listMark});
+      required this.listMark,
+      required this.listColor});
 
   final BuildContext context;
   final int pageNumber;
@@ -23,6 +24,7 @@ class ObSlide extends StatelessWidget {
   final String subTitle;
   final String path;
   final List<Widget> listMark;
+  final List<Color> listColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -64,6 +66,7 @@ class ObSlide extends StatelessWidget {
             child: OnBoardingTitle(
               textTitle: textTitle,
               textSubTitle: subTitle,
+              listColor: listColor,
             ),
           ),
           Expanded(

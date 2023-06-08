@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
+import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
+
+import '../../screens/register/register_screen.dart';
 
 class AuthFooter extends StatelessWidget {
   const AuthFooter({super.key});
@@ -19,18 +22,18 @@ class AuthFooter extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (_) => RegisterScreen(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const RegisterScreen(),
+                  ),
+                );
               },
               child: MyCustomText(
                 text: " Daftar",
                 style: FoundationTyphography.darkFontSemibold.copyWith(
-                  fontSize: FoundationTyphography.fontSizeH4,
-                ),
+                    fontSize: FoundationTyphography.fontSizeH4,
+                    color: FoundationColor.bgPrimary),
               ),
             ),
           ],

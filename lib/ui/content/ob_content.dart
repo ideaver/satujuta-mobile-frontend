@@ -4,6 +4,7 @@ import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_slide.dart';
 import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_slide_close.dart';
 
 import '../../tokens/links.dart';
+import '../foundations/foundation_colors.dart';
 import '../molecules/onboarding/ob_cirle_mark_move.dart';
 
 class ObContent extends StatefulWidget {
@@ -52,6 +53,10 @@ class _ObContentState extends State<ObContent> {
       textTitle: 'Belajar',
       subTitle: 'Dimanapun',
       path: FoundationLinks.linkOnBoardingFirst,
+      listColor: const [
+        FoundationColor.bgColorTextBlueDark,
+        FoundationColor.bgColorTextBlueLight
+      ],
       listMark: [
         ObCircleMarkMove(state: pageNumber == 0),
         const ObCircleMarkMove(state: false),
@@ -69,6 +74,10 @@ class _ObContentState extends State<ObContent> {
       textTitle: 'Liburan',
       subTitle: 'Kapanpun',
       path: Links.onBoardingSecondIlusUrl,
+      listColor: const [
+        FoundationColor.bgColorTextBlueDark,
+        FoundationColor.bgColorTextBlueLight
+      ],
       listMark: [
         const ObCircleMarkMove(state: false),
         ObCircleMarkMove(state: pageNumber == 1),
@@ -86,6 +95,10 @@ class _ObContentState extends State<ObContent> {
       textTitle: 'Reward',
       subTitle: 'Keliling Dunia',
       path: Links.onBoardingThirdIlusUrl,
+      listColor: const [
+        FoundationColor.bgColorTextPink,
+        FoundationColor.bgColorTextPurple
+      ],
       listMark: [
         const ObCircleMarkMove(state: false),
         const ObCircleMarkMove(state: false),

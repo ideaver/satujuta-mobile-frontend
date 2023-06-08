@@ -41,9 +41,12 @@ class AuthResetPasswordContent extends StatelessWidget {
                 height: FoundationSize.sizePadding * 5,
               ),
               MyCustomButton(
-                text: "Reset Kata Sandi",
-                onPressed: () {},
-              )
+                  text: "Reset Kata Sandi",
+                  onPressed: () {},
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  ))
             ],
           ),
         ),

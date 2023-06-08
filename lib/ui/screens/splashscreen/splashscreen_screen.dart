@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../organisms/splashscreen/sp_content.dart';
+import '../../content/sp_content.dart';
 import '../../ui.dart';
 
-class SplashScreenScreen extends StatefulWidget {
-  const SplashScreenScreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashScreenScreen> createState() => _SplashScreenScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenScreenState extends State<SplashScreenScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   _loadNextScreen() async {
     await Future.delayed(const Duration(milliseconds: 3000));
     // ignore: use_build_context_synchronously
