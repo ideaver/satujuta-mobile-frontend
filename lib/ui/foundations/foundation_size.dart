@@ -13,4 +13,5 @@ class FoundationSize {
   static const sizeWidthBorder = 2.0;
   static const sizeBorderRadiusCircular = 50;
   static const sizeHeightDefault = AppSizes.kHeight;
+  static const sizeBorderRadiusForm = AppSizes.kPadding;
 }
