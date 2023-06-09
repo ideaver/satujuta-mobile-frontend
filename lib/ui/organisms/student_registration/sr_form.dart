@@ -157,14 +157,10 @@ class _SRFormState extends State<SRForm> {
             height: FoundationSize.sizeHeightDefault * 4,
           ),
           InkWell(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (_) => CreatePasswordScreen(),
-              //   ),
-              // );
-            },
+            onTap: () => ModalBottom.modalBottom(
+                context,
+                contentSuccessModalBottom(context, "Data Berhasil Dibuat",
+                    "Harap melakukan pembayaran untuk menambahkan siswa ini")),
             child: Center(
               child: Container(
                 height: 60,
@@ -254,10 +250,157 @@ class _SRFormState extends State<SRForm> {
                   value = 0;
                 });
               }),
+              const SizedBox(
+                height: FoundationSize.sizeHeightDefault,
+              ),
               SizedBox(
+                width: double.infinity,
+                child: MyCustomButton(
+                    text: "Pilih",
+                    decoration: BoxDecoration(
+                        color: FoundationColor.bgPrimary,
+                        borderRadius:
+                            BorderRadius.circular(FoundationSize.sizePadding))),
+              )
+            ],
+          ),
+        ),
+      )
+    ]);
+  }
+
+  ListView contentSuccessModalBottom(
+      BuildContext context, String title, String description) {
+    return ListView(children: [
+      Container(
+        decoration: const BoxDecoration(
+          color: FoundationColor.bgColorGrey,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              SizedBox(
+                height: FoundationSize.sizeIcon,
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        top: 12,
+                        right: 10,
+                        child: GestureDetector(
+                            onTap: () => Navigator.of(context).pop(context),
+                            child: const Icon(Icons.close)))
+                  ],
+                ),
+              ),
+              Center(
+                  child: Image.asset(FoundationLinks.linkSuccessIlustration)),
+              Center(
+                child: MyCustomText(
+                  text: title,
+                  style: FoundationTyphography.darkFontBold.copyWith(
+                      fontSize: FoundationTyphography.fontSizeH1,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: MyCustomText(
+                  text: description,
+                  style: FoundationTyphography.darkFontRegular
+                      .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+                ),
+              ),
+              const SizedBox(
+                height: FoundationSize.sizeHeightDefault * 4,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: FoundationColor.bgWhite,
+                    borderRadius: BorderRadius.circular(
+                        FoundationSize.sizeBorderRadiusForm),
+                    boxShadow: const [
+                      BoxShadow(color: FoundationColor.bgColorGrey)
+                    ]),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Image.asset(FoundationLinks.linkClockIconLogo)),
+                    Expanded(
+                        flex: 2,
+                        child: Text(
+                          "1 Siswa siap didaftarkan",
+                          style: FoundationTyphography.darkFontRegular,
+                        )),
+                    const Expanded(
+                        flex: 1, child: Icon(Icons.arrow_forward_ios))
+                  ],
+                ),
+              ),
+              const SizedBox(
                 height: FoundationSize.sizeHeightDefault,
               ),
               Container(
+                padding: const EdgeInsets.all(FoundationSize.sizePadding),
+                height: FoundationSize.sizeHeightCardTransaction,
+                decoration: BoxDecoration(
+                    color: FoundationColor.bgWhite,
+                    borderRadius: BorderRadius.circular(
+                        FoundationSize.sizeBorderRadiusForm),
+                    boxShadow: const [
+                      BoxShadow(color: FoundationColor.bgColorGrey)
+                    ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Lusy Joolmin",
+                            style: FoundationTyphography.darkFontBold.copyWith(
+                                fontSize: FoundationTyphography.fontSizeH4),
+                          ),
+                          const Text("08126381234"),
+                          const Text("SD Bakti Luhur, Bandung"),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CircleAvatar(
+                            child: Image.asset(
+                                FoundationLinks.linkDarkEditIconLogo)),
+                        CircleAvatar(
+                            child:
+                                Image.asset(FoundationLinks.linkTrashIconLogo))
+                      ],
+                    )),
+                    // Expanded(
+                    //     flex: 2,
+                    //     child: Text(
+                    //       "1 Siswa siap didaftarkan",
+                    //       style: FoundationTyphography.darkFontRegular,
+                    //     )),
+                    // const Expanded(
+                    //     flex: 1, child: Icon(Icons.arrow_forward_ios))
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: FoundationSize.sizeHeightDefault * 4,
+              ),
+              SizedBox(
                 width: double.infinity,
                 child: MyCustomButton(
                     text: "Pilih",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/screens/authentication/login_screen.dart';
+import 'package:satujuta_app_mobile/ui/screens/checkout/checkout_screen.dart';
 import 'package:satujuta_app_mobile/ui/screens/hotel_picker/hotel_picker_screen.dart';
 import 'package:satujuta_app_mobile/ui/screens/onboarding/onboarding_screen.dart';
 import 'package:satujuta_app_mobile/ui/screens/register/register_screen.dart';
@@ -58,6 +59,12 @@ class ListCheckScreen extends StatelessWidget {
               builder: (context) => const StudentRegistrationScreen(),
             )),
             title: "Student Registration",
+          ),
+          ListContent(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const CheckoutScreen(),
+            )),
+            title: "Checkout",
           ),
         ],
       )),

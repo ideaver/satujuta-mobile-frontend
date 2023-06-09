@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
-import 'onboarding_title.dart';
 import '../../ui.dart';
+import 'onboarding_title_final.dart';
 
 class ObSlideClose extends StatelessWidget {
   const ObSlideClose(
@@ -45,7 +45,7 @@ class ObSlideClose extends StatelessWidget {
             ),
           ),
           const Expanded(
-            child: OnBoardingTitleNext(
+            child: OnBoardingTitleFinal(
                 textTitle: 'Berbisnis',
                 textSubTitle: 'Investasi Hasil Maksimal'),
           ),

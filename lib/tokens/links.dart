@@ -24,6 +24,7 @@ class Links {
       '${_baseIlustrationUrl}onboarding-3.png';
   static const onBoardingFourthIlusUrl =
       '${_baseIlustrationUrl}onboarding-4.png';
+  static const successIlusUrl = '${_baseIlustrationUrl}success-ilustration.png';
 
   // images
   static const baseImageUrl = '${_baseAssetsUrl}images/';
@@ -98,8 +99,10 @@ class Links {
   static const somePersonFormIconUrl = '${_baseIconUrl}some-person-icon.png';
   static const coinFormIconUrl = '${_baseIconUrl}coin-icon.png';
   static const editIconUrl = '${_baseIconUrl}edit-icon.png';
+  static const darkEditIconUrl = '${_baseIconUrl}dark-edit-icon.png';
   static const schoolIconUrl = '${_baseIconUrl}school-icon.png';
   static const passwordIconUrl = '${_baseIconUrl}password-unhide-icon.png';
+  static const arrowForwardIconUrl = '${_baseIconUrl}arrow-forward-icon.png';
   static const successIconUrl = '${_baseIconUrl}success-icon.png';
   static const unsuccessIconUrl = '${_baseIconUrl}unsuccess-icon.png';
   static const failedIconUrl = '${_baseIconUrl}failed-icon.png';
@@ -107,4 +110,6 @@ class Links {
   static const phoneIconUrl = '${_baseIconUrl}phone-icon.png';
   static const lockDarkIconUrl = '${_baseIconUrl}lock-dark-icon.png';
   static const dashboardIconUrl = '${_baseIconUrl}dashboard-icon.png';
+  static const clockIconUrl = '${_baseIconUrl}clock-icon.png';
+  static const trashIconUrl = '${_baseIconUrl}trash-icon.png';
 }

@@ -19,6 +19,7 @@ class FoundationColor {
 
   //
   static const Color bgColorTextPink = AppColors.kColorPink;
+  static const Color bgColorBgRed = AppColors.kColorRed;
   static const Color bgColorTextPurple = AppColors.kColorBlueLight;
   static const Color bgColorTextBlueDark = AppColors.kColorBlueDark;
   static const Color bgColorTextBlueLight = AppColors.kColorBlueLight;
