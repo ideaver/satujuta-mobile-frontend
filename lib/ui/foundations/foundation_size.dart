@@ -7,7 +7,7 @@ class FoundationSize {
   static const sizeRightPadding = AppSizes.kPadding;
   static const sizeIcon = AppSizes.kPadding * 3;
   static const sizeIconMini = AppSizes.kPadding * 2;
-  static const sizeIconStar = AppSizes.kHeight;
+  static const sizeIconStar = AppSizes.kHeight + 5;
   static const sizePaddingAuth = AppSizes.kPadding * 2;
   static const sizePadding = AppSizes.kPadding;
   static const sizeWidthBorder = 2.0;

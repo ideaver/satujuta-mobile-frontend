@@ -106,4 +106,5 @@ class Links {
   static const warningIconUrl = '${_baseIconUrl}warning-icon.png';
   static const phoneIconUrl = '${_baseIconUrl}phone-icon.png';
   static const lockDarkIconUrl = '${_baseIconUrl}lock-dark-icon.png';
+  static const dashboardIconUrl = '${_baseIconUrl}dashboard-icon.png';
 }

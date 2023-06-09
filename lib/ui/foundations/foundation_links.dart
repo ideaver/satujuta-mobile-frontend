@@ -13,7 +13,7 @@ class FoundationLinks {
   static const String linkShortLogo = Links.shortLogoUrl;
   static const String linkLockIconLogo = Links.lockIconUrl;
   static const String linkDropdownIconLogo = Links.dropdownRectangleFormIconUrl;
-  static const String linkLocationIconLogo = Links.locationFormIconUrl;
+  static const String linkLocationImage = Links.locationFormIconUrl;
   static const String linkPersonIconLogo = Links.personFormIconUrl;
   static const String linkSomePersonIconLogo = Links.somePersonFormIconUrl;
   static const String linkCoinIconLogo = Links.coinFormIconUrl;
@@ -23,6 +23,7 @@ class FoundationLinks {
   static const String linkSuccessIconLogo = Links.successIconUrl;
   static const String linkUnSuccessIconLogo = Links.unsuccessIconUrl;
   static const String linkFailedIconLogo = Links.failedIconUrl;
+  static const String linkDashboardIconLogo = Links.dashboardIconUrl;
   static const String linkHotelImage = Links.imageHotelUrl;
   static const String linkEmptyEmoji = Links.emptyEmojiUrl;
   static const String linkWarningIcon = Links.warningIconUrl;

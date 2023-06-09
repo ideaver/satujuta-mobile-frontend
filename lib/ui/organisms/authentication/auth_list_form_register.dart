@@ -44,7 +44,7 @@ class AuthListFormRegister extends StatelessWidget {
               indicatorColor: Colors.white,
               // ignore: prefer_const_literals_to_create_immutables
               tabs: [
-                Container(
+                SizedBox(
                   width: 100,
                   child: Tab(
                     child: Padding(
