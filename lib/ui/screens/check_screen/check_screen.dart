@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/ui/screens/list_check_screen/list_check_screen.dart';
 import 'package:satujuta_app_mobile/ui/ui.dart';
 
-class CheckPage extends StatelessWidget {
-  const CheckPage({super.key});
+class CheckScreen extends StatelessWidget {
+  const CheckScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
