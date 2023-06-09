@@ -27,4 +27,9 @@ class FoundationLinks {
   static const String linkEmptyEmoji = Links.emptyEmojiUrl;
   static const String linkWarningIcon = Links.warningIconUrl;
   static const String linkPhoneIcon = Links.phoneIconUrl;
+  static const String linkLockDarkIcon = Links.lockDarkIconUrl;
+  static const String linkBankBCAImage = Links.bankBCAImgUrl;
+  static const String linkBankBNIImage = Links.bankBNIImgUrl;
+  static const String linkBankMandiriImage = Links.bankMandiriImgUrl;
+  static const String linkBankMegaImage = Links.bankMegaImgUrl;
 }
