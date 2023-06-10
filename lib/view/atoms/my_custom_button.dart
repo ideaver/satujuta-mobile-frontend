@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/tokens/typography.dart';
+import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 
 class MyCustomButton extends StatelessWidget {
   const MyCustomButton(
@@ -24,9 +24,9 @@ class MyCustomButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: AppTypography.whiteJakartaText.copyWith(
-                  fontSize: AppTypography.kFontSizeMediumLarge,
-                  fontWeight: AppTypography.semiBold),
+              style: AppTextStyle.whiteJakartaText.copyWith(
+                  fontSize: AppTextStyle.kFontSizeMediumLarge,
+                  fontWeight: AppTextStyle.semiBold),
             ),
           ),
         ),

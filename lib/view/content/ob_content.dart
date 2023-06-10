@@ -3,7 +3,7 @@ import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
 import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_slide.dart';
 import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_slide_close.dart';
 
-import '../../tokens/links.dart';
+import '../../app/const/app_assets.dart';
 import '../foundations/foundation_colors.dart';
 import '../molecules/onboarding/ob_cirle_mark_move.dart';
 
@@ -73,7 +73,7 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Liburan',
       subTitle: 'Kapanpun',
-      path: Links.onBoardingSecondIlusUrl,
+      path: AppAssets.onBoardingSecondIlusUrl,
       listColor: const [
         FoundationColor.bgColorTextBlueDark,
         FoundationColor.bgColorTextBlueLight
@@ -94,7 +94,7 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Reward',
       subTitle: 'Keliling Dunia',
-      path: Links.onBoardingThirdIlusUrl,
+      path: AppAssets.onBoardingThirdIlusUrl,
       listColor: const [
         FoundationColor.bgColorTextPink,
         FoundationColor.bgColorTextPurple
@@ -115,7 +115,7 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Berbisnis',
       subTitle: 'Investasi Hasil Maksimal',
-      path: Links.onBoardingFourthIlusUrl,
+      path: AppAssets.onBoardingFourthIlusUrl,
       listMark: [
         const ObCircleMarkMove(state: false),
         const ObCircleMarkMove(state: false),

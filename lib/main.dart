@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/screens/check_screen/check_screen.dart';
+
+import 'view/foundations/foundation_colors.dart';
+import 'view/screens/check_screen/check_screen.dart';
 
 void main() {
   runApp(const MyApp());

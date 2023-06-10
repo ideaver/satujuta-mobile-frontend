@@ -5,7 +5,7 @@ import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
 import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 
-import '../../../tokens/links.dart';
+import '../../../app/const/app_assets.dart';
 
 class AuthForm extends StatelessWidget {
   const AuthForm({super.key});
@@ -34,7 +34,7 @@ class AuthForm extends StatelessWidget {
                       padding: const EdgeInsets.all(15),
                       child: MyCustomForm(
                         suffixIcon: IconButton(
-                          icon: Image.asset(Links.contactFormIconUrl),
+                          icon: Image.asset(AppAssets.contactFormIconUrl),
                           onPressed: () {},
                         ),
                         click: () {},
@@ -48,7 +48,7 @@ class AuthForm extends StatelessWidget {
                       padding: const EdgeInsets.all(15),
                       child: MyCustomForm(
                         suffixIcon: IconButton(
-                          icon: Image.asset(Links.lockFormIconUrl),
+                          icon: Image.asset(AppAssets.lockFormIconUrl),
                           onPressed: () {},
                         ),
                         click: () {},

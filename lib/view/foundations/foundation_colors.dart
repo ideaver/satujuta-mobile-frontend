@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/tokens/color.dart';
+import 'package:satujuta_app_mobile/app/theme/app_colors.dart';
 
 class FoundationColor {
   FoundationColor._();

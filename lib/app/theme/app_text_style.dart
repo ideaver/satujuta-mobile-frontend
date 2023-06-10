@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/tokens/color.dart';
+import 'package:satujuta_app_mobile/app/theme/app_colors.dart';
 
-class AppTypography {
-  AppTypography._();
+class AppTextStyle {
+  AppTextStyle._();
 
   static TextStyle darkJakartaText = const TextStyle(
       fontFamily: 'Plus Jakarta Sans', color: AppColors.kColorBase);

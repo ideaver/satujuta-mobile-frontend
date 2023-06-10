@@ -1,4 +1,4 @@
-import 'package:satujuta_app_mobile/tokens/sizes.dart';
+import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
 
 class FoundationSize {
   FoundationSize._();
