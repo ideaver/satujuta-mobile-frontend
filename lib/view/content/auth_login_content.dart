@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
-import 'package:satujuta_app_mobile/ui/organisms/authentication/auth_footer.dart';
-import 'package:satujuta_app_mobile/ui/organisms/authentication/auth_form.dart';
-import 'package:satujuta_app_mobile/ui/screens/reset_password/reset_password_screen.dart';
 
+import '../foundations/foundation_colors.dart';
 import '../foundations/foundation_links.dart';
+import '../foundations/foundation_size.dart';
 import '../organisms/auth_header.dart';
+import '../organisms/authentication/auth_footer.dart';
+import '../organisms/authentication/auth_form.dart';
+import '../screens/reset_password/reset_password_screen.dart';
 
 class AuthLoginContent extends StatelessWidget {
   const AuthLoginContent({super.key});

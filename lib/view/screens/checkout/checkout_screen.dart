@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
-import 'package:satujuta_app_mobile/ui/organisms/authentication/auth_top_bar_register.dart';
+
+import '../../foundations/foundation_colors.dart';
+import '../../foundations/foundation_links.dart';
+import '../../foundations/foundation_typhography.dart';
+import '../../organisms/authentication/auth_top_bar_register.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});

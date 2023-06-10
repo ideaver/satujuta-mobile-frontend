@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
-import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_slide.dart';
-import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_slide_close.dart';
 
 import '../../app/const/app_assets.dart';
 import '../foundations/foundation_colors.dart';
+import '../foundations/foundation_links.dart';
 import '../molecules/onboarding/ob_cirle_mark_move.dart';
+import '../organisms/onboarding/ob_slide.dart';
+import '../organisms/onboarding/ob_slide_close.dart';
 
 class ObContent extends StatefulWidget {
   const ObContent({super.key});
@@ -73,7 +73,7 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Liburan',
       subTitle: 'Kapanpun',
-      path: AppAssets.onBoardingSecondIlusUrl,
+      path: AppAssets.onBoardingSecondIlusPath,
       listColor: const [
         FoundationColor.bgColorTextBlueDark,
         FoundationColor.bgColorTextBlueLight
@@ -94,7 +94,7 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Reward',
       subTitle: 'Keliling Dunia',
-      path: AppAssets.onBoardingThirdIlusUrl,
+      path: AppAssets.onBoardingThirdIlusPath,
       listColor: const [
         FoundationColor.bgColorTextPink,
         FoundationColor.bgColorTextPurple
@@ -115,7 +115,7 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Berbisnis',
       subTitle: 'Investasi Hasil Maksimal',
-      path: AppAssets.onBoardingFourthIlusUrl,
+      path: AppAssets.onBoardingFourthIlusPath,
       listMark: [
         const ObCircleMarkMove(state: false),
         const ObCircleMarkMove(state: false),

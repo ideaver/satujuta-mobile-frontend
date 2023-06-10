@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/molecules/authentications/modal_bottom.dart';
 
 import '../../../atoms/my_custom_button.dart';
 import '../../../atoms/my_custom_form.dart';
@@ -8,6 +7,7 @@ import '../../../foundations/foundation_colors.dart';
 import '../../../foundations/foundation_links.dart';
 import '../../../foundations/foundation_size.dart';
 import '../../../foundations/foundation_typhography.dart';
+import '../../../molecules/authentications/modal_bottom.dart';
 
 class KomisiSection extends StatefulWidget {
   const KomisiSection({super.key});

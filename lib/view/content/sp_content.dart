@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
+
+import '../foundations/foundation_colors.dart';
+import '../foundations/foundation_links.dart';
+import '../foundations/foundation_size.dart';
 
 class SpContent extends StatelessWidget {
   const SpContent({super.key, required this.sizeQuery});

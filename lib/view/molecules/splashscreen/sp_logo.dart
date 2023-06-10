@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_asset_image.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
+
+import '../../atoms/my_asset_image.dart';
+import '../../foundations/foundation_links.dart';
 
 class SpLogo extends StatelessWidget {
   const SpLogo({super.key, required this.widthLogo});

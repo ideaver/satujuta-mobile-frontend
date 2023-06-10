@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
+import '../../atoms/my_custom_button.dart';
+import '../../foundations/foundation_typhography.dart';
 import '../../ui.dart';
 import 'onboarding_title_final.dart';
 

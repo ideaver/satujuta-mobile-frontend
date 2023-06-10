@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_asset_image.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
+import '../atoms/my_asset_image.dart';
+import '../atoms/my_custom_text.dart';
+import '../atoms/my_separated.dart';
+import '../foundations/foundation_size.dart';
+import '../foundations/foundation_typhography.dart';
 import '../molecules/auth_topbar.dart';
 
 class AuthHeader extends StatelessWidget {

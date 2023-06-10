@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
+
+import '../../foundations/foundation_typhography.dart';
 
 class OnBoardingTitle extends StatelessWidget {
   const OnBoardingTitle({

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_elevated_button.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
+
+import '../../atoms/my_elevated_button.dart';
+import '../../foundations/foundation_colors.dart';
+import '../../foundations/foundation_size.dart';
+import '../../foundations/foundation_typhography.dart';
 
 class ObButtonElevated extends StatelessWidget {
   const ObButtonElevated({super.key, required this.onPressed});

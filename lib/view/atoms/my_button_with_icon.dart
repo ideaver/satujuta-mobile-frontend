@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_icon.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
+
+import '../foundations/foundation_size.dart';
+import 'my_icon.dart';
+import 'my_separated.dart';
 
 class MyButtonWithIcon extends StatelessWidget {
   const MyButtonWithIcon(

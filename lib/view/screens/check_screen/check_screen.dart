@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/screens/list_check_screen/list_check_screen.dart';
-import 'package:satujuta_app_mobile/ui/ui.dart';
+
+import '../../screens/list_check_screen/list_check_screen.dart';
+import '../../ui.dart';
 
 class CheckScreen extends StatelessWidget {
   const CheckScreen({super.key});

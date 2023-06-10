@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_links.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
+import '../../atoms/my_custom_text.dart';
+import '../../foundations/foundation_colors.dart';
+import '../../foundations/foundation_links.dart';
+import '../../foundations/foundation_size.dart';
+import '../../foundations/foundation_typhography.dart';
 import '../../organisms/student_registration/sr_form.dart';
 
 class StudentRegistrationScreen extends StatelessWidget {

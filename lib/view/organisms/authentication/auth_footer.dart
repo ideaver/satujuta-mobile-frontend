@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_custom_text.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
 
+import '../../atoms/my_custom_text.dart';
+import '../../foundations/foundation_colors.dart';
+import '../../foundations/foundation_typhography.dart';
 import '../../screens/register/register_screen.dart';
 
 class AuthFooter extends StatelessWidget {

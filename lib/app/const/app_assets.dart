@@ -3,7 +3,7 @@ class AppAssets {
 
   // backgrounds
   static const _baseBackgroundPath = '${_baseAssetsPath}background/';
-  static const backgrounPath = '${_baseBackgroundPath}bg-subject.png';
+  static const backgroundPath = '${_baseBackgroundPath}bg-subject.png';
 
   // ilustrations
   static const _baseIlustrationPath = '${_baseAssetsPath}ilustration/';

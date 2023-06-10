@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_elevated_button.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_typhography.dart';
-import 'package:satujuta_app_mobile/ui/organisms/onboarding/ob_button_authentication.dart';
 
+import '../../atoms/my_elevated_button.dart';
+import '../../foundations/foundation_typhography.dart';
+import '../../organisms/onboarding/ob_button_authentication.dart';
 import 'onboarding_title.dart';
 
 class ObSlide extends StatelessWidget {

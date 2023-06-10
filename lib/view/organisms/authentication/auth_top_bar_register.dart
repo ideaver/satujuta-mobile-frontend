@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_icon_button.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_text_gradient_color.dart';
 
 import '../../atoms/my_button_with_icon.dart';
+import '../../atoms/my_icon_button.dart';
+import '../../atoms/my_text_gradient_color.dart';
 import '../../foundations/foundation_colors.dart';
 import '../../foundations/foundation_links.dart';
 import '../../foundations/foundation_size.dart';

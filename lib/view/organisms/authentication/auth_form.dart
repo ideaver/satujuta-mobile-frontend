@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_custom_button.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_custom_form.dart';
-import 'package:satujuta_app_mobile/ui/atoms/my_separated.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_colors.dart';
-import 'package:satujuta_app_mobile/ui/foundations/foundation_size.dart';
 
 import '../../../app/const/app_assets.dart';
+import '../../atoms/my_custom_button.dart';
+import '../../atoms/my_custom_form.dart';
+import '../../atoms/my_separated.dart';
+import '../../foundations/foundation_colors.dart';
+import '../../foundations/foundation_size.dart';
 
 class AuthForm extends StatelessWidget {
   const AuthForm({super.key});
@@ -34,7 +34,7 @@ class AuthForm extends StatelessWidget {
                       padding: const EdgeInsets.all(15),
                       child: MyCustomForm(
                         suffixIcon: IconButton(
-                          icon: Image.asset(AppAssets.contactFormIconUrl),
+                          icon: Image.asset(AppAssets.contactFormIconPath),
                           onPressed: () {},
                         ),
                         click: () {},
@@ -48,7 +48,7 @@ class AuthForm extends StatelessWidget {
                       padding: const EdgeInsets.all(15),
                       child: MyCustomForm(
                         suffixIcon: IconButton(
-                          icon: Image.asset(AppAssets.lockFormIconUrl),
+                          icon: Image.asset(AppAssets.lockFormIconPath),
                           onPressed: () {},
                         ),
                         click: () {},
