@@ -25,7 +25,7 @@ class MyTextGradientColor extends StatelessWidget {
       child: Text(
         textTitle,
         textAlign: textAlign,
-        style: AppTextStyle.medium(
+        style: AppTextStyle.extraBold(
           context,
           fontSize: fontSize,
           color: listColor.first,
