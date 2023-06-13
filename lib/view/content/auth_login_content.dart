@@ -18,7 +18,7 @@ class AuthLoginContent extends StatelessWidget {
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(AppSizes.sizePadding * 2),
+          padding: const EdgeInsets.all(AppSizes.padding * 2),
           child: Column(
             children: [
               AuthHeader(

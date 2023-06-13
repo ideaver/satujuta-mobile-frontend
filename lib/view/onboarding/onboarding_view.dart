@@ -11,6 +11,8 @@ import 'components/ob_slide.dart';
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
 
+  static const String routeName = '/onboarding';
+
   @override
   State<OnboardingView> createState() => _OnboardingViewState();
 }
@@ -234,14 +236,11 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   Widget onBoardin1() {
-    return ObSlide(
-      context: context,
-      pageIndex: pageIndex,
-      pageController: _pageController,
+    return const ObSlide(
       textTitle: 'Belajar',
       subTitle: 'Dimanapun',
       path: AppAssets.onBoardingFirstIlusPath,
-      listColor: const [
+      listColor: [
         AppColors.lightBlue,
         AppColors.darkBlue,
       ],
@@ -249,14 +248,11 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   Widget onBoardin2() {
-    return ObSlide(
-      context: context,
-      pageIndex: pageIndex,
-      pageController: _pageController,
+    return const ObSlide(
       textTitle: 'Liburan',
       subTitle: 'Kapanpun',
       path: AppAssets.onBoardingSecondIlusPath,
-      listColor: const [
+      listColor: [
         AppColors.lightBlue,
         AppColors.darkBlue,
       ],
@@ -264,14 +260,11 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   Widget onBoardin3() {
-    return ObSlide(
-      context: context,
-      pageIndex: pageIndex,
-      pageController: _pageController,
+    return const ObSlide(
       textTitle: 'Reward',
       subTitle: 'Keliling Dunia',
       path: AppAssets.onBoardingThirdIlusPath,
-      listColor: const [
+      listColor: [
         AppColors.pink,
         AppColors.darkBlue,
       ],
@@ -279,14 +272,14 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   Widget onBoardin4() {
-    return ObSlide(
-      context: context,
-      pageIndex: pageIndex,
-      pageController: _pageController,
+    return const ObSlide(
       textTitle: 'Berbisnis',
       subTitle: 'Investasi Hasil Maksimal',
       path: AppAssets.onBoardingFourthIlusPath,
-      listColor: const [AppColors.pink, AppColors.darkBlue],
+      listColor: [
+        AppColors.pink,
+        AppColors.darkBlue,
+      ],
     );
   }
 }

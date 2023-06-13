@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
-import '../atoms/my_custom_button.dart';
-import '../atoms/my_separated.dart';
+import '../../app/widget/my_custom_button.dart';
+import '../../app/widget/my_separated.dart';
 import '../organisms/auth_header.dart';
 import '../organisms/authentication/auth_form_reset_password.dart';
 import '../screens/authentication/login_screen.dart';
@@ -19,7 +19,7 @@ class AuthResetPasswordContent extends StatelessWidget {
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(AppSizes.sizePadding * 2),
+          padding: const EdgeInsets.all(AppSizes.padding * 2),
           child: Column(
             children: [
               AuthHeader(
@@ -33,12 +33,12 @@ class AuthResetPasswordContent extends StatelessWidget {
                 )),
               ),
               const MySeparated(
-                sizeHeight: AppSizes.sizeHeightDefault + 2,
-                sizeWidth: AppSizes.sizeHeightDefault,
+                sizeHeight: AppSizes.height + 2,
+                sizeWidth: AppSizes.height,
               ),
               const AuthFormResetPassword(),
               const SizedBox(
-                height: AppSizes.sizePadding * 5,
+                height: AppSizes.padding * 5,
               ),
               MyCustomButton(
                   text: "Reset Kata Sandi",

@@ -25,12 +25,12 @@ class MyButtonWithIcon extends StatelessWidget {
           children: [
             Text(text),
             const MySeparated(
-              sizeWidth: AppSizes.sizeHeightDefault,
-              sizeHeight: AppSizes.sizeHeightDefault,
+              sizeWidth: AppSizes.height,
+              sizeHeight: AppSizes.height,
             ),
             const MyIcon(
               iconData: Icons.arrow_forward_ios_outlined,
-              size: AppSizes.sizeHeightDefault,
+              size: AppSizes.height,
             )
           ],
         ));

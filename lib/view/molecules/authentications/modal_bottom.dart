@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
-import '../../atoms/my_asset_image.dart';
+import '../../../app/widget/my_asset_image.dart';
 
 class ModalBottom {
   static Future<void> modalBottom(BuildContext context, ListView list) {
@@ -28,7 +28,7 @@ class ModalBottom {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(
-        vertical: AppSizes.sizeHeightDefault / 2,
+        vertical: AppSizes.height / 2,
       ),
       child: ElevatedButton(
         onPressed: onPressed,
@@ -41,7 +41,7 @@ class ModalBottom {
         ),
         child: Container(
           padding: const EdgeInsets.all(
-            AppSizes.sizeHeightDefault * 2,
+            AppSizes.height * 2,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,12 +53,12 @@ class ModalBottom {
                 ),
               ),
               Container(
-                width: AppSizes.sizeIconMini / 2,
-                height: AppSizes.sizeIconMini / 2,
+                width: AppSizes.padding * 2 / 2,
+                height: AppSizes.padding * 2 / 2,
                 decoration: BoxDecoration(
                   color: statement ? AppColors.primary : AppColors.white,
                   borderRadius: BorderRadius.circular(
-                    AppSizes.sizeHeightDefault * 5,
+                    AppSizes.height * 5,
                   ),
                   border: Border.all(
                     color: AppColors.baseLv4,
@@ -85,7 +85,7 @@ class ModalBottom {
       width: double.infinity,
       color: AppColors.baseLv4,
       margin: const EdgeInsets.symmetric(
-        vertical: AppSizes.sizeHeightDefault / 2,
+        vertical: AppSizes.height / 2,
       ),
       child: ElevatedButton(
         onPressed: onPressed,
@@ -101,7 +101,7 @@ class ModalBottom {
         ),
         child: Padding(
           padding: const EdgeInsets.all(
-            AppSizes.sizeHeightDefault * 2,
+            AppSizes.height * 2,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,10 +110,10 @@ class ModalBottom {
                 children: [
                   MyAssetImage(
                     path: path,
-                    widthImage: AppSizes.sizeIconMini,
+                    widthImage: AppSizes.padding * 2,
                   ),
                   const SizedBox(
-                    width: AppSizes.sizeHeightDefault,
+                    width: AppSizes.height,
                   ),
                   Text(
                     text,
@@ -124,12 +124,12 @@ class ModalBottom {
                 ],
               ),
               Container(
-                width: AppSizes.sizeIconMini / 2,
-                height: AppSizes.sizeIconMini / 2,
+                width: AppSizes.padding * 2 / 2,
+                height: AppSizes.padding * 2 / 2,
                 decoration: BoxDecoration(
                   color: statement ? AppColors.primary : AppColors.white,
                   borderRadius: BorderRadius.circular(
-                    AppSizes.sizeHeightDefault * 5,
+                    AppSizes.height * 5,
                   ),
                   border: Border.all(
                     color: AppColors.baseLv4,

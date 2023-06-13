@@ -4,9 +4,9 @@ import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
-import '../../atoms/my_button_with_icon.dart';
-import '../../atoms/my_icon_button.dart';
-import '../../atoms/my_text_gradient_color.dart';
+import '../../../app/widget/my_button_with_icon.dart';
+import '../../../app/widget/my_icon_button.dart';
+import '../../../app/widget/my_text_gradient_color.dart';
 
 class AuthTopbarRegister extends StatelessWidget {
   const AuthTopbarRegister({
@@ -25,11 +25,11 @@ class AuthTopbarRegister extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: AppSizes.sizeHeightDefault * 2,
+            height: AppSizes.height * 2,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppSizes.sizePadding * 2),
+            padding:
+                const EdgeInsets.symmetric(horizontal: AppSizes.padding * 2),
             child: Row(
               children: [
                 Image.asset(
@@ -48,8 +48,8 @@ class AuthTopbarRegister extends StatelessWidget {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppSizes.sizePadding * 2),
+            padding:
+                const EdgeInsets.symmetric(horizontal: AppSizes.padding * 2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -90,36 +90,35 @@ class TopbarCheckOut extends StatelessWidget {
               image: AssetImage(AppAssets.backgroundPath), fit: BoxFit.cover)),
       child: Padding(
         padding: const EdgeInsets.only(
-            top: AppSizes.sizePadding * 3,
-            left: AppSizes.sizePadding + 8,
-            right: AppSizes.sizePadding + 8),
+            top: AppSizes.padding * 3,
+            left: AppSizes.padding + 8,
+            right: AppSizes.padding + 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: AppSizes.sizeHeightDefault * 2,
+              height: AppSizes.height * 2,
             ),
             Row(
               children: [
                 Icon(
                   Icons.arrow_back_ios,
-                  size: AppSizes.sizeIconMini,
+                  size: AppSizes.padding * 2,
                 ),
                 const Spacer(),
                 MyIconButton(
                   onPressed: () {},
                   path: AppAssets.warningIconPath,
-                  sizeImage: AppSizes.sizeIconMini,
+                  sizeImage: AppSizes.padding * 2,
                 )
               ],
             ),
             const SizedBox(
-              height: AppSizes.sizeHeightDefault * 6,
+              height: AppSizes.height * 6,
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppSizes.sizePadding),
+              padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
-import '../atoms/my_button_with_icon.dart';
-import '../atoms/my_icon_button.dart';
+import '../../app/widget/my_button_with_icon.dart';
+import '../../app/widget/my_icon_button.dart';
 
 class AuthTopBar extends StatelessWidget {
   const AuthTopBar({
@@ -17,14 +17,14 @@ class AuthTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.sizePadding),
+      padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           MyIconButton(
             onPressed: () {},
             path: AppAssets.lockIconPath,
-            sizeImage: AppSizes.sizeIcon,
+            sizeImage: AppSizes.padding * 3,
           ),
           MyButtonWithIcon(
             onPressed: onPressed,

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
-import '../atoms/my_asset_image.dart';
-import '../atoms/my_custom_text.dart';
-import '../atoms/my_separated.dart';
+import '../../app/widget/my_asset_image.dart';
+import '../../app/widget/my_custom_text.dart';
+import '../../app/widget/my_separated.dart';
 import '../molecules/auth_topbar.dart';
 
 class AuthHeader extends StatelessWidget {
@@ -38,11 +38,10 @@ class AuthHeader extends StatelessWidget {
         Center(
           child: Container(
             width: sizeWidth * .7,
-            margin:
-                const EdgeInsets.symmetric(vertical: AppSizes.sizePadding * 4),
+            margin: const EdgeInsets.symmetric(vertical: AppSizes.padding * 4),
             child: MyAssetImage(
               path: pathLogo,
-              widthImage: AppSizes.sizeHeightDefault * 15,
+              widthImage: AppSizes.height * 15,
             ),
           ),
         ),
@@ -53,8 +52,8 @@ class AuthHeader extends StatelessWidget {
               color: AppColors.base,
             ).copyWith(fontSize: 24)),
         const MySeparated(
-          sizeHeight: AppSizes.sizeHeightDefault / 2,
-          sizeWidth: AppSizes.sizeHeightDefault,
+          sizeHeight: AppSizes.height / 2,
+          sizeWidth: AppSizes.height,
         ),
         MyCustomText(
           text: textSubTitle,
@@ -64,8 +63,8 @@ class AuthHeader extends StatelessWidget {
           ),
         ),
         const MySeparated(
-          sizeHeight: AppSizes.sizeHeightDefault * 4 + 2,
-          sizeWidth: AppSizes.sizeHeightDefault,
+          sizeHeight: AppSizes.height * 4 + 2,
+          sizeWidth: AppSizes.height,
         ),
       ],
     );

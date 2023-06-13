@@ -14,7 +14,7 @@ class ContentNotReady extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 1.5,
-      padding: const EdgeInsets.all(AppSizes.sizePadding * 2),
+      padding: const EdgeInsets.all(AppSizes.padding * 2),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,7 +22,7 @@ class ContentNotReady extends StatelessWidget {
           children: [
             Image.asset(AppAssets.emptyEmojiPath),
             const SizedBox(
-              height: AppSizes.sizeHeightDefault * 5,
+              height: AppSizes.height * 5,
             ),
             Text(
               "Maaf, belum ada hotel di kota ini.",
@@ -32,7 +32,7 @@ class ContentNotReady extends StatelessWidget {
               ).copyWith(fontSize: 16),
             ),
             const SizedBox(
-              height: AppSizes.sizePadding,
+              height: AppSizes.padding,
             ),
             Text(
               "Kami akan segera menambahkan daftar hotel yang kamu inginkan",

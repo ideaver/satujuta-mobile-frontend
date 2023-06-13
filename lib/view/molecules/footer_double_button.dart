@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../app/const/app_sizes.dart';
-import '../atoms/my_button_left.dart';
-import '../atoms/my_button_right.dart';
+import '../../app/widget/my_button_left.dart';
+import '../../app/widget/my_button_right.dart';
 
 class FooterDoubleButton extends StatelessWidget {
   const FooterDoubleButton({
@@ -28,7 +28,7 @@ class FooterDoubleButton extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          width: AppSizes.sizeHeightDefault / 2,
+          width: AppSizes.height / 2,
         ),
         Expanded(
           child: InkWell(

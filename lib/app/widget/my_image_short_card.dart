@@ -44,11 +44,11 @@ class MyImageShortCard extends StatelessWidget {
                 ? Icon(
                     Icons.dashboard,
                     color: AppColors.white,
-                    size: AppSizes.sizeIconMini,
+                    size: AppSizes.padding * 2,
                   )
                 : Image.asset(
                     AppAssets.dashboardIconPath,
-                    width: AppSizes.sizeIconMini,
+                    width: AppSizes.padding * 2,
                   ),
           ),
           Expanded(

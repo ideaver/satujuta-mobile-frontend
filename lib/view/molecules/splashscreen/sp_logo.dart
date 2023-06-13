@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/const/app_assets.dart';
-import '../../atoms/my_asset_image.dart';
+import '../../../app/widget/my_asset_image.dart';
 
 class SpLogo extends StatelessWidget {
   const SpLogo({super.key, required this.widthLogo});

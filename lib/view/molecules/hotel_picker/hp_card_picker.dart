@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/const/app_assets.dart';
-import '../../atoms/my_long_card.dart';
+import '../../../app/widget/my_long_card.dart';
 
 class HpCardPicker extends StatelessWidget {
   const HpCardPicker({

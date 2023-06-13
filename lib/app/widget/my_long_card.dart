@@ -32,8 +32,7 @@ class MyLongCard extends StatelessWidget {
     return Container(
       height: 550,
       width: double.infinity,
-      margin:
-          const EdgeInsets.symmetric(vertical: AppSizes.sizeHeightDefault * 3),
+      margin: const EdgeInsets.symmetric(vertical: AppSizes.height * 3),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: const BorderRadius.only(
@@ -54,7 +53,7 @@ class MyLongCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSizes.sizeHeightDefault * 2 + 4),
+        padding: const EdgeInsets.all(AppSizes.height * 2 + 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,7 +90,7 @@ class MyLongCard extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: AppSizes.sizePadding,
+              height: AppSizes.padding,
             ),
             SizedBox(
               height: 219,
@@ -128,7 +127,7 @@ class MyLongCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: AppSizes.sizePadding,
+              height: AppSizes.padding,
             ),
             Text(
               title,
@@ -139,16 +138,16 @@ class MyLongCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: AppSizes.sizeHeightDefault,
+              height: AppSizes.height,
             ),
             SizedBox(
-              height: AppSizes.sizeIconStar,
+              height: AppSizes.height + 5,
               width: double.infinity,
               child: RatingBar.builder(
                 initialRating: 3,
                 minRating: 1,
                 allowHalfRating: true,
-                itemSize: AppSizes.sizeIconStar,
+                itemSize: AppSizes.height + 5,
                 direction: Axis.horizontal,
                 itemCount: 5,
                 itemBuilder: (context, _) => const Icon(
@@ -161,7 +160,7 @@ class MyLongCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: AppSizes.sizeHeightDefault,
+              height: AppSizes.height,
             ),
             Expanded(
               child: Text(
@@ -179,7 +178,7 @@ class MyLongCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(
-                    AppSizes.sizeHeightDefault * 5,
+                    AppSizes.height * 5,
                   ),
                 ),
               ),

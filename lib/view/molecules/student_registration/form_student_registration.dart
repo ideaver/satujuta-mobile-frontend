@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/const/app_sizes.dart';
-import '../../atoms/my_custom_form.dart';
+import '../../../app/widget/my_custom_form.dart';
 
 class FormStudentRegistration extends StatelessWidget {
   const FormStudentRegistration({
@@ -23,7 +23,7 @@ class FormStudentRegistration extends StatelessWidget {
         suffixIcon: IconButton(
           icon: Image.asset(
             path,
-            height: AppSizes.sizeIconMini,
+            height: AppSizes.padding * 2,
           ),
           onPressed: () {},
         ),

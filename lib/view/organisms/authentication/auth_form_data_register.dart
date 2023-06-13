@@ -4,7 +4,7 @@ import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
-import '../../atoms/my_custom_text.dart';
+import '../../../app/widget/my_custom_text.dart';
 import 'auth_list_form_register.dart';
 
 class AuthFormDataRegister extends StatelessWidget {
@@ -25,7 +25,7 @@ class AuthFormDataRegister extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: AppSizes.sizeHeightDefault * 5,
+              height: AppSizes.height * 5,
             ),
             Center(
               child: MyCustomText(
@@ -40,8 +40,8 @@ class AuthFormDataRegister extends StatelessWidget {
             ),
             Center(
               child: Container(
-                margin: const EdgeInsets.symmetric(
-                    vertical: AppSizes.sizeHeightDefault * 5),
+                margin:
+                    const EdgeInsets.symmetric(vertical: AppSizes.height * 5),
                 width: MediaQuery.of(context).size.width * .5,
                 height: 150,
                 child: Center(
@@ -58,17 +58,17 @@ class AuthFormDataRegister extends StatelessWidget {
                         bottom: 0,
                         right: 20,
                         child: Container(
-                          width: AppSizes.sizeIcon,
-                          height: AppSizes.sizeIcon,
+                          width: AppSizes.padding * 3,
+                          height: AppSizes.padding * 3,
                           decoration: BoxDecoration(
                               color: AppColors.primary,
-                              borderRadius: BorderRadius.circular(
-                                  AppSizes.sizeHeightDefault * 5)),
+                              borderRadius:
+                                  BorderRadius.circular(AppSizes.height * 5)),
                           child: GestureDetector(
                             onTap: () {},
                             child: Image.asset(
                               AppAssets.editIconPath,
-                              width: AppSizes.sizeIconMini,
+                              width: AppSizes.padding * 2,
                             ),
                           ),
                         ),

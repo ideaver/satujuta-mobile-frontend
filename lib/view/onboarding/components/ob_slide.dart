@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'ob_title.dart';
 
 class ObSlide extends StatelessWidget {
-  final BuildContext context;
-  final int pageIndex;
-  final PageController pageController;
   final String textTitle;
   final String subTitle;
   final String path;
@@ -13,9 +10,6 @@ class ObSlide extends StatelessWidget {
 
   const ObSlide({
     super.key,
-    required this.context,
-    required this.pageIndex,
-    required this.pageController,
     required this.textTitle,
     required this.subTitle,
     required this.path,

@@ -52,7 +52,7 @@ class AuthListFormRegister extends StatelessWidget {
                         children: [
                           Image.asset(
                             AppAssets.personFormIconPath,
-                            width: AppSizes.sizeIconMini,
+                            width: AppSizes.padding * 2,
                           ),
                           const Expanded(
                               child: Text(
@@ -75,7 +75,7 @@ class AuthListFormRegister extends StatelessWidget {
                       children: [
                         Image.asset(
                           AppAssets.lockDarkIconPath,
-                          width: AppSizes.sizeIconMini,
+                          width: AppSizes.padding * 2,
                         ),
                         const Expanded(
                           child: Text("Akun",
@@ -96,7 +96,7 @@ class AuthListFormRegister extends StatelessWidget {
                         children: [
                           Image.asset(
                             AppAssets.coinFormIconPath,
-                            width: AppSizes.sizeIconMini,
+                            width: AppSizes.padding * 2,
                           ),
                           const Expanded(
                             child: Text("Komisi",

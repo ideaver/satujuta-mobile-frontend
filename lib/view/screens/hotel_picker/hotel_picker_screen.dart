@@ -4,9 +4,9 @@ import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
-import '../../atoms/my_custom_text.dart';
-import '../../atoms/my_image_short_card.dart';
-import '../../atoms/my_short_card.dart';
+import '../../../app/widget/my_custom_text.dart';
+import '../../../app/widget/my_image_short_card.dart';
+import '../../../app/widget/my_short_card.dart';
 import '../../organisms/hotel_picker/content_not_ready.dart';
 import '../../organisms/hotel_picker/hp_content_ready.dart';
 
@@ -29,7 +29,7 @@ class _HotelPickerScreenState extends State<HotelPickerScreen> {
           child: Column(
             children: [
               const SizedBox(
-                height: AppSizes.sizeHeightDefault * 5,
+                height: AppSizes.height * 5,
               ),
               MyCustomText(
                 text: "Pilih Hotel Menginap Anda",
@@ -39,7 +39,7 @@ class _HotelPickerScreenState extends State<HotelPickerScreen> {
                 ).copyWith(fontSize: 20),
               ),
               const SizedBox(
-                height: AppSizes.sizeHeightDefault * 3 + 4,
+                height: AppSizes.height * 3 + 4,
               ),
               SizedBox(
                 height: 50,
@@ -95,7 +95,7 @@ class _HotelPickerScreenState extends State<HotelPickerScreen> {
                 ),
               ),
               const SizedBox(
-                height: AppSizes.sizeHeightDefault * 2 + 4,
+                height: AppSizes.height * 2 + 4,
               ),
               i == 2 ? const HpContentReady() : const ContentNotReady()
             ],

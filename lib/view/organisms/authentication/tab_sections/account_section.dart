@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../app/const/app_assets.dart';
 import '../../../../app/const/app_sizes.dart';
 import '../../../../app/theme/app_colors.dart';
-import '../../../atoms/my_asset_image.dart';
-import '../../../atoms/my_custom_form.dart';
+import '../../../../app/widget/my_asset_image.dart';
+import '../../../../app/widget/my_custom_form.dart';
 import '../../../molecules/footer_double_button.dart';
 
 class AccountSection extends StatefulWidget {
@@ -35,7 +35,7 @@ class _AccountSectionState extends State<AccountSection> {
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.phoneIconPath,
-                    height: AppSizes.sizeIconMini,
+                    height: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -50,7 +50,7 @@ class _AccountSectionState extends State<AccountSection> {
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
                     path: AppAssets.dropdownRectangleFormIconPath,
-                    widthImage: AppSizes.sizeIconMini,
+                    widthImage: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -65,7 +65,7 @@ class _AccountSectionState extends State<AccountSection> {
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
                     path: AppAssets.passwordIconPath,
-                    widthImage: AppSizes.sizeIconMini,
+                    widthImage: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -80,7 +80,7 @@ class _AccountSectionState extends State<AccountSection> {
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
                     path: AppAssets.passwordIconPath,
-                    widthImage: AppSizes.sizeIconMini,
+                    widthImage: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -92,35 +92,35 @@ class _AccountSectionState extends State<AccountSection> {
         ),
       ),
       const SizedBox(
-        height: AppSizes.sizeHeightDefault * 4,
+        height: AppSizes.height * 4,
       ),
       const Row(
         children: [
           Expanded(
             child: MyAssetImage(
               path: AppAssets.successIconPath,
-              widthImage: AppSizes.sizeIconMini,
+              widthImage: AppSizes.padding * 2,
             ),
           ),
           Expanded(flex: 4, child: Text('Besar atau kecil karakter'))
         ],
       ),
       const SizedBox(
-        height: AppSizes.sizeHeightDefault,
+        height: AppSizes.height,
       ),
       const Row(
         children: [
           Expanded(
             child: MyAssetImage(
               path: AppAssets.failedIconPath,
-              widthImage: AppSizes.sizeIconMini,
+              widthImage: AppSizes.padding * 2,
             ),
           ),
           Expanded(flex: 4, child: Text('6 atau lebih karakter'))
         ],
       ),
       const SizedBox(
-        height: AppSizes.sizeHeightDefault,
+        height: AppSizes.height,
       ),
       const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,14 +130,14 @@ class _AccountSectionState extends State<AccountSection> {
             flex: 1,
             child: MyAssetImage(
               path: AppAssets.unsuccessIconPath,
-              widthImage: AppSizes.sizeIconMini,
+              widthImage: AppSizes.padding * 2,
             ),
           ),
           Expanded(flex: 4, child: Text('Setidaknya 1 nomor'))
         ],
       ),
       const SizedBox(
-        height: AppSizes.sizeHeightDefault * 4,
+        height: AppSizes.height * 4,
       ),
       FooterDoubleButton(
         textLeftButton: "Sebelumnya",
@@ -169,7 +169,7 @@ class _AccountSectionState extends State<AccountSection> {
   //         child: Column(
   //           children: [
   //             SizedBox(
-  //               height: AppSizes.sizeIcon,
+  //               height: AppSizes.kPadding * 3,
   //               width: double.infinity,
   //               child: Stack(
   //                 children: [
@@ -194,7 +194,7 @@ class _AccountSectionState extends State<AccountSection> {
   //               ),
   //             ),
   //             const SizedBox(
-  //               height: AppSizes.sizeHeightDefault,
+  //               height: AppSizes.kHeight,
   //             ),
   //             ModalBottom.customRadioButton(listOption[0], value == 0, () {
   //               setState(() {
@@ -217,7 +217,7 @@ class _AccountSectionState extends State<AccountSection> {
   //               });
   //             }),
   //             const SizedBox(
-  //               height: AppSizes.sizeHeightDefault,
+  //               height: AppSizes.kHeight,
   //             ),
   //             SizedBox(
   //               width: double.infinity,
@@ -226,7 +226,7 @@ class _AccountSectionState extends State<AccountSection> {
   //                   decoration: BoxDecoration(
   //                       color: AppColors.kColorPrimary,
   //                       borderRadius:
-  //                           BorderRadius.circular(AppSizes.sizePadding))),
+  //                           BorderRadius.circular(AppSizes.kPadding))),
   //             )
   //           ],
   //         ),
@@ -252,7 +252,7 @@ class _AccountSectionState extends State<AccountSection> {
   //   return Container(
   //     width: double.infinity,
   //     margin:
-  //         EdgeInsets.symmetric(vertical: AppSizes.sizeHeightDefault / 2),
+  //         EdgeInsets.symmetric(vertical: AppSizes.kHeight / 2),
   //     child: ElevatedButton(
   //       onPressed: () {
   //         setState(() {
@@ -265,7 +265,7 @@ class _AccountSectionState extends State<AccountSection> {
   //           shape: MaterialStatePropertyAll(RoundedRectangleBorder(
   //               borderRadius: BorderRadius.circular(10)))),
   //       child: Container(
-  //         padding: const EdgeInsets.all(AppSizes.sizeHeightDefault * 2),
+  //         padding: const EdgeInsets.all(AppSizes.kHeight * 2),
   //         child: Row(
   //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //           children: [
@@ -279,14 +279,14 @@ class _AccountSectionState extends State<AccountSection> {
   //               ),
   //             ),
   //             Container(
-  //               width: AppSizes.sizeIconMini / 2,
-  //               height: AppSizes.sizeIconMini / 2,
+  //               width: AppSizes.kPadding * 2 / 2,
+  //               height: AppSizes.kPadding * 2 / 2,
   //               decoration: BoxDecoration(
   //                   color: index == value
   //                       ? AppColors.kColorPrimary
   //                       : AppColors.kColorWhite,
   //                   borderRadius: BorderRadius.circular(
-  //                       AppSizes.sizeHeightDefault * 5),
+  //                       AppSizes.kHeight * 5),
   //                   border: Border.all(
   //                       color: AppColors.kColorGrey,
   //                       style: BorderStyle.solid,

@@ -4,7 +4,7 @@ import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
-import '../../atoms/my_custom_text.dart';
+import '../../../app/widget/my_custom_text.dart';
 import '../../organisms/student_registration/sr_form.dart';
 
 class StudentRegistrationScreen extends StatelessWidget {
@@ -17,9 +17,9 @@ class StudentRegistrationScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(
-              top: AppSizes.sizePadding * 2,
-              right: AppSizes.sizePadding * 2,
-              left: AppSizes.sizePadding * 2),
+              top: AppSizes.padding * 2,
+              right: AppSizes.padding * 2,
+              left: AppSizes.padding * 2),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -30,7 +30,7 @@ class StudentRegistrationScreen extends StatelessWidget {
                     const Spacer(),
                     Image.asset(
                       AppAssets.warningIconPath,
-                      width: AppSizes.sizeIcon,
+                      width: AppSizes.padding * 3,
                     ),
                   ],
                 ),
@@ -50,7 +50,7 @@ class StudentRegistrationScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: AppSizes.sizeHeightDefault * 4,
+                  height: AppSizes.height * 4,
                 ),
                 const SRForm()
               ],

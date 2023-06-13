@@ -15,8 +15,8 @@ class _ContentIsReadyState extends State<HpContentReady> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: AppSizes.sizeHeightDefault * 2 + 2,
-        right: AppSizes.sizeHeightDefault * 2 + 2,
+        left: AppSizes.height * 2 + 2,
+        right: AppSizes.height * 2 + 2,
       ),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 5,

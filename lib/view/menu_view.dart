@@ -12,37 +12,65 @@ class MenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SplashView(),
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'SatuJuta Mobile',
+                        style: AppTextStyle.bold(context, fontSize: 22),
+                      ),
+                      const SizedBox(height: 18),
+                      Text(
+                        'SatuJuta Mobile Prototype',
+                        style: AppTextStyle.medium(context, fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              child: Text(
-                "Main app",
-                style: AppTextStyle.bold(context, color: AppColors.white),
-              ),
+                const SizedBox(height: 18),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SplashView(),
+                      ),
+                    ),
+                    child: Text(
+                      "Main app",
+                      style: AppTextStyle.bold(context, color: AppColors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ListMenuView(),
+                        ),
+                      ),
+                      child: Text(
+                        "List Page",
+                        style:
+                            AppTextStyle.bold(context, color: AppColors.white),
+                      ),
+                    ))
+              ],
             ),
-            ElevatedButton(
-              onPressed: () => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ListMenuView(),
-                ),
-              ),
-              child: Text(
-                "List Page",
-                style: AppTextStyle.bold(context, color: AppColors.white),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

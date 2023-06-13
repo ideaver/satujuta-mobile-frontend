@@ -4,9 +4,9 @@ import '../../../../app/const/app_assets.dart';
 import '../../../../app/const/app_sizes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_text_style.dart';
-import '../../../atoms/my_custom_button.dart';
-import '../../../atoms/my_custom_form.dart';
-import '../../../atoms/my_custom_text.dart';
+import '../../../../app/widget/my_custom_button.dart';
+import '../../../../app/widget/my_custom_form.dart';
+import '../../../../app/widget/my_custom_text.dart';
 import '../../../molecules/authentications/modal_bottom.dart';
 
 class KomisiSection extends StatefulWidget {
@@ -37,7 +37,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.somePersonFormIconPath,
-                    height: AppSizes.sizeIconMini,
+                    height: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -52,7 +52,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: AppSizes.sizeIconMini,
+                    size: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -91,7 +91,7 @@ class _KomisiSectionState extends State<KomisiSection> {
         ),
       ),
       const SizedBox(
-        height: AppSizes.sizeHeightDefault * 4,
+        height: AppSizes.height * 4,
       ),
       Row(
         children: [
@@ -128,7 +128,7 @@ class _KomisiSectionState extends State<KomisiSection> {
             ),
           ),
           const SizedBox(
-            width: AppSizes.sizeHeightDefault / 2,
+            width: AppSizes.height / 2,
           ),
           Expanded(
             child: InkWell(
@@ -185,7 +185,7 @@ class _KomisiSectionState extends State<KomisiSection> {
             child: Column(
               children: [
                 SizedBox(
-                  height: AppSizes.sizeIcon,
+                  height: AppSizes.padding * 3,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -211,7 +211,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                   ),
                 ),
                 const SizedBox(
-                  height: AppSizes.sizeHeightDefault,
+                  height: AppSizes.height,
                 ),
                 ModalBottom.customRadioButtonBank(context, listOption[0],
                     AppAssets.bankBCAImgPath, value == 0, () {
@@ -238,7 +238,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                   });
                 }),
                 const SizedBox(
-                  height: AppSizes.sizeHeightDefault,
+                  height: AppSizes.height,
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -247,7 +247,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(
-                        AppSizes.sizePadding,
+                        AppSizes.padding,
                       ),
                     ),
                   ),

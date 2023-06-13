@@ -4,9 +4,9 @@ import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
-import '../../atoms/my_asset_image.dart';
-import '../../atoms/my_custom_button.dart';
-import '../../atoms/my_custom_text.dart';
+import '../../../app/widget/my_asset_image.dart';
+import '../../../app/widget/my_custom_button.dart';
+import '../../../app/widget/my_custom_text.dart';
 import '../../molecules/authentications/modal_bottom.dart';
 import '../../molecules/student_registration/form_student_registration.dart';
 
@@ -35,8 +35,8 @@ class _SRFormState extends State<SRForm> {
                 color: AppColors.white,
                 border: Border.all(color: AppColors.baseLv4),
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(AppSizes.sizeBorderRadiusForm),
-                    topRight: Radius.circular(AppSizes.sizeBorderRadiusForm)),
+                    topLeft: Radius.circular(AppSizes.padding),
+                    topRight: Radius.circular(AppSizes.padding)),
               ),
               child: Column(
                 children: [
@@ -107,35 +107,35 @@ class _SRFormState extends State<SRForm> {
                 ],
               )),
           const SizedBox(
-            height: AppSizes.sizeHeightDefault * 4,
+            height: AppSizes.height * 4,
           ),
           const Row(
             children: [
               Expanded(
                 child: MyAssetImage(
                   path: AppAssets.successIconPath,
-                  widthImage: AppSizes.sizeIconMini,
+                  widthImage: AppSizes.padding * 2,
                 ),
               ),
               Expanded(flex: 4, child: Text('Email telah valid'))
             ],
           ),
           const SizedBox(
-            height: AppSizes.sizeHeightDefault,
+            height: AppSizes.height,
           ),
           const Row(
             children: [
               Expanded(
                 child: MyAssetImage(
                   path: AppAssets.failedIconPath,
-                  widthImage: AppSizes.sizeIconMini,
+                  widthImage: AppSizes.padding * 2,
                 ),
               ),
               Expanded(flex: 4, child: Text('Nomor whatsapp salah'))
             ],
           ),
           const SizedBox(
-            height: AppSizes.sizeHeightDefault,
+            height: AppSizes.height,
           ),
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,14 +145,14 @@ class _SRFormState extends State<SRForm> {
                 flex: 1,
                 child: MyAssetImage(
                   path: AppAssets.unsuccessIconPath,
-                  widthImage: AppSizes.sizeIconMini,
+                  widthImage: AppSizes.padding * 2,
                 ),
               ),
               Expanded(flex: 4, child: Text('Email valid'))
             ],
           ),
           const SizedBox(
-            height: AppSizes.sizeHeightDefault * 4,
+            height: AppSizes.height * 4,
           ),
           InkWell(
             onTap: () => ModalBottom.modalBottom(
@@ -173,7 +173,7 @@ class _SRFormState extends State<SRForm> {
             ),
           ),
           const SizedBox(
-            height: AppSizes.sizeHeightDefault * 4,
+            height: AppSizes.height * 4,
           )
         ],
       ),
@@ -198,7 +198,7 @@ class _SRFormState extends State<SRForm> {
           child: Column(
             children: [
               SizedBox(
-                height: AppSizes.sizeIcon,
+                height: AppSizes.padding * 3,
                 width: double.infinity,
                 child: Stack(
                   children: [
@@ -221,7 +221,7 @@ class _SRFormState extends State<SRForm> {
                 ),
               ),
               SizedBox(
-                height: AppSizes.sizeHeightDefault,
+                height: AppSizes.height,
               ),
               ModalBottom.customRadioButton(context, listOption[0], value == 0,
                   () {
@@ -254,7 +254,7 @@ class _SRFormState extends State<SRForm> {
                 });
               }),
               const SizedBox(
-                height: AppSizes.sizeHeightDefault,
+                height: AppSizes.height,
               ),
               SizedBox(
                 width: double.infinity,
@@ -262,8 +262,7 @@ class _SRFormState extends State<SRForm> {
                     text: "Pilih",
                     decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius:
-                            BorderRadius.circular(AppSizes.sizePadding))),
+                        borderRadius: BorderRadius.circular(AppSizes.padding))),
               )
             ],
           ),
@@ -288,7 +287,7 @@ class _SRFormState extends State<SRForm> {
           child: Column(
             children: [
               SizedBox(
-                height: AppSizes.sizeIcon,
+                height: AppSizes.padding * 3,
                 width: double.infinity,
                 child: Stack(
                   children: [
@@ -321,13 +320,12 @@ class _SRFormState extends State<SRForm> {
                 ),
               ),
               const SizedBox(
-                height: AppSizes.sizeHeightDefault * 4,
+                height: AppSizes.height * 4,
               ),
               Container(
                 decoration: BoxDecoration(
                     color: AppColors.white,
-                    borderRadius:
-                        BorderRadius.circular(AppSizes.sizeBorderRadiusForm),
+                    borderRadius: BorderRadius.circular(AppSizes.padding),
                     boxShadow: const [BoxShadow(color: AppColors.baseLv4)]),
                 child: Row(
                   children: [
@@ -349,15 +347,14 @@ class _SRFormState extends State<SRForm> {
                 ),
               ),
               const SizedBox(
-                height: AppSizes.sizeHeightDefault,
+                height: AppSizes.height,
               ),
               Container(
-                padding: const EdgeInsets.all(AppSizes.sizePadding),
-                height: AppSizes.sizeHeightCardTransaction,
+                padding: const EdgeInsets.all(AppSizes.padding),
+                height: AppSizes.height * 10,
                 decoration: BoxDecoration(
                     color: AppColors.white,
-                    borderRadius:
-                        BorderRadius.circular(AppSizes.sizeBorderRadiusForm),
+                    borderRadius: BorderRadius.circular(AppSizes.padding),
                     boxShadow: const [BoxShadow(color: AppColors.baseLv4)]),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -406,7 +403,7 @@ class _SRFormState extends State<SRForm> {
                 ),
               ),
               const SizedBox(
-                height: AppSizes.sizeHeightDefault * 4,
+                height: AppSizes.height * 4,
               ),
               SizedBox(
                 width: double.infinity,
@@ -414,8 +411,7 @@ class _SRFormState extends State<SRForm> {
                     text: "Pilih",
                     decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius:
-                            BorderRadius.circular(AppSizes.sizePadding))),
+                        borderRadius: BorderRadius.circular(AppSizes.padding))),
               )
             ],
           ),

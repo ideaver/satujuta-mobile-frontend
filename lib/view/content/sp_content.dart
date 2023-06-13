@@ -23,8 +23,7 @@ class SpContent extends StatelessWidget {
                 width: sizeQuery.width * 2.6,
                 height: sizeQuery.width * 1.2,
                 decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(AppSizes.sizeHeightDefault * 9),
+                  borderRadius: BorderRadius.circular(AppSizes.height * 9),
                   color: AppColors.white.withAlpha(10),
                 ),
               ),

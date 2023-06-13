@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
-import '../../atoms/my_custom_button.dart';
-import '../../atoms/my_custom_form.dart';
-import '../../atoms/my_separated.dart';
+import '../../../app/widget/my_custom_button.dart';
+import '../../../app/widget/my_custom_form.dart';
+import '../../../app/widget/my_separated.dart';
 
 class AuthForm extends StatelessWidget {
   const AuthForm({super.key});
@@ -61,8 +61,8 @@ class AuthForm extends StatelessWidget {
           ),
         ),
         const MySeparated(
-          sizeHeight: AppSizes.sizeHeightDefault * 6,
-          sizeWidth: AppSizes.sizeHeightDefault,
+          sizeHeight: AppSizes.height * 6,
+          sizeWidth: AppSizes.height,
         ),
         MyCustomButton(
           onPressed: () {},
@@ -73,8 +73,8 @@ class AuthForm extends StatelessWidget {
           ),
         ),
         const MySeparated(
-          sizeHeight: AppSizes.sizeHeightDefault * 2,
-          sizeWidth: AppSizes.sizeHeightDefault,
+          sizeHeight: AppSizes.height * 2,
+          sizeWidth: AppSizes.height,
         ),
       ],
     );

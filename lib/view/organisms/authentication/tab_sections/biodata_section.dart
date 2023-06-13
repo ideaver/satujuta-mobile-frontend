@@ -4,9 +4,9 @@ import '../../../../app/const/app_assets.dart';
 import '../../../../app/const/app_sizes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_text_style.dart';
-import '../../../atoms/my_custom_button.dart';
-import '../../../atoms/my_custom_form.dart';
-import '../../../atoms/my_custom_text.dart';
+import '../../../../app/widget/my_custom_button.dart';
+import '../../../../app/widget/my_custom_form.dart';
+import '../../../../app/widget/my_custom_text.dart';
 import '../../../molecules/authentications/modal_bottom.dart';
 
 class BiodataSection extends StatefulWidget {
@@ -37,7 +37,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.contactFormIconPath,
-                    height: AppSizes.sizeIconMini,
+                    height: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -52,7 +52,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.location_on_rounded,
-                    size: AppSizes.sizeIconMini,
+                    size: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -67,7 +67,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: AppSizes.sizeIconMini,
+                    size: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -92,7 +92,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: AppSizes.sizeIconMini,
+                    size: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -117,7 +117,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.dropdownRectangleFormIconPath,
-                    width: AppSizes.sizeIconMini,
+                    width: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -132,7 +132,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: AppSizes.sizeIconMini,
+                    size: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -158,7 +158,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.schoolIconPath,
-                    width: AppSizes.sizeIconMini,
+                    width: AppSizes.padding * 2,
                   ),
                   onPressed: () {},
                 ),
@@ -220,7 +220,7 @@ class _BiodataSectionState extends State<BiodataSection> {
             child: Column(
               children: [
                 SizedBox(
-                  height: AppSizes.sizeIcon,
+                  height: AppSizes.padding * 3,
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -250,7 +250,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                 ),
                 const SizedBox(
-                  height: AppSizes.sizeHeightDefault,
+                  height: AppSizes.height,
                 ),
                 ModalBottom.customRadioButton(
                     context, listOption[0], value == 0, () {
@@ -283,7 +283,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                   });
                 }),
                 const SizedBox(
-                  height: AppSizes.sizeHeightDefault,
+                  height: AppSizes.height,
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -292,7 +292,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(
-                        AppSizes.sizePadding,
+                        AppSizes.padding,
                       ),
                     ),
                   ),
