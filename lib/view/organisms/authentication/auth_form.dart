@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
 import '../../atoms/my_custom_button.dart';
 import '../../atoms/my_custom_form.dart';
 import '../../atoms/my_separated.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_size.dart';
 
 class AuthForm extends StatelessWidget {
   const AuthForm({super.key});
@@ -23,10 +23,9 @@ class AuthForm extends StatelessWidget {
                 height: 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: FoundationColor.bgWhite,
+                  color: AppColors.white,
                   borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  border:
-                      Border.all(width: 1, color: FoundationColor.bgColorGrey),
+                  border: Border.all(width: 1, color: AppColors.baseLv4),
                 ),
                 child: Column(
                   children: [
@@ -42,7 +41,7 @@ class AuthForm extends StatelessWidget {
                       ),
                     ),
                     const Divider(
-                      color: FoundationColor.bgColorGrey,
+                      color: AppColors.baseLv4,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15),
@@ -62,8 +61,8 @@ class AuthForm extends StatelessWidget {
           ),
         ),
         const MySeparated(
-          sizeHeight: FoundationSize.sizeHeightDefault * 6,
-          sizeWidth: FoundationSize.sizeHeightDefault,
+          sizeHeight: AppSizes.sizeHeightDefault * 6,
+          sizeWidth: AppSizes.sizeHeightDefault,
         ),
         MyCustomButton(
           onPressed: () {},
@@ -74,8 +73,8 @@ class AuthForm extends StatelessWidget {
           ),
         ),
         const MySeparated(
-          sizeHeight: FoundationSize.sizeHeightDefault * 2,
-          sizeWidth: FoundationSize.sizeHeightDefault,
+          sizeHeight: AppSizes.sizeHeightDefault * 2,
+          sizeWidth: AppSizes.sizeHeightDefault,
         ),
       ],
     );

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_asset_image.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 
 class ModalBottom {
   static Future<void> modalBottom(BuildContext context, ListView list) {
     return showModalBottomSheet<void>(
       context: context,
-      backgroundColor: FoundationColor.bgColorGrey,
+      backgroundColor: AppColors.baseLv4,
       builder: (BuildContext context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height / 1.2,
@@ -20,40 +20,52 @@ class ModalBottom {
   }
 
   static Widget customRadioButton(
-      String text, bool statement, VoidCallback onPressed) {
+    BuildContext context,
+    String text,
+    bool statement,
+    VoidCallback onPressed,
+  ) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(
-          vertical: FoundationSize.sizeHeightDefault / 2),
+        vertical: AppSizes.sizeHeightDefault / 2,
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)))),
+          shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
         child: Container(
-          padding: const EdgeInsets.all(FoundationSize.sizeHeightDefault * 2),
+          padding: const EdgeInsets.all(
+            AppSizes.sizeHeightDefault * 2,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 text,
-                style: FoundationTyphography.darkFontBold.copyWith(
+                style: AppTextStyle.bold(context).copyWith(
                   color: statement ? Colors.green : Colors.black,
                 ),
               ),
               Container(
-                width: FoundationSize.sizeIconMini / 2,
-                height: FoundationSize.sizeIconMini / 2,
+                width: AppSizes.sizeIconMini / 2,
+                height: AppSizes.sizeIconMini / 2,
                 decoration: BoxDecoration(
-                    color: statement
-                        ? FoundationColor.bgPrimary
-                        : FoundationColor.bgWhite,
-                    borderRadius: BorderRadius.circular(
-                        FoundationSize.sizeHeightDefault * 5),
-                    border: Border.all(
-                        color: FoundationColor.bgColorGrey,
-                        style: BorderStyle.solid,
-                        width: 2)),
+                  color: statement ? AppColors.primary : AppColors.white,
+                  borderRadius: BorderRadius.circular(
+                    AppSizes.sizeHeightDefault * 5,
+                  ),
+                  border: Border.all(
+                    color: AppColors.baseLv4,
+                    style: BorderStyle.solid,
+                    width: 2,
+                  ),
+                ),
               )
             ],
           ),
@@ -63,20 +75,34 @@ class ModalBottom {
   }
 
   static Widget customRadioButtonBank(
-      String text, String path, bool statement, VoidCallback onPressed) {
+    BuildContext context,
+    String text,
+    String path,
+    bool statement,
+    VoidCallback onPressed,
+  ) {
     return Container(
       width: double.infinity,
-      color: FoundationColor.bgColorGrey,
+      color: AppColors.baseLv4,
       margin: const EdgeInsets.symmetric(
-          vertical: FoundationSize.sizeHeightDefault / 2),
+        vertical: AppSizes.sizeHeightDefault / 2,
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10))),
-            backgroundColor: MaterialStatePropertyAll(FoundationColor.bgWhite)),
+          shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          backgroundColor: const MaterialStatePropertyAll(
+            AppColors.white,
+          ),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(FoundationSize.sizeHeightDefault * 2),
+          padding: const EdgeInsets.all(
+            AppSizes.sizeHeightDefault * 2,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,32 +110,33 @@ class ModalBottom {
                 children: [
                   MyAssetImage(
                     path: path,
-                    widthImage: FoundationSize.sizeIconMini,
+                    widthImage: AppSizes.sizeIconMini,
                   ),
                   const SizedBox(
-                    width: FoundationSize.sizeHeightDefault,
+                    width: AppSizes.sizeHeightDefault,
                   ),
                   Text(
                     text,
-                    style: FoundationTyphography.darkFontBold.copyWith(
+                    style: AppTextStyle.bold(context).copyWith(
                       color: statement ? Colors.green : Colors.black,
                     ),
                   ),
                 ],
               ),
               Container(
-                width: FoundationSize.sizeIconMini / 2,
-                height: FoundationSize.sizeIconMini / 2,
+                width: AppSizes.sizeIconMini / 2,
+                height: AppSizes.sizeIconMini / 2,
                 decoration: BoxDecoration(
-                    color: statement
-                        ? FoundationColor.bgPrimary
-                        : FoundationColor.bgWhite,
-                    borderRadius: BorderRadius.circular(
-                        FoundationSize.sizeHeightDefault * 5),
-                    border: Border.all(
-                        color: FoundationColor.bgColorGrey,
-                        style: BorderStyle.solid,
-                        width: 2)),
+                  color: statement ? AppColors.primary : AppColors.white,
+                  borderRadius: BorderRadius.circular(
+                    AppSizes.sizeHeightDefault * 5,
+                  ),
+                  border: Border.all(
+                    color: AppColors.baseLv4,
+                    style: BorderStyle.solid,
+                    width: 2,
+                  ),
+                ),
               )
             ],
           ),

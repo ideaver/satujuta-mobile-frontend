@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../screens/authentication/login_screen.dart';
-import '../../screens/checkout/checkout_screen.dart';
-import '../../screens/hotel_picker/hotel_picker_screen.dart';
-import '../../screens/onboarding/onboarding_screen.dart';
-import '../../screens/register/register_screen.dart';
-import '../../screens/reset_password/reset_password_screen.dart';
-import '../../screens/splashscreen/splashscreen_screen.dart';
-import '../../screens/student_registration/student_registration_screen.dart';
+import 'screens/authentication/login_screen.dart';
+import 'screens/checkout/checkout_screen.dart';
+import 'screens/hotel_picker/hotel_picker_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
+import 'screens/register/register_screen.dart';
+import 'screens/reset_password/reset_password_screen.dart';
+import 'screens/splashscreen/splashscreen_screen.dart';
+import 'screens/student_registration/student_registration_screen.dart';
 
-class ListCheckScreen extends StatelessWidget {
-  const ListCheckScreen({super.key});
+// TODO REMOVE
+// DEV PUSPOSE ONLY
+class ListMenuView extends StatelessWidget {
+  const ListMenuView({super.key});
 
   @override
   Widget build(BuildContext context) {

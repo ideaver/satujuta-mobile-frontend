@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/app/theme/app_colors.dart';
 
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_links.dart';
-import '../foundations/foundation_size.dart';
-import '../foundations/foundation_typhography.dart';
+import '../../app/const/app_assets.dart';
+import '../../app/const/app_sizes.dart';
+import '../../app/theme/app_text_style.dart';
 
 class MyImageShortCard extends StatelessWidget {
   const MyImageShortCard(
@@ -21,7 +21,7 @@ class MyImageShortCard extends StatelessWidget {
       height: 40,
       width: 120,
       decoration: BoxDecoration(
-        color: state ? FoundationColor.bgPrimary : FoundationColor.bgWhite,
+        color: state ? AppColors.primary : AppColors.white,
         boxShadow: const [
           BoxShadow(
             color: Color.fromARGB(66, 181, 178, 178),
@@ -43,20 +43,20 @@ class MyImageShortCard extends StatelessWidget {
             child: state
                 ? Icon(
                     Icons.dashboard,
-                    color: FoundationColor.bgWhite,
-                    size: FoundationSize.sizeIconMini,
+                    color: AppColors.white,
+                    size: AppSizes.sizeIconMini,
                   )
                 : Image.asset(
-                    FoundationLinks.linkDashboardIconLogo,
-                    width: FoundationSize.sizeIconMini,
+                    AppAssets.dashboardIconPath,
+                    width: AppSizes.sizeIconMini,
                   ),
           ),
           Expanded(
             child: Text(
               text,
               style: state
-                  ? FoundationTyphography.lightFontBold
-                  : FoundationTyphography.darkFontBold,
+                  ? AppTextStyle.bold(context)
+                  : AppTextStyle.bold(context, color: AppColors.base),
             ),
           ),
         ],

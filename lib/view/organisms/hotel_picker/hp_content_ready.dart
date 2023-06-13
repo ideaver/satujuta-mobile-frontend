@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_size.dart';
+import '../../../app/const/app_sizes.dart';
 import '../../molecules/hotel_picker/hp_card_picker.dart';
 
 class HpContentReady extends StatefulWidget {
@@ -15,8 +15,8 @@ class _ContentIsReadyState extends State<HpContentReady> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: FoundationSize.sizeHeightDefault * 2 + 2,
-        right: FoundationSize.sizeHeightDefault * 2 + 2,
+        left: AppSizes.sizeHeightDefault * 2 + 2,
+        right: AppSizes.sizeHeightDefault * 2 + 2,
       ),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 5,

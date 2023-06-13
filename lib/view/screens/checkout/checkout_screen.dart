@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_typhography.dart';
+import '../../../app/const/app_assets.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../organisms/authentication/auth_top_bar_register.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       spreadRadius: 2.0,
                     ), //BoxShadow
                   ],
-                  color: FoundationColor.bgColorBgRed,
+                  color: AppColors.red,
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 child: Padding(
@@ -57,7 +57,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              FoundationLinks.linkClockIconLogo,
+                              AppAssets.clockIconPath,
                               height: 20,
                             ),
                             SizedBox(
@@ -65,25 +65,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                             Text(
                               "00: 30 : 25",
-                              style: FoundationTyphography.lightFontBold
-                                  .copyWith(
-                                      fontSize:
-                                          FoundationTyphography.fontSizeH5,
-                                      color: FoundationColor.bgColorBgRed),
+                              style: AppTextStyle.bold(context).copyWith(
+                                fontSize: 12,
+                                color: AppColors.red,
+                              ),
                             )
                           ],
                         ),
                       ),
                       Text(
                         "Batas Bayar".toUpperCase(),
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: AppTextStyle.bold(context).copyWith(
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Image.asset(
-                        FoundationLinks.linkArrowForwardIconLogo,
+                        AppAssets.arrowForwardIconPath,
                         height: 40,
                       ),
                     ],
@@ -128,7 +127,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       child: Row(
                         children: [
                           Image.asset(
-                            FoundationLinks.linkCoinIconLogo,
+                            AppAssets.coinFormIconPath,
                             height: 40,
                           ),
                           SizedBox(
@@ -185,7 +184,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       child: Row(
                         children: [
                           Image.asset(
-                            FoundationLinks.linkCoinIconLogo,
+                            AppAssets.coinFormIconPath,
                             height: 40,
                           ),
                           SizedBox(
@@ -242,7 +241,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       child: Row(
                         children: [
                           Image.asset(
-                            FoundationLinks.linkBankBNIImage,
+                            AppAssets.bankBNIImgPath,
                             height: 20,
                           ),
                           SizedBox(
@@ -261,7 +260,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             width: 10,
                           ),
                           Image.asset(
-                            FoundationLinks.linkCoinIconLogo,
+                            AppAssets.coinFormIconPath,
                             height: 20,
                           ),
                         ],
@@ -330,7 +329,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              FoundationLinks.linkBankBCAImage,
+              AppAssets.bankBCAImgPath,
               height: 40,
             ),
             SizedBox(
@@ -361,7 +360,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               tex2,
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: 14,
-                    color: FoundationColor.bgColorBgRed,
+                    color: AppColors.red,
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -372,7 +371,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               height: 30,
               width: 70,
               decoration: BoxDecoration(
-                color: FoundationColor.bgColorBgRed,
+                color: AppColors.red,
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               child: Center(

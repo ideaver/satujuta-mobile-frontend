@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_links.dart';
-import '../foundations/foundation_size.dart';
+import '../../app/const/app_assets.dart';
+import '../../app/const/app_sizes.dart';
+import '../../app/theme/app_colors.dart';
 import '../organisms/auth_header.dart';
 import '../organisms/authentication/auth_footer.dart';
 import '../organisms/authentication/auth_form.dart';
@@ -15,15 +15,15 @@ class AuthLoginContent extends StatelessWidget {
   Widget build(BuildContext context) {
     var sizeWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: FoundationColor.bgWhite,
+      backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(FoundationSize.sizePadding * 2),
+          padding: const EdgeInsets.all(AppSizes.sizePadding * 2),
           child: Column(
             children: [
               AuthHeader(
                 sizeWidth: sizeWidth,
-                pathLogo: FoundationLinks.linkLongLogo,
+                pathLogo: AppAssets.longLogoPath,
                 textButtonHeader: "Lupa Password",
                 textTitle: "Selamat Datang",
                 textSubTitle: "Masukkan Info login untuk Akses Member Area",

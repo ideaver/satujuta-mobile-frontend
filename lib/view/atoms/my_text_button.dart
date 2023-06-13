@@ -11,8 +11,7 @@ class MyTextButton extends StatelessWidget {
         onPressed: () {},
         child: Text(
           text,
-          style: AppTextStyle.darkJakartaText
-              .copyWith(fontWeight: AppTextStyle.bold),
+          style: AppTextStyle.bold(context),
         ));
   }
 }

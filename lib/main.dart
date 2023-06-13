@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app/theme/app_theme.dart';
-import 'view/screens/check_screen/check_screen.dart';
+import 'view/menu_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'SatuJuta',
       theme: AppTheme.getTheme(),
-      home: const CheckScreen(),
+      home: const MenuView(),
     );
   }
 }

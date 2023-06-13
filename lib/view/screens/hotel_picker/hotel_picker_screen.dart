@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_custom_text.dart';
 import '../../atoms/my_image_short_card.dart';
 import '../../atoms/my_short_card.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 import '../../organisms/hotel_picker/content_not_ready.dart';
 import '../../organisms/hotel_picker/hp_content_ready.dart';
 
@@ -22,22 +22,24 @@ class _HotelPickerScreenState extends State<HotelPickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FoundationColor.bgColorGrey,
+      backgroundColor: AppColors.baseLv4,
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault * 5,
+                height: AppSizes.sizeHeightDefault * 5,
               ),
               MyCustomText(
                 text: "Pilih Hotel Menginap Anda",
-                style: FoundationTyphography.darkFontBold
-                    .copyWith(fontSize: FoundationTyphography.fontSizeH2),
+                style: AppTextStyle.bold(
+                  context,
+                  color: AppColors.base,
+                ).copyWith(fontSize: 20),
               ),
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault * 3 + 4,
+                height: AppSizes.sizeHeightDefault * 3 + 4,
               ),
               SizedBox(
                 height: 50,
@@ -55,7 +57,7 @@ class _HotelPickerScreenState extends State<HotelPickerScreen> {
                           child: MyImageShortCard(
                               state: i == 0,
                               text: "Semua",
-                              pathImage: FoundationLinks.linkDashboardIconLogo),
+                              pathImage: AppAssets.dashboardIconPath),
                         ),
                         const SizedBox(
                           width: 10,
@@ -93,7 +95,7 @@ class _HotelPickerScreenState extends State<HotelPickerScreen> {
                 ),
               ),
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault * 2 + 4,
+                height: AppSizes.sizeHeightDefault * 2 + 4,
               ),
               i == 2 ? const HpContentReady() : const ContentNotReady()
             ],

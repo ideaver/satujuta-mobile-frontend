@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_image_slideshow:
   flutter_rating_bar: ^4.0.1
-  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -88,10 +87,14 @@ flutter:
     - family: Plus Jakarta Sans
       fonts:
         - asset: assets/fonts/PlusJakartaSans-Bold.ttf
+          weight: 600
         - asset: assets/fonts/PlusJakartaSans-Medium.ttf
-        - asset: assets/fonts/PlusJakartaSans-Light.ttf
+          weight: 500
         - asset: assets/fonts/PlusJakartaSans-Regular.ttf
-          style: normal
+          weight: 400
+        - asset: assets/fonts/PlusJakartaSans-Light.ttf
+          weight: 300
+        
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

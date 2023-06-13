@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -16,89 +15,76 @@ class AppTheme {
 
   static TextTheme _buildTextTheme(TextTheme base) {
     return base.copyWith(
-      titleLarge: GoogleFonts.libreBaskerville(
-        textStyle: TextStyle(
-          color: base.titleLarge!.color,
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-        ),
+      titleLarge: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.titleLarge!.color,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
       ),
-      titleMedium: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.titleMedium!.color,
-          fontSize: 15,
-        ),
+      titleMedium: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.titleMedium!.color,
+        fontSize: 15,
       ),
-      titleSmall: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.bodySmall!.color,
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-        ),
+      titleSmall: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.bodySmall!.color,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
       ),
-      bodyLarge: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.bodyLarge?.color,
-          fontSize: 14,
-        ),
+      bodyLarge: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.bodyLarge?.color,
+        fontSize: 14,
       ),
-      bodyMedium: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.bodyMedium!.color,
-          fontSize: 16,
-        ),
+      bodyMedium: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.bodyMedium!.color,
+        fontSize: 16,
       ),
-      bodySmall: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.bodySmall!.color,
-          fontSize: 12,
-        ),
+      bodySmall: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.bodySmall!.color,
+        fontSize: 12,
       ),
-      labelLarge: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.labelLarge!.color,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
+      labelLarge: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.labelLarge!.color,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
       ),
-      labelSmall: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: base.labelSmall!.color,
-          fontSize: 10,
-        ),
+      labelSmall: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.labelSmall!.color,
+        fontSize: 10,
       ),
-      displayLarge: GoogleFonts.libreBaskerville(
-        textStyle: TextStyle(
-          color: base.titleMedium!.color,
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-        ),
+      displayLarge: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.titleMedium!.color,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
       ),
-      displayMedium: GoogleFonts.libreBaskerville(
-        textStyle: TextStyle(
-          color: base.displayMedium!.color,
-          fontSize: 60,
-        ),
+      displayMedium: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.displayMedium!.color,
+        fontSize: 60,
       ),
-      displaySmall: GoogleFonts.libreBaskerville(
-        textStyle: TextStyle(
-          color: base.displaySmall!.color,
-          fontSize: 40,
-          fontWeight: FontWeight.w600,
-        ),
+      displaySmall: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.displaySmall!.color,
+        fontSize: 40,
+        fontWeight: FontWeight.w600,
       ),
-      headlineMedium: GoogleFonts.libreBaskerville(
-        textStyle: TextStyle(
-          color: base.headlineMedium!.color,
-          fontSize: 24,
-        ),
+      headlineMedium: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.headlineMedium!.color,
+        fontSize: 24,
       ),
-      headlineSmall: GoogleFonts.libreBaskerville(
-        textStyle: TextStyle(
-          color: base.headlineSmall!.color,
-          fontSize: 20.5,
-          fontWeight: FontWeight.w700,
-        ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Plus Jakarta Sans',
+        color: base.headlineSmall!.color,
+        fontSize: 20.5,
+        fontWeight: FontWeight.w700,
       ),
     );
   }
@@ -106,11 +92,12 @@ class AppTheme {
   static ThemeData lightTheme() {
     Color primaryColor = HexColor(AppColors.primaryColorString);
     Color secondaryColor = HexColor(AppColors.secondaryColorString);
+
     final ColorScheme colorScheme = const ColorScheme.light().copyWith(
-      primary: secondaryColor,
-      secondary: Colors.white,
-      background: Colors.white,
-      error: Colors.red,
+      primary: primaryColor,
+      secondary: secondaryColor,
+      background: AppColors.white,
+      error: AppColors.red,
     );
 
     final ThemeData base = ThemeData.light();
@@ -129,7 +116,6 @@ class AppTheme {
       scaffoldBackgroundColor: Colors.white,
       textTheme: _buildTextTheme(base.textTheme),
       primaryTextTheme: _buildTextTheme(base.textTheme),
-      // accentTextTheme: _buildTextTheme(base.accentTextTheme),
       platform: TargetPlatform.iOS,
       indicatorColor: primaryColor,
       disabledColor: HexColor("#9CA3AF"),
@@ -145,11 +131,14 @@ class AppTheme {
   static ThemeData darkTheme() {
     Color primaryColor = HexColor(AppColors.primaryColorString);
     Color secondaryColor = HexColor(AppColors.secondaryColorString);
+
     final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
       primary: primaryColor,
       secondary: secondaryColor,
       background: const Color(0xff1c1d21),
+      error: AppColors.red,
     );
+
     final ThemeData base = ThemeData.dark();
     return base.copyWith(
       appBarTheme: AppBarTheme(color: Colors.grey[700]),
@@ -170,7 +159,6 @@ class AppTheme {
       ),
       textTheme: _buildTextTheme(base.textTheme),
       primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-      // accentTextTheme: _buildTextTheme(base.accentTextTheme),
       platform: TargetPlatform.iOS,
       disabledColor: HexColor("#6B7280"),
       cardColor: HexColor("#23262F"),

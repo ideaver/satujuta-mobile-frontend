@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_typhography.dart';
+import '../../app/theme/app_colors.dart';
+import '../../app/theme/app_text_style.dart';
 
 class MyButtonLeft extends StatelessWidget {
   const MyButtonLeft({
@@ -17,7 +17,7 @@ class MyButtonLeft extends StatelessWidget {
       child: Container(
         height: 60,
         decoration: BoxDecoration(
-          color: FoundationColor.bgPrimary.withAlpha(40),
+          color: AppColors.primary.withAlpha(40),
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(15),
@@ -27,8 +27,8 @@ class MyButtonLeft extends StatelessWidget {
         child: Center(
           child: Text(
             textLeftButton,
-            style: FoundationTyphography.lightFontBold
-                .copyWith(color: FoundationColor.bgSplashScreen),
+            style:
+                AppTextStyle.bold(context).copyWith(color: AppColors.primary),
           ),
         ),
       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_button_with_icon.dart';
 import '../../atoms/my_icon_button.dart';
 import '../../atoms/my_text_gradient_color.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 
 class AuthTopbarRegister extends StatelessWidget {
   const AuthTopbarRegister({
@@ -19,22 +19,21 @@ class AuthTopbarRegister extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .2,
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(FoundationLinks.linkbackgroundAestheticFourth),
-              fit: BoxFit.cover)),
+              image: AssetImage(AppAssets.backgroundPath), fit: BoxFit.cover)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: FoundationSize.sizeHeightDefault * 2,
+            height: AppSizes.sizeHeightDefault * 2,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: FoundationSize.sizePadding * 2),
+                horizontal: AppSizes.sizePadding * 2),
             child: Row(
               children: [
                 Image.asset(
-                  FoundationLinks.linkLockIconLogo,
+                  AppAssets.lockIconPath,
                   height: 30,
                 ),
                 const Spacer(),
@@ -50,24 +49,23 @@ class AuthTopbarRegister extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: FoundationSize.sizePadding * 2),
+                horizontal: AppSizes.sizePadding * 2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Registrasi",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: AppTextStyle.bold(context, fontSize: 22),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
                   "Bergabung menjadi anggota SatuJuta!",
-                  style: FoundationTyphography.darkFontRegular
-                      .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+                  style: AppTextStyle.regular(
+                    context,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
@@ -89,40 +87,39 @@ class TopbarCheckOut extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .4,
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(FoundationLinks.linkbackgroundAestheticFourth),
-              fit: BoxFit.cover)),
+              image: AssetImage(AppAssets.backgroundPath), fit: BoxFit.cover)),
       child: Padding(
         padding: const EdgeInsets.only(
-            top: FoundationSize.sizePadding * 3,
-            left: FoundationSize.sizePadding + 8,
-            right: FoundationSize.sizePadding + 8),
+            top: AppSizes.sizePadding * 3,
+            left: AppSizes.sizePadding + 8,
+            right: AppSizes.sizePadding + 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: FoundationSize.sizeHeightDefault * 2,
+              height: AppSizes.sizeHeightDefault * 2,
             ),
             Row(
               children: [
                 Icon(
                   Icons.arrow_back_ios,
-                  size: FoundationSize.sizeIconMini,
+                  size: AppSizes.sizeIconMini,
                 ),
                 const Spacer(),
                 MyIconButton(
                   onPressed: () {},
-                  path: FoundationLinks.linkWarningIcon,
-                  sizeImage: FoundationSize.sizeIconMini,
+                  path: AppAssets.warningIconPath,
+                  sizeImage: AppSizes.sizeIconMini,
                 )
               ],
             ),
             const SizedBox(
-              height: FoundationSize.sizeHeightDefault * 6,
+              height: AppSizes.sizeHeightDefault * 6,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: FoundationSize.sizePadding),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppSizes.sizePadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -130,11 +127,8 @@ class TopbarCheckOut extends StatelessWidget {
                   const Center(
                     child: MyTextGradientColor(
                       textTitle: "Ringkasan Order",
-                      listColor: [
-                        FoundationColor.bgColorTextPink,
-                        FoundationColor.bgColorTextPurple
-                      ],
-                      fontSize: FoundationTyphography.fontSizeH2 * 2 - 2,
+                      listColor: [AppColors.pink, AppColors.darkBlue],
+                      fontSize: 20 * 2 - 2,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -148,8 +142,10 @@ class TopbarCheckOut extends StatelessWidget {
               child: Text(
                 "Lakukan pembayaran sebelum batas waktu berakhir agar tidak kehilangan Peluang.",
                 textAlign: TextAlign.center,
-                style: FoundationTyphography.darkFontRegular
-                    .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+                style: AppTextStyle.regular(
+                  context,
+                  fontSize: 14,
+                ),
               ),
             ),
           ],

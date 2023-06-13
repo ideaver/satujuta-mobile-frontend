@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
 import '../../atoms/my_custom_form.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
 
 class AuthFormResetPassword extends StatelessWidget {
   const AuthFormResetPassword({
@@ -13,14 +13,13 @@ class AuthFormResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(FoundationSize.sizePadding + 8),
+      padding: const EdgeInsets.all(AppSizes.sizePadding + 8),
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: FoundationColor.bgColorGrey),
-          borderRadius:
-              BorderRadius.circular(FoundationSize.sizeHeightDefault)),
+          border: Border.all(width: 1, color: AppColors.baseLv4),
+          borderRadius: BorderRadius.circular(AppSizes.sizeHeightDefault)),
       child: MyCustomForm(
         lableText: "Email",
-        suffixIcon: Image.asset(FoundationLinks.linkContactLogo),
+        suffixIcon: Image.asset(AppAssets.contactFormIconPath),
         click: () {},
       ),
     );

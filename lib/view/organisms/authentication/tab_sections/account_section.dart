@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/const/app_assets.dart';
+import '../../../../app/const/app_sizes.dart';
+import '../../../../app/theme/app_colors.dart';
 import '../../../atoms/my_asset_image.dart';
 import '../../../atoms/my_custom_form.dart';
-import '../../../foundations/foundation_colors.dart';
-import '../../../foundations/foundation_links.dart';
-import '../../../foundations/foundation_size.dart';
 import '../../../molecules/footer_double_button.dart';
 
 class AccountSection extends StatefulWidget {
@@ -23,8 +23,8 @@ class _AccountSectionState extends State<AccountSection> {
         height: 370,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: FoundationColor.bgWhite,
-          border: Border.all(color: FoundationColor.bgColorGrey),
+          color: AppColors.white,
+          border: Border.all(color: AppColors.baseLv4),
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         child: Column(
@@ -34,8 +34,8 @@ class _AccountSectionState extends State<AccountSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: Image.asset(
-                    FoundationLinks.linkPhoneIcon,
-                    height: FoundationSize.sizeIconMini,
+                    AppAssets.phoneIconPath,
+                    height: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -49,8 +49,8 @@ class _AccountSectionState extends State<AccountSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
-                    path: FoundationLinks.linkDropdownIconLogo,
-                    widthImage: FoundationSize.sizeIconMini,
+                    path: AppAssets.dropdownRectangleFormIconPath,
+                    widthImage: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -64,8 +64,8 @@ class _AccountSectionState extends State<AccountSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
-                    path: FoundationLinks.linkPasswordIconLogo,
-                    widthImage: FoundationSize.sizeIconMini,
+                    path: AppAssets.passwordIconPath,
+                    widthImage: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -79,8 +79,8 @@ class _AccountSectionState extends State<AccountSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
-                    path: FoundationLinks.linkPasswordIconLogo,
-                    widthImage: FoundationSize.sizeIconMini,
+                    path: AppAssets.passwordIconPath,
+                    widthImage: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -92,35 +92,35 @@ class _AccountSectionState extends State<AccountSection> {
         ),
       ),
       const SizedBox(
-        height: FoundationSize.sizeHeightDefault * 4,
+        height: AppSizes.sizeHeightDefault * 4,
       ),
       const Row(
         children: [
           Expanded(
             child: MyAssetImage(
-              path: FoundationLinks.linkSuccessIconLogo,
-              widthImage: FoundationSize.sizeIconMini,
+              path: AppAssets.successIconPath,
+              widthImage: AppSizes.sizeIconMini,
             ),
           ),
           Expanded(flex: 4, child: Text('Besar atau kecil karakter'))
         ],
       ),
       const SizedBox(
-        height: FoundationSize.sizeHeightDefault,
+        height: AppSizes.sizeHeightDefault,
       ),
       const Row(
         children: [
           Expanded(
             child: MyAssetImage(
-              path: FoundationLinks.linkFailedIconLogo,
-              widthImage: FoundationSize.sizeIconMini,
+              path: AppAssets.failedIconPath,
+              widthImage: AppSizes.sizeIconMini,
             ),
           ),
           Expanded(flex: 4, child: Text('6 atau lebih karakter'))
         ],
       ),
       const SizedBox(
-        height: FoundationSize.sizeHeightDefault,
+        height: AppSizes.sizeHeightDefault,
       ),
       const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,15 +129,15 @@ class _AccountSectionState extends State<AccountSection> {
           Expanded(
             flex: 1,
             child: MyAssetImage(
-              path: FoundationLinks.linkUnSuccessIconLogo,
-              widthImage: FoundationSize.sizeIconMini,
+              path: AppAssets.unsuccessIconPath,
+              widthImage: AppSizes.sizeIconMini,
             ),
           ),
           Expanded(flex: 4, child: Text('Setidaknya 1 nomor'))
         ],
       ),
       const SizedBox(
-        height: FoundationSize.sizeHeightDefault * 4,
+        height: AppSizes.sizeHeightDefault * 4,
       ),
       FooterDoubleButton(
         textLeftButton: "Sebelumnya",
@@ -169,15 +169,18 @@ class _AccountSectionState extends State<AccountSection> {
   //         child: Column(
   //           children: [
   //             SizedBox(
-  //               height: FoundationSize.sizeIcon,
+  //               height: AppSizes.sizeIcon,
   //               width: double.infinity,
   //               child: Stack(
   //                 children: [
   //                   Center(
   //                     child: MyCustomText(
   //                       text: title,
-  //                       style: FoundationTyphography.darkFontBold.copyWith(
-  //                           fontSize: FoundationTyphography.fontSizeH3,
+  //                       style: AppTextStyle.bold(
+  //   context,
+  //   color: AppColors.kColorBase,
+  // ),.copyWith(
+  //                           fontSize: 14Large,
   //                           fontWeight: FontWeight.bold),
   //                     ),
   //                   ),
@@ -191,7 +194,7 @@ class _AccountSectionState extends State<AccountSection> {
   //               ),
   //             ),
   //             const SizedBox(
-  //               height: FoundationSize.sizeHeightDefault,
+  //               height: AppSizes.sizeHeightDefault,
   //             ),
   //             ModalBottom.customRadioButton(listOption[0], value == 0, () {
   //               setState(() {
@@ -214,16 +217,16 @@ class _AccountSectionState extends State<AccountSection> {
   //               });
   //             }),
   //             const SizedBox(
-  //               height: FoundationSize.sizeHeightDefault,
+  //               height: AppSizes.sizeHeightDefault,
   //             ),
   //             SizedBox(
   //               width: double.infinity,
   //               child: MyCustomButton(
   //                   text: "Pilih",
   //                   decoration: BoxDecoration(
-  //                       color: FoundationColor.bgPrimary,
+  //                       color: AppColors.kColorPrimary,
   //                       borderRadius:
-  //                           BorderRadius.circular(FoundationSize.sizePadding))),
+  //                           BorderRadius.circular(AppSizes.sizePadding))),
   //             )
   //           ],
   //         ),
@@ -235,7 +238,7 @@ class _AccountSectionState extends State<AccountSection> {
   // Future<void> modalBottom(BuildContext context, List<Widget> list) {
   //   return showModalBottomSheet<void>(
   //     context: context,
-  //     backgroundColor: FoundationColor.bgColorGrey,
+  //     backgroundColor: AppColors.kColorGrey,
   //     builder: (BuildContext context) {
   //       return Container(
   //         height: MediaQuery.of(context).size.height / 1.2,
@@ -249,7 +252,7 @@ class _AccountSectionState extends State<AccountSection> {
   //   return Container(
   //     width: double.infinity,
   //     margin:
-  //         EdgeInsets.symmetric(vertical: FoundationSize.sizeHeightDefault / 2),
+  //         EdgeInsets.symmetric(vertical: AppSizes.sizeHeightDefault / 2),
   //     child: ElevatedButton(
   //       onPressed: () {
   //         setState(() {
@@ -262,27 +265,30 @@ class _AccountSectionState extends State<AccountSection> {
   //           shape: MaterialStatePropertyAll(RoundedRectangleBorder(
   //               borderRadius: BorderRadius.circular(10)))),
   //       child: Container(
-  //         padding: const EdgeInsets.all(FoundationSize.sizeHeightDefault * 2),
+  //         padding: const EdgeInsets.all(AppSizes.sizeHeightDefault * 2),
   //         child: Row(
   //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //           children: [
   //             Text(
   //               text,
-  //               style: FoundationTyphography.darkFontBold.copyWith(
+  //               style: AppTextStyle.bold(
+  //   context,
+  //   color: AppColors.kColorBase,
+  // ),.copyWith(
   //                 color: (value == index) ? Colors.green : Colors.black,
   //               ),
   //             ),
   //             Container(
-  //               width: FoundationSize.sizeIconMini / 2,
-  //               height: FoundationSize.sizeIconMini / 2,
+  //               width: AppSizes.sizeIconMini / 2,
+  //               height: AppSizes.sizeIconMini / 2,
   //               decoration: BoxDecoration(
   //                   color: index == value
-  //                       ? FoundationColor.bgPrimary
-  //                       : FoundationColor.bgWhite,
+  //                       ? AppColors.kColorPrimary
+  //                       : AppColors.kColorWhite,
   //                   borderRadius: BorderRadius.circular(
-  //                       FoundationSize.sizeHeightDefault * 5),
+  //                       AppSizes.sizeHeightDefault * 5),
   //                   border: Border.all(
-  //                       color: FoundationColor.bgColorGrey,
+  //                       color: AppColors.kColorGrey,
   //                       style: BorderStyle.solid,
   //                       width: 2)),
   //             )

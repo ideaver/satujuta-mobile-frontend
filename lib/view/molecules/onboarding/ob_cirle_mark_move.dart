@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_size.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
 
 class ObCircleMarkMove extends StatelessWidget {
   const ObCircleMarkMove({super.key, required this.state});
@@ -13,12 +13,10 @@ class ObCircleMarkMove extends StatelessWidget {
       width: 20,
       height: 20,
       decoration: BoxDecoration(
-          color: state
-              ? FoundationColor.markedColorOnboarding
-              : FoundationColor.unmarkedColorOnboarding,
+          color: state ? AppColors.primary : AppColors.white,
           border: Border.all(
-            color: FoundationColor.bgColorBase,
-            width: FoundationSize.sizeWidthBorder,
+            color: AppColors.base,
+            width: AppSizes.sizeWidthBorder,
           ),
           borderRadius: BorderRadius.circular(50)),
     );

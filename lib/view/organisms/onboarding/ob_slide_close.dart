@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_custom_button.dart';
-import '../../foundations/foundation_typhography.dart';
-import '../../ui.dart';
+import '../../screens/authentication/login_screen.dart';
 import 'onboarding_title_final.dart';
 
 class ObSlideClose extends StatelessWidget {
@@ -80,15 +81,15 @@ class ObSlideClose extends StatelessWidget {
                       ),
                       // style: const ButtonStyle(
                       //     backgroundColor: MaterialStatePropertyAll(
-                      //         FoundationColor.bgColorBtnGetstarted)),
+                      //         AppColors.kColorPrimary)),
                       // onPressed: () {},
                       // child: Padding(
                       //   padding: const EdgeInsets.symmetric(
-                      //       vertical: FoundationSize.sizeLeftPadding),
+                      //       vertical: AppSizes.sizeLeftPadding),
                       //   child: Text(
                       //     "Bergabung Sekarang",
                       //     textAlign: TextAlign.center,
-                      //     style: FoundationTyphography.lightFontBold.copyWith(
+                      //     style: AppTextStyle.bold(context).copyWith(
                       //         letterSpacing: .5,
                       //         fontSize: AppTypography.kFontSizeMediumLarge),
                       //   ),
@@ -97,11 +98,15 @@ class ObSlideClose extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Login",
-                      style: FoundationTyphography.darkFontBold,
-                    ))
+                  onPressed: () {},
+                  child: Text(
+                    "Login",
+                    style: AppTextStyle.bold(
+                      context,
+                      color: AppColors.base,
+                    ),
+                  ),
+                )
               ],
             ),
           )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
 import '../../atoms/my_long_card.dart';
-import '../../foundations/foundation_links.dart';
 
 class HpCardPicker extends StatelessWidget {
   const HpCardPicker({
@@ -20,11 +20,11 @@ class HpCardPicker extends StatelessWidget {
               "If each interior angle is doubled of each exterior angle of a regular polygon with n sides, then the value of n is:",
           location: "Bandung, Jawa Barat",
           pathImages: [
-            FoundationLinks.linkHotelImage,
-            FoundationLinks.linkHotelImage,
-            FoundationLinks.linkHotelImage,
-            FoundationLinks.linkHotelImage,
-            FoundationLinks.linkHotelImage
+            AppAssets.imageHotelPath,
+            AppAssets.imageHotelPath,
+            AppAssets.imageHotelPath,
+            AppAssets.imageHotelPath,
+            AppAssets.imageHotelPath
           ],
           rating: 3.5,
           sizeKuota: "10",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_typhography.dart';
+import '../../app/theme/app_text_style.dart';
 
 class MyTextGradientColor extends StatelessWidget {
   const MyTextGradientColor({
@@ -20,13 +20,16 @@ class MyTextGradientColor extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShaderMask(
       shaderCallback: (bounds) => LinearGradient(
-        // colors: [kColorPinkLight, kColorPurple],
         colors: listColor,
       ).createShader(bounds),
       child: Text(
         textTitle,
         textAlign: textAlign,
-        style: FoundationTyphography.lightFontBold.copyWith(fontSize: fontSize),
+        style: AppTextStyle.medium(
+          context,
+          fontSize: fontSize,
+          color: listColor.first,
+        ),
       ),
     );
   }

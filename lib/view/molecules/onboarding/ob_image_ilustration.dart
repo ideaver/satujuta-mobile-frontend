@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
 import '../../atoms/my_asset_image.dart';
-import '../../foundations/foundation_links.dart';
 
 class ObImageIlustration extends StatelessWidget {
   const ObImageIlustration({super.key, required this.sizeWidth});
@@ -10,6 +10,8 @@ class ObImageIlustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyAssetImage(
-        path: FoundationLinks.linkOnBoardingFirst, widthImage: sizeWidth);
+      path: AppAssets.onBoardingFirstIlusPath,
+      widthImage: sizeWidth,
+    );
   }
 }

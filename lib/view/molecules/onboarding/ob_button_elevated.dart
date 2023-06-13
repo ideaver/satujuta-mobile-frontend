@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_elevated_button.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 
 class ObButtonElevated extends StatelessWidget {
   const ObButtonElevated({super.key, required this.onPressed});
@@ -12,13 +12,15 @@ class ObButtonElevated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyElevatedButton(
-        padding: FoundationSize.sizeHeightDefault,
-        text: "Mulai",
-        textStyle:
-            FoundationTyphography.lightFontSemibold.copyWith(letterSpacing: 1),
-        onPressed: onPressed,
-        buttonStyle: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(
-                FoundationColor.btnElevatedColorOnboarding)));
+      padding: AppSizes.kHeight,
+      text: "Mulai",
+      textStyle: AppTextStyle.medium(context).copyWith(letterSpacing: 1),
+      onPressed: onPressed,
+      buttonStyle: const ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(
+          AppColors.base,
+        ),
+      ),
+    );
   }
 }

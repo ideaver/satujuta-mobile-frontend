@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/const/app_assets.dart';
+import '../../../../app/const/app_sizes.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_text_style.dart';
 import '../../../atoms/my_custom_button.dart';
 import '../../../atoms/my_custom_form.dart';
 import '../../../atoms/my_custom_text.dart';
-import '../../../foundations/foundation_colors.dart';
-import '../../../foundations/foundation_links.dart';
-import '../../../foundations/foundation_size.dart';
-import '../../../foundations/foundation_typhography.dart';
 import '../../../molecules/authentications/modal_bottom.dart';
 
 class BiodataSection extends StatefulWidget {
@@ -25,8 +25,8 @@ class _BiodataSectionState extends State<BiodataSection> {
         height: 660,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: FoundationColor.bgWhite,
-          border: Border.all(color: FoundationColor.bgColorGrey),
+          color: AppColors.white,
+          border: Border.all(color: AppColors.baseLv4),
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         child: Column(
@@ -36,8 +36,8 @@ class _BiodataSectionState extends State<BiodataSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: Image.asset(
-                    FoundationLinks.linkContactLogo,
-                    height: FoundationSize.sizeIconMini,
+                    AppAssets.contactFormIconPath,
+                    height: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -52,7 +52,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.location_on_rounded,
-                    size: FoundationSize.sizeIconMini,
+                    size: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -67,7 +67,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: FoundationSize.sizeIconMini,
+                    size: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -92,7 +92,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: FoundationSize.sizeIconMini,
+                    size: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -116,8 +116,8 @@ class _BiodataSectionState extends State<BiodataSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: Image.asset(
-                    FoundationLinks.linkDropdownIconLogo,
-                    width: FoundationSize.sizeIconMini,
+                    AppAssets.dropdownRectangleFormIconPath,
+                    width: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -132,7 +132,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: FoundationSize.sizeIconMini,
+                    size: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -157,8 +157,8 @@ class _BiodataSectionState extends State<BiodataSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: Image.asset(
-                    FoundationLinks.linkSchoolIconLogo,
-                    width: FoundationSize.sizeIconMini,
+                    AppAssets.schoolIconPath,
+                    width: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -190,8 +190,7 @@ class _BiodataSectionState extends State<BiodataSection> {
               borderRadius: const BorderRadius.all(Radius.circular(30)),
             ),
             child: Center(
-              child: Text("Berikutnya",
-                  style: FoundationTyphography.lightFontBold),
+              child: Text("Berikutnya", style: AppTextStyle.bold(context)),
             ),
           ),
         ),
@@ -221,66 +220,82 @@ class _BiodataSectionState extends State<BiodataSection> {
             child: Column(
               children: [
                 SizedBox(
-                  height: FoundationSize.sizeIcon,
+                  height: AppSizes.sizeIcon,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Center(
                         child: MyCustomText(
                           text: title,
-                          style: FoundationTyphography.darkFontBold.copyWith(
-                              fontSize: FoundationTyphography.fontSizeH3,
-                              fontWeight: FontWeight.bold),
+                          style: AppTextStyle.bold(
+                            context,
+                            color: AppColors.base,
+                          ).copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Positioned(
-                          top: 12,
-                          right: 10,
-                          child: GestureDetector(
-                              onTap: () => Navigator.of(context).pop(context),
-                              child: const Icon(Icons.close)))
+                        top: 12,
+                        right: 10,
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context).pop(context),
+                          child: const Icon(
+                            Icons.close,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: FoundationSize.sizeHeightDefault,
+                  height: AppSizes.sizeHeightDefault,
                 ),
-                ModalBottom.customRadioButton(listOption[0], value == 0, () {
+                ModalBottom.customRadioButton(
+                    context, listOption[0], value == 0, () {
                   setState(() {
                     value = 0;
                   });
                 }),
-                ModalBottom.customRadioButton(listOption[1], value == 1, () {
+                ModalBottom.customRadioButton(
+                    context, listOption[1], value == 1, () {
                   setState(() {
                     value = 1;
                   });
                 }),
-                ModalBottom.customRadioButton(listOption[2], value == 2, () {
+                ModalBottom.customRadioButton(
+                    context, listOption[2], value == 2, () {
                   setState(() {
                     value = 2;
                   });
                 }),
-                ModalBottom.customRadioButton(listOption[3], value == 3, () {
+                ModalBottom.customRadioButton(
+                    context, listOption[3], value == 3, () {
                   setState(() {
                     value = 3;
                   });
                 }),
-                ModalBottom.customRadioButton(listOption[4], value == 4, () {
+                ModalBottom.customRadioButton(
+                    context, listOption[4], value == 4, () {
                   setState(() {
                     value = 4;
                   });
                 }),
                 const SizedBox(
-                  height: FoundationSize.sizeHeightDefault,
+                  height: AppSizes.sizeHeightDefault,
                 ),
                 SizedBox(
                   width: double.infinity,
                   child: MyCustomButton(
-                      text: "Pilih",
-                      decoration: BoxDecoration(
-                          color: FoundationColor.bgPrimary,
-                          borderRadius: BorderRadius.circular(
-                              FoundationSize.sizePadding))),
+                    text: "Pilih",
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(
+                        AppSizes.sizePadding,
+                      ),
+                    ),
+                  ),
                 )
               ],
             ),

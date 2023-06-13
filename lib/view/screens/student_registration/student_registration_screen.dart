@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_custom_text.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 import '../../organisms/student_registration/sr_form.dart';
 
 class StudentRegistrationScreen extends StatelessWidget {
@@ -13,13 +13,13 @@ class StudentRegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FoundationColor.bgWhite,
+      backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(
-              top: FoundationSize.sizePadding * 2,
-              right: FoundationSize.sizePadding * 2,
-              left: FoundationSize.sizePadding * 2),
+              top: AppSizes.sizePadding * 2,
+              right: AppSizes.sizePadding * 2,
+              left: AppSizes.sizePadding * 2),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -29,22 +29,28 @@ class StudentRegistrationScreen extends StatelessWidget {
                   children: [
                     const Spacer(),
                     Image.asset(
-                      FoundationLinks.linkWarningIcon,
-                      width: FoundationSize.sizeIcon,
+                      AppAssets.warningIconPath,
+                      width: AppSizes.sizeIcon,
                     ),
                   ],
                 ),
                 MyCustomText(
                   text: "Daftarkan Siswa",
-                  style: FoundationTyphography.darkFontBold
-                      .copyWith(fontSize: FoundationTyphography.fontSizeH1 + 8),
+                  style: AppTextStyle.bold(
+                    context,
+                    color: AppColors.base,
+                  ).copyWith(fontSize: 24 + 8),
                 ),
                 MyCustomText(
                   text: "Harap mengisi data siswa",
-                  style: FoundationTyphography.darkFontRegular.copyWith(),
+                  style: AppTextStyle.regular(
+                    context,
+                    color: AppColors.base,
+                    fontSize: 14,
+                  ),
                 ),
                 const SizedBox(
-                  height: FoundationSize.sizeHeightDefault * 4,
+                  height: AppSizes.sizeHeightDefault * 4,
                 ),
                 const SRForm()
               ],

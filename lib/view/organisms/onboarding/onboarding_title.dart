@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_typhography.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 
 class OnBoardingTitle extends StatelessWidget {
   const OnBoardingTitle({
@@ -23,12 +24,15 @@ class OnBoardingTitle extends StatelessWidget {
           ).createShader(bounds),
           child: Text(
             textTitle,
-            style: FoundationTyphography.lightFontBold.copyWith(fontSize: 48),
+            style: AppTextStyle.bold(context).copyWith(fontSize: 48),
           ),
         ),
         Text(
           textSubTitle,
-          style: FoundationTyphography.darkFontBold.copyWith(fontSize: 24),
+          style: AppTextStyle.bold(
+            context,
+            color: AppColors.base,
+          ).copyWith(fontSize: 24),
         ),
       ],
     );

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../app/const/app_sizes.dart';
+import '../../app/theme/app_colors.dart';
+import '../../app/theme/app_text_style.dart';
 import '../atoms/my_asset_image.dart';
 import '../atoms/my_custom_text.dart';
 import '../atoms/my_separated.dart';
-import '../foundations/foundation_size.dart';
-import '../foundations/foundation_typhography.dart';
 import '../molecules/auth_topbar.dart';
 
 class AuthHeader extends StatelessWidget {
@@ -37,30 +38,34 @@ class AuthHeader extends StatelessWidget {
         Center(
           child: Container(
             width: sizeWidth * .7,
-            margin: const EdgeInsets.symmetric(
-                vertical: FoundationSize.sizePadding * 4),
+            margin:
+                const EdgeInsets.symmetric(vertical: AppSizes.sizePadding * 4),
             child: MyAssetImage(
               path: pathLogo,
-              widthImage: FoundationSize.sizeHeightDefault * 15,
+              widthImage: AppSizes.sizeHeightDefault * 15,
             ),
           ),
         ),
         MyCustomText(
             text: textTitle,
-            style: FoundationTyphography.darkFontBold
-                .copyWith(fontSize: FoundationTyphography.fontSizeH1)),
+            style: AppTextStyle.bold(
+              context,
+              color: AppColors.base,
+            ).copyWith(fontSize: 24)),
         const MySeparated(
-          sizeHeight: FoundationSize.sizeHeightDefault / 2,
-          sizeWidth: FoundationSize.sizeHeightDefault,
+          sizeHeight: AppSizes.sizeHeightDefault / 2,
+          sizeWidth: AppSizes.sizeHeightDefault,
         ),
         MyCustomText(
           text: textSubTitle,
-          style: FoundationTyphography.darkFontRegular
-              .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+          style: AppTextStyle.regular(
+            context,
+            fontSize: 14,
+          ),
         ),
         const MySeparated(
-          sizeHeight: FoundationSize.sizeHeightDefault * 4 + 2,
-          sizeWidth: FoundationSize.sizeHeightDefault,
+          sizeHeight: AppSizes.sizeHeightDefault * 4 + 2,
+          sizeWidth: AppSizes.sizeHeightDefault,
         ),
       ],
     );

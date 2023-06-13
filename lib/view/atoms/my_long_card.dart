@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_links.dart';
-import '../foundations/foundation_size.dart';
-import '../foundations/foundation_typhography.dart';
+import '../../app/const/app_assets.dart';
+import '../../app/const/app_sizes.dart';
+import '../../app/theme/app_colors.dart';
+import '../../app/theme/app_text_style.dart';
 import 'my_custom_button.dart';
 
 class MyLongCard extends StatelessWidget {
@@ -32,8 +32,8 @@ class MyLongCard extends StatelessWidget {
     return Container(
       height: 550,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(
-          vertical: FoundationSize.sizeHeightDefault * 3),
+      margin:
+          const EdgeInsets.symmetric(vertical: AppSizes.sizeHeightDefault * 3),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: const BorderRadius.only(
@@ -43,7 +43,7 @@ class MyLongCard extends StatelessWidget {
             bottomRight: Radius.circular(10)),
         boxShadow: const [
           BoxShadow(
-            color: FoundationColor.bgColorGrey,
+            color: AppColors.baseLv4,
             offset: Offset(
               1,
               1,
@@ -54,7 +54,7 @@ class MyLongCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(FoundationSize.sizeHeightDefault * 2 + 4),
+        padding: const EdgeInsets.all(AppSizes.sizeHeightDefault * 2 + 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,7 +65,7 @@ class MyLongCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(FoundationLinks.linkLocationImage),
+                    Image.asset(AppAssets.locationFormIconPath),
                     Text(location)
                   ],
                 ),
@@ -77,7 +77,10 @@ class MyLongCard extends StatelessWidget {
                       children: [
                         Text(
                           sizeReady,
-                          style: FoundationTyphography.darkFontBold,
+                          style: AppTextStyle.bold(
+                            context,
+                            color: AppColors.base,
+                          ),
                         ),
                         const Text("/"),
                         Text(sizeKuota)
@@ -88,7 +91,7 @@ class MyLongCard extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: FoundationSize.sizePadding,
+              height: AppSizes.sizePadding,
             ),
             SizedBox(
               height: 219,
@@ -125,24 +128,27 @@ class MyLongCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: FoundationSize.sizePadding,
+              height: AppSizes.sizePadding,
             ),
             Text(
               title,
-              style: FoundationTyphography.darkFontBold
-                  .copyWith(fontSize: FoundationTyphography.fontSizeH3),
+              style: AppTextStyle.bold(
+                context,
+                fontSize: 16,
+                color: AppColors.base,
+              ),
             ),
             const SizedBox(
-              height: FoundationSize.sizeHeightDefault,
+              height: AppSizes.sizeHeightDefault,
             ),
             SizedBox(
-              height: FoundationSize.sizeIconStar,
+              height: AppSizes.sizeIconStar,
               width: double.infinity,
               child: RatingBar.builder(
                 initialRating: 3,
                 minRating: 1,
                 allowHalfRating: true,
-                itemSize: FoundationSize.sizeIconStar,
+                itemSize: AppSizes.sizeIconStar,
                 direction: Axis.horizontal,
                 itemCount: 5,
                 itemBuilder: (context, _) => const Icon(
@@ -155,22 +161,29 @@ class MyLongCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: FoundationSize.sizeHeightDefault,
+              height: AppSizes.sizeHeightDefault,
             ),
             Expanded(
               child: Text(
                 description,
-                style: FoundationTyphography.darkFontRegular
-                    .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+                style: AppTextStyle.regular(
+                  context,
+                  fontSize: 14,
+                  color: AppColors.base,
+                ),
               ),
             ),
             Expanded(
-                child: MyCustomButton(
-                    text: "Pilih",
-                    decoration: BoxDecoration(
-                        color: FoundationColor.bgPrimary,
-                        borderRadius: BorderRadius.circular(
-                            FoundationSize.sizeHeightDefault * 5))))
+              child: MyCustomButton(
+                text: "Pilih",
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(
+                    AppSizes.sizeHeightDefault * 5,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

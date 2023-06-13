@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/const/app_assets.dart';
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_links.dart';
+import '../../app/theme/app_colors.dart';
 import '../molecules/onboarding/ob_cirle_mark_move.dart';
 import '../organisms/onboarding/ob_slide.dart';
 import '../organisms/onboarding/ob_slide_close.dart';
@@ -52,11 +51,8 @@ class _ObContentState extends State<ObContent> {
       pageController: _pageController,
       textTitle: 'Belajar',
       subTitle: 'Dimanapun',
-      path: FoundationLinks.linkOnBoardingFirst,
-      listColor: const [
-        FoundationColor.bgColorTextBlueDark,
-        FoundationColor.bgColorTextBlueLight
-      ],
+      path: AppAssets.onBoardingFirstIlusPath,
+      listColor: const [AppColors.lightBlue, AppColors.darkBlue],
       listMark: [
         ObCircleMarkMove(state: pageNumber == 0),
         const ObCircleMarkMove(state: false),
@@ -74,10 +70,7 @@ class _ObContentState extends State<ObContent> {
       textTitle: 'Liburan',
       subTitle: 'Kapanpun',
       path: AppAssets.onBoardingSecondIlusPath,
-      listColor: const [
-        FoundationColor.bgColorTextBlueDark,
-        FoundationColor.bgColorTextBlueLight
-      ],
+      listColor: const [AppColors.lightBlue, AppColors.darkBlue],
       listMark: [
         const ObCircleMarkMove(state: false),
         ObCircleMarkMove(state: pageNumber == 1),
@@ -95,10 +88,7 @@ class _ObContentState extends State<ObContent> {
       textTitle: 'Reward',
       subTitle: 'Keliling Dunia',
       path: AppAssets.onBoardingThirdIlusPath,
-      listColor: const [
-        FoundationColor.bgColorTextPink,
-        FoundationColor.bgColorTextPurple
-      ],
+      listColor: const [AppColors.pink, AppColors.darkBlue],
       listMark: [
         const ObCircleMarkMove(state: false),
         const ObCircleMarkMove(state: false),

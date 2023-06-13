@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_links.dart';
-import '../foundations/foundation_size.dart';
+import '../../app/const/app_assets.dart';
+import '../../app/const/app_sizes.dart';
+import '../../app/theme/app_colors.dart';
 
 class SpContent extends StatelessWidget {
   const SpContent({super.key, required this.sizeQuery});
@@ -11,7 +11,7 @@ class SpContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FoundationColor.bgSplashScreen,
+      color: AppColors.primary,
       width: double.infinity,
       height: double.infinity,
       child: Stack(
@@ -23,16 +23,16 @@ class SpContent extends StatelessWidget {
                 width: sizeQuery.width * 2.6,
                 height: sizeQuery.width * 1.2,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                      FoundationSize.sizeHeightDefault * 9),
-                  color: FoundationColor.bgRectangleSplashScreen,
+                  borderRadius:
+                      BorderRadius.circular(AppSizes.sizeHeightDefault * 9),
+                  color: AppColors.white.withAlpha(10),
                 ),
               ),
             ),
           ),
           Center(
             child: Image.asset(
-              FoundationLinks.linkLogoSplashScreen,
+              AppAssets.shortLogoPath,
             ),
           )
         ],

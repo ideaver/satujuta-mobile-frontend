@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_custom_text.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 import 'auth_list_form_register.dart';
 
 class AuthFormDataRegister extends StatelessWidget {
@@ -25,18 +25,23 @@ class AuthFormDataRegister extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: FoundationSize.sizeHeightDefault * 5,
+              height: AppSizes.sizeHeightDefault * 5,
             ),
             Center(
               child: MyCustomText(
-                  text: 'Upload Foto Profile Anda',
-                  style: FoundationTyphography.darkFontBold
-                      .copyWith(fontSize: FoundationTyphography.fontSizeH3)),
+                text: 'Upload Foto Profile Anda',
+                style: AppTextStyle.bold(
+                  context,
+                  color: AppColors.base,
+                ).copyWith(
+                  fontSize: 16,
+                ),
+              ),
             ),
             Center(
               child: Container(
                 margin: const EdgeInsets.symmetric(
-                    vertical: FoundationSize.sizeHeightDefault * 5),
+                    vertical: AppSizes.sizeHeightDefault * 5),
                 width: MediaQuery.of(context).size.width * .5,
                 height: 150,
                 child: Center(
@@ -53,17 +58,17 @@ class AuthFormDataRegister extends StatelessWidget {
                         bottom: 0,
                         right: 20,
                         child: Container(
-                          width: FoundationSize.sizeIcon,
-                          height: FoundationSize.sizeIcon,
+                          width: AppSizes.sizeIcon,
+                          height: AppSizes.sizeIcon,
                           decoration: BoxDecoration(
-                              color: FoundationColor.bgPrimary,
+                              color: AppColors.primary,
                               borderRadius: BorderRadius.circular(
-                                  FoundationSize.sizeHeightDefault * 5)),
+                                  AppSizes.sizeHeightDefault * 5)),
                           child: GestureDetector(
                             onTap: () {},
                             child: Image.asset(
-                              FoundationLinks.linkEditIconLogo,
-                              width: FoundationSize.sizeIconMini,
+                              AppAssets.editIconPath,
+                              width: AppSizes.sizeIconMini,
                             ),
                           ),
                         ),

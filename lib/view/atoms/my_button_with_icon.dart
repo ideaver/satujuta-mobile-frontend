@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_size.dart';
+import '../../app/const/app_sizes.dart';
 import 'my_icon.dart';
 import 'my_separated.dart';
 
@@ -25,12 +25,12 @@ class MyButtonWithIcon extends StatelessWidget {
           children: [
             Text(text),
             const MySeparated(
-              sizeWidth: FoundationSize.sizeHeightDefault,
-              sizeHeight: FoundationSize.sizeHeightDefault,
+              sizeWidth: AppSizes.sizeHeightDefault,
+              sizeHeight: AppSizes.sizeHeightDefault,
             ),
             const MyIcon(
               iconData: Icons.arrow_forward_ios_outlined,
-              size: FoundationSize.sizeHeightDefault,
+              size: AppSizes.sizeHeightDefault,
             )
           ],
         ));

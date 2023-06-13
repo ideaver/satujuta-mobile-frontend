@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../app/const/app_assets.dart';
+import '../../app/const/app_sizes.dart';
+import '../../app/theme/app_colors.dart';
 import '../atoms/my_custom_button.dart';
 import '../atoms/my_separated.dart';
-import '../foundations/foundation_colors.dart';
-import '../foundations/foundation_links.dart';
-import '../foundations/foundation_size.dart';
 import '../organisms/auth_header.dart';
 import '../organisms/authentication/auth_form_reset_password.dart';
-import '../ui.dart';
+import '../screens/authentication/login_screen.dart';
 
 class AuthResetPasswordContent extends StatelessWidget {
   const AuthResetPasswordContent({super.key});
@@ -16,16 +16,16 @@ class AuthResetPasswordContent extends StatelessWidget {
   Widget build(BuildContext context) {
     var sizeWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: FoundationColor.bgWhite,
+      backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(FoundationSize.sizePadding * 2),
+          padding: const EdgeInsets.all(AppSizes.sizePadding * 2),
           child: Column(
             children: [
               AuthHeader(
                 sizeWidth: sizeWidth,
                 textButtonHeader: "Login",
-                pathLogo: FoundationLinks.linkShortLogo,
+                pathLogo: AppAssets.shortLogoPath,
                 textTitle: "Reset Kata Sandi",
                 textSubTitle: "Tolong isi untuk membuat kata sandi baru",
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
@@ -33,12 +33,12 @@ class AuthResetPasswordContent extends StatelessWidget {
                 )),
               ),
               const MySeparated(
-                sizeHeight: FoundationSize.sizeHeightDefault + 2,
-                sizeWidth: FoundationSize.sizeHeightDefault,
+                sizeHeight: AppSizes.sizeHeightDefault + 2,
+                sizeWidth: AppSizes.sizeHeightDefault,
               ),
               const AuthFormResetPassword(),
               const SizedBox(
-                height: FoundationSize.sizePadding * 5,
+                height: AppSizes.sizePadding * 5,
               ),
               MyCustomButton(
                   text: "Reset Kata Sandi",

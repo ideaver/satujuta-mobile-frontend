@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
 import '../../atoms/my_asset_image.dart';
-import '../../foundations/foundation_links.dart';
 
 class SpLogo extends StatelessWidget {
   const SpLogo({super.key, required this.widthLogo});
@@ -11,7 +11,7 @@ class SpLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: MyAssetImage(
-        path: FoundationLinks.linkLogoSplashScreen,
+        path: AppAssets.shortLogoPath,
         widthImage: widthLogo,
       ),
     );

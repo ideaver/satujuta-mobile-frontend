@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_asset_image.dart';
 import '../../atoms/my_custom_button.dart';
 import '../../atoms/my_custom_text.dart';
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
 import '../../molecules/authentications/modal_bottom.dart';
 import '../../molecules/student_registration/form_student_registration.dart';
 
@@ -32,28 +32,26 @@ class _SRFormState extends State<SRForm> {
               height: 840,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: FoundationColor.bgWhite,
-                border: Border.all(color: FoundationColor.bgColorGrey),
+                color: AppColors.white,
+                border: Border.all(color: AppColors.baseLv4),
                 borderRadius: const BorderRadius.only(
-                    topLeft:
-                        Radius.circular(FoundationSize.sizeBorderRadiusForm),
-                    topRight:
-                        Radius.circular(FoundationSize.sizeBorderRadiusForm)),
+                    topLeft: Radius.circular(AppSizes.sizeBorderRadiusForm),
+                    topRight: Radius.circular(AppSizes.sizeBorderRadiusForm)),
               ),
               child: Column(
                 children: [
                   FormStudentRegistration(
-                      path: FoundationLinks.linkPersonIconLogo,
+                      path: AppAssets.personFormIconPath,
                       label: "Nama Lengkap Siswa",
                       onPressed: () {}),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkLocationImage,
+                      path: AppAssets.locationFormIconPath,
                       label: 'Alamat',
                       onPressed: () {}),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkDropdownIconLogo,
+                      path: AppAssets.dropdownRectangleFormIconPath,
                       label: 'Kota',
                       onPressed: () {
                         ModalBottom.modalBottom(
@@ -68,7 +66,7 @@ class _SRFormState extends State<SRForm> {
                       }),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkDropdownIconLogo,
+                      path: AppAssets.dropdownRectangleFormIconPath,
                       label: 'Kecamatan',
                       onPressed: () {
                         ModalBottom.modalBottom(
@@ -83,61 +81,61 @@ class _SRFormState extends State<SRForm> {
                       }),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkDropdownIconLogo,
+                      path: AppAssets.dropdownRectangleFormIconPath,
                       label: 'Kode Pos',
                       onPressed: () {}),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkPhoneIcon,
+                      path: AppAssets.phoneIconPath,
                       label: 'No Whatsapp',
                       onPressed: () {}),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkDropdownIconLogo,
+                      path: AppAssets.dropdownRectangleFormIconPath,
                       label: 'Email',
                       onPressed: () {}),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkSchoolIconLogo,
+                      path: AppAssets.schoolIconPath,
                       label: 'Sekolah',
                       onPressed: () {}),
                   const Divider(),
                   FormStudentRegistration(
-                      path: FoundationLinks.linkDropdownIconLogo,
+                      path: AppAssets.dropdownRectangleFormIconPath,
                       label: 'Hotel',
                       onPressed: () {}),
                 ],
               )),
           const SizedBox(
-            height: FoundationSize.sizeHeightDefault * 4,
+            height: AppSizes.sizeHeightDefault * 4,
           ),
           const Row(
             children: [
               Expanded(
                 child: MyAssetImage(
-                  path: FoundationLinks.linkSuccessIconLogo,
-                  widthImage: FoundationSize.sizeIconMini,
+                  path: AppAssets.successIconPath,
+                  widthImage: AppSizes.sizeIconMini,
                 ),
               ),
               Expanded(flex: 4, child: Text('Email telah valid'))
             ],
           ),
           const SizedBox(
-            height: FoundationSize.sizeHeightDefault,
+            height: AppSizes.sizeHeightDefault,
           ),
           const Row(
             children: [
               Expanded(
                 child: MyAssetImage(
-                  path: FoundationLinks.linkFailedIconLogo,
-                  widthImage: FoundationSize.sizeIconMini,
+                  path: AppAssets.failedIconPath,
+                  widthImage: AppSizes.sizeIconMini,
                 ),
               ),
               Expanded(flex: 4, child: Text('Nomor whatsapp salah'))
             ],
           ),
           const SizedBox(
-            height: FoundationSize.sizeHeightDefault,
+            height: AppSizes.sizeHeightDefault,
           ),
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,15 +144,15 @@ class _SRFormState extends State<SRForm> {
               Expanded(
                 flex: 1,
                 child: MyAssetImage(
-                  path: FoundationLinks.linkUnSuccessIconLogo,
-                  widthImage: FoundationSize.sizeIconMini,
+                  path: AppAssets.unsuccessIconPath,
+                  widthImage: AppSizes.sizeIconMini,
                 ),
               ),
               Expanded(flex: 4, child: Text('Email valid'))
             ],
           ),
           const SizedBox(
-            height: FoundationSize.sizeHeightDefault * 4,
+            height: AppSizes.sizeHeightDefault * 4,
           ),
           InkWell(
             onTap: () => ModalBottom.modalBottom(
@@ -169,14 +167,13 @@ class _SRFormState extends State<SRForm> {
                   borderRadius: const BorderRadius.all(Radius.circular(30)),
                 ),
                 child: Center(
-                  child: Text("Daftar",
-                      style: FoundationTyphography.lightFontBold),
+                  child: Text("Daftar", style: AppTextStyle.bold(context)),
                 ),
               ),
             ),
           ),
           const SizedBox(
-            height: FoundationSize.sizeHeightDefault * 4,
+            height: AppSizes.sizeHeightDefault * 4,
           )
         ],
       ),
@@ -201,16 +198,17 @@ class _SRFormState extends State<SRForm> {
           child: Column(
             children: [
               SizedBox(
-                height: FoundationSize.sizeIcon,
+                height: AppSizes.sizeIcon,
                 width: double.infinity,
                 child: Stack(
                   children: [
                     Center(
                       child: MyCustomText(
                         text: title,
-                        style: FoundationTyphography.darkFontBold.copyWith(
-                            fontSize: FoundationTyphography.fontSizeH3,
-                            fontWeight: FontWeight.bold),
+                        style: AppTextStyle.bold(
+                          context,
+                          color: AppColors.base,
+                        ).copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Positioned(
@@ -223,44 +221,49 @@ class _SRFormState extends State<SRForm> {
                 ),
               ),
               SizedBox(
-                height: FoundationSize.sizeHeightDefault,
+                height: AppSizes.sizeHeightDefault,
               ),
-              ModalBottom.customRadioButton(listOption[0], value == 0, () {
+              ModalBottom.customRadioButton(context, listOption[0], value == 0,
+                  () {
                 setState(() {
                   value = 0;
                 });
               }),
-              ModalBottom.customRadioButton(listOption[1], value == 1, () {
+              ModalBottom.customRadioButton(context, listOption[1], value == 1,
+                  () {
                 setState(() {
                   value = 1;
                 });
               }),
-              ModalBottom.customRadioButton(listOption[2], value == 0, () {
+              ModalBottom.customRadioButton(context, listOption[2], value == 0,
+                  () {
                 setState(() {
                   value = 0;
                 });
               }),
-              ModalBottom.customRadioButton(listOption[3], value == 0, () {
+              ModalBottom.customRadioButton(context, listOption[3], value == 0,
+                  () {
                 setState(() {
                   value = 0;
                 });
               }),
-              ModalBottom.customRadioButton(listOption[4], value == 0, () {
+              ModalBottom.customRadioButton(context, listOption[4], value == 0,
+                  () {
                 setState(() {
                   value = 0;
                 });
               }),
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault,
+                height: AppSizes.sizeHeightDefault,
               ),
               SizedBox(
                 width: double.infinity,
                 child: MyCustomButton(
                     text: "Pilih",
                     decoration: BoxDecoration(
-                        color: FoundationColor.bgPrimary,
+                        color: AppColors.primary,
                         borderRadius:
-                            BorderRadius.circular(FoundationSize.sizePadding))),
+                            BorderRadius.circular(AppSizes.sizePadding))),
               )
             ],
           ),
@@ -274,7 +277,7 @@ class _SRFormState extends State<SRForm> {
     return ListView(children: [
       Container(
         decoration: const BoxDecoration(
-          color: FoundationColor.bgColorGrey,
+          color: AppColors.baseLv4,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25.0),
             topRight: Radius.circular(25.0),
@@ -285,7 +288,7 @@ class _SRFormState extends State<SRForm> {
           child: Column(
             children: [
               SizedBox(
-                height: FoundationSize.sizeIcon,
+                height: AppSizes.sizeIcon,
                 width: double.infinity,
                 child: Stack(
                   children: [
@@ -298,62 +301,64 @@ class _SRFormState extends State<SRForm> {
                   ],
                 ),
               ),
-              Center(
-                  child: Image.asset(FoundationLinks.linkSuccessIlustration)),
+              Center(child: Image.asset(AppAssets.successIlusPath)),
               Center(
                 child: MyCustomText(
                   text: title,
-                  style: FoundationTyphography.darkFontBold.copyWith(
-                      fontSize: FoundationTyphography.fontSizeH1,
-                      fontWeight: FontWeight.bold),
+                  style: AppTextStyle.bold(
+                    context,
+                    color: AppColors.base,
+                  ).copyWith(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
               Center(
                 child: MyCustomText(
                   text: description,
-                  style: FoundationTyphography.darkFontRegular
-                      .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+                  style: AppTextStyle.regular(
+                    context,
+                    fontSize: 14,
+                  ),
                 ),
               ),
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault * 4,
+                height: AppSizes.sizeHeightDefault * 4,
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: FoundationColor.bgWhite,
-                    borderRadius: BorderRadius.circular(
-                        FoundationSize.sizeBorderRadiusForm),
-                    boxShadow: const [
-                      BoxShadow(color: FoundationColor.bgColorGrey)
-                    ]),
+                    color: AppColors.white,
+                    borderRadius:
+                        BorderRadius.circular(AppSizes.sizeBorderRadiusForm),
+                    boxShadow: const [BoxShadow(color: AppColors.baseLv4)]),
                 child: Row(
                   children: [
+                    Expanded(child: Image.asset(AppAssets.clockIconPath)),
                     Expanded(
-                        child: Image.asset(FoundationLinks.linkClockIconLogo)),
-                    Expanded(
-                        flex: 2,
-                        child: Text(
-                          "1 Siswa siap didaftarkan",
-                          style: FoundationTyphography.darkFontRegular,
-                        )),
+                      flex: 2,
+                      child: Text(
+                        "1 Siswa siap didaftarkan",
+                        style: AppTextStyle.regular(
+                          context,
+                        ),
+                      ),
+                    ),
                     const Expanded(
-                        flex: 1, child: Icon(Icons.arrow_forward_ios))
+                      flex: 1,
+                      child: Icon(Icons.arrow_forward_ios),
+                    )
                   ],
                 ),
               ),
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault,
+                height: AppSizes.sizeHeightDefault,
               ),
               Container(
-                padding: const EdgeInsets.all(FoundationSize.sizePadding),
-                height: FoundationSize.sizeHeightCardTransaction,
+                padding: const EdgeInsets.all(AppSizes.sizePadding),
+                height: AppSizes.sizeHeightCardTransaction,
                 decoration: BoxDecoration(
-                    color: FoundationColor.bgWhite,
-                    borderRadius: BorderRadius.circular(
-                        FoundationSize.sizeBorderRadiusForm),
-                    boxShadow: const [
-                      BoxShadow(color: FoundationColor.bgColorGrey)
-                    ]),
+                    color: AppColors.white,
+                    borderRadius:
+                        BorderRadius.circular(AppSizes.sizeBorderRadiusForm),
+                    boxShadow: const [BoxShadow(color: AppColors.baseLv4)]),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -366,8 +371,10 @@ class _SRFormState extends State<SRForm> {
                         children: [
                           Text(
                             "Lusy Joolmin",
-                            style: FoundationTyphography.darkFontBold.copyWith(
-                                fontSize: FoundationTyphography.fontSizeH4),
+                            style: AppTextStyle.bold(
+                              context,
+                              color: AppColors.base,
+                            ).copyWith(fontSize: 14),
                           ),
                           const Text("08126381234"),
                           const Text("SD Bakti Luhur, Bandung"),
@@ -379,18 +386,19 @@ class _SRFormState extends State<SRForm> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CircleAvatar(
-                            child: Image.asset(
-                                FoundationLinks.linkDarkEditIconLogo)),
+                            child: Image.asset(AppAssets.darkEditIconPath)),
                         CircleAvatar(
-                            child:
-                                Image.asset(FoundationLinks.linkTrashIconLogo))
+                            child: Image.asset(AppAssets.trashIconPath))
                       ],
                     )),
                     // Expanded(
                     //     flex: 2,
                     //     child: Text(
                     //       "1 Siswa siap didaftarkan",
-                    //       style: FoundationTyphography.darkFontRegular,
+                    //       style: AppTextStyle.regular(
+                    // context,
+                    // fontSize: 14,
+                    // ),
                     //     )),
                     // const Expanded(
                     //     flex: 1, child: Icon(Icons.arrow_forward_ios))
@@ -398,16 +406,16 @@ class _SRFormState extends State<SRForm> {
                 ),
               ),
               const SizedBox(
-                height: FoundationSize.sizeHeightDefault * 4,
+                height: AppSizes.sizeHeightDefault * 4,
               ),
               SizedBox(
                 width: double.infinity,
                 child: MyCustomButton(
                     text: "Pilih",
                     decoration: BoxDecoration(
-                        color: FoundationColor.bgPrimary,
+                        color: AppColors.primary,
                         borderRadius:
-                            BorderRadius.circular(FoundationSize.sizePadding))),
+                            BorderRadius.circular(AppSizes.sizePadding))),
               )
             ],
           ),

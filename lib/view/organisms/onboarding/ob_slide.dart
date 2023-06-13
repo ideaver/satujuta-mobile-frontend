@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_elevated_button.dart';
-import '../../foundations/foundation_typhography.dart';
 import '../../organisms/onboarding/ob_button_authentication.dart';
 import 'onboarding_title.dart';
 
@@ -53,7 +54,10 @@ class ObSlide extends StatelessWidget {
                   child: MyElevatedButton(
                       padding: 0,
                       text: "Lewati",
-                      textStyle: FoundationTyphography.darkFontSemibold,
+                      textStyle: AppTextStyle.medium(
+                        context,
+                        color: AppColors.base,
+                      ),
                       buttonStyle: const ButtonStyle(),
                       onPressed: () {
                         pageController.jumpToPage(3);

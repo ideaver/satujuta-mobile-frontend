@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/const/app_assets.dart';
+import '../../../../app/const/app_sizes.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_text_style.dart';
 import '../../../atoms/my_custom_button.dart';
 import '../../../atoms/my_custom_form.dart';
 import '../../../atoms/my_custom_text.dart';
-import '../../../foundations/foundation_colors.dart';
-import '../../../foundations/foundation_links.dart';
-import '../../../foundations/foundation_size.dart';
-import '../../../foundations/foundation_typhography.dart';
 import '../../../molecules/authentications/modal_bottom.dart';
 
 class KomisiSection extends StatefulWidget {
@@ -25,8 +25,8 @@ class _KomisiSectionState extends State<KomisiSection> {
         height: 290,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: FoundationColor.bgWhite,
-          border: Border.all(color: FoundationColor.bgColorGrey),
+          color: AppColors.white,
+          border: Border.all(color: AppColors.baseLv4),
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         child: Column(
@@ -36,8 +36,8 @@ class _KomisiSectionState extends State<KomisiSection> {
               child: MyCustomForm(
                 suffixIcon: IconButton(
                   icon: Image.asset(
-                    FoundationLinks.linkSomePersonIconLogo,
-                    height: FoundationSize.sizeIconMini,
+                    AppAssets.somePersonFormIconPath,
+                    height: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
@@ -52,20 +52,25 @@ class _KomisiSectionState extends State<KomisiSection> {
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    size: FoundationSize.sizeIconMini,
+                    size: AppSizes.sizeIconMini,
                   ),
                   onPressed: () {},
                 ),
                 click: () {
                   ModalBottom.modalBottom(
+                    context,
+                    contentModalBottom(
                       context,
-                      contentModalBottom(context, "Kota", [
+                      "Kota",
+                      [
                         "Bandung",
                         "Surabaya",
                         "Banten",
                         "Jakarta",
                         "Yogyakarta"
-                      ]));
+                      ],
+                    ),
+                  );
                 },
                 lableText: 'Bank',
               ),
@@ -86,7 +91,7 @@ class _KomisiSectionState extends State<KomisiSection> {
         ),
       ),
       const SizedBox(
-        height: FoundationSize.sizeHeightDefault * 4,
+        height: AppSizes.sizeHeightDefault * 4,
       ),
       Row(
         children: [
@@ -104,7 +109,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                 child: Container(
                   height: 60,
                   decoration: BoxDecoration(
-                    color: FoundationColor.bgPrimary.withAlpha(40),
+                    color: AppColors.primary.withAlpha(40),
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(15),
@@ -114,8 +119,8 @@ class _KomisiSectionState extends State<KomisiSection> {
                   child: Center(
                     child: Text(
                       "Sebelumnya",
-                      style: FoundationTyphography.lightFontBold
-                          .copyWith(color: FoundationColor.bgSplashScreen),
+                      style: AppTextStyle.bold(context)
+                          .copyWith(color: AppColors.primary),
                     ),
                   ),
                 ),
@@ -123,7 +128,7 @@ class _KomisiSectionState extends State<KomisiSection> {
             ),
           ),
           const SizedBox(
-            width: FoundationSize.sizeHeightDefault / 2,
+            width: AppSizes.sizeHeightDefault / 2,
           ),
           Expanded(
             child: InkWell(
@@ -147,8 +152,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                         topRight: Radius.circular(30)),
                   ),
                   child: Center(
-                    child: Text("Daftar",
-                        style: FoundationTyphography.lightFontBold),
+                    child: Text("Daftar", style: AppTextStyle.bold(context)),
                   ),
                 ),
               ),
@@ -181,16 +185,20 @@ class _KomisiSectionState extends State<KomisiSection> {
             child: Column(
               children: [
                 SizedBox(
-                  height: FoundationSize.sizeIcon,
+                  height: AppSizes.sizeIcon,
                   width: double.infinity,
                   child: Stack(
                     children: [
                       Center(
                         child: MyCustomText(
                           text: title,
-                          style: FoundationTyphography.darkFontBold.copyWith(
-                              fontSize: FoundationTyphography.fontSizeH3,
-                              fontWeight: FontWeight.bold),
+                          style: AppTextStyle.bold(
+                            context,
+                            color: AppColors.base,
+                          ).copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Positioned(
@@ -203,45 +211,46 @@ class _KomisiSectionState extends State<KomisiSection> {
                   ),
                 ),
                 const SizedBox(
-                  height: FoundationSize.sizeHeightDefault,
+                  height: AppSizes.sizeHeightDefault,
                 ),
-                ModalBottom.customRadioButtonBank(
-                    listOption[0], FoundationLinks.linkBankBCAImage, value == 0,
-                    () {
+                ModalBottom.customRadioButtonBank(context, listOption[0],
+                    AppAssets.bankBCAImgPath, value == 0, () {
                   setState(() {
                     value = 0;
                   });
                 }),
-                ModalBottom.customRadioButtonBank(
-                    listOption[1], FoundationLinks.linkBankBNIImage, value == 1,
-                    () {
+                ModalBottom.customRadioButtonBank(context, listOption[1],
+                    AppAssets.bankBNIImgPath, value == 1, () {
                   setState(() {
                     value = 1;
                   });
                 }),
-                ModalBottom.customRadioButtonBank(listOption[2],
-                    FoundationLinks.linkBankMandiriImage, value == 2, () {
+                ModalBottom.customRadioButtonBank(context, listOption[2],
+                    AppAssets.bankMandiriImgPath, value == 2, () {
                   setState(() {
                     value = 2;
                   });
                 }),
-                ModalBottom.customRadioButtonBank(listOption[3],
-                    FoundationLinks.linkBankMegaImage, value == 3, () {
+                ModalBottom.customRadioButtonBank(context, listOption[3],
+                    AppAssets.bankMegaImgPath, value == 3, () {
                   setState(() {
                     value = 3;
                   });
                 }),
                 const SizedBox(
-                  height: FoundationSize.sizeHeightDefault,
+                  height: AppSizes.sizeHeightDefault,
                 ),
                 SizedBox(
                   width: double.infinity,
                   child: MyCustomButton(
-                      text: "Pilih",
-                      decoration: BoxDecoration(
-                          color: FoundationColor.bgPrimary,
-                          borderRadius: BorderRadius.circular(
-                              FoundationSize.sizePadding))),
+                    text: "Pilih",
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(
+                        AppSizes.sizePadding,
+                      ),
+                    ),
+                  ),
                 )
               ],
             ),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_colors.dart';
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
 import 'tab_sections/account_section.dart';
 import 'tab_sections/biodata_section.dart';
 import 'tab_sections/komisi_section.dart';
@@ -30,17 +29,17 @@ class AuthListFormRegister extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: FoundationColor.bgColorGrey),
+                color: AppColors.baseLv4),
             child: TabBar(
               physics: const NeverScrollableScrollPhysics(),
               onTap: null,
               controller: tabController,
               indicator: BoxDecoration(
-                color: FoundationColor.bgWhite,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              labelColor: FoundationColor.bgColorBase, isScrollable: false,
-              dividerColor: FoundationColor.bgWhite,
+              labelColor: AppColors.base, isScrollable: false,
+              dividerColor: AppColors.white,
               indicatorColor: Colors.white,
               // ignore: prefer_const_literals_to_create_immutables
               tabs: [
@@ -52,14 +51,14 @@ class AuthListFormRegister extends StatelessWidget {
                       child: Row(
                         children: [
                           Image.asset(
-                            FoundationLinks.linkPersonIconLogo,
-                            width: FoundationSize.sizeIconMini,
+                            AppAssets.personFormIconPath,
+                            width: AppSizes.sizeIconMini,
                           ),
                           const Expanded(
                               child: Text(
                             "Data Diri",
                             style: TextStyle(
-                              fontSize: FoundationTyphography.fontSizeH5,
+                              fontSize: 12,
                             ),
                           ))
                         ],
@@ -75,13 +74,13 @@ class AuthListFormRegister extends StatelessWidget {
                     child: Row(
                       children: [
                         Image.asset(
-                          FoundationLinks.linkLockDarkIcon,
-                          width: FoundationSize.sizeIconMini,
+                          AppAssets.lockDarkIconPath,
+                          width: AppSizes.sizeIconMini,
                         ),
                         const Expanded(
                           child: Text("Akun",
                               style: TextStyle(
-                                fontSize: FoundationTyphography.fontSizeH5,
+                                fontSize: 12,
                               )),
                         )
                       ],
@@ -96,13 +95,13 @@ class AuthListFormRegister extends StatelessWidget {
                       child: Row(
                         children: [
                           Image.asset(
-                            FoundationLinks.linkCoinIconLogo,
-                            width: FoundationSize.sizeIconMini,
+                            AppAssets.coinFormIconPath,
+                            width: AppSizes.sizeIconMini,
                           ),
                           const Expanded(
                             child: Text("Komisi",
                                 style: TextStyle(
-                                  fontSize: FoundationTyphography.fontSizeH5,
+                                  fontSize: 12,
                                 )),
                           )
                         ],

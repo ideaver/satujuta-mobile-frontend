@@ -24,9 +24,7 @@ class MyCustomButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: AppTextStyle.whiteJakartaText.copyWith(
-                  fontSize: AppTextStyle.kFontSizeMediumLarge,
-                  fontWeight: AppTextStyle.semiBold),
+              style: AppTextStyle.regular(context),
             ),
           ),
         ),

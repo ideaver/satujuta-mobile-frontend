@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_links.dart';
-import '../../foundations/foundation_size.dart';
-import '../../foundations/foundation_typhography.dart';
+import '../../../app/const/app_assets.dart';
+import '../../../app/const/app_sizes.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 
 class ContentNotReady extends StatelessWidget {
   const ContentNotReady({
@@ -13,29 +14,33 @@ class ContentNotReady extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 1.5,
-      padding: const EdgeInsets.all(FoundationSize.sizePadding * 2),
+      padding: const EdgeInsets.all(AppSizes.sizePadding * 2),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(FoundationLinks.linkEmptyEmoji),
+            Image.asset(AppAssets.emptyEmojiPath),
             const SizedBox(
-              height: FoundationSize.sizeHeightDefault * 5,
+              height: AppSizes.sizeHeightDefault * 5,
             ),
             Text(
               "Maaf, belum ada hotel di kota ini.",
-              style: FoundationTyphography.darkFontBold
-                  .copyWith(fontSize: FoundationTyphography.fontSizeH3),
+              style: AppTextStyle.bold(
+                context,
+                color: AppColors.base,
+              ).copyWith(fontSize: 16),
             ),
             const SizedBox(
-              height: FoundationSize.sizePadding,
+              height: AppSizes.sizePadding,
             ),
             Text(
               "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
               textAlign: TextAlign.center,
-              style: FoundationTyphography.darkFontRegular
-                  .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+              style: AppTextStyle.regular(
+                context,
+                fontSize: 14,
+              ),
             )
           ],
         ),

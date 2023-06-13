@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_typhography.dart';
+import '../../app/theme/app_colors.dart';
+import '../../app/theme/app_text_style.dart';
 
 class MyCustomForm extends StatelessWidget {
   const MyCustomForm(
@@ -22,14 +23,19 @@ class MyCustomForm extends StatelessWidget {
       onTap: () {
         click();
       },
-      style: FoundationTyphography.darkFontSemibold
-          .copyWith(fontSize: FoundationTyphography.fontSizeH4),
+      style: AppTextStyle.medium(
+        context,
+        color: AppColors.base,
+        fontSize: 14,
+      ),
       decoration: InputDecoration(
         labelText: lableText,
         suffixIcon: suffixIcon,
         border: InputBorder.none,
-        labelStyle: FoundationTyphography.darkFontRegular.copyWith(
-          fontSize: FoundationTyphography.fontSizeH4,
+        labelStyle: AppTextStyle.regular(
+          context,
+          color: AppColors.base,
+          fontSize: 14,
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../foundations/foundation_typhography.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_text_style.dart';
 
 class ObTextButton extends StatelessWidget {
   const ObTextButton({super.key});
@@ -8,10 +9,14 @@ class ObTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {},
-        child: Text(
-          "Login",
-          style: FoundationTyphography.darkFontBold,
-        ));
+      onPressed: () {},
+      child: Text(
+        "Login",
+        style: AppTextStyle.bold(
+          context,
+          color: AppColors.base,
+        ),
+      ),
+    );
   }
 }

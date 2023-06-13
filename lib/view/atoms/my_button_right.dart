@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/foundation_typhography.dart';
+import '../../app/theme/app_text_style.dart';
 
 class MyButtonRight extends StatelessWidget {
   const MyButtonRight({
@@ -24,8 +24,7 @@ class MyButtonRight extends StatelessWidget {
               topRight: Radius.circular(30)),
         ),
         child: Center(
-          child:
-              Text(textRightButton, style: FoundationTyphography.lightFontBold),
+          child: Text(textRightButton, style: AppTextStyle.bold(context)),
         ),
       ),
     );

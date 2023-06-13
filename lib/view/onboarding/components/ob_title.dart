@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_text_style.dart';
 import '../../atoms/my_text_gradient_color.dart';
 
-class OnBoardingTitleFinal extends StatelessWidget {
-  const OnBoardingTitleFinal({
+class ObTitle extends StatelessWidget {
+  const ObTitle({
     super.key,
     required this.textTitle,
     required this.textSubTitle,
+    required this.listColor,
   });
   final String textTitle;
   final String textSubTitle;
+  final List<Color> listColor;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         MyTextGradientColor(
           textTitle: textTitle,
-          listColor: const [AppColors.pink, AppColors.darkBlue],
-          fontSize: 16 * 2,
+          listColor: listColor,
+          fontSize: 24 * 2,
           textAlign: TextAlign.center,
         ),
         Text(
           textSubTitle,
-          textAlign: TextAlign.center,
           style: AppTextStyle.bold(
             context,
-            color: AppColors.base,
-          ).copyWith(fontSize: 16),
+            fontSize: 24,
+            height: 1,
+          ),
         ),
       ],
     );
