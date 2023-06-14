@@ -7,9 +7,11 @@ import '../const/app_sizes.dart';
 
 class AppTextField extends StatelessWidget {
   final String? lableText;
+  final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType? keyboardtype;
+  final bool enabled;
   final bool obscureText;
   final Function()? onTap;
   final Function(String)? onChanged;
@@ -22,9 +24,11 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
     this.lableText,
+    this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.keyboardtype,
+    this.enabled = true,
     this.obscureText = false,
     this.onTap,
     this.onChanged,
@@ -37,36 +41,45 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ??
-          const EdgeInsets.symmetric(
-            horizontal: AppSizes.padding,
-            vertical: AppSizes.padding / 2,
-          ),
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        onTap: onTap,
-        onChanged: onChanged,
-        keyboardType: keyboardtype,
-        textInputAction: textInputAction,
-        inputFormatters: inputFormatters,
-        style: AppTextStyle.medium(
-          context,
-          color: AppColors.base,
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          labelText: lableText,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          border: InputBorder.none,
-          labelStyle: AppTextStyle.medium(
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              horizontal: AppSizes.padding,
+              vertical: AppSizes.padding / 2,
+            ),
+        child: TextField(
+          controller: controller,
+          enabled: enabled,
+          obscureText: obscureText,
+          onChanged: onChanged,
+          keyboardType: keyboardtype,
+          textInputAction: textInputAction,
+          inputFormatters: inputFormatters,
+          style: AppTextStyle.medium(
             context,
-            color: AppColors.baseLv4,
-            fontSize: 14,
+            color: AppColors.base,
+            fontSize: 16,
           ),
-          contentPadding: contentPadding,
+          decoration: InputDecoration(
+            labelText: lableText,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            border: InputBorder.none,
+            labelStyle: AppTextStyle.medium(
+              context,
+              color: AppColors.baseLv4,
+              fontSize: 14,
+            ),
+            contentPadding: contentPadding,
+            hintText: hintText,
+            hintStyle: AppTextStyle.medium(
+              context,
+              color: AppColors.baseLv4,
+              fontSize: 14,
+            ),
+          ),
         ),
       ),
     );

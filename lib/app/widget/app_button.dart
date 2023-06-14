@@ -7,7 +7,7 @@ class AppButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double? fontSize;
-  final double borderRadius;
+  final BorderRadius? borderRadius;
   final EdgeInsets padding;
   final bool enable;
   final Color buttonColor;
@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
     this.width,
     this.height,
     this.fontSize,
-    this.borderRadius = 100,
+    this.borderRadius,
     this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
     this.enable = true,
     this.buttonColor = AppColors.primary,
@@ -48,14 +48,14 @@ class AppButton extends StatelessWidget {
         splashColor: Colors.black.withOpacity(0.06),
         splashFactory: InkRipple.splashFactory,
         highlightColor: enable ? Colors.black12 : Colors.transparent,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: borderRadius ?? BorderRadius.circular(100),
         child: Ink(
           width: width,
           height: height,
           padding: padding,
           decoration: BoxDecoration(
             color: enable ? buttonColor : disabledButtonColor,
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: borderRadius ?? BorderRadius.circular(100),
           ),
           child: child ??
               Center(

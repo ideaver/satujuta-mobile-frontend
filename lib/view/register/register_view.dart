@@ -28,6 +28,11 @@ class _RegisterViewState extends State<RegisterView>
   void initState() {
     super.initState();
     tabController = TabController(length: 3, vsync: this);
+    tabController.addListener(tabListener);
+  }
+
+  void tabListener() {
+    setState(() {});
   }
 
   @override
@@ -48,6 +53,8 @@ class _RegisterViewState extends State<RegisterView>
   SliverAppBar sliverAppBarWidget() {
     return SliverAppBar(
       automaticallyImplyLeading: false,
+      snap: true,
+      floating: true,
       expandedHeight: MediaQuery.of(context).size.height / 4,
       flexibleSpace: FlexibleSpaceBar(
         background: sliverBackground(),
@@ -123,15 +130,13 @@ class _RegisterViewState extends State<RegisterView>
   Widget body() {
     return Padding(
       padding: const EdgeInsets.all(AppSizes.padding),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            userPhoto(),
-            tabBar(),
-            tabBarViews(),
-            buttons(),
-          ],
-        ),
+      child: Column(
+        children: [
+          userPhoto(),
+          tabBar(),
+          tabBarViews(),
+          buttons(),
+        ],
       ),
     );
   }
@@ -146,35 +151,39 @@ class _RegisterViewState extends State<RegisterView>
         ),
         Container(
           margin: const EdgeInsets.symmetric(
-            vertical: AppSizes.padding * 1.5,
+            vertical: AppSizes.padding,
           ),
-          width: 150,
-          height: 150,
+          width: 100,
+          height: 100,
           child: Center(
             child: Stack(
               children: [
                 const ClipOval(
-                  child: AppImage(
-                    image: randomImage,
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: AppImage(
+                      image: randomImage,
+                    ),
                   ),
                 ),
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: Container(
-                    width: 44,
-                    height: 44,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO
-                      },
+                  child: GestureDetector(
+                    onTap: () {
+                      // TODO
+                    },
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
                       child: Image.asset(
                         AppAssets.editIconPath,
-                        width: AppSizes.padding * 2,
                       ),
                     ),
                   ),
@@ -183,7 +192,7 @@ class _RegisterViewState extends State<RegisterView>
             ),
           ),
         ),
-        const SizedBox(height: AppSizes.padding),
+        const SizedBox(height: AppSizes.padding / 2),
       ],
     );
   }
@@ -267,9 +276,8 @@ class _RegisterViewState extends State<RegisterView>
   }
 
   Widget tabBarViews() {
-    return Container(
-      height: MediaQuery.of(context).size.height - 200,
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
+    return Expanded(
+      // padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
       child: TabBarView(
         controller: tabController,
         children: const [
@@ -284,12 +292,135 @@ class _RegisterViewState extends State<RegisterView>
   Widget buttons() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding / 2),
-      child: AppButton(
-        onTap: () {
-          // TODO
-        },
-        text: 'Berikutnya',
-      ),
+      child: tabController.index == 0
+          ? AppButton(
+              onTap: () {
+                tabController.animateTo(tabController.index + 1);
+              },
+              text: 'Berikutnya',
+            )
+          : tabController.index == 1
+              ? Column(
+                  children: [
+                    validatorInfo(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AppButton(
+                            onTap: () {
+                              tabController.animateTo(tabController.index - 1);
+                            },
+                            text: 'Sebelumnya',
+                            textColor: AppColors.primary,
+                            buttonColor: AppColors.primary.withOpacity(0.12),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(100),
+                              bottomLeft: Radius.circular(100),
+                              topRight: Radius.circular(32),
+                              bottomRight: Radius.circular(32),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: AppButton(
+                            onTap: () {
+                              tabController.animateTo(tabController.index + 1);
+                            },
+                            text: 'Berikutnya',
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(32),
+                              bottomLeft: Radius.circular(32),
+                              topRight: Radius.circular(100),
+                              bottomRight: Radius.circular(100),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        onTap: () {
+                          tabController.animateTo(tabController.index - 1);
+                        },
+                        text: 'Sebelumnya',
+                        textColor: AppColors.primary,
+                        buttonColor: AppColors.primary.withOpacity(0.12),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(100),
+                          bottomLeft: Radius.circular(100),
+                          topRight: Radius.circular(32),
+                          bottomRight: Radius.circular(32),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: AppButton(
+                        onTap: () {
+                          // TODO
+                        },
+                        text: 'Daftar',
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(32),
+                          bottomLeft: Radius.circular(32),
+                          topRight: Radius.circular(100),
+                          bottomRight: Radius.circular(100),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+    );
+  }
+
+  Widget validatorInfo() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              AppAssets.successIconPath,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'Besar atau kecil karakter',
+              style: AppTextStyle.medium(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Row(
+          children: [
+            Image.asset(
+              AppAssets.failedIconPath,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '6 atau lebih karakter',
+              style: AppTextStyle.medium(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Row(
+          children: [
+            Image.asset(
+              AppAssets.unsuccessIconPath,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'Setidaknya 1 nomor',
+              style: AppTextStyle.medium(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizes.padding),
+      ],
     );
   }
 }
