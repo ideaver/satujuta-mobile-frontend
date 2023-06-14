@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'app_colors.dart';
 
@@ -102,7 +103,16 @@ class AppTheme {
 
     final ThemeData base = ThemeData.light();
     return base.copyWith(
-      appBarTheme: const AppBarTheme(color: Colors.white),
+      appBarTheme: const AppBarTheme(
+        color: Colors.white,
+        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: AppColors.white,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarColor: AppColors.white,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+      ),
       popupMenuTheme: const PopupMenuThemeData(color: Colors.white),
       iconTheme: const IconThemeData(color: Color(0xff2b2b2b)),
       colorScheme: colorScheme,
@@ -141,7 +151,16 @@ class AppTheme {
 
     final ThemeData base = ThemeData.dark();
     return base.copyWith(
-      appBarTheme: AppBarTheme(color: Colors.grey[700]),
+      appBarTheme: AppBarTheme(
+        color: Colors.grey[700],
+        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.grey[700],
+          systemNavigationBarIconBrightness: Brightness.light,
+          statusBarColor: Colors.grey[700],
+          statusBarIconBrightness: Brightness.light,
+        ),
+      ),
       popupMenuTheme: const PopupMenuThemeData(color: Colors.black),
       colorScheme: colorScheme,
       iconTheme: const IconThemeData(color: Colors.white),

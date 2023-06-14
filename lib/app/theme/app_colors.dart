@@ -19,7 +19,7 @@ class AppColors {
   // Base subcolors
   static const Color baseLv2 = Color(0xFF23262F);
   static const Color baseLv3 = Color(0xFF353945);
-  static const Color baseLv4 = Color(0xFFB1B5C3);
+  static const Color baseLv4 = Color(0xFF777E90);
   static const Color baseLv5 = Color(0xFFB1B5C3);
   static const Color baseLv6 = Color(0xFFE6E8EC);
   static const Color baseLv7 = Color(0xFFF4F5F6);

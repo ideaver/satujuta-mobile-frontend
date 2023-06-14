@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/const/app_sizes.dart';
-import '../../../app/widget/my_custom_form.dart';
+import '../../../app/widget/app_text_field.dart';
 
 class FormStudentRegistration extends StatelessWidget {
   const FormStudentRegistration({
@@ -19,7 +19,7 @@ class FormStudentRegistration extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: MyCustomForm(
+      child: AppTextField(
         suffixIcon: IconButton(
           icon: Image.asset(
             path,
@@ -27,7 +27,7 @@ class FormStudentRegistration extends StatelessWidget {
           ),
           onPressed: () {},
         ),
-        click: onPressed,
+        onTap: onPressed,
         lableText: label,
       ),
     );

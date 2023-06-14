@@ -5,7 +5,7 @@ import '../../../../app/const/app_sizes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../../app/widget/my_custom_button.dart';
-import '../../../../app/widget/my_custom_form.dart';
+import '../../../../app/widget/app_text_field.dart';
 import '../../../../app/widget/my_custom_text.dart';
 import '../../../molecules/authentications/modal_bottom.dart';
 
@@ -33,7 +33,7 @@ class _BiodataSectionState extends State<BiodataSection> {
           children: [
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.contactFormIconPath,
@@ -41,14 +41,14 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Nama Lengkap',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.location_on_rounded,
@@ -56,14 +56,14 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Alamat',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
@@ -71,7 +71,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {
+                onTap: () {
                   ModalBottom.modalBottom(
                       context,
                       contentModalBottom(context, "Kota", [
@@ -88,7 +88,7 @@ class _BiodataSectionState extends State<BiodataSection> {
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
@@ -96,7 +96,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {
+                onTap: () {
                   ModalBottom.modalBottom(
                       context,
                       contentModalBottom(context, "Kecamatan", [
@@ -113,7 +113,7 @@ class _BiodataSectionState extends State<BiodataSection> {
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.dropdownRectangleFormIconPath,
@@ -121,14 +121,14 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Kode Pos',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
@@ -136,7 +136,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {
+                onTap: () {
                   ModalBottom.modalBottom(
                     context,
                     contentModalBottom(context, "Role", [
@@ -154,7 +154,7 @@ class _BiodataSectionState extends State<BiodataSection> {
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.schoolIconPath,
@@ -162,7 +162,7 @@ class _BiodataSectionState extends State<BiodataSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Sekolah',
               ),
             ),

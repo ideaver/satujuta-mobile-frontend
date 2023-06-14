@@ -23,10 +23,10 @@ class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
     this.width,
-    this.height = 48,
+    this.height,
     this.fontSize,
     this.borderRadius = 100,
-    this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+    this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
     this.enable = true,
     this.buttonColor = AppColors.primary,
     this.disabledButtonColor = AppColors.baseLv2,
@@ -60,6 +60,8 @@ class AppButton extends StatelessWidget {
           child: child ??
               Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     leftIconWidget(),
                     textWidget(context),
@@ -75,9 +77,10 @@ class AppButton extends StatelessWidget {
   Widget textWidget(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: AppTextStyle.bold(
         context,
-        fontSize: fontSize ?? (height != null ? height! / 3 : 12),
+        fontSize: fontSize ?? 16,
         color: enable ? textColor : disabledTextColor,
       ),
     );
@@ -85,28 +88,38 @@ class AppButton extends StatelessWidget {
 
   Widget leftIconWidget() {
     if (leftIcon == null) {
+      if (rightIcon != null) {
+        return const SizedBox(width: 6);
+      }
+
       return const SizedBox.shrink();
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 2.0),
+      padding: const EdgeInsets.only(right: 6),
       child: Icon(
         leftIcon,
         color: enable ? textColor : disabledTextColor,
+        size: (fontSize ?? 0) + 2,
       ),
     );
   }
 
   Widget rightIconWidget() {
     if (rightIcon == null) {
+      if (leftIcon != null) {
+        return const SizedBox(width: 6);
+      }
+
       return const SizedBox.shrink();
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 2.0),
+      padding: const EdgeInsets.only(left: 6),
       child: Icon(
         rightIcon,
         color: enable ? textColor : disabledTextColor,
+        size: (fontSize ?? 0) + 2,
       ),
     );
   }

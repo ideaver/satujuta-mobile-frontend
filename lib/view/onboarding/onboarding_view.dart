@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:satujuta_app_mobile/view/screens/register/register_screen.dart';
 
 import '../../app/const/app_assets.dart';
@@ -23,15 +22,6 @@ class _OnboardingViewState extends State<OnboardingView> {
   final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: AppColors.white,
-        statusBarIconBrightness: Brightness.dark,
-      ),
-    );
-
     return Scaffold(
       body: SafeArea(
         child: Column(

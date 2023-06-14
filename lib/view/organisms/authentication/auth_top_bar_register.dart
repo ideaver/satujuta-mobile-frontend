@@ -107,10 +107,10 @@ class TopbarCheckOut extends StatelessWidget {
                   size: AppSizes.padding * 2,
                 ),
                 const Spacer(),
-                MyIconButton(
+                AppIconButton(
                   onPressed: () {},
-                  path: AppAssets.warningIconPath,
-                  sizeImage: AppSizes.padding * 2,
+                  imgIcon: AppAssets.warningIconPath,
+                  imgIconSize: AppSizes.padding * 2,
                 )
               ],
             ),

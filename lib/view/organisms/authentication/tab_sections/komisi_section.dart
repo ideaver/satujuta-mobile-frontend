@@ -5,7 +5,7 @@ import '../../../../app/const/app_sizes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../../app/widget/my_custom_button.dart';
-import '../../../../app/widget/my_custom_form.dart';
+import '../../../../app/widget/app_text_field.dart';
 import '../../../../app/widget/my_custom_text.dart';
 import '../../../molecules/authentications/modal_bottom.dart';
 
@@ -33,7 +33,7 @@ class _KomisiSectionState extends State<KomisiSection> {
           children: [
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.somePersonFormIconPath,
@@ -41,14 +41,14 @@ class _KomisiSectionState extends State<KomisiSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Kode Referral',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
@@ -56,7 +56,7 @@ class _KomisiSectionState extends State<KomisiSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {
+                onTap: () {
                   ModalBottom.modalBottom(
                     context,
                     contentModalBottom(
@@ -78,12 +78,12 @@ class _KomisiSectionState extends State<KomisiSection> {
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const Text(""),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'No Rekening',
               ),
             ),

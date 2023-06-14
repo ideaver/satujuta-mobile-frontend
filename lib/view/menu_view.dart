@@ -40,7 +40,7 @@ class MenuView extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pushReplacement(
+                    onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const SplashView(),
@@ -56,7 +56,7 @@ class MenuView extends StatelessWidget {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.pushReplacement(
+                      onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ListMenuView(),

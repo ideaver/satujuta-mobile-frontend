@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
-import '../../../app/widget/my_custom_form.dart';
+import '../../../app/widget/app_text_field.dart';
 
 class AuthFormResetPassword extends StatelessWidget {
   const AuthFormResetPassword({
@@ -17,10 +17,10 @@ class AuthFormResetPassword extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: AppColors.baseLv4),
           borderRadius: BorderRadius.circular(AppSizes.height)),
-      child: MyCustomForm(
+      child: AppTextField(
         lableText: "Email",
         suffixIcon: Image.asset(AppAssets.contactFormIconPath),
-        click: () {},
+        onTap: () {},
       ),
     );
   }

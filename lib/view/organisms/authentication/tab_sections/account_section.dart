@@ -4,7 +4,7 @@ import '../../../../app/const/app_assets.dart';
 import '../../../../app/const/app_sizes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/widget/my_asset_image.dart';
-import '../../../../app/widget/my_custom_form.dart';
+import '../../../../app/widget/app_text_field.dart';
 import '../../../molecules/footer_double_button.dart';
 
 class AccountSection extends StatefulWidget {
@@ -31,7 +31,7 @@ class _AccountSectionState extends State<AccountSection> {
           children: [
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: Image.asset(
                     AppAssets.phoneIconPath,
@@ -39,14 +39,14 @@ class _AccountSectionState extends State<AccountSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'No Whatsapp',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
                     path: AppAssets.dropdownRectangleFormIconPath,
@@ -54,14 +54,14 @@ class _AccountSectionState extends State<AccountSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Email',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
                     path: AppAssets.passwordIconPath,
@@ -69,14 +69,14 @@ class _AccountSectionState extends State<AccountSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Kata Sandi',
               ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: MyCustomForm(
+              child: AppTextField(
                 suffixIcon: IconButton(
                   icon: const MyAssetImage(
                     path: AppAssets.passwordIconPath,
@@ -84,7 +84,7 @@ class _AccountSectionState extends State<AccountSection> {
                   ),
                   onPressed: () {},
                 ),
-                click: () {},
+                onTap: () {},
                 lableText: 'Konfirmasi Kata Sandi',
               ),
             ),

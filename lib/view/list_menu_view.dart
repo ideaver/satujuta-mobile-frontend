@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app/route/app_routes.dart';
 import '../app/theme/app_colors.dart';
+import '../app/theme/app_text_style.dart';
 
 // TODO REMOVE
 // DEV PUSPOSE ONLY
@@ -17,7 +18,7 @@ class ListMenuView extends StatelessWidget {
         children: [
           ...List.generate(AppRoutes.routes.length, (index) {
             return ListTile(
-              tileColor: index.isOdd ? AppColors.baseLv5 : null,
+              tileColor: index.isOdd ? AppColors.baseLv7 : null,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 18,
                 vertical: 12,
@@ -35,6 +36,7 @@ class ListMenuView extends StatelessWidget {
                     .substring(1)
                     .replaceAll('-', ' ')
                     .toUpperCase(),
+                style: AppTextStyle.bold(context),
               ),
               trailing: const Icon(
                 Icons.arrow_forward,

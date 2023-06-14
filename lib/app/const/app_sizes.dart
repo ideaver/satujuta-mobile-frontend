@@ -3,7 +3,8 @@ class AppSizes {
 
   static const padding = 18.0;
   static const height = 12.0;
-  static const radius = 12.0;
+  static const icon = 26.0;
+  static const radius = 8.0;
 
   // static const sizeLeftPadding = AppSizes.kPadding;
   // static const sizeRightPadding = AppSizes.kPadding;

@@ -21,10 +21,10 @@ class AuthTopBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          MyIconButton(
+          AppIconButton(
             onPressed: () {},
-            path: AppAssets.lockIconPath,
-            sizeImage: AppSizes.padding * 3,
+            imgIcon: AppAssets.lockIconPath,
+            imgIconSize: AppSizes.padding * 3,
           ),
           MyButtonWithIcon(
             onPressed: onPressed,

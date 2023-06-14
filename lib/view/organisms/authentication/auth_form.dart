@@ -4,7 +4,7 @@ import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/widget/my_custom_button.dart';
-import '../../../app/widget/my_custom_form.dart';
+import '../../../app/widget/app_text_field.dart';
 import '../../../app/widget/my_separated.dart';
 
 class AuthForm extends StatelessWidget {
@@ -31,12 +31,12 @@ class AuthForm extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(15),
-                      child: MyCustomForm(
+                      child: AppTextField(
                         suffixIcon: IconButton(
                           icon: Image.asset(AppAssets.contactFormIconPath),
                           onPressed: () {},
                         ),
-                        click: () {},
+                        onTap: () {},
                         lableText: 'Email',
                       ),
                     ),
@@ -45,12 +45,12 @@ class AuthForm extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15),
-                      child: MyCustomForm(
+                      child: AppTextField(
                         suffixIcon: IconButton(
                           icon: Image.asset(AppAssets.lockFormIconPath),
                           onPressed: () {},
                         ),
-                        click: () {},
+                        onTap: () {},
                         lableText: 'Password',
                       ),
                     ),
