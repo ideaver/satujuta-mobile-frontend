@@ -53,11 +53,43 @@ class _RegisterViewState extends State<RegisterView>
   SliverAppBar sliverAppBarWidget() {
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      snap: true,
-      floating: true,
-      expandedHeight: MediaQuery.of(context).size.height / 4,
+      pinned: true,
+      expandedHeight: 170,
+      collapsedHeight: 70,
+      elevation: 0.5,
       flexibleSpace: FlexibleSpaceBar(
+        title: title(),
         background: sliverBackground(),
+        expandedTitleScale: 1.2,
+        titlePadding: const EdgeInsets.symmetric(
+          horizontal: AppSizes.padding,
+          vertical: AppSizes.padding,
+        ),
+      ),
+    );
+  }
+
+  Widget title() {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Registrasi",
+            style: AppTextStyle.bold(context, fontSize: 20),
+          ),
+          const SizedBox(height: AppSizes.padding / 4),
+          Text(
+            "Bergabung menjadi anggota SatuJuta!",
+            style: AppTextStyle.regular(
+              context,
+              fontSize: 12,
+              color: AppColors.baseLv4,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -72,9 +104,8 @@ class _RegisterViewState extends State<RegisterView>
         ),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: AppSizes.padding),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -100,35 +131,13 @@ class _RegisterViewState extends State<RegisterView>
               ),
             ],
           ),
-          const SizedBox(height: AppSizes.padding * 1.5),
-          Padding(
-            padding: const EdgeInsets.only(left: 6),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Registrasi",
-                  style: AppTextStyle.bold(context, fontSize: 22),
-                ),
-                const SizedBox(height: AppSizes.padding / 2),
-                Text(
-                  "Bergabung menjadi anggota SatuJuta!",
-                  style: AppTextStyle.regular(
-                    context,
-                    fontSize: 14,
-                    color: AppColors.baseLv4,
-                  ),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
   }
 
   Widget body() {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSizes.padding),
       child: Column(
         children: [
@@ -153,15 +162,15 @@ class _RegisterViewState extends State<RegisterView>
           margin: const EdgeInsets.symmetric(
             vertical: AppSizes.padding,
           ),
-          width: 100,
-          height: 100,
+          width: 150,
+          height: 150,
           child: Center(
             child: Stack(
               children: [
                 const ClipOval(
                   child: SizedBox(
-                    width: 100,
-                    height: 100,
+                    width: 150,
+                    height: 150,
                     child: AppImage(
                       image: randomImage,
                     ),
@@ -175,8 +184,8 @@ class _RegisterViewState extends State<RegisterView>
                       // TODO
                     },
                     child: Container(
-                      width: 32,
-                      height: 32,
+                      width: 44,
+                      height: 44,
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
                         color: AppColors.primary,
@@ -192,7 +201,7 @@ class _RegisterViewState extends State<RegisterView>
             ),
           ),
         ),
-        const SizedBox(height: AppSizes.padding / 2),
+        const SizedBox(height: AppSizes.padding),
       ],
     );
   }
@@ -276,17 +285,25 @@ class _RegisterViewState extends State<RegisterView>
   }
 
   Widget tabBarViews() {
-    return Expanded(
-      // padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
-      child: TabBarView(
-        controller: tabController,
-        children: const [
-          RegBiodata(),
-          RegAccount(),
-          RegCommission(),
-        ],
-      ),
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300),
+      child: tabController.index == 0
+          ? const RegBiodata()
+          : tabController.index == 1
+              ? const RegAccount()
+              : const RegCommission(),
     );
+    // return Expanded(
+    //   // padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
+    //   child: TabBarView(
+    //     controller: tabController,
+    //     children: const [
+    //       RegBiodata(),
+    //       RegAccount(),
+    //       RegCommission(),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget buttons() {

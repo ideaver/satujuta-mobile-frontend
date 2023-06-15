@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/app_text_style.dart';
 
-class MyTextGradientColor extends StatelessWidget {
-  const MyTextGradientColor({
+class AppGradientText extends StatelessWidget {
+  const AppGradientText({
     super.key,
     required this.textTitle,
     required this.listColor,

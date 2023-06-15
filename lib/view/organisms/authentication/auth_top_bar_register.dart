@@ -6,7 +6,7 @@ import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
 import '../../../app/widget/my_button_with_icon.dart';
 import '../../../app/widget/my_icon_button.dart';
-import '../../../app/widget/my_text_gradient_color.dart';
+import '../../../app/widget/app_gradient_text.dart';
 
 class AuthTopbarRegister extends StatelessWidget {
   const AuthTopbarRegister({
@@ -124,7 +124,7 @@ class TopbarCheckOut extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Center(
-                    child: MyTextGradientColor(
+                    child: AppGradientText(
                       textTitle: "Ringkasan Order",
                       listColor: [AppColors.pink, AppColors.darkBlue],
                       fontSize: 20 * 2 - 2,

@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
     this.enable = true,
     this.buttonColor = AppColors.primary,
-    this.disabledButtonColor = AppColors.baseLv2,
+    this.disabledButtonColor = AppColors.baseLv4,
     this.disabledTextColor = Colors.white,
     this.textColor = Colors.white,
     this.leftIcon,
@@ -100,7 +100,7 @@ class AppButton extends StatelessWidget {
       child: Icon(
         leftIcon,
         color: enable ? textColor : disabledTextColor,
-        size: (fontSize ?? 0) + 2,
+        size: (fontSize ?? 16),
       ),
     );
   }
@@ -119,7 +119,7 @@ class AppButton extends StatelessWidget {
       child: Icon(
         rightIcon,
         color: enable ? textColor : disabledTextColor,
-        size: (fontSize ?? 0) + 2,
+        size: (fontSize ?? 16),
       ),
     );
   }

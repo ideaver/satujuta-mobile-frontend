@@ -21,83 +21,81 @@ class _RegBiodataState extends State<RegBiodata> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
-      child: SingleChildScrollView(
-        child: AppTextFieldsWrapper(
-          textFields: [
-            const AppTextField(
-              suffixIcon: Icon(
-                Icons.person_outline_rounded,
-              ),
-              lableText: 'Email',
+      child: AppTextFieldsWrapper(
+        textFields: [
+          const AppTextField(
+            suffixIcon: Icon(
+              Icons.person_outline_rounded,
             ),
-            const AppTextField(
-              suffixIcon: Icon(
-                Icons.location_on_outlined,
-              ),
-              lableText: 'Alamat',
+            lableText: 'Email',
+          ),
+          const AppTextField(
+            suffixIcon: Icon(
+              Icons.location_on_outlined,
             ),
-            AppTextField(
-              enabled: false,
-              onTap: () {
-                AppModal.show(
-                  context: context,
-                  title: 'Kota',
-                  child: cityList(),
-                );
-              },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
-              ),
-              lableText: 'Kota',
+            lableText: 'Alamat',
+          ),
+          AppTextField(
+            enabled: false,
+            onTap: () {
+              AppModal.show(
+                context: context,
+                title: 'Kota',
+                child: cityList(),
+              );
+            },
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_down,
             ),
-            AppTextField(
-              enabled: false,
-              onTap: () {
-                AppModal.show(
-                  context: context,
-                  title: 'Kecamatan',
-                  child: districtList(),
-                );
-              },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
-              ),
-              lableText: 'Kecamatan',
+            lableText: 'Kota',
+          ),
+          AppTextField(
+            enabled: false,
+            onTap: () {
+              AppModal.show(
+                context: context,
+                title: 'Kecamatan',
+                child: districtList(),
+              );
+            },
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_down,
             ),
-            AppTextField(
-              onTap: () {
-                // TODO
-              },
-              suffixIcon: const Icon(
-                Icons.mail_outline_rounded,
-              ),
-              lableText: 'Kode Pos',
+            lableText: 'Kecamatan',
+          ),
+          AppTextField(
+            onTap: () {
+              // TODO
+            },
+            suffixIcon: const Icon(
+              Icons.mail_outline_rounded,
             ),
-            AppTextField(
-              enabled: false,
-              onTap: () {
-                AppModal.show(
-                  context: context,
-                  title: 'Role',
-                  child: roleList(),
-                );
-              },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
-              ),
-              lableText: 'Role',
+            lableText: 'Kode Pos',
+          ),
+          AppTextField(
+            enabled: false,
+            onTap: () {
+              AppModal.show(
+                context: context,
+                title: 'Role',
+                child: roleList(),
+              );
+            },
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_down,
             ),
-            AppTextField(
-              onTap: () {
-                // TODO
-              },
-              suffixIcon: Image.asset(
-                AppAssets.schoolIconPath,
-              ),
-              lableText: 'Sekolah',
+            lableText: 'Role',
+          ),
+          AppTextField(
+            onTap: () {
+              // TODO
+            },
+            suffixIcon: Image.asset(
+              AppAssets.schoolIconPath,
             ),
-          ],
-        ),
+            lableText: 'Sekolah',
+          ),
+        ],
       ),
     );
   }

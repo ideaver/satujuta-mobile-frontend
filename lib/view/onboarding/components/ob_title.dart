@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 
-import '../../../app/widget/my_text_gradient_color.dart';
+import '../../../app/widget/app_gradient_text.dart';
 
 class ObTitle extends StatelessWidget {
   const ObTitle({
@@ -20,7 +20,7 @@ class ObTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        MyTextGradientColor(
+        AppGradientText(
           textTitle: textTitle,
           listColor: listColor,
           fontSize: 48,

@@ -22,34 +22,32 @@ class _RegCommissionState extends State<RegCommission> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
-      child: SingleChildScrollView(
-        child: AppTextFieldsWrapper(
-          textFields: [
-            AppTextField(
-              suffixIcon: Image.asset(
-                AppAssets.somePersonFormIconPath,
-              ),
-              lableText: 'Kode Refferal',
+      child: AppTextFieldsWrapper(
+        textFields: [
+          AppTextField(
+            suffixIcon: Image.asset(
+              AppAssets.somePersonFormIconPath,
             ),
-            AppTextField(
-              enabled: false,
-              onTap: () {
-                AppModal.show(
-                  context: context,
-                  title: 'Bank',
-                  child: bankList(),
-                );
-              },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
-              ),
-              lableText: 'Bank',
+            lableText: 'Kode Refferal',
+          ),
+          AppTextField(
+            enabled: false,
+            onTap: () {
+              AppModal.show(
+                context: context,
+                title: 'Bank',
+                child: bankList(),
+              );
+            },
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_down,
             ),
-            const AppTextField(
-              lableText: 'No Rekening',
-            ),
-          ],
-        ),
+            lableText: 'Bank',
+          ),
+          const AppTextField(
+            lableText: 'No Rekening',
+          ),
+        ],
       ),
     );
   }

@@ -23,14 +23,9 @@ class AppIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed ?? () {},
-      padding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(
-        horizontal: VisualDensity.minimumDensity,
-        vertical: VisualDensity.minimumDensity,
-      ),
-      icon: icon != null
+    return InkWell(
+      onTap: onPressed ?? () {},
+      child: icon != null
           ? Icon(
               icon,
               size: iconSize ?? AppSizes.icon,

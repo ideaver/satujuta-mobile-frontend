@@ -17,45 +17,43 @@ class _RegAccountState extends State<RegAccount> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            AppTextFieldsWrapper(
-              textFields: [
-                AppTextField(
-                  suffixIcon: Image.asset(
-                    AppAssets.phoneIconPath,
-                  ),
-                  lableText: 'Nomor WhatsApp',
+      child: Column(
+        children: [
+          AppTextFieldsWrapper(
+            textFields: [
+              AppTextField(
+                suffixIcon: Image.asset(
+                  AppAssets.phoneIconPath,
                 ),
-                AppTextField(
-                  suffixIcon: Image.asset(
-                    AppAssets.dropdownRectangleFormIconPath,
-                  ),
-                  lableText: 'Email',
+                lableText: 'Nomor WhatsApp',
+              ),
+              AppTextField(
+                suffixIcon: Image.asset(
+                  AppAssets.dropdownRectangleFormIconPath,
                 ),
-                AppTextField(
-                  onTap: () {
-                    // TODO
-                  },
-                  suffixIcon: Image.asset(
-                    AppAssets.passwordIconPath,
-                  ),
-                  lableText: 'Kata Sandi',
+                lableText: 'Email',
+              ),
+              AppTextField(
+                onTap: () {
+                  // TODO
+                },
+                suffixIcon: Image.asset(
+                  AppAssets.passwordIconPath,
                 ),
-                AppTextField(
-                  onTap: () {
-                    // TODO
-                  },
-                  suffixIcon: Image.asset(
-                    AppAssets.passwordIconPath,
-                  ),
-                  lableText: 'Konfirmasi Kata Sandi',
+                lableText: 'Kata Sandi',
+              ),
+              AppTextField(
+                onTap: () {
+                  // TODO
+                },
+                suffixIcon: Image.asset(
+                  AppAssets.passwordIconPath,
                 ),
-              ],
-            ),
-          ],
-        ),
+                lableText: 'Konfirmasi Kata Sandi',
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
