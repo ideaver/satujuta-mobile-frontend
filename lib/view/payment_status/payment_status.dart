@@ -112,105 +112,102 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
   }
 
   Widget orderPricing() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
-      child: AppWidgetListWrapper(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(AppSizes.padding),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(AppSizes.radius),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.receipt_outlined,
-                        size: 20,
-                      ),
-                      const SizedBox(width: AppSizes.padding / 2),
-                      Text(
-                        'ID Transaksi',
-                        style: AppTextStyle.extraBold(context),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '#22112211',
-                    style: AppTextStyle.extraBold(context),
-                  ),
-                ],
-              ),
+    return AppWidgetListWrapper(
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(AppSizes.padding),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppSizes.radius),
             ),
-            const SizedBox(height: AppSizes.padding / 4),
-            Container(
-              padding: const EdgeInsets.all(AppSizes.padding),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(AppSizes.radius),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Biaya',
-                    style: AppTextStyle.regular(context),
-                  ),
-                  Text(
-                    'Rp. 1.000.000',
-                    style: AppTextStyle.regular(context),
-                  ),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.receipt_outlined,
+                      size: 20,
+                    ),
+                    const SizedBox(width: AppSizes.padding / 2),
+                    Text(
+                      'ID Transaksi',
+                      style: AppTextStyle.extraBold(context),
+                    ),
+                  ],
+                ),
+                Text(
+                  '#22112211',
+                  style: AppTextStyle.extraBold(context),
+                ),
+              ],
             ),
-            const SizedBox(height: AppSizes.padding / 4),
-            Container(
-              padding: const EdgeInsets.all(AppSizes.padding),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(AppSizes.radius),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Biaya Admin',
-                    style: AppTextStyle.regular(context),
-                  ),
-                  Text(
-                    'Rp. 5000',
-                    style: AppTextStyle.regular(context),
-                  ),
-                ],
-              ),
+          ),
+          const SizedBox(height: AppSizes.padding / 4),
+          Container(
+            padding: const EdgeInsets.all(AppSizes.padding),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppSizes.radius),
             ),
-            const SizedBox(height: AppSizes.padding / 4),
-            Container(
-              padding: const EdgeInsets.all(AppSizes.padding),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(AppSizes.radius),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Total Bayar',
-                    style: AppTextStyle.extraBold(context),
-                  ),
-                  Text(
-                    'Rp. 1.000.5000',
-                    style: AppTextStyle.extraBold(context),
-                  ),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Biaya',
+                  style: AppTextStyle.regular(context),
+                ),
+                Text(
+                  'Rp. 1.000.000',
+                  style: AppTextStyle.regular(context),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: AppSizes.padding / 4),
+          Container(
+            padding: const EdgeInsets.all(AppSizes.padding),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppSizes.radius),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Biaya Admin',
+                  style: AppTextStyle.regular(context),
+                ),
+                Text(
+                  'Rp. 5000',
+                  style: AppTextStyle.regular(context),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSizes.padding / 4),
+          Container(
+            padding: const EdgeInsets.all(AppSizes.padding),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppSizes.radius),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total Bayar',
+                  style: AppTextStyle.extraBold(context),
+                ),
+                Text(
+                  'Rp. 1.000.5000',
+                  style: AppTextStyle.extraBold(context),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
