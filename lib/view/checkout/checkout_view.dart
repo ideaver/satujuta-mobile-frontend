@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/app/widget/app_button.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
+import '../../app/widget/app_expansion_list_tile.dart';
 import '../../app/widget/app_gradient_text.dart';
+import '../../app/widget/app_image.dart';
+import '../../app/widget/app_modal.dart';
+import '../../app/widget/app_widget_list_wrapper.dart';
 import '../../app/widget/my_icon_button.dart';
 
 class CheckoutView extends StatefulWidget {
@@ -17,6 +22,9 @@ class CheckoutView extends StatefulWidget {
 }
 
 class _CheckoutViewState extends State<CheckoutView> {
+  bool isOrderItemsShowed = true;
+  bool isOrderShipmentShowed = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +37,7 @@ class _CheckoutViewState extends State<CheckoutView> {
         },
         body: body(),
       ),
+      bottomSheet: bottomButton(),
     );
   }
 
@@ -88,7 +97,7 @@ class _CheckoutViewState extends State<CheckoutView> {
             children: [
               AppIconButton(
                 onPressed: () {
-                  // TODO
+                  Navigator.pop(context);
                 },
                 icon: Icons.arrow_back_ios_rounded,
                 iconSize: 22,
@@ -114,17 +123,22 @@ class _CheckoutViewState extends State<CheckoutView> {
       padding: const EdgeInsets.all(AppSizes.padding),
       child: Column(
         children: [
-          orderStatusWidget(),
+          orderStatus(),
           orderInfo(),
+          orderItems(),
+          orderShipment(),
+          orderPricing(),
+          const SizedBox(height: 100),
         ],
       ),
     );
   }
 
-  Widget orderStatusWidget() {
+  Widget orderStatus() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
+      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
         constraints: const BoxConstraints(maxWidth: 500),
         height: 52,
         width: double.infinity,
@@ -202,281 +216,779 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   Widget orderInfo() {
-    return Column(
-      children: [
-        const SizedBox(height: AppSizes.padding * 2),
-        Container(
-          height: 70,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-            boxShadow: [
-              const BoxShadow(
-                color: Color.fromARGB(66, 181, 178, 178),
-                offset: Offset(
-                  1,
-                  1,
-                ),
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-              ), //BoxShadow
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Image.asset(
-                  AppAssets.coinFormIconPath,
-                  height: 40,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Create date",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const Spacer(),
-                Text(
-                  "25 Mar 2022",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: 70,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
-            boxShadow: [
-              const BoxShadow(
-                color: Color.fromARGB(66, 181, 178, 178),
-                offset: Offset(1, 1),
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Image.asset(
-                  AppAssets.coinFormIconPath,
-                  height: 40,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Deadline",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const Spacer(),
-                Text(
-                  "31 Dec 2022",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Container(
-          height: 60,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-            boxShadow: [
-              const BoxShadow(
-                color: Color.fromARGB(66, 181, 178, 178),
-                offset: Offset(
-                  1,
-                  1,
-                ),
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-              ), //BoxShadow
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Image.asset(
-                  AppAssets.bankBNIImgPath,
-                  height: 20,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "History testing (25)",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const Spacer(),
-                const SizedBox(
-                  width: 10,
-                ),
-                Image.asset(
-                  AppAssets.coinFormIconPath,
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        com("84 minutes", "80"),
-        const SizedBox(
-          height: 10,
-        ),
-        com("25 minutes", "80"),
-        const SizedBox(
-          height: 10,
-        ),
-        com("Practices", "60"),
-        const SizedBox(
-          height: 20,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-      ],
-    );
-  }
-
-  Widget com(String tex, String tex2) {
-    return Container(
-      height: 90,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)),
-        boxShadow: [
-          const BoxShadow(
-            color: Color.fromARGB(66, 181, 178, 178),
-            offset: Offset(
-              1,
-              1,
-            ),
-            blurRadius: 10.0,
-            spreadRadius: 2.0,
-          ), //BoxShadow
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
+      child: AppWidgetListWrapper(
+        child: Column(
           children: [
-            Image.asset(
-              AppAssets.bankBCAImgPath,
-              height: 40,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tex,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "18:20, 22/10/2021",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 10, color: Theme.of(context).disabledColor),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Text(
-              tex2,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: 14,
-                    color: AppColors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
             Container(
-              height: 30,
-              width: 70,
-              decoration: const BoxDecoration(
-                color: AppColors.red,
-                borderRadius: BorderRadius.all(Radius.circular(30)),
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
               ),
-              child: Center(
-                child: Text(
-                  "Point",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: const BoxDecoration(
+                          color: AppColors.secondary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.flag_rounded,
+                          color: AppColors.white,
+                          size: 18,
+                        ),
                       ),
-                ),
+                      const SizedBox(width: AppSizes.padding / 2),
+                      Text(
+                        'Order ID',
+                        style: AppTextStyle.extraBold(context),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '#123456789',
+                    style: AppTextStyle.bold(context),
+                  ),
+                ],
               ),
-            )
+            ),
+            const SizedBox(height: AppSizes.padding / 4),
+            Container(
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: const BoxDecoration(
+                          color: AppColors.sea,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.timer_rounded,
+                          color: AppColors.white,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: AppSizes.padding / 2),
+                      Text(
+                        'Tanggal Order',
+                        style: AppTextStyle.extraBold(context),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '24 Agustus 2023',
+                    style: AppTextStyle.bold(context),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget orderItems() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
+      child: AppExpansionListTile(
+        title: '4 Item Order',
+        icon: Icons.timelapse_rounded,
+        expand: true,
+        children: [
+          ...List.generate(4, (i) {
+            return orderItemCard(i);
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget orderItemCard(int i) {
+    return Container(
+      margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
+      padding: const EdgeInsets.all(AppSizes.padding),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppSizes.radius),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      width: 4,
+                      color: AppColors.baseLv8,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.wallet_giftcard_rounded,
+                    color: AppColors.white,
+                    size: 12,
+                  ),
+                ),
+                const SizedBox(width: AppSizes.padding / 2),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        i == 0
+                            ? 'Paket PREMIUM SatuJuta Membership'
+                            : 'Hotel Borobudur',
+                        style: AppTextStyle.extraBold(
+                          context,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: AppSizes.padding / 4),
+                      Text(
+                        i == 0
+                            ? 'Berlisensi PT Satu Juta Kampung Inggris '
+                            : 'Pilihan Hotel Anda',
+                        style: AppTextStyle.regular(
+                          context,
+                          fontSize: 12,
+                          color: AppColors.baseLv4,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSizes.padding / 2),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSizes.padding / 2,
+              vertical: AppSizes.padding / 4,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.secondary,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Text(
+              i == 0 ? 'Rp. 1.000.000' : 'FREE',
+              style: AppTextStyle.bold(
+                context,
+                fontSize: 12,
+                color: AppColors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget orderShipment() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
+      child: AppExpansionListTile(
+        title: 'Info Pengiriman',
+        icon: Icons.local_shipping_outlined,
+        backgroundColor: AppColors.white,
+        expand: true,
+        children: [
+          shipmentReceiver(),
+          const SizedBox(height: AppSizes.padding / 4),
+          shipmentService(),
+          const SizedBox(height: AppSizes.padding / 2),
+        ],
+      ),
+    );
+  }
+
+  Widget shipmentReceiver() {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: AppSizes.padding / 8,
+        horizontal: AppSizes.padding / 2,
+      ),
+      padding: const EdgeInsets.all(AppSizes.padding),
+      decoration: BoxDecoration(
+        color: AppColors.baseLv7,
+        borderRadius: BorderRadius.circular(AppSizes.radius * 1.5),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.person_outline_rounded,
+                      size: 20,
+                    ),
+                    const SizedBox(width: AppSizes.padding / 2),
+                    Expanded(
+                      child: Text(
+                        'Anton Prabowo',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.extraBold(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppSizes.padding / 4,
+                  horizontal: AppSizes.padding / 3,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.baseLv5.withOpacity(0.50),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  'PENERIMA',
+                  style: AppTextStyle.bold(
+                    context,
+                    fontSize: 11,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.call_outlined,
+                    size: 20,
+                  ),
+                  const SizedBox(width: AppSizes.padding / 2),
+                  Text(
+                    '+62811122223333',
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.medium(context),
+                  ),
+                ],
+              ),
+              const Icon(
+                Icons.edit_square,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.location_on_outlined,
+                size: 20,
+              ),
+              const SizedBox(width: AppSizes.padding / 2),
+              Expanded(
+                child: Text(
+                  'jln ambarawa no 1 Semarang - Jawa Timur, Indonesia',
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.medium(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.mail_outline_rounded,
+                size: 20,
+              ),
+              const SizedBox(width: AppSizes.padding / 2),
+              Expanded(
+                child: Text(
+                  '223344',
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.medium(context),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget shipmentService() {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: AppSizes.padding / 8,
+        horizontal: AppSizes.padding / 2,
+      ),
+      padding: const EdgeInsets.all(AppSizes.padding),
+      decoration: BoxDecoration(
+        color: AppColors.baseLv7,
+        borderRadius: BorderRadius.circular(AppSizes.radius * 1.5),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.person_outline_rounded,
+                      size: 20,
+                    ),
+                    const SizedBox(width: AppSizes.padding / 2),
+                    Expanded(
+                      child: Text(
+                        'JNE Reguler',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.extraBold(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppSizes.padding / 4,
+                  horizontal: AppSizes.padding / 3,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.baseLv5.withOpacity(0.50),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  'KURIR',
+                  style: AppTextStyle.bold(
+                    context,
+                    fontSize: 11,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.timelapse_rounded,
+                    size: 20,
+                  ),
+                  const SizedBox(width: AppSizes.padding / 2),
+                  Text(
+                    '2-3 Hari',
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.medium(context),
+                  ),
+                ],
+              ),
+              const Icon(
+                Icons.edit_square,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.calendar_month_outlined,
+                size: 20,
+              ),
+              const SizedBox(width: AppSizes.padding / 2),
+              Expanded(
+                child: Text(
+                  'Pengiriman Tanggal: -',
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.medium(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.receipt_long_rounded,
+                      size: 20,
+                    ),
+                    const SizedBox(width: AppSizes.padding / 2),
+                    Expanded(
+                      child: Text(
+                        'No. Resi: - \n Paket akan dikirim setelah pembayaran',
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.medium(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.copy,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.padding),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.monetization_on_outlined,
+                size: 20,
+              ),
+              const SizedBox(width: AppSizes.padding / 2),
+              Expanded(
+                child: Text(
+                  'Biaya Ongkir: -',
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.medium(context),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget orderPricing() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
+      child: AppWidgetListWrapper(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.receipt_outlined,
+                        size: 20,
+                      ),
+                      const SizedBox(width: AppSizes.padding / 2),
+                      Text(
+                        'ID Transaksi',
+                        style: AppTextStyle.extraBold(context),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '#22112211',
+                    style: AppTextStyle.extraBold(context),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSizes.padding / 4),
+            Container(
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Biaya',
+                    style: AppTextStyle.regular(context),
+                  ),
+                  Text(
+                    'Rp. 1.000.000',
+                    style: AppTextStyle.regular(context),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSizes.padding / 4),
+            Container(
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Biaya Admin',
+                    style: AppTextStyle.regular(context),
+                  ),
+                  Text(
+                    'Rp. 5000',
+                    style: AppTextStyle.regular(context),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSizes.padding / 4),
+            Container(
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total Bayar',
+                    style: AppTextStyle.extraBold(context),
+                  ),
+                  Text(
+                    'Rp. 1.000.5000',
+                    style: AppTextStyle.extraBold(context),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget bottomButton() {
+    return Container(
+      padding: const EdgeInsets.all(AppSizes.padding),
+      height: 94,
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.baseLv7,
+            offset: Offset(0, -4),
+            blurRadius: 6,
+          ),
+        ],
+      ),
+      child: AppButton(
+        text: 'Pilih Metode Pemabayaran',
+        onTap: () {
+          AppModal.show(
+            context: context,
+            title: 'Pilih Metode Pembayaran',
+            child: paymentMethodList(),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget paymentMethodList() {
+    return Column(
+      children: [
+        orderStatus(),
+        Container(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 280,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  AppExpansionListTile(
+                    title: 'Transfer Bank',
+                    icon: Icons.credit_card,
+                    expand: true,
+                    children: [
+                      ...List.generate(5, (index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 6),
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius:
+                                BorderRadius.circular(AppSizes.radius),
+                          ),
+                          child: RadioListTile(
+                            value: null,
+                            groupValue: null,
+                            onChanged: (value) {},
+                            title: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 50,
+                                  child: AppImage(
+                                    image: AppAssets.bankMandiriImgPath,
+                                    imgProvider: ImgProvider.assetImage,
+                                  ),
+                                ),
+                                const SizedBox(width: AppSizes.padding),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Bank Mandiri',
+                                      style: AppTextStyle.bold(context),
+                                    ),
+                                    const SizedBox(
+                                        height: AppSizes.padding / 2),
+                                    Text(
+                                      'Admin Fee Rp 2.500',
+                                      style: AppTextStyle.regular(
+                                        context,
+                                        fontSize: 12,
+                                        color: AppColors.baseLv4,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            activeColor: AppColors.primary,
+                            contentPadding: const EdgeInsets.fromLTRB(
+                              AppSizes.padding,
+                              AppSizes.padding / 1.8,
+                              AppSizes.padding / 1.8,
+                              AppSizes.padding / 1.8,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(AppSizes.radius),
+                            ),
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
+                        );
+                      })
+                    ],
+                  ),
+                  SizedBox(height: AppSizes.padding),
+                  AppExpansionListTile(
+                    title: 'Virtual Account',
+                    icon: Icons.credit_card,
+                    expand: true,
+                    children: [
+                      ...List.generate(5, (index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 6),
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius:
+                                BorderRadius.circular(AppSizes.radius),
+                          ),
+                          child: RadioListTile(
+                            value: null,
+                            groupValue: null,
+                            onChanged: (value) {},
+                            title: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 50,
+                                  child: AppImage(
+                                    image: AppAssets.bankMandiriImgPath,
+                                    imgProvider: ImgProvider.assetImage,
+                                  ),
+                                ),
+                                const SizedBox(width: AppSizes.padding),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Bank Mandiri',
+                                      style: AppTextStyle.bold(context),
+                                    ),
+                                    const SizedBox(
+                                        height: AppSizes.padding / 2),
+                                    Text(
+                                      'Admin Fee Rp 2.500',
+                                      style: AppTextStyle.regular(
+                                        context,
+                                        fontSize: 12,
+                                        color: AppColors.baseLv4,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            activeColor: AppColors.primary,
+                            contentPadding: const EdgeInsets.fromLTRB(
+                              AppSizes.padding,
+                              AppSizes.padding / 1.8,
+                              AppSizes.padding / 1.8,
+                              AppSizes.padding / 1.8,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(AppSizes.radius),
+                            ),
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
+                        );
+                      })
+                    ],
+                  )
+                ],
+              ),
+            )),
+        const SizedBox(height: AppSizes.padding),
+        AppButton(
+          onTap: () {
+            // TODO
+            Navigator.pop(context);
+          },
+          text: 'Pilih',
+        ),
+      ],
     );
   }
 }

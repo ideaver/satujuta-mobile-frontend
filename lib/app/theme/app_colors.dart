@@ -12,7 +12,7 @@ class AppColors {
   static const Color primary = Color(0xFF3772FF);
   static const Color secondary = Color(0xFF22C55E);
   static const Color sea = Color(0xFF08CCCC);
-  static const Color yellow = Color(0xFF22C55E);
+  static const Color yellow = Color(0xFFFFB800);
   static const Color pink = Color(0xFFFF61D3);
   static const Color red = Color(0xFFFE1A59);
 

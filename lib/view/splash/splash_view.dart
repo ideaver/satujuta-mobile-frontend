@@ -18,11 +18,11 @@ class _SplashViewState extends State<SplashView> {
     final navigator = Navigator.of(context);
 
     await Future.delayed(const Duration(milliseconds: 3000));
-    navigator.pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const OnboardingView(),
-        ),
-        (route) => false);
+    navigator.push(
+      MaterialPageRoute(
+        builder: (context) => const OnboardingView(),
+      ),
+    );
   }
 
   @override

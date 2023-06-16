@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/widget/app_button.dart';
 import 'package:satujuta_app_mobile/app/widget/app_image.dart';
+import 'package:satujuta_app_mobile/app/widget/app_not_found_widget.dart';
 
-import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
@@ -32,40 +32,61 @@ class _HotelPickerState extends State<HotelPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
-      body: SafeArea(
-        child: Column(
-          children: [
-            title(),
-            tabBar(),
-            body(),
-          ],
-        ),
+      body: NestedScrollView(
+        physics: const BouncingScrollPhysics(),
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            sliverAppBarWidget(),
+          ];
+        },
+        body: body(),
       ),
       bottomSheet: bottomSheet(),
     );
   }
 
+  SliverAppBar sliverAppBarWidget() {
+    return SliverAppBar(
+      automaticallyImplyLeading: false,
+      expandedHeight: 170,
+      pinned: true,
+      backgroundColor: AppColors.baseLv7,
+      elevation: 0.5,
+      flexibleSpace: FlexibleSpaceBar(
+        title: title(),
+        expandedTitleScale: 1.5,
+      ),
+      bottom: tabBar(),
+    );
+  }
+
   Widget title() {
     return Padding(
-      padding: const EdgeInsets.all(AppSizes.padding * 2),
+      padding: const EdgeInsets.only(bottom: AppSizes.padding * 3),
       child: Text(
         'Pilih Hotel Menginap Anda',
-        style: AppTextStyle.bold(context, fontSize: 20),
+        style: AppTextStyle.bold(context, fontSize: 14),
       ),
     );
   }
 
-  Widget tabBar() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
-      child: Row(
-        children: [
-          tabWidget(-1),
-          ...List.generate(locations.length, (i) {
-            return tabWidget(i);
-          })
-        ],
+  PreferredSizeWidget tabBar() {
+    return PreferredSize(
+      preferredSize: const Size(double.infinity, 50),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSizes.padding,
+          vertical: AppSizes.padding,
+        ),
+        child: Row(
+          children: [
+            tabWidget(-1),
+            ...List.generate(locations.length, (i) {
+              return tabWidget(i);
+            })
+          ],
+        ),
       ),
     );
   }
@@ -115,20 +136,22 @@ class _HotelPickerState extends State<HotelPicker> {
 
   Widget body() {
     if (selectedLocation == 0) {
-      return notFoundWidget();
+      return AppNotFoundWidget(
+        title: 'Maaf, Belum Ada Hotel Di Lokasi Ini',
+        subtitle:
+            "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
+      );
     }
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: AppSizes.padding),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 5,
-          padding: const EdgeInsets.all(AppSizes.padding),
-          itemBuilder: (context, i) {
-            return hotelCard(i);
-          },
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSizes.padding),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: 5,
+        padding: const EdgeInsets.all(AppSizes.padding),
+        itemBuilder: (context, i) {
+          return hotelCard(i);
+        },
       ),
     );
   }
@@ -246,106 +269,69 @@ class _HotelPickerState extends State<HotelPicker> {
     );
   }
 
-  Widget notFoundWidget() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSizes.padding * 4),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              AppAssets.emptyEmojiPath,
-              height: 172,
-            ),
-            const SizedBox(
-              height: AppSizes.padding,
-            ),
-            Text(
-              "Maaf, belum ada hotel di kota ini.",
-              textAlign: TextAlign.center,
-              style: AppTextStyle.bold(
-                context,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: AppSizes.padding / 2),
-            Text(
-              "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
-              textAlign: TextAlign.center,
-              style: AppTextStyle.regular(
-                context,
-                fontSize: 14,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget bottomSheet() {
-    if (selectedHotel == null) {
-      return const SizedBox.shrink();
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(AppSizes.radius * 2),
-          topRight: Radius.circular(AppSizes.radius * 2),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            offset: Offset(0, -4),
-            blurRadius: 22,
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Grand Cordela Hotel Bandung',
-            style: AppTextStyle.bold(context, fontSize: 16),
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            children: [
-              const Icon(
-                Icons.timelapse_outlined,
-                size: 12,
-                color: AppColors.baseLv4,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                'Perkiraan check-in menginap',
-                style: AppTextStyle.medium(
-                  context,
-                  fontSize: 12,
-                  color: AppColors.baseLv4,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300),
+      child: selectedHotel == null
+          ? const SizedBox.shrink()
+          : Container(
+              padding: const EdgeInsets.all(AppSizes.padding),
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppSizes.radius * 2),
+                  topRight: Radius.circular(AppSizes.radius * 2),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, -4),
+                    blurRadius: 22,
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding / 4),
-          Text(
-            'Medi 2023 - Juli 2023',
-            style: AppTextStyle.bold(context, fontSize: 14),
-          ),
-          const SizedBox(height: AppSizes.padding),
-          AppButton(
-            text: 'Berikutnya',
-            onTap: () {
-              // TODO
-            },
-          ),
-        ],
-      ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Grand Cordela Hotel Bandung',
+                    style: AppTextStyle.bold(context, fontSize: 16),
+                  ),
+                  const SizedBox(height: AppSizes.padding),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.timelapse_outlined,
+                        size: 12,
+                        color: AppColors.baseLv4,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Perkiraan check-in menginap',
+                        style: AppTextStyle.medium(
+                          context,
+                          fontSize: 12,
+                          color: AppColors.baseLv4,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSizes.padding / 4),
+                  Text(
+                    'Medi 2023 - Juli 2023',
+                    style: AppTextStyle.bold(context, fontSize: 14),
+                  ),
+                  const SizedBox(height: AppSizes.padding),
+                  AppButton(
+                    text: 'Berikutnya',
+                    onTap: () {
+                      // TODO
+                    },
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

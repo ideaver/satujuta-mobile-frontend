@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../const/app_sizes.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_style.dart';
 
@@ -7,6 +8,7 @@ class AppButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double? fontSize;
+  final double? borderWidth;
   final BorderRadius? borderRadius;
   final EdgeInsets padding;
   final bool enable;
@@ -14,6 +16,7 @@ class AppButton extends StatelessWidget {
   final Color disabledButtonColor;
   final Color disabledTextColor;
   final Color textColor;
+  final Color borderColor;
   final String text;
   final Function() onTap;
   final IconData? leftIcon;
@@ -26,7 +29,10 @@ class AppButton extends StatelessWidget {
     this.height,
     this.fontSize,
     this.borderRadius,
-    this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: AppSizes.padding,
+      vertical: AppSizes.padding,
+    ),
     this.enable = true,
     this.buttonColor = AppColors.primary,
     this.disabledButtonColor = AppColors.baseLv4,
@@ -34,6 +40,8 @@ class AppButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.leftIcon,
     this.rightIcon,
+    this.borderWidth,
+    this.borderColor = AppColors.baseLv6,
     this.child,
     required this.text,
     required this.onTap,
@@ -56,6 +64,12 @@ class AppButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: enable ? buttonColor : disabledButtonColor,
             borderRadius: borderRadius ?? BorderRadius.circular(100),
+            border: borderWidth != null
+                ? Border.all(
+                    width: borderWidth!,
+                    color: borderColor,
+                  )
+                : null,
           ),
           child: child ??
               Center(
@@ -100,7 +114,7 @@ class AppButton extends StatelessWidget {
       child: Icon(
         leftIcon,
         color: enable ? textColor : disabledTextColor,
-        size: (fontSize ?? 16),
+        size: fontSize != null ? (fontSize! + 2) : 16,
       ),
     );
   }
@@ -119,7 +133,7 @@ class AppButton extends StatelessWidget {
       child: Icon(
         rightIcon,
         color: enable ? textColor : disabledTextColor,
-        size: (fontSize ?? 16),
+        size: fontSize != null ? (fontSize! + 2) : 16,
       ),
     );
   }

@@ -27,6 +27,7 @@ class AppAssets {
       '${_baseIlustrationPath}onboarding-4.png';
   static const successIlusPath =
       '${_baseIlustrationPath}success-ilustration.png';
+  static const failedIlusPath = '${_baseIlustrationPath}failed-ilustration.png';
 
   // images
   static const baseImagePath = '${_baseAssetsPath}images/';
