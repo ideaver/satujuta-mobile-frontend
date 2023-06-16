@@ -83,8 +83,8 @@ class _AppExpansionListTileState extends State<AppExpansionListTile> {
                     ),
                     Icon(
                       isExpanded
-                          ? Icons.keyboard_arrow_down_rounded
-                          : Icons.keyboard_arrow_up_rounded,
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
                       color: AppColors.baseLv4,
                       size: 14,
                     ),

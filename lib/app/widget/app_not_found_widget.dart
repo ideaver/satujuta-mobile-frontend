@@ -18,39 +18,37 @@ class AppNotFoundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSizes.padding * 4),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              image ?? AppAssets.emptyEmojiPath,
-              height: 172,
+    return Padding(
+      padding: const EdgeInsets.all(AppSizes.padding * 4),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            image ?? AppAssets.emptyEmojiPath,
+            height: 172,
+          ),
+          const SizedBox(
+            height: AppSizes.padding,
+          ),
+          Text(
+            title ?? "Oops, Content Not Found",
+            textAlign: TextAlign.center,
+            style: AppTextStyle.bold(
+              context,
+              fontSize: 18,
             ),
-            const SizedBox(
-              height: AppSizes.padding,
+          ),
+          const SizedBox(height: AppSizes.padding / 2),
+          Text(
+            subtitle ?? "Try again later",
+            textAlign: TextAlign.center,
+            style: AppTextStyle.regular(
+              context,
+              fontSize: 14,
             ),
-            Text(
-              title ?? "Oops, Content Not Found",
-              textAlign: TextAlign.center,
-              style: AppTextStyle.bold(
-                context,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: AppSizes.padding / 2),
-            Text(
-              subtitle ?? "Try again later",
-              textAlign: TextAlign.center,
-              style: AppTextStyle.regular(
-                context,
-                fontSize: 14,
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
