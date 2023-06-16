@@ -25,7 +25,6 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
     return Scaffold(
       appBar: appBar(),
       body: body(),
-      bottomSheet: bottomButton(),
     );
   }
 
@@ -99,7 +98,14 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
           ),
           const SizedBox(height: AppSizes.padding * 2),
           orderPricing(),
-          const SizedBox(height: AppSizes.padding * 4),
+          const SizedBox(height: AppSizes.padding * 2),
+          AppButton(
+            onTap: () {
+              //TODO
+            },
+            text: isSuccess ? 'Lihat Ringkasan' : 'Ulangi',
+          ),
+          const SizedBox(height: AppSizes.padding * 2),
         ],
       ),
     );
@@ -205,19 +211,6 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget bottomButton() {
-    return Container(
-      height: 100,
-      padding: const EdgeInsets.all(AppSizes.padding),
-      child: AppButton(
-        onTap: () {
-          //TODO
-        },
-        text: isSuccess ? 'Lihat Ringkasan' : 'Ulangi',
       ),
     );
   }
