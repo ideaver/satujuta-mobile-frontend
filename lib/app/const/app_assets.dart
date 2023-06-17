@@ -28,6 +28,8 @@ class AppAssets {
   static const successIlusPath =
       '${_baseIlustrationPath}success-ilustration.png';
   static const failedIlusPath = '${_baseIlustrationPath}failed-ilustration.png';
+  static const dashboardUserPointCardIlusPath =
+      '${_baseIlustrationPath}dashboard-user-point-card-bg.png';
 
   // images
   static const baseImagePath = '${_baseAssetsPath}images/';
@@ -115,4 +117,5 @@ class AppAssets {
   static const dashboardIconPath = '${_baseIconPath}dashboard-icon.png';
   static const clockIconPath = '${_baseIconPath}clock-icon.png';
   static const trashIconPath = '${_baseIconPath}trash-icon.png';
+  static const whatsAppIconPath = '${_baseIconPath}whatsapp.png';
 }

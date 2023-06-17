@@ -67,10 +67,10 @@ class _RewardListViewState extends State<RewardListView> {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.campaign_rounded,
               ),
-              SizedBox(width: AppSizes.padding / 2),
+              const SizedBox(width: AppSizes.padding / 2),
               Text(
                 'Katalog Reward',
                 style: AppTextStyle.bold(context, fontSize: 14),
@@ -87,7 +87,7 @@ class _RewardListViewState extends State<RewardListView> {
               fontSize: 8,
               leftIcon: Icons.stars_rounded,
               buttonColor: AppColors.yellow,
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: AppSizes.padding / 4,
                 horizontal: AppSizes.padding / 2,
               ),
@@ -229,8 +229,8 @@ class _RewardListViewState extends State<RewardListView> {
                       color: AppColors.yellow,
                     ),
                   ),
-                  SizedBox(width: AppSizes.padding / 4),
-                  Icon(
+                  const SizedBox(width: AppSizes.padding / 4),
+                  const Icon(
                     Icons.stars,
                     size: 14,
                     color: AppColors.yellow,
@@ -251,7 +251,7 @@ class _RewardListViewState extends State<RewardListView> {
           ),
           const SizedBox(height: AppSizes.padding),
           Container(
-            padding: EdgeInsets.all(AppSizes.padding / 1.2),
+            padding: const EdgeInsets.all(AppSizes.padding / 1.2),
             decoration: BoxDecoration(
               color: AppColors.baseLv7,
               borderRadius: BorderRadius.circular(AppSizes.radius),
@@ -272,13 +272,14 @@ class _RewardListViewState extends State<RewardListView> {
                 Container(
                   height: 24,
                   width: double.infinity,
+                  alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
-                    color: AppColors.baseLv7,
+                    color: AppColors.baseLv6,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Container(
                     height: 24,
-                    width: 50,
+                    width: 200,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(100),
@@ -290,7 +291,7 @@ class _RewardListViewState extends State<RewardListView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '95',
+                      '75',
                       style: AppTextStyle.bold(
                         context,
                         fontSize: 12,

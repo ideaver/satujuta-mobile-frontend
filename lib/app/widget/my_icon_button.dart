@@ -10,6 +10,8 @@ class AppIconButton extends StatelessWidget {
   final double? imgIconSize;
   final double? iconSize;
   final Color? iconColor;
+  final Color? backgroundColor;
+  final EdgeInsets padding;
 
   const AppIconButton({
     super.key,
@@ -19,22 +21,30 @@ class AppIconButton extends StatelessWidget {
     this.imgIconSize,
     this.iconSize,
     this.iconColor,
+    this.backgroundColor,
+    this.padding = EdgeInsets.zero,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed ?? () {},
-      child: icon != null
-          ? Icon(
-              icon,
-              size: iconSize ?? AppSizes.icon,
-              color: iconColor,
-            )
-          : MyAssetImage(
-              path: imgIcon ?? '',
-              widthImage: imgIconSize ?? AppSizes.icon,
-            ),
-    );
+        onTap: onPressed ?? () {},
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            shape: BoxShape.circle,
+          ),
+          child: icon != null
+              ? Icon(
+                  icon,
+                  size: iconSize ?? AppSizes.icon,
+                  color: iconColor,
+                )
+              : MyAssetImage(
+                  path: imgIcon ?? '',
+                  widthImage: imgIconSize ?? AppSizes.icon,
+                ),
+        ));
   }
 }

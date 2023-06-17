@@ -9,17 +9,21 @@ import '../../app/theme/app_colors.dart';
 import '../../app/widget/app_widget_list_wrapper.dart';
 
 class PaymentStatusView extends StatefulWidget {
-  const PaymentStatusView({Key? key}) : super(key: key);
+  final bool isSucess;
 
-  static const String routeName = '/payment-status';
+  const PaymentStatusView({Key? key, required this.isSucess}) : super(key: key);
+
+  static const String successRouteName = '/payment-status-success';
+  static const String failedRouteName = '/payment-status-failed';
+
+  const PaymentStatusView.success({super.key, this.isSucess = true});
+  const PaymentStatusView.failed({super.key, this.isSucess = false});
 
   @override
   State<PaymentStatusView> createState() => _PaymentStatusViewState();
 }
 
 class _PaymentStatusViewState extends State<PaymentStatusView> {
-  bool isSuccess = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,14 +70,14 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
             child: AppImage(
-              image: isSuccess
+              image: widget.isSucess
                   ? AppAssets.successIlusPath
                   : AppAssets.failedIlusPath,
               imgProvider: ImgProvider.assetImage,
             ),
           ),
           Text(
-            isSuccess ? 'Berhasil' : 'Gagal',
+            widget.isSucess ? 'Berhasil' : 'Gagal',
             style: AppTextStyle.bold(context, fontSize: 20),
           ),
           const SizedBox(height: AppSizes.padding / 1.5),
@@ -103,7 +107,7 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
             onTap: () {
               //TODO
             },
-            text: isSuccess ? 'Lihat Ringkasan' : 'Ulangi',
+            text: widget.isSucess ? 'Lihat Ringkasan' : 'Ulangi',
           ),
           const SizedBox(height: AppSizes.padding * 2),
         ],

@@ -34,6 +34,8 @@ class AppColors {
   // static const Color primaryLv7 = Color(0xFFF4F5F6);
   // static const Color primaryLv8 = Color(0xFFFCFCFD);
 
+  static const Color tangerine = Color(0xFFfd9f34);
+
   // Gradient Text
   static const Color darkBlue = Color(0xFF0500FF);
   static const Color lightBlue = Color(0xFF01C8F4);

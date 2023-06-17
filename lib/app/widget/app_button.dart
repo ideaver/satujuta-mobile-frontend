@@ -17,6 +17,7 @@ class AppButton extends StatelessWidget {
   final Color disabledTextColor;
   final Color textColor;
   final Color borderColor;
+  final Color? iconColor;
   final String text;
   final Function() onTap;
   final IconData? leftIcon;
@@ -38,6 +39,7 @@ class AppButton extends StatelessWidget {
     this.disabledButtonColor = AppColors.baseLv4,
     this.disabledTextColor = Colors.white,
     this.textColor = Colors.white,
+    this.iconColor,
     this.leftIcon,
     this.rightIcon,
     this.borderWidth,
@@ -113,7 +115,7 @@ class AppButton extends StatelessWidget {
       padding: const EdgeInsets.only(right: 6),
       child: Icon(
         leftIcon,
-        color: enable ? textColor : disabledTextColor,
+        color: enable ? (iconColor ?? textColor) : disabledTextColor,
         size: fontSize != null ? (fontSize! + 2) : 16,
       ),
     );
@@ -132,7 +134,7 @@ class AppButton extends StatelessWidget {
       padding: const EdgeInsets.only(left: 6),
       child: Icon(
         rightIcon,
-        color: enable ? textColor : disabledTextColor,
+        color: enable ? (iconColor ?? textColor) : disabledTextColor,
         size: fontSize != null ? (fontSize! + 2) : 16,
       ),
     );
