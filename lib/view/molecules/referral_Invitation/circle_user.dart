@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/const/app_assets.dart';
+
 import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 import 'package:satujuta_app_mobile/app/widget/my_custom_text.dart';
 
@@ -7,9 +7,18 @@ import '../../../app/theme/app_colors.dart';
 import '../../../app/widget/my_container_circle.dart';
 
 class CircleUser extends StatelessWidget {
-  const CircleUser({
+  CircleUser({
     super.key,
+    required this.imageFriend1,
+    required this.imageFriend2,
+    required this.imageFriend3,
+    required this.countFriend,
   });
+
+  final String? imageFriend1;
+  final String? imageFriend2;
+  final String? imageFriend3;
+  final String? countFriend;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class CircleUser extends StatelessWidget {
               width: 2,
               color: AppColors.white,
             ),
-            imageUrl: AppAssets.userImage1Path,
+            imageUrl: imageFriend1,
           ),
           Positioned(
             right: 20,
@@ -38,7 +47,7 @@ class CircleUser extends StatelessWidget {
                     width: 2,
                     color: AppColors.white,
                   ),
-                  imageUrl: AppAssets.userImage2Path,
+                  imageUrl: imageFriend2,
                 ),
               ],
             ),
@@ -54,14 +63,14 @@ class CircleUser extends StatelessWidget {
                     width: 2,
                     color: AppColors.white,
                   ),
-                  imageUrl: AppAssets.userImage3Path,
+                  imageUrl: imageFriend3,
                 ),
                 Container(
                   width: 30,
                   height: 30,
                   child: Center(
                     child: MyCustomText(
-                        text: '+9',
+                        text: '+$countFriend',
                         style: AppTextStyle.bold(
                           context,
                           fontSize: 12,

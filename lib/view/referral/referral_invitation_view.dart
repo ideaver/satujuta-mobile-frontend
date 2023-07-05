@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:satujuta_app_mobile/app/const/app_assets.dart';
 
 import 'package:satujuta_app_mobile/app/widget/my_custom_text.dart';
 import 'package:satujuta_app_mobile/app/widget/my_separated.dart';
@@ -298,7 +299,12 @@ class WrapInviteFriend extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
                 child: MyInviteButton(
                   functionButton: () {},
-                  leadingButton: CircleUser(),
+                  leadingButton: CircleUser(
+                    imageFriend1: AppAssets.userImage1Path,
+                    imageFriend2: AppAssets.userImage2Path,
+                    imageFriend3: AppAssets.userImage3Path,
+                    countFriend: '9',
+                  ),
                   textButton: 'Undang Lebih Banyak',
                 ),
               )
