@@ -4,9 +4,9 @@ import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 
 import '../../../app/widget/my_icon.dart';
 import '../../../app/const/app_sizes.dart';
-import '../../../app/widget/my_icon.dart';
 import '../../../app/widget/my_separated.dart';
 
+// ignore: must_be_immutable
 class MyButtonWithCustomIcon extends StatelessWidget {
   MyButtonWithCustomIcon({
     super.key,

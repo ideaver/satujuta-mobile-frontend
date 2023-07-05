@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 
+// ignore: must_be_immutable
 class MyContainerCircle extends StatelessWidget {
   MyContainerCircle({
     this.size,
@@ -21,7 +22,7 @@ class MyContainerCircle extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(''),
+          image: AssetImage(imageUrl!),
           fit: BoxFit.cover,
         ),
         shape: BoxShape.circle,

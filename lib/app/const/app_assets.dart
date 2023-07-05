@@ -4,7 +4,22 @@ class AppAssets {
   // backgrounds
   static const _baseBackgroundPath = '${_baseAssetsPath}background/';
   static const backgroundPath = '${_baseBackgroundPath}bg-subject.png';
-  static const refBackgroundPath = '${_baseBackgroundPath}bg-ref';
+
+  // bg user
+  static const _baseUserDummyPath = '${_baseBackgroundPath}user/';
+  static const userDummy1Path = '${_baseUserDummyPath}Ellipse-1952.png';
+  static const userDummy2Path = '${_baseUserDummyPath}Ellipse-1953.png';
+  static const userDummy3Path = '${_baseUserDummyPath}Ellipse-1954.png';
+  static const userDummy4Path = '${_baseUserDummyPath}Ellipse-1955.png';
+  static const userDummy5Path = '${_baseUserDummyPath}Ellipse-1956.png';
+  static const userDummy6Path = '${_baseUserDummyPath}Ellipse-1957.png';
+  static const userDummy7Path = '${_baseUserDummyPath}Ellipse-1958.png';
+
+  // image user
+
+  static const userImage1Path = '${_baseUserDummyPath}student-1.png';
+  static const userImage2Path = '${_baseUserDummyPath}student-2.png';
+  static const userImage3Path = '${_baseUserDummyPath}student-3.png';
 
   // ilustrations
   static const _baseIlustrationPath = '${_baseAssetsPath}ilustration/';

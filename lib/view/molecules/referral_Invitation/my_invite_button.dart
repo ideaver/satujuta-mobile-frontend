@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
 
+// ignore: must_be_immutable
 class MyInviteButton extends StatelessWidget {
   MyInviteButton({
     super.key,
@@ -29,12 +31,12 @@ class MyInviteButton extends StatelessWidget {
         ),
         onPressed: functionButton,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSizes.padding),
           child: Row(
             children: [
               leadingButton!,
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding / 3),
                 child: Text(
                   textButton!,
                   style: AppTextStyle.regular(context, color: AppColors.base, fontSize: 12),

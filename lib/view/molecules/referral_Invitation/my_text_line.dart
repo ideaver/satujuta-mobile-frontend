@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_text_style.dart';
-import '../../../app/widget/my_custom_text.dart';
-
+// ignore: must_be_immutable
 class MyTextLine extends StatelessWidget {
   MyTextLine({Key? key, this.title, this.subTitle, this.gap}) : super(key: key);
 

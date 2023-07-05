@@ -8,6 +8,7 @@ import '../../../app/widget/my_icon_button.dart';
 import '../../molecules/referral_Invitation/my_button_with_custom_icon.dart';
 import '../../molecules/referral_Invitation/my_text_line.dart';
 
+// ignore: must_be_immutable
 class WrapContentCodeRef extends StatelessWidget {
   final bool userConditionInvite = false;
 
@@ -54,6 +55,7 @@ class WrapContentCodeRef extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class WrapCodeReferral extends StatelessWidget {
   WrapCodeReferral({
     required this.functionButton,
