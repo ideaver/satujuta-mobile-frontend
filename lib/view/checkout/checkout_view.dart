@@ -358,9 +358,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        i == 0
-                            ? 'Paket PREMIUM SatuJuta Membership'
-                            : 'Hotel Borobudur',
+                        i == 0 ? 'Paket PREMIUM SatuJuta Membership' : 'Hotel Borobudur',
                         style: AppTextStyle.extraBold(
                           context,
                           fontSize: 16,
@@ -368,9 +366,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                       const SizedBox(height: AppSizes.padding / 4),
                       Text(
-                        i == 0
-                            ? 'Berlisensi PT Satu Juta Kampung Inggris '
-                            : 'Pilihan Hotel Anda',
+                        i == 0 ? 'Berlisensi PT Satu Juta Kampung Inggris ' : 'Pilihan Hotel Anda',
                         style: AppTextStyle.regular(
                           context,
                           fontSize: 12,
@@ -856,8 +852,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                           margin: const EdgeInsets.only(bottom: 6),
                           decoration: BoxDecoration(
                             color: AppColors.white,
-                            borderRadius:
-                                BorderRadius.circular(AppSizes.radius),
+                            borderRadius: BorderRadius.circular(AppSizes.radius),
                           ),
                           child: RadioListTile(
                             value: null,
@@ -880,8 +875,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                                       'Bank Mandiri',
                                       style: AppTextStyle.bold(context),
                                     ),
-                                    const SizedBox(
-                                        height: AppSizes.padding / 2),
+                                    const SizedBox(height: AppSizes.padding / 2),
                                     Text(
                                       'Admin Fee Rp 2.500',
                                       style: AppTextStyle.regular(
@@ -902,8 +896,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               AppSizes.padding / 1.8,
                             ),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppSizes.radius),
+                              borderRadius: BorderRadius.circular(AppSizes.radius),
                             ),
                             controlAffinity: ListTileControlAffinity.trailing,
                           ),
@@ -922,8 +915,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                           margin: const EdgeInsets.only(bottom: 6),
                           decoration: BoxDecoration(
                             color: AppColors.white,
-                            borderRadius:
-                                BorderRadius.circular(AppSizes.radius),
+                            borderRadius: BorderRadius.circular(AppSizes.radius),
                           ),
                           child: RadioListTile(
                             value: null,
@@ -946,8 +938,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                                       'Bank Mandiri',
                                       style: AppTextStyle.bold(context),
                                     ),
-                                    const SizedBox(
-                                        height: AppSizes.padding / 2),
+                                    const SizedBox(height: AppSizes.padding / 2),
                                     Text(
                                       'Admin Fee Rp 2.500',
                                       style: AppTextStyle.regular(
@@ -968,8 +959,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               AppSizes.padding / 1.8,
                             ),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppSizes.radius),
+                              borderRadius: BorderRadius.circular(AppSizes.radius),
                             ),
                             controlAffinity: ListTileControlAffinity.trailing,
                           ),

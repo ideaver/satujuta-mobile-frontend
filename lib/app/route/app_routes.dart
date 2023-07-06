@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/view/referral/referral_invitation_view.dart';
 
 import '../../view/checkout/checkout_view.dart';
 import '../../view/dashboard/dashboard_view.dart';
@@ -8,7 +9,6 @@ import '../../view/login/reset_pass_view.dart';
 import '../../view/onboarding/onboarding_view.dart';
 import '../../view/payment_status/payment_status.dart';
 import '../../view/program_list/program_list_view.dart';
-import '../../view/referral/referral_invitation_view.dart';
 import '../../view/referral/referral_view.dart';
 import '../../view/register/register_view.dart';
 import '../../view/reward_list/reward_list_view.dart';
@@ -25,15 +25,11 @@ class AppRoutes {
     CheckoutView.routeName: (context) => const CheckoutView(),
     ProgramListView.routeName: (context) => const ProgramListView(),
     RewardListView.routeName: (context) => const RewardListView(),
-    PaymentStatusView.successRouteName: (context) =>
-        const PaymentStatusView.success(),
-    PaymentStatusView.failedRouteName: (context) =>
-        const PaymentStatusView.failed(),
+    PaymentStatusView.successRouteName: (context) => const PaymentStatusView.success(),
+    PaymentStatusView.failedRouteName: (context) => const PaymentStatusView.failed(),
     DashboardView.routeName: (context) => const DashboardView(),
     ReferralView.viewAsMeRouteName: (context) => const ReferralView.viewAsMe(),
-    ReferralView.viewAsOtherRouteName: (context) =>
-        const ReferralView.viewAsOther(),
-    ReferralInvitationView.routeName: (context) =>
-        const ReferralInvitationView(),
+    ReferralView.viewAsOtherRouteName: (context) => const ReferralView.viewAsOther(),
+    ReferralInvitationView.viewAsMeRouteName: (context) => const ReferralInvitationView.viewAsMe()
   };
 }

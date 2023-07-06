@@ -1,9 +1,27 @@
+import 'package:flutter/widgets.dart';
+
 class AppAssets {
   static const _baseAssetsPath = 'assets/';
 
   // backgrounds
   static const _baseBackgroundPath = '${_baseAssetsPath}background/';
   static const backgroundPath = '${_baseBackgroundPath}bg-subject.png';
+
+  // bg user
+  static const _baseUserDummyPath = '${_baseBackgroundPath}user/';
+  static const userDummy1Path = '${_baseUserDummyPath}Ellipse-1952.png';
+  static const userDummy2Path = '${_baseUserDummyPath}Ellipse-1953.png';
+  static const userDummy3Path = '${_baseUserDummyPath}Ellipse-1954.png';
+  static const userDummy4Path = '${_baseUserDummyPath}Ellipse-1955.png';
+  static const userDummy5Path = '${_baseUserDummyPath}Ellipse-1956.png';
+  static const userDummy6Path = '${_baseUserDummyPath}Ellipse-1957.png';
+  static const userDummy7Path = '${_baseUserDummyPath}Ellipse-1958.png';
+
+  // image user
+
+  static const userImage1Path = '${_baseUserDummyPath}student-1.png';
+  static const userImage2Path = '${_baseUserDummyPath}student-2.png';
+  static const userImage3Path = '${_baseUserDummyPath}student-3.png';
 
   // ilustrations
   static const _baseIlustrationPath = '${_baseAssetsPath}ilustration/';
@@ -12,24 +30,17 @@ class AppAssets {
   static const emojiSadIlusPath = '${_baseIlustrationPath}Emoji.png';
   static const createIlusPath = '${_baseIlustrationPath}Ilus-create.png';
   static const docIlusPath = '${_baseIlustrationPath}Ilus-doc.png';
-  static const emailCheckIlusPath =
-      '${_baseIlustrationPath}Ilus-emailcheck.png';
+  static const emailCheckIlusPath = '${_baseIlustrationPath}Ilus-emailcheck.png';
   static const lockIlusPath = '${_baseIlustrationPath}Ilus-lock.png';
   static const sendIlusPath = '${_baseIlustrationPath}Ilus-send.png';
   static const trashIlusPath = '${_baseIlustrationPath}Ilus-trash.png';
-  static const onBoardingFirstIlusPath =
-      '${_baseIlustrationPath}onboarding-1.png';
-  static const onBoardingSecondIlusPath =
-      '${_baseIlustrationPath}onboarding-2.png';
-  static const onBoardingThirdIlusPath =
-      '${_baseIlustrationPath}onboarding-3.png';
-  static const onBoardingFourthIlusPath =
-      '${_baseIlustrationPath}onboarding-4.png';
-  static const successIlusPath =
-      '${_baseIlustrationPath}success-ilustration.png';
+  static const onBoardingFirstIlusPath = '${_baseIlustrationPath}onboarding-1.png';
+  static const onBoardingSecondIlusPath = '${_baseIlustrationPath}onboarding-2.png';
+  static const onBoardingThirdIlusPath = '${_baseIlustrationPath}onboarding-3.png';
+  static const onBoardingFourthIlusPath = '${_baseIlustrationPath}onboarding-4.png';
+  static const successIlusPath = '${_baseIlustrationPath}success-ilustration.png';
   static const failedIlusPath = '${_baseIlustrationPath}failed-ilustration.png';
-  static const dashboardUserPointCardIlusPath =
-      '${_baseIlustrationPath}dashboard-user-point-card-bg.png';
+  static const dashboardUserPointCardIlusPath = '${_baseIlustrationPath}dashboard-user-point-card-bg.png';
 
   // images
   static const baseImagePath = '${_baseAssetsPath}images/';
@@ -59,8 +70,7 @@ class AppAssets {
   static const bankOCBCImgPath = '${_baseBankPath}ocbc.png';
   static const bankPaninImgPath = '${_baseBankPath}panin.png';
   static const bankPermataImgPath = '${_baseBankPath}permata.png';
-  static const bankStandardCharteredImgPath =
-      '${_baseBankPath}standard chartered.png';
+  static const bankStandardCharteredImgPath = '${_baseBankPath}standard chartered.png';
   static const bankUOBImgPath = '${_baseBankPath}uob.png';
   // EWALLET
   static const _baseEwalPath = '${baseImagePath}ewallet/';
@@ -96,8 +106,7 @@ class AppAssets {
   static const lockFormIconPath = '${_baseIconPath}lock-form.png';
   static const lockIconPath = '${_baseIconPath}lock.png';
   static const contactFormIconPath = '${_baseIconPath}contact-form.png';
-  static const dropdownRectangleFormIconPath =
-      '${_baseIconPath}dropdown-rectangle-icon.png';
+  static const dropdownRectangleFormIconPath = '${_baseIconPath}dropdown-rectangle-icon.png';
   static const locationFormIconPath = '${_baseIconPath}location-icon.png';
   static const personFormIconPath = '${_baseIconPath}person-icon.png';
   static const phoneFormIconPath = '${_baseIconPath}phone-icon.png';
@@ -118,4 +127,17 @@ class AppAssets {
   static const clockIconPath = '${_baseIconPath}clock-icon.png';
   static const trashIconPath = '${_baseIconPath}trash-icon.png';
   static const whatsAppIconPath = '${_baseIconPath}whatsapp.png';
+  static const copyIconPath = '${_baseIconPath}copy-icon.png';
+  static const forumIconPath = '${_baseIconPath}forum-icon.png';
+}
+
+class CustomIcon {
+  CustomIcon._();
+
+  static const _kFontFam = 'CustomIcon';
+  static const String? _kFontPkg = null;
+
+  static const IconData inventory = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData copy_document = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData forum_outlined = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
