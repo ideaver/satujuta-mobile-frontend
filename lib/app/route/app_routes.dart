@@ -8,6 +8,7 @@ import '../../view/login/reset_pass_view.dart';
 import '../../view/onboarding/onboarding_view.dart';
 import '../../view/payment_status/payment_status.dart';
 import '../../view/program_list/program_list_view.dart';
+import '../../view/referral/referral_invitation_view.dart';
 import '../../view/referral/referral_view.dart';
 import '../../view/register/register_view.dart';
 import '../../view/reward_list/reward_list_view.dart';
@@ -32,5 +33,7 @@ class AppRoutes {
     ReferralView.viewAsMeRouteName: (context) => const ReferralView.viewAsMe(),
     ReferralView.viewAsOtherRouteName: (context) =>
         const ReferralView.viewAsOther(),
+    ReferralInvitationView.routeName: (context) =>
+        const ReferralInvitationView(),
   };
 }

@@ -9,6 +9,8 @@ import '../../app/widget/my_icon_button.dart';
 class ReferralInvitationView extends StatefulWidget {
   const ReferralInvitationView({Key? key}) : super(key: key);
 
+  static const String routeName = '/referral-invitation';
+
   @override
   State<ReferralInvitationView> createState() => _ReferralInvitationViewState();
 }
@@ -18,35 +20,40 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: AppColors.baseLv7,
+        statusBarColor: AppColors.white,
       ),
     );
 
     return Scaffold(
-      appBar: appBar(),
-      body: body(),
+      body: Stack(
+        children: [
+          background(),
+          apppBar(),
+          body(),
+        ],
+      ),
     );
   }
 
-  AppBar appBar() {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: AppColors.baseLv7,
-      title: title(),
-    );
-  }
-
-  Widget title() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        backButton(),
-        Text(
-          'Undang Teman',
-          style: AppTextStyle.bold(context, fontSize: 18),
+  Widget apppBar() {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSizes.padding,
+          vertical: AppSizes.padding / 2,
         ),
-        moreButton(),
-      ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            backButton(),
+            Text(
+              'Undang Teman',
+              style: AppTextStyle.bold(context, fontSize: 18),
+            ),
+            moreButton(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -68,7 +75,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
       onPressed: () {
         Navigator.pop(context);
       },
-      icon: Icons.arrow_back_ios_rounded,
+      icon: Icons.more_vert_rounded,
       iconSize: 18,
       iconColor: AppColors.base,
       backgroundColor: AppColors.white,
@@ -86,6 +93,9 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
   }
 
   Widget background() {
-    return Container();
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+    );
   }
 }
