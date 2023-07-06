@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/app/const/app_assets.dart';
 
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
@@ -30,6 +31,7 @@ class WrapContentCodeRef extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+      margin: EdgeInsets.only(top: AppSizes.padding),
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +93,7 @@ class WrapCodeReferral extends StatelessWidget {
                 width: AppSizes.padding,
               ),
               AppIconButton(
-                icon: Icons.inventory_2_outlined,
+                icon: CustomIcon.inventory,
                 backgroundColor: AppColors.baseLv6,
                 iconSize: 25,
                 padding: EdgeInsets.all(AppSizes.padding),

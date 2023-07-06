@@ -103,7 +103,11 @@ flutter:
           weight: 400
         - asset: assets/fonts/PlusJakartaSans-Light.ttf
           weight: 300
-        
+          
+    - family:  CustomIcon
+      fonts:
+        - asset: assets/fonts/CustomIcon.ttf
+      
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

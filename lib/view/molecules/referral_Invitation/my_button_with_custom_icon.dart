@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/theme/app_colors.dart';
 import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 
-import '../../../app/widget/my_icon.dart';
 import '../../../app/const/app_sizes.dart';
-import '../../../app/widget/my_separated.dart';
 
 // ignore: must_be_immutable
 class MyButtonWithCustomIcon extends StatelessWidget {
@@ -15,17 +13,15 @@ class MyButtonWithCustomIcon extends StatelessWidget {
     required this.icon,
   });
 
-  IconData? icon;
-
   final VoidCallback onPressed;
 
+  IconData? icon;
   final String text;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSizes.padding * 2,
-        horizontal: AppSizes.padding * 2,
+      padding: const EdgeInsets.all(
+        AppSizes.padding * 2,
       ),
       child: ElevatedButton(
           onPressed: onPressed,
@@ -37,20 +33,26 @@ class MyButtonWithCustomIcon extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+            padding: const EdgeInsets.all(AppSizes.padding / 1.5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   text,
-                  style: AppTextStyle.bold(context, fontSize: 16, color: AppColors.white),
+                  style: AppTextStyle.bold(
+                    context,
+                    fontSize: 16,
+                    color: AppColors.white,
+                  ),
                 ),
-                MySeparated(sizeWidth: 10, sizeHeight: 0),
-                MyIcon(
-                  iconData: icon!,
-                  size: 25,
-                )
+                CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Icon(
+                      icon,
+                      size: 35,
+                      color: Colors.white,
+                    ))
               ],
             ),
           )),

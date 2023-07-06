@@ -20,7 +20,9 @@ class MyInviteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        onPressed: functionButton,
         style: ButtonStyle(
+          visualDensity: VisualDensity.compact,
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
@@ -29,17 +31,21 @@ class MyInviteButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(AppColors.baseLv6),
           elevation: MaterialStateProperty.all(0),
         ),
-        onPressed: functionButton,
         child: Padding(
-          padding: const EdgeInsets.all(AppSizes.padding),
+          padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               leadingButton!,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding / 3),
                 child: Text(
                   textButton!,
-                  style: AppTextStyle.regular(context, color: AppColors.base, fontSize: 12),
+                  style: AppTextStyle.regular(
+                    context,
+                    color: AppColors.base,
+                    fontSize: 14,
+                  ),
                 ),
               ),
               Icon(
