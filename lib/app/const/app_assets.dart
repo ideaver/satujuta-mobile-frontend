@@ -129,6 +129,8 @@ class AppAssets {
   static const whatsAppIconPath = '${_baseIconPath}whatsapp.png';
   static const copyIconPath = '${_baseIconPath}copy-icon.png';
   static const forumIconPath = '${_baseIconPath}forum-icon.png';
+  static const poinIconPath = '${_baseIconPath}poin-icon.png';
+  static const contactGroupIconPath = '${_baseIconPath}contact-group-icon.png';
 }
 
 class CustomIcon {
@@ -138,6 +140,8 @@ class CustomIcon {
   static const String? _kFontPkg = null;
 
   static const IconData inventory = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData coin_icon = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData copy_document = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData forum_outlined = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit_icon = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -28,7 +28,7 @@ class MyInviteButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
           ),
-          backgroundColor: MaterialStateProperty.all(AppColors.baseLv6),
+          backgroundColor: MaterialStateProperty.all(AppColors.baseLv7),
           elevation: MaterialStateProperty.all(0),
         ),
         child: Padding(

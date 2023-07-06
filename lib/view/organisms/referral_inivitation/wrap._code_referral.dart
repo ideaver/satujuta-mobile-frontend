@@ -16,9 +16,11 @@ class WrapContentCodeRef extends StatelessWidget {
   WrapContentCodeRef({
     required this.title,
     required this.subtitle,
-    required this.functionButton,
     required this.icon,
     required this.textButton,
+    required this.functionButton,
+    required this.functionShareButton,
+    required this.functionRefButton,
   });
 
   String? title;
@@ -26,6 +28,8 @@ class WrapContentCodeRef extends StatelessWidget {
   String? textButton;
   IconData? icon;
   dynamic functionButton;
+  dynamic functionShareButton;
+  dynamic functionRefButton;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +51,11 @@ class WrapContentCodeRef extends StatelessWidget {
                   subTitle: MyCustomText(text: subtitle!, style: AppTextStyle.regular(context, fontSize: 14)),
                 ),
           WrapCodeReferral(
-            functionButton: functionButton,
             textButton: textButton,
             icon: icon,
+            functionButton: functionButton,
+            functionRefButton: functionRefButton,
+            functionShareButton: functionShareButton,
           )
         ],
       ),
@@ -61,11 +67,15 @@ class WrapContentCodeRef extends StatelessWidget {
 class WrapCodeReferral extends StatelessWidget {
   WrapCodeReferral({
     required this.functionButton,
+    required this.functionShareButton,
+    required this.functionRefButton,
     required this.icon,
     required this.textButton,
   });
 
   dynamic functionButton;
+  dynamic functionShareButton;
+  dynamic functionRefButton;
   IconData? icon;
   String? textButton;
 
@@ -80,24 +90,30 @@ class WrapCodeReferral extends StatelessWidget {
           icon: icon!,
         ),
         Container(
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppIconButton(
-                icon: Icons.share_outlined,
-                backgroundColor: AppColors.baseLv5,
-                iconSize: 25,
-                padding: EdgeInsets.all(AppSizes.padding),
+              GestureDetector(
+                onTap: functionShareButton,
+                child: AppIconButton(
+                  icon: Icons.share_outlined,
+                  backgroundColor: AppColors.baseLv5,
+                  iconSize: 25,
+                  padding: EdgeInsets.all(AppSizes.padding),
+                ),
               ),
               SizedBox(
                 width: AppSizes.padding,
               ),
-              AppIconButton(
-                icon: CustomIcon.inventory,
-                backgroundColor: AppColors.baseLv6,
-                iconSize: 25,
-                padding: EdgeInsets.all(AppSizes.padding),
-                iconColor: AppColors.baseLv4,
+              GestureDetector(
+                onTap: functionRefButton,
+                child: AppIconButton(
+                  icon: CustomIcon.inventory,
+                  backgroundColor: AppColors.baseLv6,
+                  iconSize: 25,
+                  padding: EdgeInsets.all(AppSizes.padding),
+                  iconColor: AppColors.baseLv4,
+                ),
               ),
             ],
           ),
