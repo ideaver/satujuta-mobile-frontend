@@ -30,7 +30,12 @@ class ListMenuView extends StatelessWidget {
                 );
               },
               title: Text(
-                AppRoutes.routes.entries.elementAt(index).key.substring(1).replaceAll('-', ' ').toUpperCase(),
+                AppRoutes.routes.entries
+                    .elementAt(index)
+                    .key
+                    .substring(1)
+                    .replaceAll('-', ' ')
+                    .toUpperCase(),
                 style: AppTextStyle.bold(context),
               ),
               trailing: const Icon(

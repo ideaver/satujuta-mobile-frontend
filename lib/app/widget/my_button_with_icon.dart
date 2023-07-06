@@ -5,7 +5,11 @@ import 'my_icon.dart';
 import 'my_separated.dart';
 
 class MyButtonWithIcon extends StatelessWidget {
-  const MyButtonWithIcon({super.key, required this.onPressed, required this.text, required this.buttonStyle});
+  const MyButtonWithIcon(
+      {super.key,
+      required this.onPressed,
+      required this.text,
+      required this.buttonStyle});
 
   final VoidCallback onPressed;
   final ButtonStyle buttonStyle;
