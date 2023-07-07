@@ -96,19 +96,15 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
               hintText: widget.kodePos,
             ),
             AppTextField(
-                enabled: false,
-                onTap: () {
-                  AppModal.show(
-                    context: context,
-                    title: 'Role',
-                    child: roleList(),
-                  );
-                },
-                suffixIcon: const Icon(
-                  Icons.keyboard_arrow_down,
-                ),
-                lableText: 'No. Whatsapp',
-                hintText: widget.noWa),
+              onTap: () {
+                // TODO
+              },
+              suffixIcon: const Icon(
+                Icons.keyboard_arrow_down,
+              ),
+              lableText: 'No. Whatsapp',
+              hintText: widget.noWa,
+            ),
             AppTextField(
               onTap: () {
                 // TODO

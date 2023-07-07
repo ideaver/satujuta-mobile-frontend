@@ -4,7 +4,7 @@ import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
 
-class SettingItem extends StatelessWidget {
+class SettingItem extends StatefulWidget {
   SettingItem({
     super.key,
     required this.icon,
@@ -19,8 +19,13 @@ class SettingItem extends StatelessWidget {
   final Widget? rightButton;
 
   @override
+  State<SettingItem> createState() => _SettingItemState();
+}
+
+class _SettingItemState extends State<SettingItem> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return Ink(
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -38,7 +43,7 @@ class SettingItem extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  icon!,
+                  widget.icon!,
                   color: AppColors.base,
                   size: 24,
                 ),
@@ -48,29 +53,29 @@ class SettingItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title!,
+                    widget.title!,
                     style: AppTextStyle.bold(
                       context,
                     ),
                   ),
-                  subTitle == null
+                  widget.subTitle == null
                       ? SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.only(top: AppSizes.height / 2),
                           child: Text(
-                            subTitle!,
+                            widget.subTitle!,
                             style: AppTextStyle.regular(
                               context,
                               fontSize: 12,
                               color: AppColors.baseLv5,
                             ),
                           ),
-                        )
+                        ),
                 ],
               ),
             ],
           ),
-          rightButton!
+          widget.rightButton!,
         ],
       ),
     );

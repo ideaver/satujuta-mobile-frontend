@@ -147,4 +147,6 @@ class CustomIcon {
   static const IconData forum_outlined = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData edit_icon = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData logout_icon = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData about_icon = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData notification_icon = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

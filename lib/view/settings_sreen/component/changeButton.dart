@@ -6,8 +6,7 @@ import '../../../app/widget/app_button.dart';
 Widget changeButton(String text, dynamic functionButton) {
   return Padding(
     padding: const EdgeInsets.symmetric(
-      horizontal: AppSizes.padding * 5,
-      vertical: AppSizes.padding / 2,
+      vertical: AppSizes.padding / 1.5,
     ),
     child: AppButton(text: text, onTap: functionButton),
   );

@@ -24,14 +24,14 @@ class _SettingsPasswordState extends State<SettingsPassword> {
           textFields: [
             AppTextField(
               suffixIcon: Image.asset(
-                AppAssets.lockFormIconPath,
+                AppAssets.passwordIconPath,
               ),
               obscureText: true,
               lableText: 'Password Lama',
             ),
             AppTextField(
               suffixIcon: Image.asset(
-                AppAssets.lockFormIconPath,
+                AppAssets.passwordIconPath,
               ),
               obscureText: true,
               lableText: 'Password Baru',
