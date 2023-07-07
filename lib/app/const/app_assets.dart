@@ -149,4 +149,5 @@ class CustomIcon {
   static const IconData logout_icon = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData about_icon = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notification_icon = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData contact_icon = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
