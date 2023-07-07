@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_style.dart';
@@ -99,8 +100,8 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
               onTap: () {
                 // TODO
               },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
+              suffixIcon: Image.asset(
+                AppAssets.phoneIconPath,
               ),
               lableText: 'No. Whatsapp',
               hintText: widget.noWa,
