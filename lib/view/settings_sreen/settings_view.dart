@@ -118,15 +118,11 @@ class _SettingsViewState extends State<SettingsView> {
           settingListItems(),
           SettingsPassword(),
           validatorInfo(),
-          Row(
-            children: [
-              changeButton(
-                'Ubah Password',
-                () {
-                  // TO DO
-                },
-              ),
-            ],
+          changeButton(
+            'Ubah Password',
+            () {
+              // TO DO
+            },
           ),
         ],
       ),
