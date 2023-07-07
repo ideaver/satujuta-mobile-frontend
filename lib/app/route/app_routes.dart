@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/view/referral/referral_invitation_view.dart';
+import 'package:satujuta_app_mobile/view/settings_sreen/settings_view.dart';
 
 import '../../view/checkout/checkout_view.dart';
 import '../../view/dashboard/dashboard_view.dart';
@@ -32,6 +33,7 @@ class AppRoutes {
     ReferralView.viewAsMeRouteName: (context) => const ReferralView.viewAsMe(),
     ReferralView.viewAsOtherRouteName: (context) => const ReferralView.viewAsOther(),
     ReferralInvitationView.viewAsMeRouteName: (context) => const ReferralInvitationView.viewAsMe(),
-    ReferralDetailView.viewAsMeRouteName: (context) => const ReferralDetailView.viewAsMe()
+    ReferralDetailView.viewAsMeRouteName: (context) => const ReferralDetailView.viewAsMe(),
+    SettingsView.routeName: (context) => const SettingsView()
   };
 }

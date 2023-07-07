@@ -20,8 +20,7 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView>
-    with TickerProviderStateMixin {
+class _RegisterViewState extends State<RegisterView> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override

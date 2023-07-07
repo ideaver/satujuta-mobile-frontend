@@ -278,7 +278,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
   }
 
   Widget wrapListQuestion() {
-    return AppExpansionListTile(
+    return const AppExpansionListTile(
       title: 'Pertanyaan yang sering ditanyakan',
       backgroundColor: Colors.white,
       icon: CustomIcon.forum_outlined,
@@ -311,7 +311,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 2),
       child: Container(
-        child: Column(
+        child: const Column(
           children: [
             ReferralCard(
               title: 'KOMISI BULAN INI',

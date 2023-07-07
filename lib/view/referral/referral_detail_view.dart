@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/const/app_assets.dart';
 import 'package:satujuta_app_mobile/app/theme/app_colors.dart';
 import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
+import 'package:satujuta_app_mobile/view/register/components/reg_commission.dart';
 
 import '../../app/const/app_consts.dart';
 import '../../app/const/app_sizes.dart';
@@ -31,6 +32,8 @@ class ReferralDetailView extends StatefulWidget {
 
 class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProviderStateMixin {
   late TabController tabController;
+  bool isShow = true;
+  int a = 3;
 
   @override
   void initState() {
@@ -124,6 +127,21 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
     );
   }
 
+  Widget body() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(AppSizes.padding),
+      child: Column(
+        children: [
+          wrapMyRefCode(),
+          countMemberAndTask(),
+          wrapInviteFriend(),
+          tabBar(),
+          tabBarViews(),
+        ],
+      ),
+    );
+  }
+
   Widget background() {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -148,19 +166,13 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
             ),
             child: Column(
               children: [
-                Container(
-                  width: 160,
-                  height: 160,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        scale: 1.0,
-                        image: AssetImage(
-                          AppAssets.userImage1Path,
-                        ),
-                      )),
+                const CircleAvatar(
+                  maxRadius: 80,
+                  backgroundImage: AssetImage(
+                    AppAssets.userImage1Path,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: AppSizes.height * 2,
                 ),
                 SizedBox(
@@ -193,21 +205,6 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget body() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      child: Column(
-        children: [
-          wrapMyRefCode(),
-          countMemberAndTask(),
-          wrapInviteFriend(),
-          tabBar(),
-          tabBarViews(),
         ],
       ),
     );
@@ -341,7 +338,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
     return Container(
       margin: EdgeInsets.only(
         top: AppSizes.padding,
-        bottom: AppSizes.padding / 4,
+        bottom: AppSizes.padding * 1.5,
       ),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
@@ -428,7 +425,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
         child: tabController.index == 0
             ? poinItems()
             : tabController.index == 1
-                ? rewardItems()
+                ? RegCommission()
                 : rewardItems());
   }
 
@@ -440,11 +437,14 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
         icon: Icons.access_time_sharp,
         expand: true,
         children: [
-          ...List.generate(3, (i) {
+          ...List.generate(a, (i) {
             return rewardItemCard(i);
           }),
           showButton(() {
-            // TO DO
+            setState(() {
+              isShow ? a = 5 : a = 3;
+              isShow ? isShow = false : isShow = true;
+            });
           }),
         ],
       ),
@@ -459,18 +459,21 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
         icon: Icons.access_time_sharp,
         expand: true,
         children: [
-          ...List.generate(3, (i) {
+          ...List.generate(a, (i) {
             return poinItemCard(i);
           }),
           showButton(() {
-            // TO DO
+            setState(() {
+              isShow ? a = 5 : a = 3;
+              isShow ? isShow = false : isShow = true;
+            });
           }),
         ],
       ),
     );
   }
 
-//
+// ===========
 
   Widget rewardItemCard(int i) {
     return Container(
@@ -663,14 +666,14 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tampilkan Semua',
+              isShow ? 'Tampilkan Semua' : 'Sembunyikan ',
               style: AppTextStyle.bold(context, fontSize: 14, color: AppColors.primary),
             ),
             SizedBox(
               width: AppSizes.height,
             ),
-            const Icon(
-              Icons.arrow_downward,
+            Icon(
+              isShow ? Icons.arrow_downward : Icons.arrow_upward,
               size: AppSizes.height,
               color: AppColors.primary,
             )
