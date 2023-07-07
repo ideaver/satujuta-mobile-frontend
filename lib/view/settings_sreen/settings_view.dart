@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:satujuta_app_mobile/view/settings_sreen/component/settings_password.dart';
 
+import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
 import '../../app/widget/my_icon_button.dart';
+import 'component/changeButton.dart';
 import 'component/settings_items.dart';
 
 class SettingsView extends StatefulWidget {
@@ -20,6 +22,8 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
+  bool isCheck = true;
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -45,7 +49,7 @@ class _SettingsViewState extends State<SettingsView> {
   AppBar appBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.baseLv7,
       title: title(),
     );
   }
@@ -82,8 +86,8 @@ class _SettingsViewState extends State<SettingsView> {
       onPressed: () {
         Navigator.pop(context);
       },
-      icon: Icons.more_horiz,
-      iconSize: 18,
+      icon: CustomIcon.logout_icon,
+      iconSize: 20,
       iconColor: AppColors.base,
       backgroundColor: AppColors.white,
       padding: const EdgeInsets.all(AppSizes.padding / 2),
@@ -93,7 +97,6 @@ class _SettingsViewState extends State<SettingsView> {
   SliverAppBar sliverAppBarWidget() {
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      expandedHeight: 0,
       flexibleSpace: FlexibleSpaceBar(
         background: Column(
           children: [
@@ -112,6 +115,13 @@ class _SettingsViewState extends State<SettingsView> {
         children: [
           settingListItems(),
           SettingsPassword(),
+          validatorInfo(),
+          changeButton(
+            'Ubah Password',
+            () {
+              // TO DO
+            },
+          ),
         ],
       ),
     );
@@ -119,7 +129,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget settingListItems() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: AppSizes.padding),
+      margin: EdgeInsets.only(top: AppSizes.padding * 1.5),
       child: Column(
         children: [
           SettingItem(
@@ -141,12 +151,20 @@ class _SettingsViewState extends State<SettingsView> {
             title: 'Notifikasi',
             subTitle: 'Enable system send notification',
             rightButton: IconButton(
-              icon: Icon(
-                Icons.chevron_right,
-                size: 20,
-              ),
+              icon: isCheck
+                  ? Image(
+                      image: AssetImage(
+                      AppAssets.checkIconPath,
+                    ))
+                  : Image(
+                      image: AssetImage(
+                      AppAssets.uncheckIconPath,
+                    )),
               onPressed: () {
                 // TO DO
+                setState(() {
+                  isCheck ? isCheck = false : isCheck = true;
+                });
               },
             ),
           ),
@@ -181,6 +199,52 @@ class _SettingsViewState extends State<SettingsView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget validatorInfo() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              AppAssets.successIconPath,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'Besar atau kecil karakter',
+              style: AppTextStyle.medium(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Row(
+          children: [
+            Image.asset(
+              AppAssets.failedIconPath,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '6 atau lebih karakter',
+              style: AppTextStyle.medium(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Row(
+          children: [
+            Image.asset(
+              AppAssets.unsuccessIconPath,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'Setidaknya 1 nomor',
+              style: AppTextStyle.medium(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizes.padding),
+      ],
     );
   }
 }

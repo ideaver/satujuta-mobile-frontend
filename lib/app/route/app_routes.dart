@@ -14,6 +14,7 @@ import '../../view/referral/referral_detail_view.dart';
 import '../../view/referral/referral_view.dart';
 import '../../view/register/register_view.dart';
 import '../../view/reward_list/reward_list_view.dart';
+import '../../view/settings_sreen/edit_profile_view.dart';
 import '../../view/splash/splash_view.dart';
 
 class AppRoutes {
@@ -34,6 +35,7 @@ class AppRoutes {
     ReferralView.viewAsOtherRouteName: (context) => const ReferralView.viewAsOther(),
     ReferralInvitationView.viewAsMeRouteName: (context) => const ReferralInvitationView.viewAsMe(),
     ReferralDetailView.viewAsMeRouteName: (context) => const ReferralDetailView.viewAsMe(),
-    SettingsView.routeName: (context) => const SettingsView()
+    SettingsView.routeName: (context) => const SettingsView(),
+    EditProfileView.routeName: (context) => const EditProfileView(),
   };
 }

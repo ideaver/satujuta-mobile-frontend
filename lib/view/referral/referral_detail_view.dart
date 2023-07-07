@@ -19,7 +19,7 @@ class ReferralDetailView extends StatefulWidget {
   final PageStateEnum pageState;
   const ReferralDetailView({Key? key, required this.pageState}) : super(key: key);
 
-  static const String viewAsMeRouteName = '/my-referral-Detail';
+  static const String viewAsMeRouteName = '/my-referral-detail';
 
   const ReferralDetailView.viewAsMe({
     Key? key,
@@ -154,14 +154,14 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
             child: Container(
               width: 619,
               height: 619,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color.fromRGBO(55, 114, 255, 0.05),
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: AppSizes.padding * 4,
             ),
             child: Column(
@@ -192,7 +192,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: AppSizes.height * 2,
                 ),
                 Text(

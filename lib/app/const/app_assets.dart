@@ -131,6 +131,8 @@ class AppAssets {
   static const forumIconPath = '${_baseIconPath}forum-icon.png';
   static const poinIconPath = '${_baseIconPath}poin-icon.png';
   static const contactGroupIconPath = '${_baseIconPath}contact-group-icon.png';
+  static const checkIconPath = '${_baseIconPath}check-icon.png';
+  static const uncheckIconPath = '${_baseIconPath}uncheck-icon.png';
 }
 
 class CustomIcon {
@@ -144,4 +146,5 @@ class CustomIcon {
   static const IconData copy_document = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData forum_outlined = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData edit_icon = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData logout_icon = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
