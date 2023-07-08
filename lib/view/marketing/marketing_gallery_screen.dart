@@ -74,10 +74,9 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
       onPressed: () {
         Navigator.pop(context);
       },
-      icon: Icons.arrow_back,
+      icon: Icons.chevron_left,
       iconSize: 18,
       iconColor: AppColors.base,
-      backgroundColor: AppColors.white,
       padding: const EdgeInsets.all(AppSizes.padding / 2),
     );
   }
