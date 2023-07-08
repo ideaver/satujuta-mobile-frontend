@@ -27,6 +27,7 @@ class AppAssets {
   static const _baseIlustrationPath = '${_baseAssetsPath}ilustration/';
   static const emojiOkIlusPath = '${_baseIlustrationPath}Emoji-1.png';
   static const emojiHappyIlusPath = '${_baseIlustrationPath}Emoji-2.png';
+  static const emojiHappyIlus2Path = '${_baseIlustrationPath}Emoji-3.png';
   static const emojiSadIlusPath = '${_baseIlustrationPath}Emoji.png';
   static const createIlusPath = '${_baseIlustrationPath}Ilus-create.png';
   static const docIlusPath = '${_baseIlustrationPath}Ilus-doc.png';
