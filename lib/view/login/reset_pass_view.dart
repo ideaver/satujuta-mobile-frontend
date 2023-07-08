@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/widget/app_button.dart';
+import 'package:satujuta_app_mobile/view/login/login_view.dart';
+import 'package:satujuta_app_mobile/view/onboarding/onboarding_view.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
@@ -53,6 +55,11 @@ class _ResetPassViewState extends State<ResetPassView> {
           AppButton(
             onTap: () {
               // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginView.routeName,
+                ModalRoute.withName(OnboardingView.routeName),
+              );
             },
             textColor: AppColors.primary,
             buttonColor: AppColors.primary.withOpacity(0.12),

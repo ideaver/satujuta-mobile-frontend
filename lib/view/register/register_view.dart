@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/widget/app_image.dart';
+import 'package:satujuta_app_mobile/view/login/login_view.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
@@ -117,6 +118,11 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
               AppButton(
                 onTap: () {
                   // TODO
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    LoginView.routeName,
+                    ModalRoute.withName(RegisterView.routeName),
+                  );
                 },
                 textColor: AppColors.primary,
                 buttonColor: AppColors.primary.withOpacity(0.12),

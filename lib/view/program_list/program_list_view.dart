@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
+import 'package:satujuta_app_mobile/view/organisms/custom_nav_button.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
@@ -38,7 +39,15 @@ class _ProgramListViewState extends State<ProgramListView> {
             sliverAppBarWidget(),
           ];
         },
-        body: body(),
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            body(),
+            CustomNavBottom(
+              indexIndicator: 1,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -124,9 +133,7 @@ class _ProgramListViewState extends State<ProgramListView> {
                     child: Icon(
                       Icons.dashboard_outlined,
                       size: 16,
-                      color: selectedCategory == -1
-                          ? AppColors.white
-                          : AppColors.base,
+                      color: selectedCategory == -1 ? AppColors.white : AppColors.base,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -147,8 +154,7 @@ class _ProgramListViewState extends State<ProgramListView> {
     if (selectedCategory == 0) {
       return const AppNotFoundWidget(
         title: 'Maaf, Saat Ini Belum Ada Program Tersedia',
-        subtitle:
-            'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
+        subtitle: 'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
       );
     }
 

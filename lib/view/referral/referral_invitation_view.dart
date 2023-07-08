@@ -14,6 +14,7 @@ import '../../app/theme/app_text_style.dart';
 import '../../app/widget/my_icon_button.dart';
 import '../molecules/referral_Invitation/circle_user.dart';
 import '../molecules/referral_Invitation/my_text_line.dart';
+import '../organisms/custom_nav_button.dart';
 import '../organisms/referral_inivitation/background_referral.dart';
 
 class QuestionCard extends StatefulWidget {
@@ -177,7 +178,13 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
             sliverAppBarWidget(),
           ];
         },
-        body: body(),
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            body(),
+            CustomNavBottom(indexIndicator: 2),
+          ],
+        ),
       ),
     );
   }
@@ -239,6 +246,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
           wrapInviteFriend(context),
           wrapReferralCard(),
           wrapListQuestion(),
+          SizedBox(height: AppSizes.height * 9)
         ],
       ),
     );

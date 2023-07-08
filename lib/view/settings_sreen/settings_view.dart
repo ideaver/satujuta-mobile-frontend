@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:satujuta_app_mobile/view/about/about_view.dart';
+import 'package:satujuta_app_mobile/view/login/login_view.dart';
 import 'package:satujuta_app_mobile/view/settings_sreen/component/settings_password.dart';
+import 'package:satujuta_app_mobile/view/settings_sreen/edit_profile_view.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
 import '../../app/widget/my_icon_button.dart';
+import '../organisms/custom_nav_button.dart';
 import 'component/changeButton.dart';
 import 'component/settings_items.dart';
 
@@ -41,7 +45,13 @@ class _SettingsViewState extends State<SettingsView> {
             sliverAppBarWidget(),
           ];
         },
-        body: body(),
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            body(),
+            CustomNavBottom(indexIndicator: 3),
+          ],
+        ),
       ),
     );
   }
@@ -124,6 +134,7 @@ class _SettingsViewState extends State<SettingsView> {
               // TO DO
             },
           ),
+          SizedBox(height: AppSizes.height * 8)
         ],
       ),
     );
@@ -138,7 +149,14 @@ class _SettingsViewState extends State<SettingsView> {
             icon: Icons.person_outline,
             title: 'Ubah Profile',
             rightButton: chevronButton(),
-            functionButton: () {},
+            functionButton: () {
+              // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                EditProfileView.routeName,
+                ModalRoute.withName(SettingsView.routeName),
+              );
+            },
           ),
           SizedBox(height: AppSizes.padding / 2),
           SettingItem(
@@ -170,14 +188,28 @@ class _SettingsViewState extends State<SettingsView> {
             title: 'Tentang',
             subTitle: 'Informasi tentang aplikasi',
             rightButton: chevronButton(),
-            functionButton: () {},
+            functionButton: () {
+              // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AboutView.routeName,
+                ModalRoute.withName(SettingsView.routeName),
+              );
+            },
           ),
           SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: Icons.arrow_circle_left_outlined,
             title: 'Logout',
             rightButton: chevronButton(),
-            functionButton: () {},
+            functionButton: () {
+              // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginView.routeName,
+                ModalRoute.withName(LoginView.routeName),
+              );
+            },
           ),
         ],
       ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
+import 'package:satujuta_app_mobile/view/login/login_view.dart';
 import 'package:satujuta_app_mobile/view/screens/register/register_screen.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
-import '../screens/authentication/login_screen.dart';
+
 import 'components/ob_slide.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -211,12 +213,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   Widget loginButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const LoginScreen(),
-          ),
-        );
+        Navigator.pushNamed(context, LoginView.routeName);
       },
       child: Text(
         "Login",

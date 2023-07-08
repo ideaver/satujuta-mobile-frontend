@@ -27,6 +27,9 @@ class _AboutViewState extends State<AboutView> {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: AppIconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: Icons.arrow_back_rounded,
               iconColor: AppColors.base,
               backgroundColor: Colors.white,

@@ -9,6 +9,7 @@ import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
 import '../../app/widget/app_button.dart';
 import '../../app/widget/app_text_field.dart';
+import '../organisms/custom_nav_button.dart';
 
 class ReferralView extends StatefulWidget {
   final PageStateEnum pageState;
@@ -51,7 +52,13 @@ class _ReferralViewState extends State<ReferralView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       appBar: appBar(),
-      body: body(),
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          body(),
+          CustomNavBottom(indexIndicator: 2),
+        ],
+      ),
     );
   }
 
@@ -252,8 +259,7 @@ class _ReferralViewState extends State<ReferralView> {
           horizontal: AppSizes.padding,
         ),
         decoration: BoxDecoration(
-          color:
-              selectedMemberStatus == i ? AppColors.primary : AppColors.white,
+          color: selectedMemberStatus == i ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Row(
@@ -264,9 +270,7 @@ class _ReferralViewState extends State<ReferralView> {
                     child: Icon(
                       Icons.dashboard_outlined,
                       size: 16,
-                      color: selectedMemberStatus == -1
-                          ? AppColors.white
-                          : AppColors.base,
+                      color: selectedMemberStatus == -1 ? AppColors.white : AppColors.base,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -274,9 +278,7 @@ class _ReferralViewState extends State<ReferralView> {
               i == -1 ? 'Semua' : '${memberStatuses[i]} (0)',
               style: AppTextStyle.semiBold(
                 context,
-                color: selectedMemberStatus == i
-                    ? AppColors.white
-                    : AppColors.base,
+                color: selectedMemberStatus == i ? AppColors.white : AppColors.base,
               ),
             ),
           ],
@@ -294,7 +296,9 @@ class _ReferralViewState extends State<ReferralView> {
             ...List.generate(15, (i) {
               return memberCard(i);
             }),
-            const SizedBox(height: AppSizes.padding * 2),
+            SizedBox(
+              height: AppSizes.padding * 6,
+            )
           ],
         ),
       ),

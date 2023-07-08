@@ -162,4 +162,9 @@ class CustomIcon {
   static const IconData notification_icon = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData contact_icon = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData video_circle_icon = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData settings_icon = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData contact_group_icon = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dashboard_icon = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData layer_icon = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData download = IconData(0xe865, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

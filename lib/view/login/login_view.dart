@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/widget/app_button.dart';
+import 'package:satujuta_app_mobile/view/dashboard/dashboard_view.dart';
+import 'package:satujuta_app_mobile/view/login/reset_pass_view.dart';
+import 'package:satujuta_app_mobile/view/register/register_view.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/const/app_sizes.dart';
@@ -54,6 +57,7 @@ class _LoginViewState extends State<LoginView> {
           AppButton(
             onTap: () {
               // TODO
+              Navigator.pushNamed(context, ResetPassView.routeName);
             },
             textColor: AppColors.primary,
             buttonColor: AppColors.primary.withOpacity(0.12),
@@ -141,6 +145,11 @@ class _LoginViewState extends State<LoginView> {
       text: 'Masuk',
       onTap: () {
         // TODO
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          DashboardView.routeName,
+          ModalRoute.withName(LoginView.routeName),
+        );
       },
     );
   }
@@ -158,6 +167,11 @@ class _LoginViewState extends State<LoginView> {
           InkWell(
             onTap: () {
               // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RegisterView.routeName,
+                ModalRoute.withName(LoginView.routeName),
+              );
             },
             child: Text(
               'Daftar',

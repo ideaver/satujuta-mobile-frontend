@@ -8,6 +8,11 @@ import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 import 'package:satujuta_app_mobile/app/widget/app_image.dart';
 import 'package:satujuta_app_mobile/app/widget/app_modal.dart';
 import 'package:satujuta_app_mobile/app/widget/my_icon_button.dart';
+import 'package:satujuta_app_mobile/view/organisms/custom_nav_button.dart';
+import 'package:satujuta_app_mobile/view/program_list/program_list_view.dart';
+import 'package:satujuta_app_mobile/view/referral/referral_detail_view.dart';
+import 'package:satujuta_app_mobile/view/referral/referral_view.dart';
+import 'package:satujuta_app_mobile/view/student/student_registration_view.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../app/const/app_consts.dart';
@@ -26,7 +31,11 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  List<String> periods = ['Minggu', 'Bulan', 'Tahun'];
+  List<String> periods = [
+    'Minggu',
+    'Bulan',
+    'Tahun'
+  ];
 
   List<ChartModel> caseByDiseases = [
     ...List.generate(12, (index) {
@@ -56,6 +65,11 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -66,7 +80,15 @@ class _DashboardViewState extends State<DashboardView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       appBar: appBar(),
-      body: body(),
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          body(),
+          CustomNavBottom(
+            indexIndicator: 0,
+          )
+        ],
+      ),
     );
   }
 
@@ -98,6 +120,11 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                ReferralDetailView.viewAsMeRouteName,
+                ModalRoute.withName(DashboardView.routeName),
+              );
             },
             text: '50',
             fontSize: 14,
@@ -130,7 +157,7 @@ class _DashboardViewState extends State<DashboardView> {
           orderStatus(),
           withdrawalStatus(),
           whatsAppConsulCard(),
-          const SizedBox(height: AppSizes.padding * 2),
+          SizedBox(height: AppSizes.height * 8)
         ],
       ),
     );
@@ -248,6 +275,12 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
+
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                ReferralView.viewAsMeRouteName,
+                ModalRoute.withName(DashboardView.routeName),
+              );
             },
             text: 'Undang',
             fontSize: 12,
@@ -488,7 +521,10 @@ class _DashboardViewState extends State<DashboardView> {
           axisLine: const AxisLine(width: 0),
           majorGridLines: const MajorGridLines(
             color: AppColors.baseLv5,
-            dashArray: [2, 6],
+            dashArray: [
+              2,
+              6
+            ],
           ),
           majorTickLines: const MajorTickLines(size: 0),
           labelStyle: AppTextStyle.medium(
@@ -636,6 +672,11 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                StudentRegistrationView.routeName,
+                ModalRoute.withName(DashboardView.routeName),
+              );
             },
             text: 'Daftarkan Siswa',
             fontSize: 12,
@@ -689,6 +730,11 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                ProgramListView.routeName,
+                ModalRoute.withName(DashboardView.routeName),
+              );
             },
             text: '2 Baru',
             fontSize: 10,
