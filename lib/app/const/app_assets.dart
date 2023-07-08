@@ -96,6 +96,13 @@ class AppAssets {
   static const merchantAlfamartImgPath = '${_baseMerchantPath}alfamart.png';
   static const merchantIndomartImgPath = '${_baseMerchantPath}indomaret.png';
 
+  // PHOTOS
+  static const _basePhotosPath = '${baseImagePath}photos/';
+  static const randomPhotos1Path = '${_basePhotosPath}random-photos-1.png';
+  static const randomPhotos2Path = '${_basePhotosPath}random-photos-2.png';
+  static const randomPhotos3Path = '${_basePhotosPath}random-photos-3.png';
+  static const randomPhotos4Path = '${_basePhotosPath}random-photos-4.png';
+
   // logos
   static const _baseLogoPath = '${_baseAssetsPath}logo/';
   static const longLogoPath = '${_baseLogoPath}long-logo.png';
@@ -133,7 +140,10 @@ class AppAssets {
   static const contactGroupIconPath = '${_baseIconPath}contact-group-icon.png';
   static const checkIconPath = '${_baseIconPath}check-icon.png';
   static const uncheckIconPath = '${_baseIconPath}uncheck-icon.png';
+  static const fileIconPath = '${_baseIconPath}file-icon.png';
 }
+
+// CUSTOM ICON
 
 class CustomIcon {
   CustomIcon._();
@@ -150,4 +160,5 @@ class CustomIcon {
   static const IconData about_icon = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notification_icon = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData contact_icon = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData video_circle_icon = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

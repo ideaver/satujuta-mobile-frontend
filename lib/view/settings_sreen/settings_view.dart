@@ -137,13 +137,15 @@ class _SettingsViewState extends State<SettingsView> {
           SettingItem(
             icon: Icons.person_outline,
             title: 'Ubah Profile',
-            rightButton: chevronButton(() {}),
+            rightButton: chevronButton(),
+            functionButton: () {},
           ),
           SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: CustomIcon.notification_icon,
             title: 'Notifikasi',
             subTitle: 'Enable system send notification',
+            functionButton: () {},
             rightButton: IconButton(
               icon: isCheck
                   ? Image(
@@ -167,37 +169,27 @@ class _SettingsViewState extends State<SettingsView> {
             icon: CustomIcon.about_icon,
             title: 'Tentang',
             subTitle: 'Informasi tentang aplikasi',
-            rightButton: chevronButton(() {}),
+            rightButton: chevronButton(),
+            functionButton: () {},
           ),
           SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: Icons.arrow_circle_left_outlined,
             title: 'Logout',
-            rightButton: chevronButton(() {}),
+            rightButton: chevronButton(),
+            functionButton: () {},
           ),
         ],
       ),
     );
   }
 
-  Widget chevronButton(dynamic functionButton) {
-    return Ink(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: InkWell(
-        splashColor: Colors.black.withOpacity(0.06),
-        borderRadius: new BorderRadius.circular(24),
-        onTap: functionButton,
-        child: Container(
-          width: 30,
-          height: 30,
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.chevron_right,
-            size: 20,
-          ),
-        ),
+  Widget chevronButton() {
+    return Padding(
+      padding: const EdgeInsets.all(AppSizes.padding / 2),
+      child: Icon(
+        Icons.chevron_right,
+        size: 20,
       ),
     );
   }

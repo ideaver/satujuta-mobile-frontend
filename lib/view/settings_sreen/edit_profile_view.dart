@@ -279,11 +279,10 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
     return Column(
       children: [
         const EditProfileBiodata(
-          nama: 'Agus Susanto',
-          alamat: 'jln ambarawa no 1 Semarang',
-          kota: 'Surabaya',
-          kecamatan: '',
-          kodePos: '60241',
+          name: 'Agus Susanto',
+          address: 'jln ambarawa no 1 Semarang',
+          city: 'Surabaya',
+          posCode: '60241',
           noWa: '+62908327587',
           email: 'Agus@gmail.com',
         ),

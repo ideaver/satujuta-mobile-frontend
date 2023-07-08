@@ -477,7 +477,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
 
   Widget rewardItemCard(int i) {
     return Container(
-      margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
+      margin: EdgeInsets.only(bottom: i == 5 ? 0 : AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -552,7 +552,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
 
   Widget poinItemCard(int i) {
     return Container(
-      margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
+      margin: EdgeInsets.only(bottom: i == 5 ? 0 : AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
         color: AppColors.white,

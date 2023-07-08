@@ -16,10 +16,7 @@ class StudentRegistrationScreen extends StatelessWidget {
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(
-              top: AppSizes.padding * 2,
-              right: AppSizes.padding * 2,
-              left: AppSizes.padding * 2),
+          padding: const EdgeInsets.only(top: AppSizes.padding * 2, right: AppSizes.padding * 2, left: AppSizes.padding * 2),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
