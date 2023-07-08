@@ -90,16 +90,14 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
       leading: backButton(),
       title: title(),
       automaticallyImplyLeading: false,
-      flexibleSpace: FlexibleSpaceBar(
-        expandedTitleScale: 1.5,
-      ),
+      flexibleSpace: FlexibleSpaceBar(),
       bottom: tabBar(),
     );
   }
 
   PreferredSizeWidget tabBar() {
     return PreferredSize(
-      preferredSize: const Size(double.infinity, 50),
+      preferredSize: const Size(double.infinity, 70),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(
@@ -163,7 +161,6 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
     if (selectedCategory == 0) {
       return Padding(
         padding: const EdgeInsets.only(
-          top: AppSizes.padding,
           left: AppSizes.padding,
           right: AppSizes.padding,
         ),
@@ -172,7 +169,6 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
     } else if (selectedCategory == 1) {
       return Padding(
         padding: const EdgeInsets.only(
-          top: AppSizes.padding,
           left: AppSizes.padding,
           right: AppSizes.padding,
         ),
