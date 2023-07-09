@@ -12,16 +12,16 @@ import '../../app/widget/app_modal.dart';
 import '../../app/widget/app_widget_list_wrapper.dart';
 import '../../app/widget/my_icon_button.dart';
 
-class CheckoutView extends StatefulWidget {
-  const CheckoutView({Key? key}) : super(key: key);
+class StudentCheckoutView extends StatefulWidget {
+  const StudentCheckoutView({Key? key}) : super(key: key);
 
-  static const String routeName = '/checkout';
+  static const String routeName = '/student-checkout';
 
   @override
-  State<CheckoutView> createState() => _CheckoutViewState();
+  State<StudentCheckoutView> createState() => _StudentCheckoutViewState();
 }
 
-class _CheckoutViewState extends State<CheckoutView> {
+class _StudentCheckoutViewState extends State<StudentCheckoutView> {
   bool isOrderItemsShowed = true;
   bool isOrderShipmentShowed = true;
 
@@ -68,7 +68,7 @@ class _CheckoutViewState extends State<CheckoutView> {
           ),
           const SizedBox(height: AppSizes.padding / 4),
           Text(
-            "Lakukan pembayaran sebelum batas waktu berakhir agar tidak kehilangan Peluang.",
+            "Lakukan pembayaran sebelum batas waktu berakhir",
             textAlign: TextAlign.center,
             style: AppTextStyle.regular(
               context,
@@ -126,7 +126,6 @@ class _CheckoutViewState extends State<CheckoutView> {
           orderStatus(),
           orderInfo(),
           orderItems(),
-          orderShipment(),
           orderPricing(),
           const SizedBox(height: 100),
         ],
@@ -308,11 +307,11 @@ class _CheckoutViewState extends State<CheckoutView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppExpansionListTile(
-        title: '4 Item Order',
+        title: 'Item Order',
         icon: Icons.timelapse_rounded,
         expand: true,
         children: [
-          ...List.generate(4, (i) {
+          ...List.generate(1, (i) {
             return orderItemCard(i);
           }),
         ],
@@ -358,7 +357,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        i == 0 ? 'Paket PREMIUM SatuJuta Membership' : 'Hotel Borobudur',
+                        i == 0 ? 'Registrasi Siswa' : 'Hotel Borobudur',
                         style: AppTextStyle.extraBold(
                           context,
                           fontSize: 16,
@@ -366,7 +365,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                       const SizedBox(height: AppSizes.padding / 4),
                       Text(
-                        i == 0 ? 'Berlisensi PT Satu Juta Kampung Inggris ' : 'Pilihan Hotel Anda',
+                        i == 0 ? 'Kuantitas 14 Orang' : 'Kuantitas 14 Orang',
                         style: AppTextStyle.regular(
                           context,
                           fontSize: 12,
@@ -398,303 +397,6 @@ class _CheckoutViewState extends State<CheckoutView> {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget orderShipment() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
-      child: AppExpansionListTile(
-        title: 'Info Pengiriman',
-        icon: Icons.local_shipping_outlined,
-        backgroundColor: AppColors.white,
-        expand: true,
-        children: [
-          shipmentReceiver(),
-          const SizedBox(height: AppSizes.padding / 4),
-          shipmentService(),
-          const SizedBox(height: AppSizes.padding / 2),
-        ],
-      ),
-    );
-  }
-
-  Widget shipmentReceiver() {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: AppSizes.padding / 8,
-        horizontal: AppSizes.padding / 2,
-      ),
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.baseLv7,
-        borderRadius: BorderRadius.circular(AppSizes.radius * 1.5),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.person_outline_rounded,
-                      size: 20,
-                    ),
-                    const SizedBox(width: AppSizes.padding / 2),
-                    Expanded(
-                      child: Text(
-                        'Anton Prabowo',
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.extraBold(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppSizes.padding / 4,
-                  horizontal: AppSizes.padding / 3,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.baseLv5.withOpacity(0.50),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  'PENERIMA',
-                  style: AppTextStyle.bold(
-                    context,
-                    fontSize: 11,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.call_outlined,
-                    size: 20,
-                  ),
-                  const SizedBox(width: AppSizes.padding / 2),
-                  Text(
-                    '+62811122223333',
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.medium(context),
-                  ),
-                ],
-              ),
-              const Icon(
-                Icons.edit_square,
-                color: AppColors.primary,
-                size: 20,
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.location_on_outlined,
-                size: 20,
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              Expanded(
-                child: Text(
-                  'jln ambarawa no 1 Semarang - Jawa Timur, Indonesia',
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.medium(context),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.mail_outline_rounded,
-                size: 20,
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              Expanded(
-                child: Text(
-                  '223344',
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.medium(context),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget shipmentService() {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: AppSizes.padding / 8,
-        horizontal: AppSizes.padding / 2,
-      ),
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.baseLv7,
-        borderRadius: BorderRadius.circular(AppSizes.radius * 1.5),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.person_outline_rounded,
-                      size: 20,
-                    ),
-                    const SizedBox(width: AppSizes.padding / 2),
-                    Expanded(
-                      child: Text(
-                        'JNE Reguler',
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.extraBold(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppSizes.padding / 4,
-                  horizontal: AppSizes.padding / 3,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.baseLv5.withOpacity(0.50),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  'KURIR',
-                  style: AppTextStyle.bold(
-                    context,
-                    fontSize: 11,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.timelapse_rounded,
-                    size: 20,
-                  ),
-                  const SizedBox(width: AppSizes.padding / 2),
-                  Text(
-                    '2-3 Hari',
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.medium(context),
-                  ),
-                ],
-              ),
-              const Icon(
-                Icons.edit_square,
-                color: AppColors.primary,
-                size: 20,
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.calendar_month_outlined,
-                size: 20,
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              Expanded(
-                child: Text(
-                  'Pengiriman Tanggal: -',
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.medium(context),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.receipt_long_rounded,
-                      size: 20,
-                    ),
-                    const SizedBox(width: AppSizes.padding / 2),
-                    Expanded(
-                      child: Text(
-                        'No. Resi: - \n Paket akan dikirim setelah pembayaran',
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.medium(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.copy,
-                color: AppColors.primary,
-                size: 20,
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.monetization_on_outlined,
-                size: 20,
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              Expanded(
-                child: Text(
-                  'Biaya Ongkir: -',
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.medium(context),
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );

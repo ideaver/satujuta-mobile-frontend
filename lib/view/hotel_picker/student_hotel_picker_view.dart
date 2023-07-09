@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/widget/app_button.dart';
 import 'package:satujuta_app_mobile/app/widget/app_image.dart';
 import 'package:satujuta_app_mobile/app/widget/app_not_found_widget.dart';
+import 'package:satujuta_app_mobile/view/student/student_registration_view.dart';
 
 import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
@@ -318,6 +319,10 @@ class _StudentHotelPickerViewState extends State<StudentHotelPickerView> {
                     text: 'Berikutnya',
                     onTap: () {
                       // TODO
+                      Navigator.pushNamed(
+                        context,
+                        StudentRegistrationView.routeName,
+                      );
                     },
                   ),
                 ],

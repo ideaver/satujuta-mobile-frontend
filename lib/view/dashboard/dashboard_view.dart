@@ -84,7 +84,7 @@ class _DashboardViewState extends State<DashboardView> {
         onWillPop: () async {
           Navigator.pop(context);
 
-          return true;
+          return false;
         },
         child: Stack(
           alignment: Alignment.bottomCenter,

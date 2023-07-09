@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/app/widget/app_button.dart';
 import 'package:satujuta_app_mobile/view/dashboard/dashboard_view.dart';
 import 'package:satujuta_app_mobile/view/login/reset_pass_view.dart';
+import 'package:satujuta_app_mobile/view/onboarding/onboarding_view.dart';
 import 'package:satujuta_app_mobile/view/register/register_view.dart';
 
 import '../../app/const/app_assets.dart';
@@ -148,7 +149,7 @@ class _LoginViewState extends State<LoginView> {
         Navigator.pushNamedAndRemoveUntil(
           context,
           DashboardView.routeName,
-          ModalRoute.withName(LoginView.routeName),
+          ModalRoute.withName(OnboardingView.routeName),
         );
       },
     );

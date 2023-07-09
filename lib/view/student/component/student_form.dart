@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/view/hotel_picker/student_hotel_picker_view.dart';
 
 import '../../../app/const/app_assets.dart';
 import '../../../app/const/app_sizes.dart';
@@ -108,11 +109,7 @@ class _StudentFormState extends State<StudentForm> {
             enabled: false,
             onTap: () {
               // TODO
-              AppModal.show(
-                context: context,
-                title: 'Hotel',
-                child: hotelList(),
-              );
+              Navigator.pushNamed(context, StudentHotelPickerView.routeName);
             },
             suffixIcon: Icon(
               Icons.keyboard_arrow_down,

@@ -385,6 +385,7 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
                       child: AppButton(
                         onTap: () {
                           // TODO
+                          Navigator.pushNamed(context, LoginView.routeName);
                         },
                         text: 'Daftar',
                         borderRadius: const BorderRadius.only(

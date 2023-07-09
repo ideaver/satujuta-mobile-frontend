@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:satujuta_app_mobile/app/widget/app_modal.dart';
 import 'package:satujuta_app_mobile/app/widget/my_icon_button.dart';
 import 'package:satujuta_app_mobile/view/student/component/student_form.dart';
 
@@ -8,6 +9,8 @@ import '../../app/const/app_sizes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
 import '../../app/widget/app_button.dart';
+
+import 'component/regisStudentStatus.dart';
 
 class StudentRegistrationView extends StatefulWidget {
   const StudentRegistrationView({
@@ -89,7 +92,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
               height: 20,
               child: AppIconButton(
                 icon: Icons.info_outline,
@@ -120,7 +123,15 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
           validatorInfo(),
           buttons('Berikutnya', () {
             // TODO
-          })
+
+            AppModal.show(
+              context: context,
+              title: '',
+              child: RegisStudentStatus(
+                isSuccess: true,
+              ),
+            );
+          }),
         ],
       ),
     );

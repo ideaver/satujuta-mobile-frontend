@@ -166,5 +166,5 @@ class CustomIcon {
   static const IconData contact_group_icon = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dashboard_icon = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData layer_icon = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData download = IconData(0xe865, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData trash_icon = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

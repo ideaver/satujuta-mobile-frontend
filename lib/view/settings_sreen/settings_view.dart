@@ -73,7 +73,7 @@ class _SettingsViewState extends State<SettingsView> {
           'Settings',
           style: AppTextStyle.bold(context, fontSize: 18),
         ),
-        moreButton(),
+        logOutButton(),
       ],
     );
   }
@@ -91,10 +91,10 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  Widget moreButton() {
+  Widget logOutButton() {
     return AppIconButton(
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.popAndPushNamed(context, LoginView.routeName);
       },
       icon: CustomIcon.logout_icon,
       iconSize: 20,

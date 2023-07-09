@@ -5,6 +5,7 @@ import 'package:satujuta_app_mobile/view/student/student_registration_view.dart'
 
 import '../../view/about/about_view.dart';
 import '../../view/checkout/checkout_view.dart';
+import '../../view/checkout/student_checkout_view.dart';
 import '../../view/dashboard/dashboard_view.dart';
 import '../../view/hotel_picker/hotel_picker_view.dart';
 import '../../view/hotel_picker/student_hotel_picker_view.dart';
@@ -44,6 +45,7 @@ class AppRoutes {
     MarketingGalleryView.routeName: (context) => const MarketingGalleryView(),
     StudentRegistrationView.routeName: (context) => const StudentRegistrationView(),
     StudentHotelPickerView.routeName: (context) => const StudentHotelPickerView(),
+    StudentCheckoutView.routeName: (context) => const StudentCheckoutView(),
     AboutView.routeName: (context) => const AboutView(),
   };
 }
