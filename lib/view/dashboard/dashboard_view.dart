@@ -80,14 +80,21 @@ class _DashboardViewState extends State<DashboardView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       appBar: appBar(),
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          body(),
-          CustomNavBottom(
-            indexIndicator: 0,
-          )
-        ],
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context);
+
+          return true;
+        },
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            body(),
+            CustomNavBottom(
+              indexIndicator: 0,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -175,7 +182,7 @@ class _DashboardViewState extends State<DashboardView> {
           Icons.search,
         ),
         hintText: 'Cari Nama Anggota Anda',
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: AppSizes.padding / 2,
           vertical: AppSizes.padding / 4,
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:satujuta_app_mobile/view/login/login_view.dart';
-import 'package:satujuta_app_mobile/view/screens/register/register_screen.dart';
+import 'package:satujuta_app_mobile/view/register/register_view.dart';
 
 import '../../app/const/app_assets.dart';
 import '../../app/theme/app_colors.dart';
@@ -180,12 +180,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   Widget joinButton() {
     return InkWell(
       onTap: (() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const RegisterScreen(),
-          ),
-        );
+        Navigator.pushNamed(context, RegisterView.routeName);
       }),
       child: Container(
         width: 200,
