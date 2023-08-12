@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/const/app_assets.dart';
-import '../../../app/const/app_sizes.dart';
-import '../../../app/widget/app_text_field.dart';
-import '../../../app/widget/app_text_fields_wrapper.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../widget/atom/app_text_field.dart';
+import '../../../../widget/atom/app_text_fields_wrapper.dart';
 
 class RegAccount extends StatefulWidget {
   const RegAccount({Key? key}) : super(key: key);

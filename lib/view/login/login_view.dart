@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/widget/app_button.dart';
-import 'package:satujuta_app_mobile/view/dashboard/dashboard_view.dart';
-import 'package:satujuta_app_mobile/view/login/reset_pass_view.dart';
-import 'package:satujuta_app_mobile/view/onboarding/onboarding_view.dart';
-import 'package:satujuta_app_mobile/view/register/register_view.dart';
 
-import '../../app/const/app_assets.dart';
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-import '../../app/widget/app_image.dart';
-import '../../app/widget/app_text_field.dart';
-import '../../app/widget/app_text_fields_wrapper.dart';
-import '../../app/widget/my_icon_button.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_text_field.dart';
+import '../../../widget/atom/app_text_fields_wrapper.dart';
+import '../../widget/atom/app_icon_button.dart';
+import '../dashboard/dashboard_view.dart';
+import '../onboarding/onboarding_view.dart';
+import '../register/register_view.dart';
+import 'reset_pass_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);

@@ -2,24 +2,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:satujuta_app_mobile/app/const/app_assets.dart';
-import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
-import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
-import 'package:satujuta_app_mobile/app/widget/app_image.dart';
-import 'package:satujuta_app_mobile/app/widget/app_modal.dart';
-import 'package:satujuta_app_mobile/app/widget/my_icon_button.dart';
-import 'package:satujuta_app_mobile/view/organisms/custom_nav_button.dart';
-import 'package:satujuta_app_mobile/view/program_list/program_list_view.dart';
-import 'package:satujuta_app_mobile/view/referral/referral_detail_view.dart';
-import 'package:satujuta_app_mobile/view/referral/referral_view.dart';
-import 'package:satujuta_app_mobile/view/student/student_registration_view.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../app/const/app_consts.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/widget/app_button.dart';
-import '../../app/widget/app_text_field.dart';
-import '../../model/chart_model.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../app/const/app_consts.dart';
+import '../../../model/chart_model.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_modal.dart';
+import '../../../widget/atom/app_text_field.dart';
+import '../../widget/atom/app_icon_button.dart';
+// import '../../../widget/organism/custom_nav_button.dart';
+// import '../program_list/program_list_view.dart';
+// import '../referral/referral_detail_view.dart';
+// import '../referral/referral_view.dart';
+// import '../student/student_registration_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -31,11 +31,7 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  List<String> periods = [
-    'Minggu',
-    'Bulan',
-    'Tahun'
-  ];
+  List<String> periods = ['Minggu', 'Bulan', 'Tahun'];
 
   List<ChartModel> caseByDiseases = [
     ...List.generate(12, (index) {
@@ -90,9 +86,9 @@ class _DashboardViewState extends State<DashboardView> {
           alignment: Alignment.bottomCenter,
           children: [
             body(),
-            CustomNavBottom(
-              indexIndicator: 0,
-            )
+            // CustomNavBottom(
+            //   indexIndicator: 0,
+            // )
           ],
         ),
       ),
@@ -127,11 +123,11 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                ReferralDetailView.viewAsMeRouteName,
-                ModalRoute.withName(DashboardView.routeName),
-              );
+              // Navigator.pushNamedAndRemoveUntil(
+              //   context,
+              //   ReferralDetailView.viewAsMeRouteName,
+              //   ModalRoute.withName(DashboardView.routeName),
+              // );
             },
             text: '50',
             fontSize: 14,
@@ -164,7 +160,7 @@ class _DashboardViewState extends State<DashboardView> {
           orderStatus(),
           withdrawalStatus(),
           whatsAppConsulCard(),
-          SizedBox(height: AppSizes.height * 8)
+          const SizedBox(height: AppSizes.height * 8)
         ],
       ),
     );
@@ -283,11 +279,11 @@ class _DashboardViewState extends State<DashboardView> {
             onTap: () {
               // TODO
 
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                ReferralView.viewAsMeRouteName,
-                ModalRoute.withName(DashboardView.routeName),
-              );
+              // Navigator.pushNamedAndRemoveUntil(
+              //   context,
+              //   ReferralView.viewAsMeRouteName,
+              //   ModalRoute.withName(DashboardView.routeName),
+              // );
             },
             text: 'Undang',
             fontSize: 12,
@@ -528,10 +524,7 @@ class _DashboardViewState extends State<DashboardView> {
           axisLine: const AxisLine(width: 0),
           majorGridLines: const MajorGridLines(
             color: AppColors.baseLv5,
-            dashArray: [
-              2,
-              6
-            ],
+            dashArray: [2, 6],
           ),
           majorTickLines: const MajorTickLines(size: 0),
           labelStyle: AppTextStyle.medium(
@@ -679,11 +672,11 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                StudentRegistrationView.routeName,
-                ModalRoute.withName(DashboardView.routeName),
-              );
+              // Navigator.pushNamedAndRemoveUntil(
+              //   context,
+              //   StudentRegistrationView.routeName,
+              //   ModalRoute.withName(DashboardView.routeName),
+              // );
             },
             text: 'Daftarkan Siswa',
             fontSize: 12,
@@ -737,11 +730,11 @@ class _DashboardViewState extends State<DashboardView> {
           AppButton(
             onTap: () {
               // TODO
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                ProgramListView.routeName,
-                ModalRoute.withName(DashboardView.routeName),
-              );
+              // Navigator.pushNamedAndRemoveUntil(
+              //   context,
+              //   ProgramListView.routeName,
+              //   ModalRoute.withName(DashboardView.routeName),
+              // );
             },
             text: '2 Baru',
             fontSize: 10,
@@ -882,7 +875,7 @@ class _DashboardViewState extends State<DashboardView> {
       child: Stack(
         alignment: Alignment.topRight,
         children: [
-          Container(
+          SizedBox(
             width: 200,
             child: Stack(
               children: [

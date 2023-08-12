@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'app_colors.dart';
 
 class AppTheme {
   static bool isLightTheme = true;
+
+  // Light Ui Overlay Style
+  static const lightOverlayStyle = SystemUiOverlayStyle(
+    systemNavigationBarColor: AppColors.white,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    statusBarColor: AppColors.white,
+    statusBarIconBrightness: Brightness.dark,
+  );
+
+  // Dark Ui Overlay Style
+  static const darkOverlayStyle = SystemUiOverlayStyle(
+    systemNavigationBarColor: AppColors.black,
+    systemNavigationBarIconBrightness: Brightness.light,
+    statusBarColor: AppColors.black,
+    statusBarIconBrightness: Brightness.light,
+  );
 
   static ThemeData getTheme() {
     if (isLightTheme) {
@@ -105,12 +122,16 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   systemNavigationBarColor: AppColors.white,
-        //   systemNavigationBarIconBrightness: Brightness.dark,
-        //   statusBarColor: AppColors.white,
-        //   statusBarIconBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: AppColors.white,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.base,
+        ),
+        shadowColor: AppColors.baseLv3,
+        titleSpacing: 0,
       ),
       popupMenuTheme: const PopupMenuThemeData(color: Colors.white),
       iconTheme: const IconThemeData(color: Color(0xff2b2b2b)),
@@ -153,12 +174,16 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         color: Colors.grey[700],
         elevation: 0,
-        // systemOverlayStyle: SystemUiOverlayStyle(
-        //   systemNavigationBarColor: Colors.grey[700],
-        //   systemNavigationBarIconBrightness: Brightness.light,
-        //   statusBarColor: Colors.grey[700],
-        //   statusBarIconBrightness: Brightness.light,
-        // ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: AppColors.white,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        iconTheme: const IconThemeData(
+          color: AppColors.base,
+        ),
+        shadowColor: AppColors.baseLv3,
+        titleSpacing: 0,
       ),
       popupMenuTheme: const PopupMenuThemeData(color: Colors.black),
       colorScheme: colorScheme,

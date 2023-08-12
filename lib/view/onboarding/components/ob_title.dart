@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
 
-import '../../../app/widget/app_gradient_text.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../../widget/atom/app_gradient_text.dart';
 
 class ObTitle extends StatelessWidget {
   const ObTitle({
