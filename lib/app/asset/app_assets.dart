@@ -1,11 +1,6 @@
 class AppAssets {
   static const _baseAssetsPath = 'assets/';
 
-  // Placeholder
-  static const String user = 'assets/images/user.png';
-  static const String loadingGif = 'assets/images/loading.gif';
-  static const String emptyPlaceholder = 'assets/images/empty_placeholder.png';
-
   // backgrounds
   static const _baseBackgroundPath = '${_baseAssetsPath}background/';
   static const backgroundPath = '${_baseBackgroundPath}bg-subject.png';
@@ -21,7 +16,6 @@ class AppAssets {
   static const userDummy7Path = '${_baseUserDummyPath}Ellipse-1958.png';
 
   // image user
-
   static const userImage1Path = '${_baseUserDummyPath}student-1.png';
   static const userImage2Path = '${_baseUserDummyPath}student-2.png';
   static const userImage3Path = '${_baseUserDummyPath}student-3.png';
@@ -50,6 +44,9 @@ class AppAssets {
   static const baseImagePath = '${_baseAssetsPath}images/';
   static const imageHotelPath = '${baseImagePath}hotel-image.png';
   static const emptyEmojiPath = '${baseImagePath}empty-emoji.png';
+  static const user = '${_baseAssetsPath}user.png';
+  static const loadingGif = '${_baseAssetsPath}loading.gif';
+  static const emptyPlaceholder = '${_baseAssetsPath}empty_placeholder.png';
   // BANK
   static const _baseBankPath = '${baseImagePath}bank/';
   static const bankAnzImgPath = '${_baseBankPath}anz.png';

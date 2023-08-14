@@ -131,7 +131,7 @@ class AppTheme {
           color: AppColors.base,
         ),
         shadowColor: AppColors.baseLv3,
-        titleSpacing: 0,
+        // titleSpacing: 0,
       ),
       popupMenuTheme: const PopupMenuThemeData(color: Colors.white),
       iconTheme: const IconThemeData(color: Color(0xff2b2b2b)),

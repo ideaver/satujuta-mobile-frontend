@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:satujuta_app_mobile/model/auth_model.dart';
 
 enum LocalStorageKey {
   userId,
+  userAuth,
   user,
 }
 
@@ -11,6 +15,23 @@ class LocalStorageService {
   LocalStorageService._();
 
   static const _storage = FlutterSecureStorage();
+
+  static Future<Auth?> readAuthData() async {
+    var data = await _storage.read(key: LocalStorageKey.userAuth.name);
+
+    if (data != null) {
+      return Auth.fromJson(json.decode(data));
+    } else {
+      return null;
+    }
+  }
+
+  static Future<void> writeAuthData(Auth auth) async {
+    await _storage.write(
+      key: LocalStorageKey.userAuth.name,
+      value: json.encode(auth.toJson()),
+    );
+  }
 
   static Future<String?> readData(LocalStorageKey key) async {
     return await _storage.read(key: key.name);

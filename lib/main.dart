@@ -8,7 +8,10 @@ import 'app/route/app_routes.dart';
 import 'app/service/locator/service_locator.dart';
 import 'app/service/network_checker/network_checker_service.dart';
 import 'app/theme/app_theme.dart';
-import 'view/splash/splash_view.dart';
+import 'view/main/main_view.dart';
+import 'view_model/login_view_model.dart';
+import 'view_model/main_view_model.dart';
+import 'view_model/user_view_model.dart';
 
 Future<void> main() async {
   // Initialize binding
@@ -49,12 +52,15 @@ class MyApp extends StatelessWidget {
       providers: [
         // Providers
         ChangeNotifierProvider(create: (_) => locator<NetworkCheckerService>()),
+        ChangeNotifierProvider(create: (_) => locator<MainViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<UserViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',
         theme: AppTheme.getTheme(),
         debugShowCheckedModeBanner: true,
-        initialRoute: SplashView.routeName,
+        initialRoute: MainView.routeName,
         routes: AppRoutes.routes,
         // home: const SplashView(),
         locale: AppLocale.defaultLocale,

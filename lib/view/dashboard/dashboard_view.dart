@@ -82,15 +82,7 @@ class _DashboardViewState extends State<DashboardView> {
 
           return false;
         },
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            body(),
-            // CustomNavBottom(
-            //   indexIndicator: 0,
-            // )
-          ],
-        ),
+        child: body(),
       ),
     );
   }

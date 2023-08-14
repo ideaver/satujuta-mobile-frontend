@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_sizes.dart';
-import 'app_image.dart';
 
 class AppIconButton extends StatelessWidget {
   final Function()? onPressed;
@@ -41,9 +40,10 @@ class AppIconButton extends StatelessWidget {
                 size: iconSize ?? AppSizes.icon,
                 color: iconColor,
               )
-            : AppImage(
-                image: imgIcon ?? '',
+            : Image.asset(
+                imgIcon ?? '',
                 width: imgIconSize ?? AppSizes.icon,
+                height: imgIconSize ?? AppSizes.icon,
               ),
       ),
     );
