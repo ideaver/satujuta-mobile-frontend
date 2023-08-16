@@ -1,12 +1,9 @@
 import 'package:satujuta_gql_client/client.dart';
 
-import '../locator/service_locator.dart';
 import 'gql_client.dart';
 
 class GqlUserService {
-  static final gqlClient = locator<GqlClient>().gqlClient;
-
-  static Future<List<GUserFindManyData_userFindMany>?> getUsers({int take = 10, int? skip}) async {
+  static Future<List<GUserFindManyData_userFindMany>?> getAllUsers({int take = 10, int? skip}) async {
     List<GUserFindManyData_userFindMany>? users;
 
     var req = GUserFindManyReq(
@@ -15,7 +12,7 @@ class GqlUserService {
         ..vars.userFindManyArgs.take = take,
     );
 
-    await gqlClient.request(req).listen((event) {
+    await GqlClient.client.request(req).listen((event) {
       if (event.data?.userFindMany != null) {
         users = event.data?.userFindMany!.toList();
       }
@@ -23,4 +20,20 @@ class GqlUserService {
 
     return users;
   }
+
+  // static Future<List<GUserFindManyData_userFindMany>?> getUserById(int id) async {
+  //   List<GUserFindManyData_userFindMany>? users;
+
+  //   var req = GAccountFindOneReq(
+  //     (b) => b..requestId = id,
+  //   );
+
+  //   await gqlClient.request(req).listen((event) {
+  //     if (event.data?.userFindMany != null) {
+  //       users = event.data?.userFindMany!.toList();
+  //     }
+  //   }).asFuture();
+
+  //   return users;
+  // }
 }

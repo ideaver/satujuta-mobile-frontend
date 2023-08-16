@@ -19,7 +19,7 @@ class UserViewModel extends ChangeNotifier {
   Future<void> getUser() async {
     // TODO GET USER
 
-    users = await GqlUserService.getUsers();
+    users = await GqlUserService.getAllUsers();
 
     notifyListeners();
   }

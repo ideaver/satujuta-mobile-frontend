@@ -44,9 +44,9 @@ class AppAssets {
   static const baseImagePath = '${_baseAssetsPath}images/';
   static const imageHotelPath = '${baseImagePath}hotel-image.png';
   static const emptyEmojiPath = '${baseImagePath}empty-emoji.png';
-  static const user = '${_baseAssetsPath}user.png';
-  static const loadingGif = '${_baseAssetsPath}loading.gif';
-  static const emptyPlaceholder = '${_baseAssetsPath}empty_placeholder.png';
+  static const user = '${baseImagePath}user.png';
+  static const loadingGif = '${baseImagePath}loading.gif';
+  static const emptyPlaceholder = '${baseImagePath}empty_placeholder.png';
   // BANK
   static const _baseBankPath = '${baseImagePath}bank/';
   static const bankAnzImgPath = '${_baseBankPath}anz.png';

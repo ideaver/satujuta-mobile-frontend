@@ -10,11 +10,11 @@ class AppNavigationBar extends StatelessWidget {
   final List<IconData> icons;
 
   const AppNavigationBar({
-    Key? key,
+    super.key,
     required this.index,
     required this.onTapIcon,
     required this.icons,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

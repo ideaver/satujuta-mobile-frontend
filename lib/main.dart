@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/service/graphql/gql_client.dart';
 
 import 'app/locale/app_locale.dart';
 import 'app/route/app_routes.dart';
@@ -11,6 +12,7 @@ import 'app/theme/app_theme.dart';
 import 'view/main/main_view.dart';
 import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
+import 'view_model/program_list_view_model.dart';
 import 'view_model/user_view_model.dart';
 
 Future<void> main() async {
@@ -38,6 +40,9 @@ Future<void> main() async {
   // Set overlay style
   SystemChrome.setSystemUIOverlayStyle(AppTheme.lightOverlayStyle);
 
+  // Initialize GraphQL Client
+  GqlClient.init();
+
   // runApp()
   runApp(const MyApp());
 }
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<MainViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<UserViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<ProgramListViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/duration_formatter.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
+import 'package:satujuta_gql_client/operations/generated/program_find_many.data.gql.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -6,6 +10,9 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/date_formatter.dart';
+import '../../view_model/program_list_view_model.dart';
 
 class ProgramListView extends StatefulWidget {
   const ProgramListView({Key? key}) : super(key: key);
@@ -17,6 +24,8 @@ class ProgramListView extends StatefulWidget {
 }
 
 class _ProgramListViewState extends State<ProgramListView> {
+  final programListViewModel = locator<ProgramListViewModel>();
+
   int selectedCategory = -1;
 
   List<String> categories = [
@@ -26,6 +35,12 @@ class _ProgramListViewState extends State<ProgramListView> {
     'Seminar',
     'Tour',
   ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +81,10 @@ class _ProgramListViewState extends State<ProgramListView> {
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.campaign_rounded,
           ),
-          SizedBox(width: AppSizes.padding / 2),
+          const SizedBox(width: AppSizes.padding / 2),
           Text(
             'Katalog Program',
             style: AppTextStyle.bold(context, fontSize: 14),
@@ -142,27 +157,36 @@ class _ProgramListViewState extends State<ProgramListView> {
   }
 
   Widget body() {
-    if (selectedCategory == 0) {
-      return const AppNotFoundWidget(
-        title: 'Maaf, Saat Ini Belum Ada Program Tersedia',
-        subtitle: 'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
-      );
-    }
+    return Consumer<ProgramListViewModel>(
+      builder: (context, programListViewModel, _) {
+        if (programListViewModel.programs == null) {
+          programListViewModel.getAllPrograms();
+          return const AppProgressIndicator();
+        }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: AppSizes.padding),
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: 5,
-        padding: const EdgeInsets.all(AppSizes.padding),
-        itemBuilder: (context, i) {
-          return programCard(i);
-        },
-      ),
+        if (programListViewModel.programs!.isEmpty) {
+          return const AppNotFoundWidget(
+            title: 'Maaf, Saat Ini Belum Ada Program Tersedia',
+            subtitle: 'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
+          );
+        }
+
+        return Padding(
+          padding: const EdgeInsets.only(top: AppSizes.padding),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: programListViewModel.programs!.length,
+            padding: const EdgeInsets.all(AppSizes.padding),
+            itemBuilder: (context, i) {
+              return programCard(programListViewModel.programs![i]);
+            },
+          ),
+        );
+      },
     );
   }
 
-  Widget programCard(int i) {
+  Widget programCard(GProgramFindManyData_programFindMany program) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSizes.padding),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -184,14 +208,14 @@ class _ProgramListViewState extends State<ProgramListView> {
             aspectRatio: 1.5,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-              child: const AppImage(
-                image: randomImage,
+              child: AppImage(
+                image: program.Images?.first.url ?? '',
               ),
             ),
           ),
           const SizedBox(height: AppSizes.padding),
           Text(
-            'Grand Cordela Hotel Bandung',
+            program.name,
             style: AppTextStyle.bold(context, fontSize: 16),
           ),
           const SizedBox(height: AppSizes.padding),
@@ -200,14 +224,14 @@ class _ProgramListViewState extends State<ProgramListView> {
             children: [
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.timelapse_rounded,
                     size: 12,
                     color: AppColors.baseLv4,
                   ),
-                  SizedBox(width: AppSizes.padding / 2),
+                  const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    '20/12/2023',
+                    program.dueDate?.value != null ? DateFormatter.slashDate(program.dueDate!.value) : '-',
                     style: AppTextStyle.regular(
                       context,
                       fontSize: 12,
@@ -218,14 +242,16 @@ class _ProgramListViewState extends State<ProgramListView> {
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.calendar_month_outlined,
                     size: 12,
                     color: AppColors.baseLv4,
                   ),
-                  SizedBox(width: AppSizes.padding / 2),
+                  const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    '2 Hari Lagi',
+                    program.dueDate?.value != null
+                        ? '${DurationFormatter.format(DateTime.now(), DateTime.parse(program.dueDate!.value))} Hari Lagi'
+                        : '-',
                     style: AppTextStyle.regular(
                       context,
                       fontSize: 12,
@@ -238,7 +264,7 @@ class _ProgramListViewState extends State<ProgramListView> {
           ),
           const SizedBox(height: AppSizes.padding),
           Text(
-            'If each interior angle is doubled of each exterior angle of a regular polygon with n sides, then the value of n is:',
+            program.description,
             style: AppTextStyle.regular(context, fontSize: 14),
           ),
           const SizedBox(height: AppSizes.padding),
@@ -253,7 +279,7 @@ class _ProgramListViewState extends State<ProgramListView> {
               rightIcon: Icons.arrow_right_alt_rounded,
               buttonColor: AppColors.white,
               textColor: AppColors.base,
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: AppSizes.padding / 2,
                 horizontal: AppSizes.padding,
               ),
