@@ -10,7 +10,7 @@ import '../../view/login/login_view.dart';
 import '../../view/login/reset_pass_view.dart';
 import '../../view/main/main_view.dart';
 import '../../view/marketing/marketing_gallery_screen.dart';
-import '../../view/onboarding copy/onboarding_view.dart';
+import '../../view/onboarding/onboarding_view.dart';
 import '../../view/payment_status/payment_status.dart';
 import '../../view/program_list/program_list_view.dart';
 import '../../view/referral/referral_detail_view.dart';

@@ -1,39 +1,39 @@
-import 'package:satujuta_gql_client/client.dart';
+// import 'package:satujuta_gql_client/client.dart';
 
-import 'gql_client.dart';
+// import 'gql_client.dart';
 
-class GqlUserService {
-  static Future<List<GUserFindManyData_userFindMany>?> getAllUsers({int take = 10, int? skip}) async {
-    List<GUserFindManyData_userFindMany>? users;
+// class GqlUserService {
+//   static Future<List<GUserFindManyData_userFindMany>?> getAllUsers({int take = 10, int? skip}) async {
+//     List<GUserFindManyData_userFindMany>? users;
 
-    var req = GUserFindManyReq(
-      (b) => b
-        ..vars.userFindManyArgs.skip = skip
-        ..vars.userFindManyArgs.take = take,
-    );
+//     var req = GUserFindManyReq(
+//       (b) => b
+//         ..vars.userFindManyArgs.skip = skip
+//         ..vars.userFindManyArgs.take = take,
+//     );
 
-    await GqlClient.client.request(req).listen((event) {
-      if (event.data?.userFindMany != null) {
-        users = event.data?.userFindMany!.toList();
-      }
-    }).asFuture();
+//     await GqlClient.client.request(req).listen((event) {
+//       if (event.data?.userFindMany != null) {
+//         users = event.data?.userFindMany!.toList();
+//       }
+//     }).asFuture();
 
-    return users;
-  }
+//     return users;
+//   }
 
-  // static Future<List<GUserFindManyData_userFindMany>?> getUserById(int id) async {
-  //   List<GUserFindManyData_userFindMany>? users;
+//   // static Future<List<GUserFindManyData_userFindMany>?> getUserById(int id) async {
+//   //   List<GUserFindManyData_userFindMany>? users;
 
-  //   var req = GAccountFindOneReq(
-  //     (b) => b..requestId = id,
-  //   );
+//   //   var req = GAccountFindOneReq(
+//   //     (b) => b..requestId = id,
+//   //   );
 
-  //   await gqlClient.request(req).listen((event) {
-  //     if (event.data?.userFindMany != null) {
-  //       users = event.data?.userFindMany!.toList();
-  //     }
-  //   }).asFuture();
+//   //   await gqlClient.request(req).listen((event) {
+//   //     if (event.data?.userFindMany != null) {
+//   //       users = event.data?.userFindMany!.toList();
+//   //     }
+//   //   }).asFuture();
 
-  //   return users;
-  // }
-}
+//   //   return users;
+//   // }
+// }

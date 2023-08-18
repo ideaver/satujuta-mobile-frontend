@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/service/graphql/gql_client.dart';
 
 import 'app/locale/app_locale.dart';
 import 'app/route/app_routes.dart';
@@ -39,9 +38,6 @@ Future<void> main() async {
 
   // Set overlay style
   SystemChrome.setSystemUIOverlayStyle(AppTheme.lightOverlayStyle);
-
-  // Initialize GraphQL Client
-  GqlClient.init();
 
   // runApp()
   runApp(const MyApp());

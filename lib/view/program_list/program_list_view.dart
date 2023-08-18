@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/utility/duration_formatter.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
-import 'package:satujuta_gql_client/operations/generated/program_find_many.data.gql.dart';
+import 'package:satujuta_gql_client/operations/generated/program_find_many.graphql.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -38,7 +38,9 @@ class _ProgramListViewState extends State<ProgramListView> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      programListViewModel.getAllPrograms();
+    });
     super.initState();
   }
 
@@ -160,7 +162,6 @@ class _ProgramListViewState extends State<ProgramListView> {
     return Consumer<ProgramListViewModel>(
       builder: (context, programListViewModel, _) {
         if (programListViewModel.programs == null) {
-          programListViewModel.getAllPrograms();
           return const AppProgressIndicator();
         }
 
@@ -186,7 +187,7 @@ class _ProgramListViewState extends State<ProgramListView> {
     );
   }
 
-  Widget programCard(GProgramFindManyData_programFindMany program) {
+  Widget programCard(Query$ProgramFindMany$programFindMany program) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSizes.padding),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -231,7 +232,7 @@ class _ProgramListViewState extends State<ProgramListView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    program.dueDate?.value != null ? DateFormatter.slashDate(program.dueDate!.value) : '-',
+                    program.dueDate != null ? DateFormatter.slashDate(program.dueDate!) : '-',
                     style: AppTextStyle.regular(
                       context,
                       fontSize: 12,
@@ -249,8 +250,8 @@ class _ProgramListViewState extends State<ProgramListView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    program.dueDate?.value != null
-                        ? '${DurationFormatter.format(DateTime.now(), DateTime.parse(program.dueDate!.value))} Hari Lagi'
+                    program.dueDate != null
+                        ? '${DurationFormatter.format(DateTime.now(), DateTime.parse(program.dueDate!))} Hari Lagi'
                         : '-',
                     style: AppTextStyle.regular(
                       context,

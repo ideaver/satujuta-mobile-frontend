@@ -1,10 +1,10 @@
 class Auth {
-  // final String userId;
-  // final String fullName;
-  final String accessToken;
-  final String refreshToken;
+  //  String userId;
+  //  String fullName;
+  String accessToken;
+  String refreshToken;
 
-  const Auth({
+  Auth({
     // required this.userId,
     // required this.fullName,
     required this.accessToken,
