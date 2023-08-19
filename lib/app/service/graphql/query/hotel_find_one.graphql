@@ -1,0 +1,42 @@
+query HotelFindOne($hotelFindUniqueArgs: HotelFindUniqueArgs!) {
+  hotelFindOne(hotelFindUniqueArgs: $hotelFindUniqueArgs) {
+    id
+    name
+    description
+    rating
+    startDate
+    quota
+    createdById
+    createdAt
+    updatedAt
+    _count {
+      checkIns
+    }
+    images {
+      url
+    }
+    address {
+      id
+      name
+      city {
+        name
+      }
+      district {
+        name
+      }
+      postalCode {
+        code
+      }
+    }
+    checkIns {
+      user {
+        id
+        firstName
+        lastName
+        avatarUrl
+      }
+      checkInAt
+      createdAt
+    }
+  }
+}

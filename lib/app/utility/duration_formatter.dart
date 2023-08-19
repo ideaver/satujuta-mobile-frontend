@@ -1,9 +1,8 @@
-// App Duration Formatter
-// v.0.0.1
-// by Elriz Wiraswara
-
-// Duration formatter
+// Duration Formatter
 class DurationFormatter {
+  // This class is not meant to be instatiated or extended; this constructor
+  // prevents instantiation and extension.
+  // ignore: unused_element
   DurationFormatter._();
 
   static String format(DateTime from, DateTime time) {
@@ -20,13 +19,13 @@ class DurationFormatter {
 
   static String formatDetailed(DateTime from, DateTime time) {
     return from.difference(time).inSeconds < 60
-        ? '${time.second}sec'
+        ? '${from.difference(time).inSeconds}sec'
         : from.difference(time).inMinutes < 60
-            ? '${time.minute}min ${time.second}sec'
+            ? '${from.difference(time).inMinutes}min'
             : from.difference(time).inHours < 24
-                ? '${time.hour}h ${time.minute}min'
+                ? '${from.difference(time).inHours}h'
                 : from.difference(time).inDays < 365
-                    ? '${time.day}d ${time.hour}h'
-                    : '${time.year}y ${time.day}d';
+                    ? '${from.difference(time).inDays}d'
+                    : '${(from.difference(time).inDays / 365.25).floor()}y';
   }
 }

@@ -2,6 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/currency_formatter.dart';
+import 'package:satujuta_app_mobile/view_model/member_list_view_model.dart';
+import 'package:satujuta_app_mobile/view_model/program_list_view_model.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -14,12 +19,11 @@ import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_text_field.dart';
+import '../../app/service/graphql/query/generated/user_find_many.graphql.dart';
+import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
-// import '../../../widget/organism/custom_nav_button.dart';
-// import '../program_list/program_list_view.dart';
-// import '../referral/referral_detail_view.dart';
-// import '../referral/referral_view.dart';
-// import '../student/student_registration_view.dart';
+import '../referral/referral_detail_view.dart';
+import '../student/student_registration_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -73,55 +77,62 @@ class _DashboardViewState extends State<DashboardView> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: AppColors.baseLv7,
-      appBar: appBar(),
-      body: WillPopScope(
-        onWillPop: () async {
-          Navigator.pop(context);
+    return Consumer<UserViewModel>(builder: (context, userViewModel, _) {
+      if (userViewModel.user == null) {
+        return const Scaffold(body: AppProgressIndicator());
+      }
 
-          return false;
-        },
-        child: body(),
-      ),
-    );
+      return Scaffold(
+        backgroundColor: AppColors.baseLv7,
+        appBar: appBar(userViewModel),
+        body: WillPopScope(
+          onWillPop: () async {
+            Navigator.pop(context);
+
+            return false;
+          },
+          child: body(userViewModel),
+        ),
+      );
+    });
   }
 
-  AppBar appBar() {
+  AppBar appBar(UserViewModel userViewModel) {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: AppColors.baseLv7,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const SizedBox(
-                width: 32,
-                height: 32,
-                child: ClipOval(
+          GestureDetector(
+            onTap: () {
+              // TODO
+            },
+            child: Row(
+              children: [
+                ClipOval(
                   child: AppImage(
-                    image: randomImage,
+                    image: userViewModel.user?.avatarUrl ?? '',
+                    width: 32,
+                    height: 32,
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              Text(
-                'Hi',
-                style: AppTextStyle.bold(context, fontSize: 18),
-              ),
-            ],
+                const SizedBox(width: AppSizes.padding / 2),
+                Text(
+                  'Hi, ${userViewModel.user?.firstName ?? ''}',
+                  style: AppTextStyle.bold(context, fontSize: 18),
+                ),
+              ],
+            ),
           ),
           AppButton(
             onTap: () {
-              // TODO
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   ReferralDetailView.viewAsMeRouteName,
-              //   ModalRoute.withName(DashboardView.routeName),
-              // );
+              Navigator.pushNamed(
+                context,
+                ReferralDetailView.viewAsMeRouteName,
+              );
             },
-            text: '50',
+            text: '${userViewModel.userPoint}',
             fontSize: 14,
             leftIcon: Icons.stars_rounded,
             buttonColor: AppColors.yellow,
@@ -135,7 +146,7 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget body() {
+  Widget body(UserViewModel userViewModel) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSizes.padding,
@@ -144,8 +155,8 @@ class _DashboardViewState extends State<DashboardView> {
       child: Column(
         children: [
           searchField(),
-          userPointCard(),
-          userCommission(),
+          userPointCard(userViewModel),
+          userCommission(userViewModel),
           chart(),
           nextRewardTarget(),
           registeredMemberAndProgram(),
@@ -178,7 +189,7 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget userPointCard() {
+  Widget userPointCard(UserViewModel model) {
     return Container(
       margin: const EdgeInsets.only(top: AppSizes.padding),
       decoration: BoxDecoration(
@@ -216,7 +227,7 @@ class _DashboardViewState extends State<DashboardView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '50',
+                  '${model.userPoint}',
                   style: AppTextStyle.extraBold(context, fontSize: 42),
                 ),
                 const SizedBox(height: AppSizes.padding / 1.5),
@@ -226,7 +237,7 @@ class _DashboardViewState extends State<DashboardView> {
                 ),
                 const SizedBox(height: AppSizes.padding * 1.5),
                 Text(
-                  'Agus Susanto',
+                  '${model.user?.firstName} ${model.user?.lastName}',
                   style: AppTextStyle.extraBold(context, fontSize: 20),
                 ),
                 const SizedBox(height: AppSizes.padding * 1.5),
@@ -258,53 +269,59 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget userMemberCard() {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.padding / 2),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AppButton(
-            onTap: () {
-              // TODO
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      return Container(
+        padding: const EdgeInsets.all(AppSizes.padding / 2),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppButton(
+              onTap: () {
+                // TODO
 
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   ReferralView.viewAsMeRouteName,
-              //   ModalRoute.withName(DashboardView.routeName),
-              // );
-            },
-            text: 'Undang',
-            fontSize: 12,
-            leftIcon: Icons.add,
-            padding: const EdgeInsets.all(
-              AppSizes.padding / 2,
-            ),
-          ),
-          Text(
-            '12 Anggota',
-            style: AppTextStyle.regular(
-              context,
+                // Navigator.pushNamedAndRemoveUntil(
+                //   context,
+                //   ReferralView.viewAsMeRouteName,
+                //   ModalRoute.withName(DashboardView.routeName),
+                // );
+              },
+              text: 'Undang',
               fontSize: 12,
+              leftIcon: Icons.add,
+              padding: const EdgeInsets.all(
+                AppSizes.padding / 2,
+              ),
             ),
-          ),
-          userMemberThumbs(),
-        ],
-      ),
-    );
+            Text(
+              '${model.userMembers?.length ?? 0} Anggota',
+              style: AppTextStyle.regular(
+                context,
+                fontSize: 12,
+              ),
+            ),
+            userMemberThumbs(model.userMembers),
+          ],
+        ),
+      );
+    });
   }
 
-  Widget userMemberThumbs() {
+  Widget userMemberThumbs(List<Query$UserFindMany$userFindMany>? userMembers) {
+    if (userMembers == null || userMembers.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return SizedBox(
       width: 80,
       height: 26,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          ...List.generate(4, (i) {
+          ...List.generate(userMembers.length > 4 ? 4 : userMembers.length, (i) {
             return Positioned(
               left: i == 0 ? 0 : i * 18,
               child: Container(
@@ -325,7 +342,7 @@ class _DashboardViewState extends State<DashboardView> {
                       const AppImage(
                         image: randomImage,
                       ),
-                      i != 3
+                      userMembers.length < 4
                           ? const SizedBox.shrink()
                           : Container(
                               width: 26,
@@ -333,7 +350,7 @@ class _DashboardViewState extends State<DashboardView> {
                               color: AppColors.base.withOpacity(0.54),
                               child: Center(
                                 child: Text(
-                                  '+9',
+                                  '+${userMembers.length - 4}',
                                   style: AppTextStyle.bold(
                                     context,
                                     fontSize: 10,
@@ -353,7 +370,7 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget userCommission() {
+  Widget userCommission(UserViewModel userViewModel) {
     return Padding(
       padding: const EdgeInsets.all(AppSizes.padding / 2),
       child: Column(
@@ -400,7 +417,7 @@ class _DashboardViewState extends State<DashboardView> {
           ),
           const SizedBox(height: AppSizes.padding / 2),
           Text(
-            'Rp 54.000',
+            CurrencyFormatter.format(userViewModel.userCommission),
             style: AppTextStyle.extraBold(
               context,
               fontSize: 32,
@@ -612,135 +629,138 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget registeredMember() {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'SISWA\nTERDAFTAR',
-                    style: AppTextStyle.bold(
-                      context,
-                      fontSize: 14,
-                      color: AppColors.baseLv4,
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      return Container(
+        padding: const EdgeInsets.all(AppSizes.padding),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppSizes.radius),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'SISWA\nTERDAFTAR',
+                      style: AppTextStyle.bold(
+                        context,
+                        fontSize: 14,
+                        color: AppColors.baseLv4,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSizes.padding / 2),
-                  Text(
-                    '20',
-                    style: AppTextStyle.extraBold(
-                      context,
-                      fontSize: 24,
+                    const SizedBox(height: AppSizes.padding / 2),
+                    Text(
+                      // TODO STUDENT COUNT
+                      '${model.userMembers?.length ?? 0}',
+                      style: AppTextStyle.extraBold(
+                        context,
+                        fontSize: 24,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              AppIconButton(
-                onPressed: () {
-                  // TODO
-                },
-                icon: Icons.people_alt_outlined,
-                iconSize: 32,
-                backgroundColor: AppColors.baseLv7,
-                padding: const EdgeInsets.all(AppSizes.padding / 2),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          AppButton(
-            onTap: () {
-              // TODO
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   StudentRegistrationView.routeName,
-              //   ModalRoute.withName(DashboardView.routeName),
-              // );
-            },
-            text: 'Daftarkan Siswa',
-            fontSize: 12,
-            leftIcon: Icons.stars,
-            iconColor: AppColors.yellow,
-            padding: const EdgeInsets.all(AppSizes.padding / 2),
-          ),
-        ],
-      ),
-    );
+                  ],
+                ),
+                const SizedBox(width: AppSizes.padding / 2),
+                AppIconButton(
+                  onPressed: () {
+                    // TODO
+                  },
+                  icon: Icons.people_alt_outlined,
+                  iconSize: 32,
+                  backgroundColor: AppColors.baseLv7,
+                  padding: const EdgeInsets.all(AppSizes.padding / 2),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.padding),
+            AppButton(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  StudentRegistrationView.routeName,
+                );
+              },
+              text: 'Daftarkan Siswa',
+              fontSize: 12,
+              leftIcon: Icons.stars,
+              iconColor: AppColors.yellow,
+              padding: const EdgeInsets.all(AppSizes.padding / 2),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget programTotal() {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppIconButton(
-            onPressed: () {
-              // TODO
-            },
-            icon: Icons.campaign_rounded,
-            iconSize: 16,
-            backgroundColor: AppColors.baseLv7,
-            padding: const EdgeInsets.all(AppSizes.padding / 2),
-          ),
-          const SizedBox(height: AppSizes.padding / 2),
-          Text(
-            'PROGRAM',
-            style: AppTextStyle.bold(
-              context,
-              fontSize: 12,
-              color: AppColors.baseLv4,
+    return Consumer<ProgramListViewModel>(builder: (context, model, _) {
+      return Container(
+        padding: const EdgeInsets.all(AppSizes.padding),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppSizes.radius),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppIconButton(
+              onPressed: () {
+                // TODO
+              },
+              icon: Icons.campaign_rounded,
+              iconSize: 16,
+              backgroundColor: AppColors.baseLv7,
+              padding: const EdgeInsets.all(AppSizes.padding / 2),
             ),
-          ),
-          const SizedBox(height: AppSizes.padding / 4),
-          Text(
-            '20',
-            style: AppTextStyle.extraBold(
-              context,
-              fontSize: 18,
+            const SizedBox(height: AppSizes.padding / 2),
+            Text(
+              'PROGRAM',
+              style: AppTextStyle.bold(
+                context,
+                fontSize: 12,
+                color: AppColors.baseLv4,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSizes.padding / 2),
-          AppButton(
-            onTap: () {
-              // TODO
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   ProgramListView.routeName,
-              //   ModalRoute.withName(DashboardView.routeName),
-              // );
-            },
-            text: '2 Baru',
-            fontSize: 10,
-            rightIcon: Icons.arrow_right_alt_rounded,
-            textColor: AppColors.base,
-            buttonColor: AppColors.baseLv7,
-            padding: const EdgeInsets.symmetric(
-              vertical: AppSizes.padding / 2,
-              horizontal: AppSizes.padding,
+            const SizedBox(height: AppSizes.padding / 4),
+            Text(
+              '${model.programs?.length ?? 0}',
+              style: AppTextStyle.extraBold(
+                context,
+                fontSize: 18,
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(height: AppSizes.padding / 2),
+            AppButton(
+              onTap: () {
+                // TODO
+                // Navigator.pushNamedAndRemoveUntil(
+                //   context,
+                //   ProgramListView.routeName,
+                //   ModalRoute.withName(DashboardView.routeName),
+                // );
+              },
+              text: '2 Baru',
+              fontSize: 10,
+              rightIcon: Icons.arrow_right_alt_rounded,
+              textColor: AppColors.base,
+              buttonColor: AppColors.baseLv7,
+              padding: const EdgeInsets.symmetric(
+                vertical: AppSizes.padding / 2,
+                horizontal: AppSizes.padding,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget orderStatus() {

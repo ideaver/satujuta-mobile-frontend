@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -8,7 +11,11 @@ import '../../../app/const/app_consts.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_text_field.dart';
+import '../../app/service/graphql/query/generated/user_find_many.graphql.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/member_list_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_not_found_widget.dart';
 
 class ReferralView extends StatefulWidget {
   final PageStateEnum pageState;
@@ -33,12 +40,22 @@ class ReferralView extends StatefulWidget {
 }
 
 class _ReferralViewState extends State<ReferralView> {
+  final _memberListViewModel = locator<MemberListViewModel>();
+
   int selectedMemberStatus = -1;
 
   List<String> memberStatuses = [
     'Aktif',
     'Non-Aktif',
   ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _memberListViewModel.getAllUserMembers();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +65,17 @@ class _ReferralViewState extends State<ReferralView> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: AppColors.baseLv7,
-      appBar: appBar(),
-      body: body(),
-    );
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      if (model.userMembers == null) {
+        return const Scaffold(body: AppProgressIndicator());
+      }
+
+      return Scaffold(
+        backgroundColor: AppColors.baseLv7,
+        appBar: appBar(),
+        body: body(),
+      );
+    });
   }
 
   AppBar appBar() {
@@ -64,62 +87,65 @@ class _ReferralViewState extends State<ReferralView> {
   }
 
   Widget title() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            backButton(),
-            widget.pageState == PageStateEnum.viewAsOther
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Anggota',
-                        style: AppTextStyle.bold(
-                          context,
-                          fontSize: 12,
-                          color: AppColors.baseLv4,
+    // TODO CONSUME OTHER USER MEMBER DATA
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              backButton(),
+              widget.pageState == PageStateEnum.viewAsOther
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Anggota',
+                          style: AppTextStyle.bold(
+                            context,
+                            fontSize: 12,
+                            color: AppColors.baseLv4,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Robert Meijer',
-                        style: AppTextStyle.bold(context, fontSize: 18),
-                      ),
-                    ],
-                  )
-                : Row(
-                    children: [
-                      const Icon(
-                        Icons.people_alt_outlined,
-                        color: AppColors.base,
-                      ),
-                      const SizedBox(width: AppSizes.padding / 2),
-                      Text(
-                        'Anggota Anda',
-                        style: AppTextStyle.bold(context, fontSize: 18),
-                      ),
-                    ],
-                  ),
-          ],
-        ),
-        Row(
-          children: [
-            const Icon(
-              Icons.person,
-              color: AppColors.base,
-              size: 18,
-            ),
-            const SizedBox(width: AppSizes.padding / 4),
-            Text(
-              '16',
-              style: AppTextStyle.bold(context, fontSize: 16),
-            ),
-            const SizedBox(width: AppSizes.padding / 4),
-          ],
-        ),
-      ],
-    );
+                        Text(
+                          'Robert Meijer',
+                          style: AppTextStyle.bold(context, fontSize: 18),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        const Icon(
+                          Icons.people_alt_outlined,
+                          color: AppColors.base,
+                        ),
+                        const SizedBox(width: AppSizes.padding / 2),
+                        Text(
+                          'Anggota Anda',
+                          style: AppTextStyle.bold(context, fontSize: 18),
+                        ),
+                      ],
+                    ),
+            ],
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.person,
+                color: AppColors.base,
+                size: 18,
+              ),
+              const SizedBox(width: AppSizes.padding / 4),
+              Text(
+                '${model.userMembers?.length ?? 0}',
+                style: AppTextStyle.bold(context, fontSize: 16),
+              ),
+              const SizedBox(width: AppSizes.padding / 4),
+            ],
+          ),
+        ],
+      );
+    });
   }
 
   Widget backButton() {
@@ -141,17 +167,19 @@ class _ReferralViewState extends State<ReferralView> {
   }
 
   Widget body() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        searchField(),
-        tabBar(),
-        memberList(),
-      ],
-    );
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          searchField(model),
+          tabBar(),
+          memberList(model),
+        ],
+      );
+    });
   }
 
-  Widget searchField() {
+  Widget searchField(MemberListViewModel model) {
     return Container(
       margin: const EdgeInsets.fromLTRB(
         AppSizes.padding,
@@ -240,65 +268,80 @@ class _ReferralViewState extends State<ReferralView> {
   }
 
   Widget tabWidget(int i) {
-    return GestureDetector(
-      onTap: () {
-        selectedMemberStatus = i;
-        setState(() {});
-      },
-      child: Container(
-        margin: const EdgeInsets.only(right: AppSizes.padding / 2),
-        padding: const EdgeInsets.symmetric(
-          vertical: AppSizes.padding / 2,
-          horizontal: AppSizes.padding,
-        ),
-        decoration: BoxDecoration(
-          color: selectedMemberStatus == i ? AppColors.primary : AppColors.white,
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: Row(
-          children: [
-            i == -1
-                ? Padding(
-                    padding: const EdgeInsets.only(right: AppSizes.padding / 2),
-                    child: Icon(
-                      Icons.dashboard_outlined,
-                      size: 16,
-                      color: selectedMemberStatus == -1 ? AppColors.white : AppColors.base,
-                    ),
-                  )
-                : const SizedBox.shrink(),
-            Text(
-              i == -1 ? 'Semua' : '${memberStatuses[i]} (0)',
-              style: AppTextStyle.semiBold(
-                context,
-                color: selectedMemberStatus == i ? AppColors.white : AppColors.base,
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      return GestureDetector(
+        onTap: () {
+          selectedMemberStatus = i;
+          setState(() {});
+        },
+        child: Container(
+          margin: const EdgeInsets.only(right: AppSizes.padding / 2),
+          padding: const EdgeInsets.symmetric(
+            vertical: AppSizes.padding / 2,
+            horizontal: AppSizes.padding,
+          ),
+          decoration: BoxDecoration(
+            color: selectedMemberStatus == i ? AppColors.primary : AppColors.white,
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: Row(
+            children: [
+              i == -1
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: AppSizes.padding / 2),
+                      child: Icon(
+                        Icons.dashboard_outlined,
+                        size: 16,
+                        color: selectedMemberStatus == -1 ? AppColors.white : AppColors.base,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              Text(
+                i == -1
+                    ? 'Semua'
+                    : '${memberStatuses[i]} (${i == 0 ? (model.userMembersActive?.length ?? 0) : (model.userMembersInactive?.length ?? 0)})',
+                style: AppTextStyle.semiBold(
+                  context,
+                  color: selectedMemberStatus == i ? AppColors.white : AppColors.base,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  Widget memberList() {
+  Widget memberList(MemberListViewModel model) {
+    var members = selectedMemberStatus == -1
+        ? model.userMembers
+        : selectedMemberStatus == 0
+            ? model.userMembersActive
+            : model.userMembersInactive;
+
+    if (members == null || members.isEmpty) {
+      return const AppNotFoundWidget(
+        title: 'Kamu belum memiliki anggota',
+        subtitle: 'Segera menambahkan anggota dan akan kami beritahukan lewat pemberitahuan',
+      );
+    }
+
     return Expanded(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
         child: Column(
           children: [
-            ...List.generate(15, (i) {
-              return memberCard(i);
+            ...List.generate(members.length, (i) {
+              return memberCard(i, members[i], model);
             }),
-            SizedBox(
-              height: AppSizes.padding * 6,
-            )
+            const SizedBox(height: AppSizes.padding * 6)
           ],
         ),
       ),
     );
   }
 
-  Widget memberCard(int i) {
+  Widget memberCard(int i, Query$UserFindMany$userFindMany member, MemberListViewModel model) {
     return Container(
       margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -316,12 +359,12 @@ class _ReferralViewState extends State<ReferralView> {
                   width: 48,
                   height: 48,
                   decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                    color: AppColors.baseLv7,
                     shape: BoxShape.circle,
                   ),
-                  child: const ClipOval(
+                  child: ClipOval(
                     child: AppImage(
-                      image: randomImage,
+                      image: member.avatarUrl ?? '',
                     ),
                   ),
                 ),
@@ -331,7 +374,7 @@ class _ReferralViewState extends State<ReferralView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Robert Meijer',
+                        '${member.firstName} ${member.lastName}',
                         style: AppTextStyle.extraBold(
                           context,
                           fontSize: 16,
@@ -339,7 +382,7 @@ class _ReferralViewState extends State<ReferralView> {
                       ),
                       const SizedBox(height: AppSizes.padding / 4),
                       Text(
-                        'Bergabung 22/10/2021',
+                        'Bergabung ${DateFormatter.slashDate(member.createdAt)}',
                         style: AppTextStyle.regular(
                           context,
                           fontSize: 12,
@@ -356,7 +399,7 @@ class _ReferralViewState extends State<ReferralView> {
                           ),
                           const SizedBox(width: AppSizes.padding / 4),
                           Text(
-                            '1080 Poin',
+                            '${model.calculateMemberPoint(member.PointTransactions)} Poin',
                             style: AppTextStyle.medium(
                               context,
                               fontSize: 12,
@@ -376,7 +419,7 @@ class _ReferralViewState extends State<ReferralView> {
             onTap: () {
               // TODO
             },
-            text: '15',
+            text: '${member.$_count.referredUsers}',
             fontSize: 14,
             textColor: AppColors.base,
             buttonColor: AppColors.white,

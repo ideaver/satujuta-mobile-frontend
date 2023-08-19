@@ -1,9 +1,3 @@
-// import 'package:ferry/ferry.dart';
-// import 'package:satujuta_gql_client/client.dart';
-// class GqlClient {
-//   static late Client client;
-
-import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -11,13 +5,13 @@ import '../storage/local_storage_service.dart';
 
 class GraphQLService {
   late GraphQLClient _client;
-  late ValueNotifier<GraphQLClient> _clientNotifier;
+  // late ValueNotifier<GraphQLClient> _clientNotifier;
 
   // bool _renewingToken = false;
 
   GraphQLClient get client => _client;
 
-  ValueNotifier<GraphQLClient> get clientNotifier => _clientNotifier;
+  // ValueNotifier<GraphQLClient> get clientNotifier => _clientNotifier;
 
   GraphQLService() {
     final authLink = AuthLink(getToken: _getToken);
@@ -35,7 +29,7 @@ class GraphQLService {
       defaultPolicies: DefaultPolicies(query: Policies(fetch: FetchPolicy.networkOnly)),
     );
 
-    _clientNotifier = ValueNotifier(_client);
+    // _clientNotifier = ValueNotifier(_client);
   }
 
   Future<String?> _getToken() async {

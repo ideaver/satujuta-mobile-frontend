@@ -1,0 +1,42 @@
+query UserFindOne($userFindUniqueArgs: UserFindUniqueArgs!) {
+  userFindOne(userFindUniqueArgs: $userFindUniqueArgs) {
+    id
+    avatarUrl
+    firstName
+    lastName
+    email
+    addressId
+    userRole
+    userType
+    avatarUrl
+    whatsappNumber
+    whatsappVerifiedAt
+    referralCode
+    status
+    schoolId
+    theme
+    createdAt
+    updatedAt
+    referredById
+    referredBy {
+      id
+      firstName
+      lastName
+    }
+    _count {
+      referredUsers
+      claimedRewards
+    }
+    PointTransactions {
+      id
+      transactionType
+      createdAt
+      amount
+    }
+    claimedRewards {
+      id
+      name
+      createdAt
+    }
+  }
+}

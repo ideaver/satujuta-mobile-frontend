@@ -11,6 +11,7 @@ import 'app/theme/app_theme.dart';
 import 'view/main/main_view.dart';
 import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
+import 'view_model/member_list_view_model.dart';
 import 'view_model/program_list_view_model.dart';
 import 'view_model/user_view_model.dart';
 
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<UserViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<ProgramListViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<MemberListViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',

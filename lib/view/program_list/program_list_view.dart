@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/utility/duration_formatter.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
-import 'package:satujuta_gql_client/operations/generated/program_find_many.graphql.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -24,7 +23,7 @@ class ProgramListView extends StatefulWidget {
 }
 
 class _ProgramListViewState extends State<ProgramListView> {
-  final programListViewModel = locator<ProgramListViewModel>();
+  final _programListViewModel = locator<ProgramListViewModel>();
 
   int selectedCategory = -1;
 
@@ -39,7 +38,7 @@ class _ProgramListViewState extends State<ProgramListView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      programListViewModel.getAllPrograms();
+      _programListViewModel.getAllPrograms();
     });
     super.initState();
   }
@@ -160,36 +159,33 @@ class _ProgramListViewState extends State<ProgramListView> {
 
   Widget body() {
     return Consumer<ProgramListViewModel>(
-      builder: (context, programListViewModel, _) {
-        if (programListViewModel.programs == null) {
+      builder: (context, model, _) {
+        if (model.programs == null) {
           return const AppProgressIndicator();
         }
 
-        if (programListViewModel.programs!.isEmpty) {
+        if (model.programs!.isEmpty) {
           return const AppNotFoundWidget(
             title: 'Maaf, Saat Ini Belum Ada Program Tersedia',
             subtitle: 'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
           );
         }
 
-        return Padding(
-          padding: const EdgeInsets.only(top: AppSizes.padding),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: programListViewModel.programs!.length,
-            padding: const EdgeInsets.all(AppSizes.padding),
-            itemBuilder: (context, i) {
-              return programCard(programListViewModel.programs![i]);
-            },
-          ),
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: model.programs!.length,
+          padding: const EdgeInsets.all(AppSizes.padding),
+          itemBuilder: (context, i) {
+            return programCard(i, model);
+          },
         );
       },
     );
   }
 
-  Widget programCard(Query$ProgramFindMany$programFindMany program) {
+  Widget programCard(int i, ProgramListViewModel model) {
     return Container(
-      margin: const EdgeInsets.only(bottom: AppSizes.padding),
+      margin: EdgeInsets.only(bottom: i < model.programs!.length - 1 ? AppSizes.padding : AppSizes.padding * 6),
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -210,13 +206,13 @@ class _ProgramListViewState extends State<ProgramListView> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppSizes.radius * 2),
               child: AppImage(
-                image: program.Images?.first.url ?? '',
+                image: model.programs![i].Images?.first.url ?? '',
               ),
             ),
           ),
           const SizedBox(height: AppSizes.padding),
           Text(
-            program.name,
+            model.programs![i].name,
             style: AppTextStyle.bold(context, fontSize: 16),
           ),
           const SizedBox(height: AppSizes.padding),
@@ -232,7 +228,7 @@ class _ProgramListViewState extends State<ProgramListView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    program.dueDate != null ? DateFormatter.slashDate(program.dueDate!) : '-',
+                    model.programs![i].dueDate != null ? DateFormatter.slashDate(model.programs![i].dueDate!) : '-',
                     style: AppTextStyle.regular(
                       context,
                       fontSize: 12,
@@ -250,8 +246,8 @@ class _ProgramListViewState extends State<ProgramListView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    program.dueDate != null
-                        ? '${DurationFormatter.format(DateTime.now(), DateTime.parse(program.dueDate!))} Hari Lagi'
+                    model.programs![i].dueDate != null
+                        ? '${DurationFormatter.format(DateTime.now(), DateTime.parse(model.programs![i].dueDate!))} Hari Lagi'
                         : '-',
                     style: AppTextStyle.regular(
                       context,
@@ -265,7 +261,7 @@ class _ProgramListViewState extends State<ProgramListView> {
           ),
           const SizedBox(height: AppSizes.padding),
           Text(
-            program.description,
+            model.programs![i].description,
             style: AppTextStyle.regular(context, fontSize: 14),
           ),
           const SizedBox(height: AppSizes.padding),

@@ -1,13 +1,9 @@
 targets:
   $default:
     builders:
-      ferry_generator|graphql_builder:
-        enabled: true
+      graphql_codegen:
         options:
-          schema: satujuta_app_mobile|lib/app/service/graphql/src/schema.graphql
-          output_dir: generated
-      ferry_generator|serializer_builder:
-        enabled: true
-        options:
-          schema: satujuta_app_mobile|lib/app/service/graphql/src/schema.graphql
-          output_dir: generated
+          assetsPath: lib/app/service/graphql/**
+          outputDirectory: generated
+          clients:
+            - graphql_flutter

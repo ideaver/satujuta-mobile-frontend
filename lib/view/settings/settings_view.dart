@@ -7,6 +7,7 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../about/about_view.dart';
 import '../login/login_view.dart';
 import 'component/changeButton.dart';
 import 'component/settings_items.dart';
@@ -119,7 +120,7 @@ class _SettingsViewState extends State<SettingsView> {
       child: Column(
         children: [
           settingListItems(),
-          SettingsPassword(),
+          const SettingsPassword(),
           validatorInfo(),
           changeButton(
             'Ubah Password',
@@ -127,7 +128,7 @@ class _SettingsViewState extends State<SettingsView> {
               // TO DO
             },
           ),
-          SizedBox(height: AppSizes.height * 8)
+          const SizedBox(height: AppSizes.height * 8)
         ],
       ),
     );
@@ -135,7 +136,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget settingListItems() {
     return Container(
-      margin: EdgeInsets.only(top: AppSizes.padding * 1.5),
+      margin: const EdgeInsets.only(top: AppSizes.padding * 1.5),
       child: Column(
         children: [
           SettingItem(
@@ -143,15 +144,13 @@ class _SettingsViewState extends State<SettingsView> {
             title: 'Ubah Profile',
             rightButton: chevronButton(),
             functionButton: () {
-              // TODO
-              Navigator.pushNamedAndRemoveUntil(
+              Navigator.pushNamed(
                 context,
                 EditProfileView.routeName,
-                ModalRoute.withName(SettingsView.routeName),
               );
             },
           ),
-          SizedBox(height: AppSizes.padding / 2),
+          const SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: CustomIcon.notification_icon,
             title: 'Notifikasi',
@@ -159,11 +158,11 @@ class _SettingsViewState extends State<SettingsView> {
             functionButton: () {},
             rightButton: IconButton(
               icon: isCheck
-                  ? Image(
+                  ? const Image(
                       image: AssetImage(
                       AppAssets.checkIconPath,
                     ))
-                  : Image(
+                  : const Image(
                       image: AssetImage(
                       AppAssets.uncheckIconPath,
                     )),
@@ -175,33 +174,30 @@ class _SettingsViewState extends State<SettingsView> {
               },
             ),
           ),
-          SizedBox(height: AppSizes.padding / 2),
+          const SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: CustomIcon.about_icon,
             title: 'Tentang',
             subTitle: 'Informasi tentang aplikasi',
             rightButton: chevronButton(),
             functionButton: () {
-              // TODO
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   AboutView.routeName,
-              //   ModalRoute.withName(SettingsView.routeName),
-              // );
+              Navigator.pushNamed(
+                context,
+                AboutView.routeName,
+              );
             },
           ),
-          SizedBox(height: AppSizes.padding / 2),
+          const SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: Icons.arrow_circle_left_outlined,
             title: 'Logout',
             rightButton: chevronButton(),
             functionButton: () {
-              // TODO
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LoginView.routeName,
-                ModalRoute.withName(LoginView.routeName),
-              );
+              // TODO LOG OUT
+              // Navigator.pushNamed(
+              //   context,
+              //   LoginView.routeName,
+              // );
             },
           ),
         ],
@@ -210,8 +206,8 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget chevronButton() {
-    return Padding(
-      padding: const EdgeInsets.all(AppSizes.padding / 2),
+    return const Padding(
+      padding: EdgeInsets.all(AppSizes.padding / 2),
       child: Icon(
         Icons.chevron_right,
         size: 20,

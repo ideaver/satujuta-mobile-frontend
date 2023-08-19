@@ -1,0 +1,20 @@
+query ProgramFindOne($programFindOneArgs: ProgramFindUniqueArgs!) {
+  programFindOne(programFindUniqueArgs: $programFindOneArgs) {
+    id
+    name
+    startDate
+    dueDate
+    description
+    category {
+      id
+      name
+      createdAt
+    }
+    Images {
+      url
+    }
+    _count {
+      participant
+    }
+  }
+}

@@ -6,5 +6,6 @@ import '../app/service/network_checker/network_checker_service.dart';
 
 class SignUpViewModel extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
+
   final network = locator<NetworkCheckerService>();
 }

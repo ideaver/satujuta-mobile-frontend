@@ -1,0 +1,20 @@
+query ProgramFindMany($programFindManyArgs: ProgramFindManyArgs!) {
+  programFindMany(programFindManyArgs: $programFindManyArgs) {
+    id
+    name
+    description
+    category {
+      id
+      name
+      createdAt
+    }
+    startDate
+    dueDate
+    _count {
+      participant
+    }
+    Images {
+      url
+    }
+  }
+}
