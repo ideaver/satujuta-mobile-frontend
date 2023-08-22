@@ -8,7 +8,7 @@ class AppTheme {
 
   // Light Ui Overlay Style
   static const lightOverlayStyle = SystemUiOverlayStyle(
-    systemNavigationBarColor: AppColors.white,
+    systemNavigationBarColor: AppColors.baseLv7,
     systemNavigationBarIconBrightness: Brightness.dark,
     statusBarColor: AppColors.white,
     statusBarIconBrightness: Brightness.dark,
@@ -122,11 +122,7 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColors.white,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
+        systemOverlayStyle: lightOverlayStyle,
         iconTheme: IconThemeData(
           color: AppColors.base,
         ),
@@ -174,11 +170,7 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         color: Colors.grey[700],
         elevation: 0,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.white,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
+        systemOverlayStyle: darkOverlayStyle,
         iconTheme: const IconThemeData(
           color: AppColors.base,
         ),

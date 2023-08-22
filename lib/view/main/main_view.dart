@@ -9,7 +9,7 @@ import '../../app/service/locator/service_locator.dart';
 import '../../app/service/network_checker/network_checker_service.dart';
 import '../../view_model/main_view_model.dart';
 import '../program_list/program_list_view.dart';
-import '../referral/referral_view.dart';
+import '../referral/referral_list_view.dart';
 import '../settings/settings_view.dart';
 import '../splash/splash_view.dart';
 
@@ -78,7 +78,7 @@ class _MainViewState extends State<MainView> {
       return const ProgramListView();
     }
     if (i == 2) {
-      return const ReferralView(pageState: PageStateEnum.viewAsMe);
+      return const ReferralListView(pageState: PageStateEnum.viewAsMe);
     }
     if (i == 3) {
       return const SettingsView();

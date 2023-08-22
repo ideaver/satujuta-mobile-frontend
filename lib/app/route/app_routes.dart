@@ -15,9 +15,10 @@ import '../../view/payment_status/payment_status.dart';
 import '../../view/program_list/program_list_view.dart';
 import '../../view/referral/referral_detail_view.dart';
 import '../../view/referral/referral_invitation_view.dart';
-import '../../view/referral/referral_view.dart';
+import '../../view/referral/referral_list_view.dart';
 import '../../view/register/register_view.dart';
 import '../../view/reward_list/reward_list_view.dart';
+import '../../view/settings/edit_password_view.dart';
 import '../../view/settings/edit_profile_view.dart';
 import '../../view/settings/settings_view.dart';
 import '../../view/splash/splash_view.dart';
@@ -39,12 +40,13 @@ class AppRoutes {
     RewardListView.routeName: (context) => const RewardListView(),
     PaymentStatusView.successRouteName: (context) => const PaymentStatusView.success(),
     PaymentStatusView.failedRouteName: (context) => const PaymentStatusView.failed(),
-    ReferralView.viewAsMeRouteName: (context) => const ReferralView.viewAsMe(),
-    ReferralView.viewAsOtherRouteName: (context) => const ReferralView.viewAsOther(),
+    ReferralListView.viewAsMeRouteName: (context) => const ReferralListView.viewAsMe(),
+    ReferralListView.viewAsOtherRouteName: (context) => const ReferralListView.viewAsOther(),
     ReferralInvitationView.viewAsMeRouteName: (context) => const ReferralInvitationView.viewAsMe(),
     ReferralDetailView.viewAsMeRouteName: (context) => const ReferralDetailView.viewAsMe(),
     SettingsView.routeName: (context) => const SettingsView(),
     EditProfileView.routeName: (context) => const EditProfileView(),
+    EditPasswordView.routeName: (context) => const EditPasswordView(),
     MarketingGalleryView.routeName: (context) => const MarketingGalleryView(),
     StudentRegistrationView.routeName: (context) => const StudentRegistrationView(),
     StudentHotelPickerView.routeName: (context) => const StudentHotelPickerView(),

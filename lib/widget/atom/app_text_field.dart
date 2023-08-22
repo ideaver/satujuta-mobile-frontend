@@ -5,78 +5,106 @@ import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_sizes.dart';
 import '../../app/theme/app_text_style.dart';
 
-class AppTextField extends StatelessWidget {
+enum AppTextFieldType {
+  text,
+  password,
+  number,
+  phone,
+  search,
+}
+
+class AppTextField extends StatefulWidget {
+  final AppTextFieldType type;
   final String? lableText;
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType? keyboardtype;
   final bool enabled;
-  final bool obscureText;
+  final bool showVisibilityButton;
   final Color? fillColor;
   final Function()? onTap;
   final Function(String)? onChanged;
+  final Function()? onEditingComplete;
   final EdgeInsets? padding;
   final EdgeInsets? contentPadding;
   final TextEditingController? controller;
+  final TextInputType? textInputType;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
 
   const AppTextField({
     super.key,
+    this.type = AppTextFieldType.text,
     this.lableText,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.keyboardtype,
     this.enabled = true,
-    this.obscureText = false,
+    this.showVisibilityButton = true,
     this.onTap,
     this.onChanged,
+    this.onEditingComplete,
     this.padding,
     this.contentPadding,
     this.controller,
+    this.textInputType,
     this.textInputAction,
     this.inputFormatters,
     this.fillColor,
   });
 
   @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  bool _obsecureText = false;
+
+  @override
+  void initState() {
+    _obsecureText = widget.type == AppTextFieldType.password;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Padding(
-        padding: padding ??
+        padding: widget.padding ??
             const EdgeInsets.symmetric(
               horizontal: AppSizes.padding,
               vertical: AppSizes.padding / 2,
             ),
         child: TextField(
-          controller: controller,
-          enabled: enabled,
-          obscureText: obscureText,
-          onChanged: onChanged,
-          keyboardType: keyboardtype,
-          textInputAction: textInputAction,
-          inputFormatters: inputFormatters,
+          controller: widget.controller,
+          enabled: widget.enabled,
+          obscureText: _obsecureText,
+          onChanged: widget.onChanged,
+          onEditingComplete: widget.onEditingComplete,
+          keyboardType: keyboardType(),
+          textInputAction: widget.textInputAction,
+          inputFormatters: inputFormatters(),
           style: AppTextStyle.medium(
             context,
             color: AppColors.base,
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            labelText: lableText,
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-            fillColor: fillColor,
+            labelText: widget.lableText,
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: suffixIconWidget(),
+            fillColor: widget.fillColor,
             border: InputBorder.none,
             labelStyle: AppTextStyle.medium(
               context,
               color: AppColors.baseLv4,
               fontSize: 14,
             ),
-            contentPadding: contentPadding,
-            hintText: hintText,
+            contentPadding: widget.contentPadding,
+            hintText: widget.hintText,
             hintStyle: AppTextStyle.medium(
               context,
               color: AppColors.baseLv4,
@@ -84,6 +112,61 @@ class AppTextField extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  TextInputType? keyboardType() {
+    if (widget.textInputType != null) {
+      return widget.textInputType;
+    }
+
+    if (widget.type == AppTextFieldType.phone) {
+      return TextInputType.phone;
+    }
+
+    if (widget.type == AppTextFieldType.number) {
+      return TextInputType.number;
+    }
+
+    return widget.textInputType;
+  }
+
+  List<TextInputFormatter>? inputFormatters() {
+    if (widget.inputFormatters != null) {
+      return widget.inputFormatters;
+    }
+
+    if (widget.type == AppTextFieldType.phone) {
+      return [FilteringTextInputFormatter.digitsOnly];
+    }
+
+    if (widget.type == AppTextFieldType.number) {
+      return [FilteringTextInputFormatter.digitsOnly];
+    }
+
+    return widget.inputFormatters;
+  }
+
+  Widget? suffixIconWidget() {
+    if (widget.type == AppTextFieldType.password && widget.showVisibilityButton) {
+      return textVisibilityIconButton();
+    }
+
+    return widget.suffixIcon;
+  }
+
+  Widget textVisibilityIconButton() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _obsecureText = !_obsecureText;
+        });
+      },
+      child: Icon(
+        _obsecureText ? Icons.visibility_off_rounded : Icons.remove_red_eye_rounded,
+        // color: AppColors.baseLv5,
+        // size: widget.iconsSize,
       ),
     );
   }

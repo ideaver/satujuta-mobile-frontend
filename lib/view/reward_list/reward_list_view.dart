@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -52,6 +53,9 @@ class _RewardListViewState extends State<RewardListView> {
         expandedTitleScale: 1.5,
       ),
       bottom: tabBar(),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.baseLv7,
+      ),
     );
   }
 

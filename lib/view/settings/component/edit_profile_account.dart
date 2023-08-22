@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../widget/atom/app_text_field.dart';
 import '../../../../widget/atom/app_text_fields_wrapper.dart';
+import '../../../view_model/edit_profile_view_model.dart';
 
 class EditProfileAccount extends StatefulWidget {
   const EditProfileAccount({
-    Key? key,
+    super.key,
     this.noWa,
     this.email,
   });
@@ -23,53 +24,52 @@ class EditProfileAccount extends StatefulWidget {
 class _EditProfileAccountState extends State<EditProfileAccount> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
-      child: Container(
-        color: AppColors.white,
-        child: Column(
-          children: [
-            AppTextFieldsWrapper(
-              textFields: [
-                AppTextField(
-                  suffixIcon: Image.asset(
-                    AppAssets.phoneIconPath,
-                  ),
-                  lableText: 'Nomor WhatsApp',
-                  hintText: widget.noWa,
-                ),
-                AppTextField(
-                  suffixIcon: Image.asset(
-                    AppAssets.dropdownRectangleFormIconPath,
-                  ),
-                  lableText: 'Email',
-                  hintText: widget.email,
-                ),
-                AppTextField(
-                  onTap: () {
-                    // TODO
-                  },
-                  suffixIcon: Image.asset(
-                    AppAssets.passwordIconPath,
-                  ),
-                  lableText: 'Kata Sandi',
-                  obscureText: true,
-                ),
-                AppTextField(
-                  onTap: () {
-                    // TODO
-                  },
-                  suffixIcon: Image.asset(
-                    AppAssets.passwordIconPath,
-                  ),
-                  obscureText: true,
-                  lableText: 'Konfirmasi Kata Sandi',
+    return Consumer<EditProfileViewModel>(
+      builder: (context, model, _) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
+          child: Container(
+            color: AppColors.white,
+            child: Column(
+              children: [
+                AppTextFieldsWrapper(
+                  textFields: [
+                    AppTextField(
+                      controller: model.whatsappNumber,
+                      enabled: false,
+                      type: AppTextFieldType.phone,
+                      suffixIcon: const Icon(
+                        CupertinoIcons.phone,
+                      ),
+                      lableText: 'Nomor WhatsApp',
+                      hintText: widget.noWa,
+                    ),
+                    AppTextField(
+                      controller: model.email,
+                      enabled: false,
+                      suffixIcon: const Icon(
+                        CupertinoIcons.mail,
+                      ),
+                      lableText: 'Email',
+                      hintText: widget.email,
+                    ),
+                    // AppTextField(
+                    //   controller: model.password,
+                    //   type: AppTextFieldType.password,
+                    //   lableText: 'Kata Sandi',
+                    // ),
+                    // AppTextField(
+                    //   controller: model.confirmPassword,
+                    //   type: AppTextFieldType.password,
+                    //   lableText: 'Konfirmasi Kata Sandi',
+                    // ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

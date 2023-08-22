@@ -11,9 +11,9 @@ query HotelFindMany($hotelFindManyArgs: HotelFindManyArgs!) {
       district {
         name
       }
-      postalCode {
-        code
-      }
+      # postalCode {
+      #   code
+      # }
     }
     description
     rating
@@ -28,7 +28,6 @@ query HotelFindMany($hotelFindManyArgs: HotelFindManyArgs!) {
     }
     createdAt
     updatedAt
-    
     images {
       url
     }

@@ -5,7 +5,7 @@ import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 
 class SettingItem extends StatefulWidget {
-  SettingItem({
+  const SettingItem({
     super.key,
     required this.icon,
     required this.title,
@@ -65,7 +65,7 @@ class _SettingItemState extends State<SettingItem> {
                       ),
                     ),
                     widget.subTitle == null
-                        ? SizedBox.shrink()
+                        ? const SizedBox.shrink()
                         : Padding(
                             padding: const EdgeInsets.only(top: AppSizes.height / 2),
                             child: Text(

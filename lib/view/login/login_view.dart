@@ -155,13 +155,13 @@ class _LoginViewState extends State<LoginView> {
             height: 0,
           ),
           AppTextField(
+            type: AppTextFieldType.password,
             suffixIcon: AppIconButton(
               imgIcon: AppAssets.lockFormIconPath,
               onPressed: () {
                 // TODO
               },
             ),
-            obscureText: true,
             lableText: 'Password',
           ),
         ],

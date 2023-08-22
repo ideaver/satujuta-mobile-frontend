@@ -9,6 +9,8 @@ import 'app/service/locator/service_locator.dart';
 import 'app/service/network_checker/network_checker_service.dart';
 import 'app/theme/app_theme.dart';
 import 'view/main/main_view.dart';
+import 'view_model/address_view_model.dart';
+import 'view_model/edit_profile_view_model.dart';
 import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
 import 'view_model/member_list_view_model.dart';
@@ -57,8 +59,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<MainViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<UserViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<EditProfileViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<ProgramListViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<MemberListViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<AddressViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',

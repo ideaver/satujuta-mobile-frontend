@@ -67,8 +67,6 @@ input AccountCreateManyUserInput {
   id: Int
   accountNumber: Float
   name: String!
-  createdAt: DateTime
-  updatedAt: DateTime
   accountCategory: AccountCategory!
 }
 
@@ -90,31 +88,9 @@ input AccountCreateNestedOneWithoutProjectInput {
   connect: AccountWhereUniqueInput
 }
 
-input AccountCreateNestedOneWithoutTransactionDestinationInput {
-  create: AccountCreateWithoutTransactionDestinationInput
-  connectOrCreate: AccountCreateOrConnectWithoutTransactionDestinationInput
-  connect: AccountWhereUniqueInput
-}
-
-input AccountCreateNestedOneWithoutTransactionOriginsInput {
-  create: AccountCreateWithoutTransactionOriginsInput
-  connectOrCreate: AccountCreateOrConnectWithoutTransactionOriginsInput
-  connect: AccountWhereUniqueInput
-}
-
 input AccountCreateOrConnectWithoutProjectInput {
   where: AccountWhereUniqueInput!
   create: AccountCreateWithoutProjectInput!
-}
-
-input AccountCreateOrConnectWithoutTransactionDestinationInput {
-  where: AccountWhereUniqueInput!
-  create: AccountCreateWithoutTransactionDestinationInput!
-}
-
-input AccountCreateOrConnectWithoutTransactionOriginsInput {
-  where: AccountWhereUniqueInput!
-  create: AccountCreateWithoutTransactionOriginsInput!
 }
 
 input AccountCreateOrConnectWithoutUserInput {
@@ -125,49 +101,14 @@ input AccountCreateOrConnectWithoutUserInput {
 input AccountCreateWithoutProjectInput {
   accountNumber: Float
   name: String!
-  createdAt: DateTime
-  updatedAt: DateTime
   accountCategory: AccountCategory!
   user: UserCreateNestedOneWithoutAccountsInput!
-  transactionOrigins: TransactionCreateNestedManyWithoutFromAccountInput
-  transactionDestination: TransactionCreateNestedManyWithoutToAccountInput
-  bankAccount: BankCreateNestedOneWithoutAccountInput
-}
-
-input AccountCreateWithoutTransactionDestinationInput {
-  accountNumber: Float
-  name: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  accountCategory: AccountCategory!
-  user: UserCreateNestedOneWithoutAccountsInput!
-  transactionOrigins: TransactionCreateNestedManyWithoutFromAccountInput
-  project: ProjectCreateNestedOneWithoutAccountInput
-  bankAccount: BankCreateNestedOneWithoutAccountInput
-}
-
-input AccountCreateWithoutTransactionOriginsInput {
-  accountNumber: Float
-  name: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  accountCategory: AccountCategory!
-  user: UserCreateNestedOneWithoutAccountsInput!
-  transactionDestination: TransactionCreateNestedManyWithoutToAccountInput
-  project: ProjectCreateNestedOneWithoutAccountInput
-  bankAccount: BankCreateNestedOneWithoutAccountInput
 }
 
 input AccountCreateWithoutUserInput {
   accountNumber: Float
   name: String!
-  createdAt: DateTime
-  updatedAt: DateTime
   accountCategory: AccountCategory!
-  transactionOrigins: TransactionCreateNestedManyWithoutFromAccountInput
-  transactionDestination: TransactionCreateNestedManyWithoutToAccountInput
-  project: ProjectCreateNestedOneWithoutAccountInput
-  bankAccount: BankCreateNestedOneWithoutAccountInput
 }
 
 input AccountFindFirstArgs {
@@ -225,15 +166,11 @@ input AccountOrderByWithRelationInput {
   id: SortOrder
   accountNumber: SortOrderInput
   name: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
   userId: SortOrder
   accountCategory: SortOrder
   user: UserOrderByWithRelationInput
   transactionOrigins: TransactionOrderByRelationAggregateInput
   transactionDestination: TransactionOrderByRelationAggregateInput
-  project: ProjectOrderByWithRelationInput
-  bankAccount: BankOrderByWithRelationInput
 }
 
 input AccountRelationFilter {
@@ -258,8 +195,6 @@ input AccountScalarWhereInput {
   id: IntFilter
   accountNumber: FloatNullableFilter
   name: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   userId: StringFilter
   accountCategory: EnumAccountCategoryFilter
 }
@@ -272,21 +207,15 @@ type AccountSumAggregate {
 input AccountUpdateInput {
   accountNumber: NullableFloatFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   accountCategory: EnumAccountCategoryFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutAccountsNestedInput
   transactionOrigins: TransactionUpdateManyWithoutFromAccountNestedInput
   transactionDestination: TransactionUpdateManyWithoutToAccountNestedInput
-  project: ProjectUpdateOneWithoutAccountNestedInput
-  bankAccount: BankUpdateOneWithoutAccountNestedInput
 }
 
 input AccountUpdateManyMutationInput {
   accountNumber: NullableFloatFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   accountCategory: EnumAccountCategoryFieldUpdateOperationsInput
 }
 
@@ -322,83 +251,26 @@ input AccountUpdateOneRequiredWithoutProjectNestedInput {
   update: AccountUpdateToOneWithWhereWithoutProjectInput
 }
 
-input AccountUpdateOneRequiredWithoutTransactionDestinationNestedInput {
-  create: AccountCreateWithoutTransactionDestinationInput
-  connectOrCreate: AccountCreateOrConnectWithoutTransactionDestinationInput
-  upsert: AccountUpsertWithoutTransactionDestinationInput
-  connect: AccountWhereUniqueInput
-  update: AccountUpdateToOneWithWhereWithoutTransactionDestinationInput
-}
-
-input AccountUpdateOneRequiredWithoutTransactionOriginsNestedInput {
-  create: AccountCreateWithoutTransactionOriginsInput
-  connectOrCreate: AccountCreateOrConnectWithoutTransactionOriginsInput
-  upsert: AccountUpsertWithoutTransactionOriginsInput
-  connect: AccountWhereUniqueInput
-  update: AccountUpdateToOneWithWhereWithoutTransactionOriginsInput
-}
-
 input AccountUpdateToOneWithWhereWithoutProjectInput {
   where: AccountWhereInput
   data: AccountUpdateWithoutProjectInput!
 }
 
-input AccountUpdateToOneWithWhereWithoutTransactionDestinationInput {
-  where: AccountWhereInput
-  data: AccountUpdateWithoutTransactionDestinationInput!
-}
-
-input AccountUpdateToOneWithWhereWithoutTransactionOriginsInput {
-  where: AccountWhereInput
-  data: AccountUpdateWithoutTransactionOriginsInput!
-}
-
 input AccountUpdateWithoutProjectInput {
   accountNumber: NullableFloatFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   accountCategory: EnumAccountCategoryFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutAccountsNestedInput
   transactionOrigins: TransactionUpdateManyWithoutFromAccountNestedInput
   transactionDestination: TransactionUpdateManyWithoutToAccountNestedInput
-  bankAccount: BankUpdateOneWithoutAccountNestedInput
-}
-
-input AccountUpdateWithoutTransactionDestinationInput {
-  accountNumber: NullableFloatFieldUpdateOperationsInput
-  name: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  accountCategory: EnumAccountCategoryFieldUpdateOperationsInput
-  user: UserUpdateOneRequiredWithoutAccountsNestedInput
-  transactionOrigins: TransactionUpdateManyWithoutFromAccountNestedInput
-  project: ProjectUpdateOneWithoutAccountNestedInput
-  bankAccount: BankUpdateOneWithoutAccountNestedInput
-}
-
-input AccountUpdateWithoutTransactionOriginsInput {
-  accountNumber: NullableFloatFieldUpdateOperationsInput
-  name: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  accountCategory: EnumAccountCategoryFieldUpdateOperationsInput
-  user: UserUpdateOneRequiredWithoutAccountsNestedInput
-  transactionDestination: TransactionUpdateManyWithoutToAccountNestedInput
-  project: ProjectUpdateOneWithoutAccountNestedInput
-  bankAccount: BankUpdateOneWithoutAccountNestedInput
 }
 
 input AccountUpdateWithoutUserInput {
   accountNumber: NullableFloatFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   accountCategory: EnumAccountCategoryFieldUpdateOperationsInput
   transactionOrigins: TransactionUpdateManyWithoutFromAccountNestedInput
   transactionDestination: TransactionUpdateManyWithoutToAccountNestedInput
-  project: ProjectUpdateOneWithoutAccountNestedInput
-  bankAccount: BankUpdateOneWithoutAccountNestedInput
 }
 
 input AccountUpdateWithWhereUniqueWithoutUserInput {
@@ -409,18 +281,6 @@ input AccountUpdateWithWhereUniqueWithoutUserInput {
 input AccountUpsertWithoutProjectInput {
   update: AccountUpdateWithoutProjectInput!
   create: AccountCreateWithoutProjectInput!
-  where: AccountWhereInput
-}
-
-input AccountUpsertWithoutTransactionDestinationInput {
-  update: AccountUpdateWithoutTransactionDestinationInput!
-  create: AccountCreateWithoutTransactionDestinationInput!
-  where: AccountWhereInput
-}
-
-input AccountUpsertWithoutTransactionOriginsInput {
-  update: AccountUpdateWithoutTransactionOriginsInput!
-  create: AccountCreateWithoutTransactionOriginsInput!
   where: AccountWhereInput
 }
 
@@ -437,15 +297,11 @@ input AccountWhereInput {
   id: IntFilter
   accountNumber: FloatNullableFilter
   name: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   userId: StringFilter
   accountCategory: EnumAccountCategoryFilter
   user: UserRelationFilter
   transactionOrigins: TransactionListRelationFilter
   transactionDestination: TransactionListRelationFilter
-  project: ProjectNullableRelationFilter
-  bankAccount: BankNullableRelationFilter
 }
 
 input AccountWhereUniqueInput {
@@ -455,26 +311,24 @@ input AccountWhereUniqueInput {
   NOT: [AccountWhereInput!]
   accountNumber: FloatNullableFilter
   name: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   userId: StringFilter
   accountCategory: EnumAccountCategoryFilter
   user: UserRelationFilter
   transactionOrigins: TransactionListRelationFilter
   transactionDestination: TransactionListRelationFilter
-  project: ProjectNullableRelationFilter
-  bankAccount: BankNullableRelationFilter
 }
 
 type Address {
   id: Int!
   name: String!
+  provinceId: Int!
   cityId: Int!
   districtId: Int!
-  postalCodeId: Int!
+  subdistrictId: Int!
+  province: Province!
   city: City!
   district: District!
-  postalCode: PostalCode!
+  subdistrict: Subdistrict!
   user: UserAbstract
   hotel: Hotel
   school: School
@@ -483,17 +337,19 @@ type Address {
 
 type AddressAvgAggregate {
   id: Float
+  provinceId: Float
   cityId: Float
   districtId: Float
-  postalCodeId: Float
+  subdistrictId: Float
 }
 
 type AddressCountAggregate {
   id: Int!
   name: Int!
+  provinceId: Int!
   cityId: Int!
   districtId: Int!
-  postalCodeId: Int!
+  subdistrictId: Int!
   _all: Int!
 }
 
@@ -503,9 +359,77 @@ input AddressCreateArgs {
 
 input AddressCreateInput {
   name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
   city: CityCreateNestedOneWithoutAddressInput!
   district: DistrictCreateNestedOneWithoutAddressInput!
-  postalCode: PostalCodeCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
+}
+
+input AddressCreateManyCityInput {
+  name: String!
+  subdistrictId: Int!
+}
+
+input AddressCreateManyCityInputEnvelope {
+  data: [AddressCreateManyCityInput!]!
+  skipDuplicates: Boolean
+}
+
+input AddressCreateManyDistrictInput {
+  name: String!
+  subdistrictId: Int!
+}
+
+input AddressCreateManyDistrictInputEnvelope {
+  data: [AddressCreateManyDistrictInput!]!
+  skipDuplicates: Boolean
+}
+
+input AddressCreateManyProvinceInput {
+  name: String!
+  subdistrictId: Int!
+}
+
+input AddressCreateManyProvinceInputEnvelope {
+  data: [AddressCreateManyProvinceInput!]!
+  skipDuplicates: Boolean
+}
+
+input AddressCreateManySubdistrictInput {
+  name: String!
+}
+
+input AddressCreateManySubdistrictInputEnvelope {
+  data: [AddressCreateManySubdistrictInput!]!
+  skipDuplicates: Boolean
+}
+
+input AddressCreateNestedManyWithoutCityInput {
+  create: [AddressCreateWithoutCityInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutCityInput!]
+  createMany: AddressCreateManyCityInputEnvelope
+  connect: [AddressWhereUniqueInput!]
+}
+
+input AddressCreateNestedManyWithoutDistrictInput {
+  create: [AddressCreateWithoutDistrictInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutDistrictInput!]
+  createMany: AddressCreateManyDistrictInputEnvelope
+  connect: [AddressWhereUniqueInput!]
+}
+
+input AddressCreateNestedManyWithoutProvinceInput {
+  create: [AddressCreateWithoutProvinceInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutProvinceInput!]
+  createMany: AddressCreateManyProvinceInputEnvelope
+  connect: [AddressWhereUniqueInput!]
+}
+
+input AddressCreateNestedManyWithoutSubdistrictInput {
+  create: [AddressCreateWithoutSubdistrictInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutSubdistrictInput!]
+  createMany: AddressCreateManySubdistrictInputEnvelope
+  connect: [AddressWhereUniqueInput!]
 }
 
 input AddressCreateNestedOneWithoutHotelInput {
@@ -520,21 +444,30 @@ input AddressCreateNestedOneWithoutSchoolInput {
   connect: AddressWhereUniqueInput
 }
 
-input AddressCreateNestedOneWithoutShippingInput {
-  create: AddressCreateWithoutShippingInput
-  connectOrCreate: AddressCreateOrConnectWithoutShippingInput
-  connect: AddressWhereUniqueInput
-}
-
 input AddressCreateNestedOneWithoutUserInput {
   create: AddressCreateWithoutUserInput
   connectOrCreate: AddressCreateOrConnectWithoutUserInput
   connect: AddressWhereUniqueInput
 }
 
+input AddressCreateOrConnectWithoutCityInput {
+  where: AddressWhereUniqueInput!
+  create: AddressCreateWithoutCityInput!
+}
+
+input AddressCreateOrConnectWithoutDistrictInput {
+  where: AddressWhereUniqueInput!
+  create: AddressCreateWithoutDistrictInput!
+}
+
 input AddressCreateOrConnectWithoutHotelInput {
   where: AddressWhereUniqueInput!
   create: AddressCreateWithoutHotelInput!
+}
+
+input AddressCreateOrConnectWithoutProvinceInput {
+  where: AddressWhereUniqueInput!
+  create: AddressCreateWithoutProvinceInput!
 }
 
 input AddressCreateOrConnectWithoutSchoolInput {
@@ -547,37 +480,74 @@ input AddressCreateOrConnectWithoutShippingInput {
   create: AddressCreateWithoutShippingInput!
 }
 
+input AddressCreateOrConnectWithoutSubdistrictInput {
+  where: AddressWhereUniqueInput!
+  create: AddressCreateWithoutSubdistrictInput!
+}
+
 input AddressCreateOrConnectWithoutUserInput {
   where: AddressWhereUniqueInput!
   create: AddressCreateWithoutUserInput!
 }
 
+input AddressCreateWithoutCityInput {
+  name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
+  district: DistrictCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
+}
+
+input AddressCreateWithoutDistrictInput {
+  name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
+  city: CityCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
+}
+
 input AddressCreateWithoutHotelInput {
+  name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
+  city: CityCreateNestedOneWithoutAddressInput!
+  district: DistrictCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
+}
+
+input AddressCreateWithoutProvinceInput {
   name: String!
   city: CityCreateNestedOneWithoutAddressInput!
   district: DistrictCreateNestedOneWithoutAddressInput!
-  postalCode: PostalCodeCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
 }
 
 input AddressCreateWithoutSchoolInput {
   name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
   city: CityCreateNestedOneWithoutAddressInput!
   district: DistrictCreateNestedOneWithoutAddressInput!
-  postalCode: PostalCodeCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
 }
 
 input AddressCreateWithoutShippingInput {
   name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
   city: CityCreateNestedOneWithoutAddressInput!
   district: DistrictCreateNestedOneWithoutAddressInput!
-  postalCode: PostalCodeCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
+}
+
+input AddressCreateWithoutSubdistrictInput {
+  name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
+  city: CityCreateNestedOneWithoutAddressInput!
+  district: DistrictCreateNestedOneWithoutAddressInput!
 }
 
 input AddressCreateWithoutUserInput {
   name: String!
+  province: ProvinceCreateNestedOneWithoutAddressInput!
   city: CityCreateNestedOneWithoutAddressInput!
   district: DistrictCreateNestedOneWithoutAddressInput!
-  postalCode: PostalCodeCreateNestedOneWithoutAddressInput!
+  subdistrict: SubdistrictCreateNestedOneWithoutAddressInput!
 }
 
 input AddressFindManyArgs {
@@ -601,17 +571,19 @@ input AddressListRelationFilter {
 type AddressMaxAggregate {
   id: Int
   name: String
+  provinceId: Int
   cityId: Int
   districtId: Int
-  postalCodeId: Int
+  subdistrictId: Int
 }
 
 type AddressMinAggregate {
   id: Int
   name: String
+  provinceId: Int
   cityId: Int
   districtId: Int
-  postalCodeId: Int
+  subdistrictId: Int
 }
 
 input AddressOrderByRelationAggregateInput {
@@ -621,12 +593,14 @@ input AddressOrderByRelationAggregateInput {
 input AddressOrderByWithRelationInput {
   id: SortOrder
   name: SortOrder
+  provinceId: SortOrder
   cityId: SortOrder
   districtId: SortOrder
-  postalCodeId: SortOrder
+  subdistrictId: SortOrder
+  province: ProvinceOrderByWithRelationInput
   city: CityOrderByWithRelationInput
   district: DistrictOrderByWithRelationInput
-  postalCode: PostalCodeOrderByWithRelationInput
+  subdistrict: SubdistrictOrderByWithRelationInput
   user: UserOrderByWithRelationInput
   hotel: HotelOrderByWithRelationInput
   school: SchoolOrderByWithRelationInput
@@ -641,27 +615,122 @@ input AddressRelationFilter {
 enum AddressScalarFieldEnum {
   id
   name
+  provinceId
   cityId
   districtId
-  postalCodeId
+  subdistrictId
+}
+
+input AddressScalarWhereInput {
+  AND: [AddressScalarWhereInput!]
+  OR: [AddressScalarWhereInput!]
+  NOT: [AddressScalarWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  provinceId: IntFilter
+  cityId: IntFilter
+  districtId: IntFilter
+  subdistrictId: IntFilter
 }
 
 type AddressSumAggregate {
   id: Int
+  provinceId: Int
   cityId: Int
   districtId: Int
-  postalCodeId: Int
+  subdistrictId: Int
 }
 
 input AddressUpdateInput {
   name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
   city: CityUpdateOneRequiredWithoutAddressNestedInput
   district: DistrictUpdateOneRequiredWithoutAddressNestedInput
-  postalCode: PostalCodeUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
   user: UserUpdateOneWithoutAddressNestedInput
   hotel: HotelUpdateOneWithoutAddressNestedInput
   school: SchoolUpdateOneWithoutAddressNestedInput
   Shipping: ShippingUpdateOneWithoutAddressNestedInput
+}
+
+input AddressUpdateManyMutationInput {
+  name: StringFieldUpdateOperationsInput
+}
+
+input AddressUpdateManyWithoutCityNestedInput {
+  create: [AddressCreateWithoutCityInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutCityInput!]
+  upsert: [AddressUpsertWithWhereUniqueWithoutCityInput!]
+  createMany: AddressCreateManyCityInputEnvelope
+  set: [AddressWhereUniqueInput!]
+  disconnect: [AddressWhereUniqueInput!]
+  delete: [AddressWhereUniqueInput!]
+  connect: [AddressWhereUniqueInput!]
+  update: [AddressUpdateWithWhereUniqueWithoutCityInput!]
+  updateMany: [AddressUpdateManyWithWhereWithoutCityInput!]
+  deleteMany: [AddressScalarWhereInput!]
+}
+
+input AddressUpdateManyWithoutDistrictNestedInput {
+  create: [AddressCreateWithoutDistrictInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutDistrictInput!]
+  upsert: [AddressUpsertWithWhereUniqueWithoutDistrictInput!]
+  createMany: AddressCreateManyDistrictInputEnvelope
+  set: [AddressWhereUniqueInput!]
+  disconnect: [AddressWhereUniqueInput!]
+  delete: [AddressWhereUniqueInput!]
+  connect: [AddressWhereUniqueInput!]
+  update: [AddressUpdateWithWhereUniqueWithoutDistrictInput!]
+  updateMany: [AddressUpdateManyWithWhereWithoutDistrictInput!]
+  deleteMany: [AddressScalarWhereInput!]
+}
+
+input AddressUpdateManyWithoutProvinceNestedInput {
+  create: [AddressCreateWithoutProvinceInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutProvinceInput!]
+  upsert: [AddressUpsertWithWhereUniqueWithoutProvinceInput!]
+  createMany: AddressCreateManyProvinceInputEnvelope
+  set: [AddressWhereUniqueInput!]
+  disconnect: [AddressWhereUniqueInput!]
+  delete: [AddressWhereUniqueInput!]
+  connect: [AddressWhereUniqueInput!]
+  update: [AddressUpdateWithWhereUniqueWithoutProvinceInput!]
+  updateMany: [AddressUpdateManyWithWhereWithoutProvinceInput!]
+  deleteMany: [AddressScalarWhereInput!]
+}
+
+input AddressUpdateManyWithoutSubdistrictNestedInput {
+  create: [AddressCreateWithoutSubdistrictInput!]
+  connectOrCreate: [AddressCreateOrConnectWithoutSubdistrictInput!]
+  upsert: [AddressUpsertWithWhereUniqueWithoutSubdistrictInput!]
+  createMany: AddressCreateManySubdistrictInputEnvelope
+  set: [AddressWhereUniqueInput!]
+  disconnect: [AddressWhereUniqueInput!]
+  delete: [AddressWhereUniqueInput!]
+  connect: [AddressWhereUniqueInput!]
+  update: [AddressUpdateWithWhereUniqueWithoutSubdistrictInput!]
+  updateMany: [AddressUpdateManyWithWhereWithoutSubdistrictInput!]
+  deleteMany: [AddressScalarWhereInput!]
+}
+
+input AddressUpdateManyWithWhereWithoutCityInput {
+  where: AddressScalarWhereInput!
+  data: AddressUpdateManyMutationInput!
+}
+
+input AddressUpdateManyWithWhereWithoutDistrictInput {
+  where: AddressScalarWhereInput!
+  data: AddressUpdateManyMutationInput!
+}
+
+input AddressUpdateManyWithWhereWithoutProvinceInput {
+  where: AddressScalarWhereInput!
+  data: AddressUpdateManyMutationInput!
+}
+
+input AddressUpdateManyWithWhereWithoutSubdistrictInput {
+  where: AddressScalarWhereInput!
+  data: AddressUpdateManyMutationInput!
 }
 
 input AddressUpdateOneArgs {
@@ -721,21 +790,56 @@ input AddressUpdateToOneWithWhereWithoutUserInput {
   data: AddressUpdateWithoutUserInput!
 }
 
+input AddressUpdateWithoutCityInput {
+  name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
+  district: DistrictUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
+  user: UserUpdateOneWithoutAddressNestedInput
+  hotel: HotelUpdateOneWithoutAddressNestedInput
+  school: SchoolUpdateOneWithoutAddressNestedInput
+  Shipping: ShippingUpdateOneWithoutAddressNestedInput
+}
+
+input AddressUpdateWithoutDistrictInput {
+  name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
+  city: CityUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
+  user: UserUpdateOneWithoutAddressNestedInput
+  hotel: HotelUpdateOneWithoutAddressNestedInput
+  school: SchoolUpdateOneWithoutAddressNestedInput
+  Shipping: ShippingUpdateOneWithoutAddressNestedInput
+}
+
 input AddressUpdateWithoutHotelInput {
+  name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
+  city: CityUpdateOneRequiredWithoutAddressNestedInput
+  district: DistrictUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
+  user: UserUpdateOneWithoutAddressNestedInput
+  school: SchoolUpdateOneWithoutAddressNestedInput
+  Shipping: ShippingUpdateOneWithoutAddressNestedInput
+}
+
+input AddressUpdateWithoutProvinceInput {
   name: StringFieldUpdateOperationsInput
   city: CityUpdateOneRequiredWithoutAddressNestedInput
   district: DistrictUpdateOneRequiredWithoutAddressNestedInput
-  postalCode: PostalCodeUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
   user: UserUpdateOneWithoutAddressNestedInput
+  hotel: HotelUpdateOneWithoutAddressNestedInput
   school: SchoolUpdateOneWithoutAddressNestedInput
   Shipping: ShippingUpdateOneWithoutAddressNestedInput
 }
 
 input AddressUpdateWithoutSchoolInput {
   name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
   city: CityUpdateOneRequiredWithoutAddressNestedInput
   district: DistrictUpdateOneRequiredWithoutAddressNestedInput
-  postalCode: PostalCodeUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
   user: UserUpdateOneWithoutAddressNestedInput
   hotel: HotelUpdateOneWithoutAddressNestedInput
   Shipping: ShippingUpdateOneWithoutAddressNestedInput
@@ -743,22 +847,55 @@ input AddressUpdateWithoutSchoolInput {
 
 input AddressUpdateWithoutShippingInput {
   name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
   city: CityUpdateOneRequiredWithoutAddressNestedInput
   district: DistrictUpdateOneRequiredWithoutAddressNestedInput
-  postalCode: PostalCodeUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
   user: UserUpdateOneWithoutAddressNestedInput
   hotel: HotelUpdateOneWithoutAddressNestedInput
   school: SchoolUpdateOneWithoutAddressNestedInput
 }
 
-input AddressUpdateWithoutUserInput {
+input AddressUpdateWithoutSubdistrictInput {
   name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
   city: CityUpdateOneRequiredWithoutAddressNestedInput
   district: DistrictUpdateOneRequiredWithoutAddressNestedInput
-  postalCode: PostalCodeUpdateOneRequiredWithoutAddressNestedInput
+  user: UserUpdateOneWithoutAddressNestedInput
   hotel: HotelUpdateOneWithoutAddressNestedInput
   school: SchoolUpdateOneWithoutAddressNestedInput
   Shipping: ShippingUpdateOneWithoutAddressNestedInput
+}
+
+input AddressUpdateWithoutUserInput {
+  name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutAddressNestedInput
+  city: CityUpdateOneRequiredWithoutAddressNestedInput
+  district: DistrictUpdateOneRequiredWithoutAddressNestedInput
+  subdistrict: SubdistrictUpdateOneRequiredWithoutAddressNestedInput
+  hotel: HotelUpdateOneWithoutAddressNestedInput
+  school: SchoolUpdateOneWithoutAddressNestedInput
+  Shipping: ShippingUpdateOneWithoutAddressNestedInput
+}
+
+input AddressUpdateWithWhereUniqueWithoutCityInput {
+  where: AddressWhereUniqueInput!
+  data: AddressUpdateWithoutCityInput!
+}
+
+input AddressUpdateWithWhereUniqueWithoutDistrictInput {
+  where: AddressWhereUniqueInput!
+  data: AddressUpdateWithoutDistrictInput!
+}
+
+input AddressUpdateWithWhereUniqueWithoutProvinceInput {
+  where: AddressWhereUniqueInput!
+  data: AddressUpdateWithoutProvinceInput!
+}
+
+input AddressUpdateWithWhereUniqueWithoutSubdistrictInput {
+  where: AddressWhereUniqueInput!
+  data: AddressUpdateWithoutSubdistrictInput!
 }
 
 input AddressUpsertWithoutHotelInput {
@@ -785,18 +922,44 @@ input AddressUpsertWithoutUserInput {
   where: AddressWhereInput
 }
 
+input AddressUpsertWithWhereUniqueWithoutCityInput {
+  where: AddressWhereUniqueInput!
+  update: AddressUpdateWithoutCityInput!
+  create: AddressCreateWithoutCityInput!
+}
+
+input AddressUpsertWithWhereUniqueWithoutDistrictInput {
+  where: AddressWhereUniqueInput!
+  update: AddressUpdateWithoutDistrictInput!
+  create: AddressCreateWithoutDistrictInput!
+}
+
+input AddressUpsertWithWhereUniqueWithoutProvinceInput {
+  where: AddressWhereUniqueInput!
+  update: AddressUpdateWithoutProvinceInput!
+  create: AddressCreateWithoutProvinceInput!
+}
+
+input AddressUpsertWithWhereUniqueWithoutSubdistrictInput {
+  where: AddressWhereUniqueInput!
+  update: AddressUpdateWithoutSubdistrictInput!
+  create: AddressCreateWithoutSubdistrictInput!
+}
+
 input AddressWhereInput {
   AND: [AddressWhereInput!]
   OR: [AddressWhereInput!]
   NOT: [AddressWhereInput!]
   id: IntFilter
   name: StringFilter
+  provinceId: IntFilter
   cityId: IntFilter
   districtId: IntFilter
-  postalCodeId: IntFilter
+  subdistrictId: IntFilter
+  province: ProvinceRelationFilter
   city: CityRelationFilter
   district: DistrictRelationFilter
-  postalCode: PostalCodeRelationFilter
+  subdistrict: SubdistrictRelationFilter
   user: UserNullableRelationFilter
   hotel: HotelNullableRelationFilter
   school: SchoolNullableRelationFilter
@@ -809,12 +972,14 @@ input AddressWhereUniqueInput {
   OR: [AddressWhereInput!]
   NOT: [AddressWhereInput!]
   name: StringFilter
+  provinceId: IntFilter
   cityId: IntFilter
   districtId: IntFilter
-  postalCodeId: IntFilter
+  subdistrictId: IntFilter
+  province: ProvinceRelationFilter
   city: CityRelationFilter
   district: DistrictRelationFilter
-  postalCode: PostalCodeRelationFilter
+  subdistrict: SubdistrictRelationFilter
   user: UserNullableRelationFilter
   hotel: HotelNullableRelationFilter
   school: SchoolNullableRelationFilter
@@ -848,23 +1013,6 @@ type BankCountAggregate {
   _all: Int!
 }
 
-input BankCreateNestedOneWithoutAccountInput {
-  create: BankCreateWithoutAccountInput
-  connectOrCreate: BankCreateOrConnectWithoutAccountInput
-  connect: BankWhereUniqueInput
-}
-
-input BankCreateOrConnectWithoutAccountInput {
-  where: BankWhereUniqueInput!
-  create: BankCreateWithoutAccountInput!
-}
-
-input BankCreateWithoutAccountInput {
-  name: String!
-  logoUrl: String!
-  accountNumber: Int!
-}
-
 type BankMaxAggregate {
   id: Int
   name: String
@@ -881,75 +1029,10 @@ type BankMinAggregate {
   accountId: Int
 }
 
-input BankNullableRelationFilter {
-  is: BankWhereInput
-  isNot: BankWhereInput
-}
-
-input BankOrderByWithRelationInput {
-  id: SortOrder
-  name: SortOrder
-  logoUrl: SortOrder
-  accountNumber: SortOrder
-  accountId: SortOrder
-  account: AccountOrderByWithRelationInput
-}
-
 type BankSumAggregate {
   id: Int
   accountNumber: Int
   accountId: Int
-}
-
-input BankUpdateOneWithoutAccountNestedInput {
-  create: BankCreateWithoutAccountInput
-  connectOrCreate: BankCreateOrConnectWithoutAccountInput
-  upsert: BankUpsertWithoutAccountInput
-  disconnect: BankWhereInput
-  delete: BankWhereInput
-  connect: BankWhereUniqueInput
-  update: BankUpdateToOneWithWhereWithoutAccountInput
-}
-
-input BankUpdateToOneWithWhereWithoutAccountInput {
-  where: BankWhereInput
-  data: BankUpdateWithoutAccountInput!
-}
-
-input BankUpdateWithoutAccountInput {
-  name: StringFieldUpdateOperationsInput
-  logoUrl: StringFieldUpdateOperationsInput
-  accountNumber: IntFieldUpdateOperationsInput
-}
-
-input BankUpsertWithoutAccountInput {
-  update: BankUpdateWithoutAccountInput!
-  create: BankCreateWithoutAccountInput!
-  where: BankWhereInput
-}
-
-input BankWhereInput {
-  AND: [BankWhereInput!]
-  OR: [BankWhereInput!]
-  NOT: [BankWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  logoUrl: StringFilter
-  accountNumber: IntFilter
-  accountId: IntFilter
-  account: AccountRelationFilter
-}
-
-input BankWhereUniqueInput {
-  id: Int
-  accountId: Int
-  AND: [BankWhereInput!]
-  OR: [BankWhereInput!]
-  NOT: [BankWhereInput!]
-  name: StringFilter
-  logoUrl: StringFilter
-  accountNumber: IntFilter
-  account: AccountRelationFilter
 }
 
 input BoolFieldUpdateOperationsInput {
@@ -1495,21 +1578,44 @@ input CheckInWhereUniqueInput {
 type City {
   id: Int!
   name: String!
+  provinceId: Int!
+  province: Province!
+  districts: [District!]
   _count: CityCount!
 }
 
 type CityAvgAggregate {
   id: Float
+  provinceId: Float
 }
 
 type CityCount {
+  districts: Int!
   address: Int!
 }
 
 type CityCountAggregate {
   id: Int!
   name: Int!
+  provinceId: Int!
   _all: Int!
+}
+
+input CityCreateManyProvinceInput {
+  id: Int
+  name: String!
+}
+
+input CityCreateManyProvinceInputEnvelope {
+  data: [CityCreateManyProvinceInput!]!
+  skipDuplicates: Boolean
+}
+
+input CityCreateNestedManyWithoutProvinceInput {
+  create: [CityCreateWithoutProvinceInput!]
+  connectOrCreate: [CityCreateOrConnectWithoutProvinceInput!]
+  createMany: CityCreateManyProvinceInputEnvelope
+  connect: [CityWhereUniqueInput!]
 }
 
 input CityCreateNestedOneWithoutAddressInput {
@@ -1518,28 +1624,85 @@ input CityCreateNestedOneWithoutAddressInput {
   connect: CityWhereUniqueInput
 }
 
+input CityCreateNestedOneWithoutDistrictsInput {
+  create: CityCreateWithoutDistrictsInput
+  connectOrCreate: CityCreateOrConnectWithoutDistrictsInput
+  connect: CityWhereUniqueInput
+}
+
 input CityCreateOrConnectWithoutAddressInput {
   where: CityWhereUniqueInput!
   create: CityCreateWithoutAddressInput!
 }
 
+input CityCreateOrConnectWithoutDistrictsInput {
+  where: CityWhereUniqueInput!
+  create: CityCreateWithoutDistrictsInput!
+}
+
+input CityCreateOrConnectWithoutProvinceInput {
+  where: CityWhereUniqueInput!
+  create: CityCreateWithoutProvinceInput!
+}
+
 input CityCreateWithoutAddressInput {
   name: String!
+  province: ProvinceCreateNestedOneWithoutCitiesInput!
+  districts: DistrictCreateNestedManyWithoutCityInput
+}
+
+input CityCreateWithoutDistrictsInput {
+  name: String!
+  province: ProvinceCreateNestedOneWithoutCitiesInput!
+  address: AddressCreateNestedManyWithoutCityInput
+}
+
+input CityCreateWithoutProvinceInput {
+  name: String!
+  districts: DistrictCreateNestedManyWithoutCityInput
+  address: AddressCreateNestedManyWithoutCityInput
+}
+
+input CityFindManyArgs {
+  where: CityWhereInput
+  orderBy: [CityOrderByWithRelationInput!]
+  take: Int
+  skip: Int
+  distinct: [CityScalarFieldEnum!]
+}
+
+input CityFindUniqueArgs {
+  where: CityWhereUniqueInput!
+}
+
+input CityListRelationFilter {
+  every: CityWhereInput
+  some: CityWhereInput
+  none: CityWhereInput
 }
 
 type CityMaxAggregate {
   id: Int
   name: String
+  provinceId: Int
 }
 
 type CityMinAggregate {
   id: Int
   name: String
+  provinceId: Int
+}
+
+input CityOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input CityOrderByWithRelationInput {
   id: SortOrder
   name: SortOrder
+  provinceId: SortOrder
+  province: ProvinceOrderByWithRelationInput
+  districts: DistrictOrderByRelationAggregateInput
   address: AddressOrderByRelationAggregateInput
 }
 
@@ -1548,8 +1711,47 @@ input CityRelationFilter {
   isNot: CityWhereInput
 }
 
+enum CityScalarFieldEnum {
+  id
+  name
+  provinceId
+}
+
+input CityScalarWhereInput {
+  AND: [CityScalarWhereInput!]
+  OR: [CityScalarWhereInput!]
+  NOT: [CityScalarWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  provinceId: IntFilter
+}
+
 type CitySumAggregate {
   id: Int
+  provinceId: Int
+}
+
+input CityUpdateManyMutationInput {
+  name: StringFieldUpdateOperationsInput
+}
+
+input CityUpdateManyWithoutProvinceNestedInput {
+  create: [CityCreateWithoutProvinceInput!]
+  connectOrCreate: [CityCreateOrConnectWithoutProvinceInput!]
+  upsert: [CityUpsertWithWhereUniqueWithoutProvinceInput!]
+  createMany: CityCreateManyProvinceInputEnvelope
+  set: [CityWhereUniqueInput!]
+  disconnect: [CityWhereUniqueInput!]
+  delete: [CityWhereUniqueInput!]
+  connect: [CityWhereUniqueInput!]
+  update: [CityUpdateWithWhereUniqueWithoutProvinceInput!]
+  updateMany: [CityUpdateManyWithWhereWithoutProvinceInput!]
+  deleteMany: [CityScalarWhereInput!]
+}
+
+input CityUpdateManyWithWhereWithoutProvinceInput {
+  where: CityScalarWhereInput!
+  data: CityUpdateManyMutationInput!
 }
 
 input CityUpdateOneRequiredWithoutAddressNestedInput {
@@ -1560,13 +1762,45 @@ input CityUpdateOneRequiredWithoutAddressNestedInput {
   update: CityUpdateToOneWithWhereWithoutAddressInput
 }
 
+input CityUpdateOneRequiredWithoutDistrictsNestedInput {
+  create: CityCreateWithoutDistrictsInput
+  connectOrCreate: CityCreateOrConnectWithoutDistrictsInput
+  upsert: CityUpsertWithoutDistrictsInput
+  connect: CityWhereUniqueInput
+  update: CityUpdateToOneWithWhereWithoutDistrictsInput
+}
+
 input CityUpdateToOneWithWhereWithoutAddressInput {
   where: CityWhereInput
   data: CityUpdateWithoutAddressInput!
 }
 
+input CityUpdateToOneWithWhereWithoutDistrictsInput {
+  where: CityWhereInput
+  data: CityUpdateWithoutDistrictsInput!
+}
+
 input CityUpdateWithoutAddressInput {
   name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutCitiesNestedInput
+  districts: DistrictUpdateManyWithoutCityNestedInput
+}
+
+input CityUpdateWithoutDistrictsInput {
+  name: StringFieldUpdateOperationsInput
+  province: ProvinceUpdateOneRequiredWithoutCitiesNestedInput
+  address: AddressUpdateManyWithoutCityNestedInput
+}
+
+input CityUpdateWithoutProvinceInput {
+  name: StringFieldUpdateOperationsInput
+  districts: DistrictUpdateManyWithoutCityNestedInput
+  address: AddressUpdateManyWithoutCityNestedInput
+}
+
+input CityUpdateWithWhereUniqueWithoutProvinceInput {
+  where: CityWhereUniqueInput!
+  data: CityUpdateWithoutProvinceInput!
 }
 
 input CityUpsertWithoutAddressInput {
@@ -1575,12 +1809,27 @@ input CityUpsertWithoutAddressInput {
   where: CityWhereInput
 }
 
+input CityUpsertWithoutDistrictsInput {
+  update: CityUpdateWithoutDistrictsInput!
+  create: CityCreateWithoutDistrictsInput!
+  where: CityWhereInput
+}
+
+input CityUpsertWithWhereUniqueWithoutProvinceInput {
+  where: CityWhereUniqueInput!
+  update: CityUpdateWithoutProvinceInput!
+  create: CityCreateWithoutProvinceInput!
+}
+
 input CityWhereInput {
   AND: [CityWhereInput!]
   OR: [CityWhereInput!]
   NOT: [CityWhereInput!]
   id: IntFilter
   name: StringFilter
+  provinceId: IntFilter
+  province: ProvinceRelationFilter
+  districts: DistrictListRelationFilter
   address: AddressListRelationFilter
 }
 
@@ -1590,6 +1839,9 @@ input CityWhereUniqueInput {
   OR: [CityWhereInput!]
   NOT: [CityWhereInput!]
   name: StringFilter
+  provinceId: IntFilter
+  province: ProvinceRelationFilter
+  districts: DistrictListRelationFilter
   address: AddressListRelationFilter
 }
 
@@ -1632,21 +1884,44 @@ input DateTimeNullableFilter {
 type District {
   id: Int!
   name: String!
+  cityId: Int!
+  city: City!
+  subdistricts: [Subdistrict!]
   _count: DistrictCount!
 }
 
 type DistrictAvgAggregate {
   id: Float
+  cityId: Float
 }
 
 type DistrictCount {
+  subdistricts: Int!
   address: Int!
 }
 
 type DistrictCountAggregate {
   id: Int!
   name: Int!
+  cityId: Int!
   _all: Int!
+}
+
+input DistrictCreateManyCityInput {
+  id: Int
+  name: String!
+}
+
+input DistrictCreateManyCityInputEnvelope {
+  data: [DistrictCreateManyCityInput!]!
+  skipDuplicates: Boolean
+}
+
+input DistrictCreateNestedManyWithoutCityInput {
+  create: [DistrictCreateWithoutCityInput!]
+  connectOrCreate: [DistrictCreateOrConnectWithoutCityInput!]
+  createMany: DistrictCreateManyCityInputEnvelope
+  connect: [DistrictWhereUniqueInput!]
 }
 
 input DistrictCreateNestedOneWithoutAddressInput {
@@ -1655,28 +1930,85 @@ input DistrictCreateNestedOneWithoutAddressInput {
   connect: DistrictWhereUniqueInput
 }
 
+input DistrictCreateNestedOneWithoutSubdistrictsInput {
+  create: DistrictCreateWithoutSubdistrictsInput
+  connectOrCreate: DistrictCreateOrConnectWithoutSubdistrictsInput
+  connect: DistrictWhereUniqueInput
+}
+
 input DistrictCreateOrConnectWithoutAddressInput {
   where: DistrictWhereUniqueInput!
   create: DistrictCreateWithoutAddressInput!
 }
 
+input DistrictCreateOrConnectWithoutCityInput {
+  where: DistrictWhereUniqueInput!
+  create: DistrictCreateWithoutCityInput!
+}
+
+input DistrictCreateOrConnectWithoutSubdistrictsInput {
+  where: DistrictWhereUniqueInput!
+  create: DistrictCreateWithoutSubdistrictsInput!
+}
+
 input DistrictCreateWithoutAddressInput {
   name: String!
+  city: CityCreateNestedOneWithoutDistrictsInput!
+  subdistricts: SubdistrictCreateNestedManyWithoutDistrictInput
+}
+
+input DistrictCreateWithoutCityInput {
+  name: String!
+  subdistricts: SubdistrictCreateNestedManyWithoutDistrictInput
+  address: AddressCreateNestedManyWithoutDistrictInput
+}
+
+input DistrictCreateWithoutSubdistrictsInput {
+  name: String!
+  city: CityCreateNestedOneWithoutDistrictsInput!
+  address: AddressCreateNestedManyWithoutDistrictInput
+}
+
+input DistrictFindManyArgs {
+  where: DistrictWhereInput
+  orderBy: [DistrictOrderByWithRelationInput!]
+  take: Int
+  skip: Int
+  distinct: [DistrictScalarFieldEnum!]
+}
+
+input DistrictFindUniqueArgs {
+  where: DistrictWhereUniqueInput!
+}
+
+input DistrictListRelationFilter {
+  every: DistrictWhereInput
+  some: DistrictWhereInput
+  none: DistrictWhereInput
 }
 
 type DistrictMaxAggregate {
   id: Int
   name: String
+  cityId: Int
 }
 
 type DistrictMinAggregate {
   id: Int
   name: String
+  cityId: Int
+}
+
+input DistrictOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input DistrictOrderByWithRelationInput {
   id: SortOrder
   name: SortOrder
+  cityId: SortOrder
+  city: CityOrderByWithRelationInput
+  subdistricts: SubdistrictOrderByRelationAggregateInput
   address: AddressOrderByRelationAggregateInput
 }
 
@@ -1685,8 +2017,47 @@ input DistrictRelationFilter {
   isNot: DistrictWhereInput
 }
 
+enum DistrictScalarFieldEnum {
+  id
+  name
+  cityId
+}
+
+input DistrictScalarWhereInput {
+  AND: [DistrictScalarWhereInput!]
+  OR: [DistrictScalarWhereInput!]
+  NOT: [DistrictScalarWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  cityId: IntFilter
+}
+
 type DistrictSumAggregate {
   id: Int
+  cityId: Int
+}
+
+input DistrictUpdateManyMutationInput {
+  name: StringFieldUpdateOperationsInput
+}
+
+input DistrictUpdateManyWithoutCityNestedInput {
+  create: [DistrictCreateWithoutCityInput!]
+  connectOrCreate: [DistrictCreateOrConnectWithoutCityInput!]
+  upsert: [DistrictUpsertWithWhereUniqueWithoutCityInput!]
+  createMany: DistrictCreateManyCityInputEnvelope
+  set: [DistrictWhereUniqueInput!]
+  disconnect: [DistrictWhereUniqueInput!]
+  delete: [DistrictWhereUniqueInput!]
+  connect: [DistrictWhereUniqueInput!]
+  update: [DistrictUpdateWithWhereUniqueWithoutCityInput!]
+  updateMany: [DistrictUpdateManyWithWhereWithoutCityInput!]
+  deleteMany: [DistrictScalarWhereInput!]
+}
+
+input DistrictUpdateManyWithWhereWithoutCityInput {
+  where: DistrictScalarWhereInput!
+  data: DistrictUpdateManyMutationInput!
 }
 
 input DistrictUpdateOneRequiredWithoutAddressNestedInput {
@@ -1697,13 +2068,45 @@ input DistrictUpdateOneRequiredWithoutAddressNestedInput {
   update: DistrictUpdateToOneWithWhereWithoutAddressInput
 }
 
+input DistrictUpdateOneRequiredWithoutSubdistrictsNestedInput {
+  create: DistrictCreateWithoutSubdistrictsInput
+  connectOrCreate: DistrictCreateOrConnectWithoutSubdistrictsInput
+  upsert: DistrictUpsertWithoutSubdistrictsInput
+  connect: DistrictWhereUniqueInput
+  update: DistrictUpdateToOneWithWhereWithoutSubdistrictsInput
+}
+
 input DistrictUpdateToOneWithWhereWithoutAddressInput {
   where: DistrictWhereInput
   data: DistrictUpdateWithoutAddressInput!
 }
 
+input DistrictUpdateToOneWithWhereWithoutSubdistrictsInput {
+  where: DistrictWhereInput
+  data: DistrictUpdateWithoutSubdistrictsInput!
+}
+
 input DistrictUpdateWithoutAddressInput {
   name: StringFieldUpdateOperationsInput
+  city: CityUpdateOneRequiredWithoutDistrictsNestedInput
+  subdistricts: SubdistrictUpdateManyWithoutDistrictNestedInput
+}
+
+input DistrictUpdateWithoutCityInput {
+  name: StringFieldUpdateOperationsInput
+  subdistricts: SubdistrictUpdateManyWithoutDistrictNestedInput
+  address: AddressUpdateManyWithoutDistrictNestedInput
+}
+
+input DistrictUpdateWithoutSubdistrictsInput {
+  name: StringFieldUpdateOperationsInput
+  city: CityUpdateOneRequiredWithoutDistrictsNestedInput
+  address: AddressUpdateManyWithoutDistrictNestedInput
+}
+
+input DistrictUpdateWithWhereUniqueWithoutCityInput {
+  where: DistrictWhereUniqueInput!
+  data: DistrictUpdateWithoutCityInput!
 }
 
 input DistrictUpsertWithoutAddressInput {
@@ -1712,12 +2115,27 @@ input DistrictUpsertWithoutAddressInput {
   where: DistrictWhereInput
 }
 
+input DistrictUpsertWithoutSubdistrictsInput {
+  update: DistrictUpdateWithoutSubdistrictsInput!
+  create: DistrictCreateWithoutSubdistrictsInput!
+  where: DistrictWhereInput
+}
+
+input DistrictUpsertWithWhereUniqueWithoutCityInput {
+  where: DistrictWhereUniqueInput!
+  update: DistrictUpdateWithoutCityInput!
+  create: DistrictCreateWithoutCityInput!
+}
+
 input DistrictWhereInput {
   AND: [DistrictWhereInput!]
   OR: [DistrictWhereInput!]
   NOT: [DistrictWhereInput!]
   id: IntFilter
   name: StringFilter
+  cityId: IntFilter
+  city: CityRelationFilter
+  subdistricts: SubdistrictListRelationFilter
   address: AddressListRelationFilter
 }
 
@@ -1727,6 +2145,9 @@ input DistrictWhereUniqueInput {
   OR: [DistrictWhereInput!]
   NOT: [DistrictWhereInput!]
   name: StringFilter
+  cityId: IntFilter
+  city: CityRelationFilter
+  subdistricts: SubdistrictListRelationFilter
   address: AddressListRelationFilter
 }
 
@@ -1763,10 +2184,6 @@ input EnumFileTypeFilter {
   not: NestedEnumFileTypeFilter
 }
 
-input EnumInstallmentStatusFieldUpdateOperationsInput {
-  set: InstallmentStatus
-}
-
 input EnumInstallmentStatusFilter {
   equals: InstallmentStatus
   in: [InstallmentStatus!]
@@ -1790,17 +2207,6 @@ input EnumProjectCategoryFilter {
   in: [ProjectCategory!]
   notIn: [ProjectCategory!]
   not: NestedEnumProjectCategoryFilter
-}
-
-input EnumShippingStatusFieldUpdateOperationsInput {
-  set: ShippingStatus
-}
-
-input EnumShippingStatusFilter {
-  equals: ShippingStatus
-  in: [ShippingStatus!]
-  notIn: [ShippingStatus!]
-  not: NestedEnumShippingStatusFilter
 }
 
 input EnumThemeFieldUpdateOperationsInput {
@@ -2260,8 +2666,6 @@ type HotelCountAggregate {
 }
 
 input HotelCreateArgs {
-  select: HotelSelect
-  include: HotelSelect
   data: HotelCreateInput!
 }
 
@@ -2357,19 +2761,14 @@ input HotelCreateWithoutImagesInput {
 }
 
 input HotelFindManyArgs {
-  select: HotelSelect
-  include: HotelSelect
-  where: HotelWhereUniqueInput
+  where: HotelWhereInput
   orderBy: [HotelOrderByWithRelationInput!]
-  cursor: HotelWhereUniqueInput
   take: Int
   skip: Int
   distinct: [HotelScalarFieldEnum!]
 }
 
 input HotelFindUniqueArgs {
-  select: HotelSelect
-  include: HotelSelect
   where: HotelWhereUniqueInput!
 }
 
@@ -2465,29 +2864,25 @@ input HotelScalarWhereInput {
   updatedAt: DateTimeFilter
 }
 
-input HotelSelect {
-  id: Boolean
-  name: Boolean
-  addressId: Boolean
-  description: Boolean
-  rating: Boolean
-  startDate: Boolean
-  quota: Boolean
-  createdById: Boolean
-  createdAt: Boolean
-  updatedAt: Boolean
-  address: Boolean
-  images: Boolean
-  checkIns: Boolean
-  createdBy: Boolean
-  _count: Boolean
-}
-
 type HotelSumAggregate {
   id: Int
   addressId: Int
   rating: Float
   quota: Int
+}
+
+input HotelUpdateInput {
+  name: StringFieldUpdateOperationsInput
+  description: StringFieldUpdateOperationsInput
+  rating: FloatFieldUpdateOperationsInput
+  startDate: DateTimeFieldUpdateOperationsInput
+  quota: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  address: AddressUpdateOneRequiredWithoutHotelNestedInput
+  images: ImagesUpdateManyWithoutHotelImageNestedInput
+  checkIns: CheckInUpdateManyWithoutHotelNestedInput
+  createdBy: UserUpdateOneRequiredWithoutHotelsCreatedNestedInput
 }
 
 input HotelUpdateManyMutationInput {
@@ -2517,6 +2912,11 @@ input HotelUpdateManyWithoutCreatedByNestedInput {
 input HotelUpdateManyWithWhereWithoutCreatedByInput {
   where: HotelScalarWhereInput!
   data: HotelUpdateManyMutationInput!
+}
+
+input HotelUpdateOneArgs {
+  data: HotelUpdateInput!
+  where: HotelWhereUniqueInput!
 }
 
 input HotelUpdateOneRequiredWithoutCheckInsNestedInput {
@@ -3156,20 +3556,9 @@ input InstallmentCreateNestedManyWithoutInvoiceInput {
   connect: [InstallmentWhereUniqueInput!]
 }
 
-input InstallmentCreateNestedOneWithoutTransactionInput {
-  create: InstallmentCreateWithoutTransactionInput
-  connectOrCreate: InstallmentCreateOrConnectWithoutTransactionInput
-  connect: InstallmentWhereUniqueInput
-}
-
 input InstallmentCreateOrConnectWithoutInvoiceInput {
   where: InstallmentWhereUniqueInput!
   create: InstallmentCreateWithoutInvoiceInput!
-}
-
-input InstallmentCreateOrConnectWithoutTransactionInput {
-  where: InstallmentWhereUniqueInput!
-  create: InstallmentCreateWithoutTransactionInput!
 }
 
 input InstallmentCreateWithoutInvoiceInput {
@@ -3180,16 +3569,6 @@ input InstallmentCreateWithoutInvoiceInput {
   status: InstallmentStatus!
   transactionId: Int
   transaction: TransactionCreateNestedOneWithoutInstallmentInput
-}
-
-input InstallmentCreateWithoutTransactionInput {
-  number: Int!
-  lateFee: Float!
-  amount: Float!
-  dueDate: DateTime!
-  status: InstallmentStatus!
-  transactionId: Int
-  invoice: InvoiceCreateNestedOneWithoutInstallmentsInput!
 }
 
 input InstallmentListRelationFilter {
@@ -3220,40 +3599,8 @@ type InstallmentMinAggregate {
   invoiceId: Int
 }
 
-input InstallmentNullableRelationFilter {
-  is: InstallmentWhereInput
-  isNot: InstallmentWhereInput
-}
-
 input InstallmentOrderByRelationAggregateInput {
   _count: SortOrder
-}
-
-input InstallmentOrderByWithRelationInput {
-  id: SortOrder
-  number: SortOrder
-  lateFee: SortOrder
-  amount: SortOrder
-  dueDate: SortOrder
-  status: SortOrder
-  transactionId: SortOrderInput
-  invoiceId: SortOrder
-  transaction: TransactionOrderByWithRelationInput
-  invoice: InvoiceOrderByWithRelationInput
-}
-
-input InstallmentScalarWhereInput {
-  AND: [InstallmentScalarWhereInput!]
-  OR: [InstallmentScalarWhereInput!]
-  NOT: [InstallmentScalarWhereInput!]
-  id: IntFilter
-  number: IntFilter
-  lateFee: FloatFilter
-  amount: FloatFilter
-  dueDate: DateTimeFilter
-  status: EnumInstallmentStatusFilter
-  transactionId: IntNullableFilter
-  invoiceId: IntFilter
 }
 
 enum InstallmentStatus {
@@ -3268,86 +3615,6 @@ type InstallmentSumAggregate {
   amount: Float
   transactionId: Int
   invoiceId: Int
-}
-
-input InstallmentUpdateManyMutationInput {
-  number: IntFieldUpdateOperationsInput
-  lateFee: FloatFieldUpdateOperationsInput
-  amount: FloatFieldUpdateOperationsInput
-  dueDate: DateTimeFieldUpdateOperationsInput
-  status: EnumInstallmentStatusFieldUpdateOperationsInput
-  transactionId: NullableIntFieldUpdateOperationsInput
-}
-
-input InstallmentUpdateManyWithoutInvoiceNestedInput {
-  create: [InstallmentCreateWithoutInvoiceInput!]
-  connectOrCreate: [InstallmentCreateOrConnectWithoutInvoiceInput!]
-  upsert: [InstallmentUpsertWithWhereUniqueWithoutInvoiceInput!]
-  createMany: InstallmentCreateManyInvoiceInputEnvelope
-  set: [InstallmentWhereUniqueInput!]
-  disconnect: [InstallmentWhereUniqueInput!]
-  delete: [InstallmentWhereUniqueInput!]
-  connect: [InstallmentWhereUniqueInput!]
-  update: [InstallmentUpdateWithWhereUniqueWithoutInvoiceInput!]
-  updateMany: [InstallmentUpdateManyWithWhereWithoutInvoiceInput!]
-  deleteMany: [InstallmentScalarWhereInput!]
-}
-
-input InstallmentUpdateManyWithWhereWithoutInvoiceInput {
-  where: InstallmentScalarWhereInput!
-  data: InstallmentUpdateManyMutationInput!
-}
-
-input InstallmentUpdateOneWithoutTransactionNestedInput {
-  create: InstallmentCreateWithoutTransactionInput
-  connectOrCreate: InstallmentCreateOrConnectWithoutTransactionInput
-  upsert: InstallmentUpsertWithoutTransactionInput
-  disconnect: InstallmentWhereInput
-  delete: InstallmentWhereInput
-  connect: InstallmentWhereUniqueInput
-  update: InstallmentUpdateToOneWithWhereWithoutTransactionInput
-}
-
-input InstallmentUpdateToOneWithWhereWithoutTransactionInput {
-  where: InstallmentWhereInput
-  data: InstallmentUpdateWithoutTransactionInput!
-}
-
-input InstallmentUpdateWithoutInvoiceInput {
-  number: IntFieldUpdateOperationsInput
-  lateFee: FloatFieldUpdateOperationsInput
-  amount: FloatFieldUpdateOperationsInput
-  dueDate: DateTimeFieldUpdateOperationsInput
-  status: EnumInstallmentStatusFieldUpdateOperationsInput
-  transactionId: NullableIntFieldUpdateOperationsInput
-  transaction: TransactionUpdateOneWithoutInstallmentNestedInput
-}
-
-input InstallmentUpdateWithoutTransactionInput {
-  number: IntFieldUpdateOperationsInput
-  lateFee: FloatFieldUpdateOperationsInput
-  amount: FloatFieldUpdateOperationsInput
-  dueDate: DateTimeFieldUpdateOperationsInput
-  status: EnumInstallmentStatusFieldUpdateOperationsInput
-  transactionId: NullableIntFieldUpdateOperationsInput
-  invoice: InvoiceUpdateOneRequiredWithoutInstallmentsNestedInput
-}
-
-input InstallmentUpdateWithWhereUniqueWithoutInvoiceInput {
-  where: InstallmentWhereUniqueInput!
-  data: InstallmentUpdateWithoutInvoiceInput!
-}
-
-input InstallmentUpsertWithoutTransactionInput {
-  update: InstallmentUpdateWithoutTransactionInput!
-  create: InstallmentCreateWithoutTransactionInput!
-  where: InstallmentWhereInput
-}
-
-input InstallmentUpsertWithWhereUniqueWithoutInvoiceInput {
-  where: InstallmentWhereUniqueInput!
-  update: InstallmentUpdateWithoutInvoiceInput!
-  create: InstallmentCreateWithoutInvoiceInput!
 }
 
 input InstallmentWhereInput {
@@ -3416,6 +3683,7 @@ type Invoice {
   id: Int!
   adminFee: Float!
   amount: Float!
+  uniqueCode: Int!
   createdAt: DateTime!
   Order: Order
   transactions: [Transaction!]
@@ -3427,6 +3695,7 @@ type InvoiceAvgAggregate {
   id: Float
   adminFee: Float
   amount: Float
+  uniqueCode: Float
 }
 
 type InvoiceCount {
@@ -3438,14 +3707,9 @@ type InvoiceCountAggregate {
   id: Int!
   adminFee: Int!
   amount: Int!
+  uniqueCode: Int!
   createdAt: Int!
   _all: Int!
-}
-
-input InvoiceCreateNestedOneWithoutInstallmentsInput {
-  create: InvoiceCreateWithoutInstallmentsInput
-  connectOrCreate: InvoiceCreateOrConnectWithoutInstallmentsInput
-  connect: InvoiceWhereUniqueInput
 }
 
 input InvoiceCreateNestedOneWithoutOrderInput {
@@ -3460,11 +3724,6 @@ input InvoiceCreateNestedOneWithoutTransactionsInput {
   connect: InvoiceWhereUniqueInput
 }
 
-input InvoiceCreateOrConnectWithoutInstallmentsInput {
-  where: InvoiceWhereUniqueInput!
-  create: InvoiceCreateWithoutInstallmentsInput!
-}
-
 input InvoiceCreateOrConnectWithoutOrderInput {
   where: InvoiceWhereUniqueInput!
   create: InvoiceCreateWithoutOrderInput!
@@ -3475,18 +3734,9 @@ input InvoiceCreateOrConnectWithoutTransactionsInput {
   create: InvoiceCreateWithoutTransactionsInput!
 }
 
-input InvoiceCreateWithoutInstallmentsInput {
-  adminFee: Float!
-  amount: Float!
-  createdAt: DateTime
-  Order: OrderCreateNestedOneWithoutInvoiceInput
-  transactions: TransactionCreateNestedManyWithoutInvoiceInput
-}
-
 input InvoiceCreateWithoutOrderInput {
   adminFee: Float!
   amount: Float!
-  createdAt: DateTime
   transactions: TransactionCreateNestedManyWithoutInvoiceInput
   Installments: InstallmentCreateNestedManyWithoutInvoiceInput
 }
@@ -3494,15 +3744,27 @@ input InvoiceCreateWithoutOrderInput {
 input InvoiceCreateWithoutTransactionsInput {
   adminFee: Float!
   amount: Float!
-  createdAt: DateTime
   Order: OrderCreateNestedOneWithoutInvoiceInput
   Installments: InstallmentCreateNestedManyWithoutInvoiceInput
+}
+
+input InvoiceFindManyArgs {
+  where: InvoiceWhereInput
+  orderBy: [InvoiceOrderByWithRelationInput!]
+  take: Int
+  skip: Int
+  distinct: [InvoiceScalarFieldEnum!]
+}
+
+input InvoiceFindUniqueArgs {
+  where: InvoiceWhereUniqueInput!
 }
 
 type InvoiceMaxAggregate {
   id: Int
   adminFee: Float
   amount: Float
+  uniqueCode: Int
   createdAt: DateTime
 }
 
@@ -3510,6 +3772,7 @@ type InvoiceMinAggregate {
   id: Int
   adminFee: Float
   amount: Float
+  uniqueCode: Int
   createdAt: DateTime
 }
 
@@ -3522,7 +3785,6 @@ input InvoiceOrderByWithRelationInput {
   id: SortOrder
   adminFee: SortOrder
   amount: SortOrder
-  createdAt: SortOrder
   Order: OrderOrderByWithRelationInput
   transactions: TransactionOrderByRelationAggregateInput
   Installments: InstallmentOrderByRelationAggregateInput
@@ -3533,18 +3795,29 @@ input InvoiceRelationFilter {
   isNot: InvoiceWhereInput
 }
 
+enum InvoiceScalarFieldEnum {
+  id
+  adminFee
+  amount
+  uniqueCode
+  createdAt
+}
+
 type InvoiceSumAggregate {
   id: Int
   adminFee: Float
   amount: Float
+  uniqueCode: Int
 }
 
-input InvoiceUpdateOneRequiredWithoutInstallmentsNestedInput {
-  create: InvoiceCreateWithoutInstallmentsInput
-  connectOrCreate: InvoiceCreateOrConnectWithoutInstallmentsInput
-  upsert: InvoiceUpsertWithoutInstallmentsInput
-  connect: InvoiceWhereUniqueInput
-  update: InvoiceUpdateToOneWithWhereWithoutInstallmentsInput
+input InvoiceUpdateInput {
+  adminFee: FloatFieldUpdateOperationsInput
+  amount: FloatFieldUpdateOperationsInput
+}
+
+input InvoiceUpdateOneArgs {
+  data: InvoiceUpdateInput!
+  where: InvoiceWhereUniqueInput!
 }
 
 input InvoiceUpdateOneRequiredWithoutOrderNestedInput {
@@ -3565,11 +3838,6 @@ input InvoiceUpdateOneWithoutTransactionsNestedInput {
   update: InvoiceUpdateToOneWithWhereWithoutTransactionsInput
 }
 
-input InvoiceUpdateToOneWithWhereWithoutInstallmentsInput {
-  where: InvoiceWhereInput
-  data: InvoiceUpdateWithoutInstallmentsInput!
-}
-
 input InvoiceUpdateToOneWithWhereWithoutOrderInput {
   where: InvoiceWhereInput
   data: InvoiceUpdateWithoutOrderInput!
@@ -3580,34 +3848,14 @@ input InvoiceUpdateToOneWithWhereWithoutTransactionsInput {
   data: InvoiceUpdateWithoutTransactionsInput!
 }
 
-input InvoiceUpdateWithoutInstallmentsInput {
-  adminFee: FloatFieldUpdateOperationsInput
-  amount: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  Order: OrderUpdateOneWithoutInvoiceNestedInput
-  transactions: TransactionUpdateManyWithoutInvoiceNestedInput
-}
-
 input InvoiceUpdateWithoutOrderInput {
   adminFee: FloatFieldUpdateOperationsInput
   amount: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  transactions: TransactionUpdateManyWithoutInvoiceNestedInput
-  Installments: InstallmentUpdateManyWithoutInvoiceNestedInput
 }
 
 input InvoiceUpdateWithoutTransactionsInput {
   adminFee: FloatFieldUpdateOperationsInput
   amount: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  Order: OrderUpdateOneWithoutInvoiceNestedInput
-  Installments: InstallmentUpdateManyWithoutInvoiceNestedInput
-}
-
-input InvoiceUpsertWithoutInstallmentsInput {
-  update: InvoiceUpdateWithoutInstallmentsInput!
-  create: InvoiceCreateWithoutInstallmentsInput!
-  where: InvoiceWhereInput
 }
 
 input InvoiceUpsertWithoutOrderInput {
@@ -3629,7 +3877,6 @@ input InvoiceWhereInput {
   id: IntFilter
   adminFee: FloatFilter
   amount: FloatFilter
-  createdAt: DateTimeFilter
   Order: OrderNullableRelationFilter
   transactions: TransactionListRelationFilter
   Installments: InstallmentListRelationFilter
@@ -3642,7 +3889,6 @@ input InvoiceWhereUniqueInput {
   NOT: [InvoiceWhereInput!]
   adminFee: FloatFilter
   amount: FloatFilter
-  createdAt: DateTimeFilter
   Order: OrderNullableRelationFilter
   transactions: TransactionListRelationFilter
   Installments: InstallmentListRelationFilter
@@ -3884,8 +4130,17 @@ type Mutation {
 
   """Datanya benar2 terhapus dari db"""
   itemRemove(itemId: Float!): Boolean
-  hotelCreate(hotelCreateArgs: HotelCreateArgs!): Hotel!
-  removeHotel(id: Int!): Hotel!
+
+  """Deskripsinya ada disini loh"""
+  hotelCreateOne(hotelCreateArgs: HotelCreateArgs!): Hotel
+
+  """
+  Deskripsinya ada disini loh, Jika tentang mutasi klaim hotel, backend akan cek apakah saldo point user cukup untuk claim
+  """
+  hotelUpdateOne(hotelUpdateOneArgs: HotelUpdateOneArgs!): Hotel!
+
+  """Datanya benar2 terhapus dari db"""
+  hotelRemove(hotelId: Float!): Boolean
   createAuth(createAuthInput: CreateAuthInput!): Auth!
   resetPassword(email: String!): Auth!
   removeAuth(id: Int!): Auth!
@@ -3950,15 +4205,6 @@ type Mutation {
   projectRemove(projectId: Float!): Boolean
 
   """Deskripsinya ada disini loh"""
-  shippingCreateOne(shippingCreateArgs: ShippingCreateArgs!): Shipping
-
-  """Deskripsinya ada disini loh"""
-  shippingUpdateOne(shippingUpdateOneArgs: ShippingUpdateOneArgs!): Shipping!
-
-  """Datanya benar2 terhapus dari db"""
-  shippingRemove(shippingId: Float!): Boolean
-
-  """Deskripsinya ada disini loh"""
   checkInCreateOne(checkInCreateArgs: CheckInCreateArgs!): CheckIn
 
   """Deskripsinya ada disini loh"""
@@ -3975,6 +4221,12 @@ type Mutation {
 
   """Datanya benar2 terhapus dari db"""
   userNotificationRemove(userNotificationId: Float!): Boolean
+
+  """Deskripsinya ada disini loh"""
+  transactionCreateOne(transactionCreateArgs: TransactionCreateArgs!): Transaction
+
+  """Deskripsinya ada disini loh"""
+  invoiceUpdateOne(invoiceUpdateOneArgs: InvoiceUpdateOneArgs!): Invoice!
 
   """Deskripsinya ada disini loh"""
   accountUpdateOne(accountUpdateOneArgs: AccountUpdateOneArgs!): Account!
@@ -4068,13 +4320,6 @@ input NestedEnumProjectCategoryFilter {
   in: [ProjectCategory!]
   notIn: [ProjectCategory!]
   not: NestedEnumProjectCategoryFilter
-}
-
-input NestedEnumShippingStatusFilter {
-  equals: ShippingStatus
-  in: [ShippingStatus!]
-  notIn: [ShippingStatus!]
-  not: NestedEnumShippingStatusFilter
 }
 
 input NestedEnumThemeFilter {
@@ -4554,24 +4799,9 @@ input OrderUpdateOneRequiredWithoutShippingNestedInput {
   update: OrderUpdateToOneWithWhereWithoutShippingInput
 }
 
-input OrderUpdateOneWithoutInvoiceNestedInput {
-  create: OrderCreateWithoutInvoiceInput
-  connectOrCreate: OrderCreateOrConnectWithoutInvoiceInput
-  upsert: OrderUpsertWithoutInvoiceInput
-  disconnect: OrderWhereInput
-  delete: OrderWhereInput
-  connect: OrderWhereUniqueInput
-  update: OrderUpdateToOneWithWhereWithoutInvoiceInput
-}
-
 input OrderUpdateToOneWithWhereWithoutCartInput {
   where: OrderWhereInput
   data: OrderUpdateWithoutCartInput!
-}
-
-input OrderUpdateToOneWithWhereWithoutInvoiceInput {
-  where: OrderWhereInput
-  data: OrderUpdateWithoutInvoiceInput!
 }
 
 input OrderUpdateToOneWithWhereWithoutShippingInput {
@@ -4589,18 +4819,6 @@ input OrderUpdateWithoutCartInput {
   orderBy: UserUpdateOneRequiredWithoutOrdersNestedInput
   shipping: ShippingUpdateOneWithoutOrderNestedInput
   invoice: InvoiceUpdateOneRequiredWithoutOrderNestedInput
-}
-
-input OrderUpdateWithoutInvoiceInput {
-  status: EnumTransactionStatusFieldUpdateOperationsInput
-  shippingId: NullableIntFieldUpdateOperationsInput
-  platformFee: FloatFieldUpdateOperationsInput
-  total: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  orderBy: UserUpdateOneRequiredWithoutOrdersNestedInput
-  cart: CartUpdateManyWithoutOrderNestedInput
-  shipping: ShippingUpdateOneWithoutOrderNestedInput
 }
 
 input OrderUpdateWithoutOrderByInput {
@@ -4635,12 +4853,6 @@ input OrderUpdateWithWhereUniqueWithoutOrderByInput {
 input OrderUpsertWithoutCartInput {
   update: OrderUpdateWithoutCartInput!
   create: OrderCreateWithoutCartInput!
-  where: OrderWhereInput
-}
-
-input OrderUpsertWithoutInvoiceInput {
-  update: OrderUpdateWithoutInvoiceInput!
-  create: OrderCreateWithoutInvoiceInput!
   where: OrderWhereInput
 }
 
@@ -4840,109 +5052,6 @@ input PointTransactionWhereUniqueInput {
 enum PointType {
   REFERRING
   REDEEMING
-}
-
-type PostalCode {
-  id: Int!
-  code: Int!
-  _count: PostalCodeCount!
-}
-
-type PostalCodeAvgAggregate {
-  id: Float
-  code: Float
-}
-
-type PostalCodeCount {
-  address: Int!
-}
-
-type PostalCodeCountAggregate {
-  id: Int!
-  code: Int!
-  _all: Int!
-}
-
-input PostalCodeCreateNestedOneWithoutAddressInput {
-  create: PostalCodeCreateWithoutAddressInput
-  connectOrCreate: PostalCodeCreateOrConnectWithoutAddressInput
-  connect: PostalCodeWhereUniqueInput
-}
-
-input PostalCodeCreateOrConnectWithoutAddressInput {
-  where: PostalCodeWhereUniqueInput!
-  create: PostalCodeCreateWithoutAddressInput!
-}
-
-input PostalCodeCreateWithoutAddressInput {
-  code: Int!
-}
-
-type PostalCodeMaxAggregate {
-  id: Int
-  code: Int
-}
-
-type PostalCodeMinAggregate {
-  id: Int
-  code: Int
-}
-
-input PostalCodeOrderByWithRelationInput {
-  id: SortOrder
-  code: SortOrder
-  address: AddressOrderByRelationAggregateInput
-}
-
-input PostalCodeRelationFilter {
-  is: PostalCodeWhereInput
-  isNot: PostalCodeWhereInput
-}
-
-type PostalCodeSumAggregate {
-  id: Int
-  code: Int
-}
-
-input PostalCodeUpdateOneRequiredWithoutAddressNestedInput {
-  create: PostalCodeCreateWithoutAddressInput
-  connectOrCreate: PostalCodeCreateOrConnectWithoutAddressInput
-  upsert: PostalCodeUpsertWithoutAddressInput
-  connect: PostalCodeWhereUniqueInput
-  update: PostalCodeUpdateToOneWithWhereWithoutAddressInput
-}
-
-input PostalCodeUpdateToOneWithWhereWithoutAddressInput {
-  where: PostalCodeWhereInput
-  data: PostalCodeUpdateWithoutAddressInput!
-}
-
-input PostalCodeUpdateWithoutAddressInput {
-  code: IntFieldUpdateOperationsInput
-}
-
-input PostalCodeUpsertWithoutAddressInput {
-  update: PostalCodeUpdateWithoutAddressInput!
-  create: PostalCodeCreateWithoutAddressInput!
-  where: PostalCodeWhereInput
-}
-
-input PostalCodeWhereInput {
-  AND: [PostalCodeWhereInput!]
-  OR: [PostalCodeWhereInput!]
-  NOT: [PostalCodeWhereInput!]
-  id: IntFilter
-  code: IntFilter
-  address: AddressListRelationFilter
-}
-
-input PostalCodeWhereUniqueInput {
-  id: Int
-  code: Int
-  AND: [PostalCodeWhereInput!]
-  OR: [PostalCodeWhereInput!]
-  NOT: [PostalCodeWhereInput!]
-  address: AddressListRelationFilter
 }
 
 type Program {
@@ -5594,37 +5703,9 @@ input ProjectCreateInput {
   account: AccountCreateNestedOneWithoutProjectInput!
 }
 
-input ProjectCreateNestedOneWithoutAccountInput {
-  create: ProjectCreateWithoutAccountInput
-  connectOrCreate: ProjectCreateOrConnectWithoutAccountInput
-  connect: ProjectWhereUniqueInput
-}
-
-input ProjectCreateOrConnectWithoutAccountInput {
-  where: ProjectWhereUniqueInput!
-  create: ProjectCreateWithoutAccountInput!
-}
-
 input ProjectCreateOrConnectWithoutImagesInput {
   where: ProjectWhereUniqueInput!
   create: ProjectCreateWithoutImagesInput!
-}
-
-input ProjectCreateWithoutAccountInput {
-  name: String!
-  description: String!
-  projectCategory: ProjectCategory!
-  startDate: DateTime!
-  endDate: DateTime!
-  returnRate: Float!
-  goalAmount: Int!
-  currentAmount: Float!
-  minimumInvestment: Int!
-  maxInvestor: Int!
-  createdAt: DateTime
-  updatedAt: DateTime
-  images: ImagesCreateNestedManyWithoutProjectImageInput
-  investors: UserCreateNestedManyWithoutProjectsInvestmentInput
 }
 
 input ProjectCreateWithoutImagesInput {
@@ -5765,16 +5846,6 @@ input ProjectUpdateOneArgs {
   where: ProjectWhereUniqueInput!
 }
 
-input ProjectUpdateOneWithoutAccountNestedInput {
-  create: ProjectCreateWithoutAccountInput
-  connectOrCreate: ProjectCreateOrConnectWithoutAccountInput
-  upsert: ProjectUpsertWithoutAccountInput
-  disconnect: ProjectWhereInput
-  delete: ProjectWhereInput
-  connect: ProjectWhereUniqueInput
-  update: ProjectUpdateToOneWithWhereWithoutAccountInput
-}
-
 input ProjectUpdateOneWithoutImagesNestedInput {
   create: ProjectCreateWithoutImagesInput
   connectOrCreate: ProjectCreateOrConnectWithoutImagesInput
@@ -5785,31 +5856,9 @@ input ProjectUpdateOneWithoutImagesNestedInput {
   update: ProjectUpdateToOneWithWhereWithoutImagesInput
 }
 
-input ProjectUpdateToOneWithWhereWithoutAccountInput {
-  where: ProjectWhereInput
-  data: ProjectUpdateWithoutAccountInput!
-}
-
 input ProjectUpdateToOneWithWhereWithoutImagesInput {
   where: ProjectWhereInput
   data: ProjectUpdateWithoutImagesInput!
-}
-
-input ProjectUpdateWithoutAccountInput {
-  name: StringFieldUpdateOperationsInput
-  description: StringFieldUpdateOperationsInput
-  projectCategory: EnumProjectCategoryFieldUpdateOperationsInput
-  startDate: DateTimeFieldUpdateOperationsInput
-  endDate: DateTimeFieldUpdateOperationsInput
-  returnRate: FloatFieldUpdateOperationsInput
-  goalAmount: IntFieldUpdateOperationsInput
-  currentAmount: FloatFieldUpdateOperationsInput
-  minimumInvestment: IntFieldUpdateOperationsInput
-  maxInvestor: IntFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  images: ImagesUpdateManyWithoutProjectImageNestedInput
-  investors: UserUpdateManyWithoutProjectsInvestmentNestedInput
 }
 
 input ProjectUpdateWithoutImagesInput {
@@ -5827,12 +5876,6 @@ input ProjectUpdateWithoutImagesInput {
   updatedAt: DateTimeFieldUpdateOperationsInput
   investors: UserUpdateManyWithoutProjectsInvestmentNestedInput
   account: AccountUpdateOneRequiredWithoutProjectNestedInput
-}
-
-input ProjectUpsertWithoutAccountInput {
-  update: ProjectUpdateWithoutAccountInput!
-  create: ProjectCreateWithoutAccountInput!
-  where: ProjectWhereInput
 }
 
 input ProjectUpsertWithoutImagesInput {
@@ -5887,6 +5930,170 @@ input ProjectWhereUniqueInput {
   account: AccountRelationFilter
 }
 
+type Province {
+  id: Int!
+  name: String!
+  _count: ProvinceCount!
+}
+
+type ProvinceAvgAggregate {
+  id: Float
+}
+
+type ProvinceCount {
+  cities: Int!
+  address: Int!
+}
+
+type ProvinceCountAggregate {
+  id: Int!
+  name: Int!
+  _all: Int!
+}
+
+input ProvinceCreateNestedOneWithoutAddressInput {
+  create: ProvinceCreateWithoutAddressInput
+  connectOrCreate: ProvinceCreateOrConnectWithoutAddressInput
+  connect: ProvinceWhereUniqueInput
+}
+
+input ProvinceCreateNestedOneWithoutCitiesInput {
+  create: ProvinceCreateWithoutCitiesInput
+  connectOrCreate: ProvinceCreateOrConnectWithoutCitiesInput
+  connect: ProvinceWhereUniqueInput
+}
+
+input ProvinceCreateOrConnectWithoutAddressInput {
+  where: ProvinceWhereUniqueInput!
+  create: ProvinceCreateWithoutAddressInput!
+}
+
+input ProvinceCreateOrConnectWithoutCitiesInput {
+  where: ProvinceWhereUniqueInput!
+  create: ProvinceCreateWithoutCitiesInput!
+}
+
+input ProvinceCreateWithoutAddressInput {
+  name: String!
+  cities: CityCreateNestedManyWithoutProvinceInput
+}
+
+input ProvinceCreateWithoutCitiesInput {
+  name: String!
+  address: AddressCreateNestedManyWithoutProvinceInput
+}
+
+input ProvinceFindManyArgs {
+  where: ProvinceWhereInput
+  orderBy: [ProvinceOrderByWithRelationInput!]
+  take: Int
+  skip: Int
+  distinct: [ProvinceScalarFieldEnum!]
+}
+
+input ProvinceFindUniqueArgs {
+  where: ProvinceWhereUniqueInput!
+}
+
+type ProvinceMaxAggregate {
+  id: Int
+  name: String
+}
+
+type ProvinceMinAggregate {
+  id: Int
+  name: String
+}
+
+input ProvinceOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  cities: CityOrderByRelationAggregateInput
+  address: AddressOrderByRelationAggregateInput
+}
+
+input ProvinceRelationFilter {
+  is: ProvinceWhereInput
+  isNot: ProvinceWhereInput
+}
+
+enum ProvinceScalarFieldEnum {
+  id
+  name
+}
+
+type ProvinceSumAggregate {
+  id: Int
+}
+
+input ProvinceUpdateOneRequiredWithoutAddressNestedInput {
+  create: ProvinceCreateWithoutAddressInput
+  connectOrCreate: ProvinceCreateOrConnectWithoutAddressInput
+  upsert: ProvinceUpsertWithoutAddressInput
+  connect: ProvinceWhereUniqueInput
+  update: ProvinceUpdateToOneWithWhereWithoutAddressInput
+}
+
+input ProvinceUpdateOneRequiredWithoutCitiesNestedInput {
+  create: ProvinceCreateWithoutCitiesInput
+  connectOrCreate: ProvinceCreateOrConnectWithoutCitiesInput
+  upsert: ProvinceUpsertWithoutCitiesInput
+  connect: ProvinceWhereUniqueInput
+  update: ProvinceUpdateToOneWithWhereWithoutCitiesInput
+}
+
+input ProvinceUpdateToOneWithWhereWithoutAddressInput {
+  where: ProvinceWhereInput
+  data: ProvinceUpdateWithoutAddressInput!
+}
+
+input ProvinceUpdateToOneWithWhereWithoutCitiesInput {
+  where: ProvinceWhereInput
+  data: ProvinceUpdateWithoutCitiesInput!
+}
+
+input ProvinceUpdateWithoutAddressInput {
+  name: StringFieldUpdateOperationsInput
+  cities: CityUpdateManyWithoutProvinceNestedInput
+}
+
+input ProvinceUpdateWithoutCitiesInput {
+  name: StringFieldUpdateOperationsInput
+  address: AddressUpdateManyWithoutProvinceNestedInput
+}
+
+input ProvinceUpsertWithoutAddressInput {
+  update: ProvinceUpdateWithoutAddressInput!
+  create: ProvinceCreateWithoutAddressInput!
+  where: ProvinceWhereInput
+}
+
+input ProvinceUpsertWithoutCitiesInput {
+  update: ProvinceUpdateWithoutCitiesInput!
+  create: ProvinceCreateWithoutCitiesInput!
+  where: ProvinceWhereInput
+}
+
+input ProvinceWhereInput {
+  AND: [ProvinceWhereInput!]
+  OR: [ProvinceWhereInput!]
+  NOT: [ProvinceWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  cities: CityListRelationFilter
+  address: AddressListRelationFilter
+}
+
+input ProvinceWhereUniqueInput {
+  id: Int
+  name: String
+  AND: [ProvinceWhereInput!]
+  OR: [ProvinceWhereInput!]
+  NOT: [ProvinceWhereInput!]
+  cities: CityListRelationFilter
+  address: AddressListRelationFilter
+}
+
 type Query {
   """Deskripsinya ada disini loh"""
   userFindMany(userFindManyArgs: UserFindManyArgs!): [User!]
@@ -5902,14 +6109,13 @@ type Query {
 
   """Deskripsinya ada disini loh"""
   itemFindOne(itemFindUniqueArgs: ItemFindUniqueArgs!): Item
+
+  """Deskripsinya ada disini loh"""
   hotelFindMany(hotelFindManyArgs: HotelFindManyArgs!): [Hotel!]
 
-  """Default prisma query include nested address & checkIns"""
+  """Deskripsinya ada disini loh"""
   hotelFindOne(hotelFindUniqueArgs: HotelFindUniqueArgs!): Hotel
   auth(id: Int!): Auth!
-  cityFindMany(cityNameSearch: String!): [City!]!
-  districtFindMany(districtNameSearch: String!): [District!]!
-  postalCodeFindMany: [PostalCode!]!
   bankFindMany: [Bank!]!
 
   """Deskripsinya ada disini loh"""
@@ -5991,6 +6197,15 @@ type Query {
   transactionFindOne(transactionFindUniqueArgs: TransactionFindUniqueArgs!): Transaction
 
   """Deskripsinya ada disini loh"""
+  invoiceFindMany(invoiceFindManyArgs: InvoiceFindManyArgs!): [Invoice!]
+
+  """Deskripsinya ada disini loh"""
+  invoiceFindOne(invoiceFindUniqueArgs: InvoiceFindUniqueArgs!): Invoice
+
+  """Deskripsinya ada disini loh"""
+  invoiceCount(invoiceFindManyArgs: InvoiceFindManyArgs): Int!
+
+  """Deskripsinya ada disini loh"""
   accountFindMany(accountFindManyArgs: AccountFindManyArgs!): [Account!]
 
   """Deskripsinya ada disini loh"""
@@ -6021,6 +6236,30 @@ type Query {
 
   """Deskripsinya ada disini loh"""
   orderCount(orderFindManyArgs: OrderFindManyArgs): Int!
+
+  """Deskripsinya ada disini loh"""
+  provinceFindMany(provinceFindManyArgs: ProvinceFindManyArgs!): [Province!]
+
+  """Deskripsinya ada disini loh"""
+  provinceFindOne(provinceFindUniqueArgs: ProvinceFindUniqueArgs!): Province
+
+  """Deskripsinya ada disini loh"""
+  cityFindMany(cityFindManyArgs: CityFindManyArgs!): [City!]
+
+  """Deskripsinya ada disini loh"""
+  cityFindOne(cityFindUniqueArgs: CityFindUniqueArgs!): City
+
+  """Deskripsinya ada disini loh"""
+  districtFindMany(districtFindManyArgs: DistrictFindManyArgs!): [District!]
+
+  """Deskripsinya ada disini loh"""
+  districtFindOne(districtFindUniqueArgs: DistrictFindUniqueArgs!): District
+
+  """Deskripsinya ada disini loh"""
+  subdistrictFindMany(subdistrictFindManyArgs: SubdistrictFindManyArgs!): [Subdistrict!]
+
+  """Deskripsinya ada disini loh"""
+  subdistrictFindOne(subdistrictFindUniqueArgs: SubdistrictFindUniqueArgs!): Subdistrict
 }
 
 type Reward {
@@ -6061,12 +6300,19 @@ input RewardCreateArgs {
 
 input RewardCreateInput {
   name: String!
-  pointCost: Float!
   description: String!
-  createdAt: DateTime
-  updatedAt: DateTime
   images: ImagesCreateNestedManyWithoutRewardImageInput
-  claimers: UserCreateNestedManyWithoutClaimedRewardsInput
+}
+
+input RewardCreateNestedManyWithoutClaimersInput {
+  create: [RewardCreateWithoutClaimersInput!]
+  connectOrCreate: [RewardCreateOrConnectWithoutClaimersInput!]
+  connect: [RewardWhereUniqueInput!]
+}
+
+input RewardCreateOrConnectWithoutClaimersInput {
+  where: RewardWhereUniqueInput!
+  create: RewardCreateWithoutClaimersInput!
 }
 
 input RewardCreateOrConnectWithoutImagesInput {
@@ -6074,13 +6320,15 @@ input RewardCreateOrConnectWithoutImagesInput {
   create: RewardCreateWithoutImagesInput!
 }
 
+input RewardCreateWithoutClaimersInput {
+  name: String!
+  description: String!
+  images: ImagesCreateNestedManyWithoutRewardImageInput
+}
+
 input RewardCreateWithoutImagesInput {
   name: String!
-  pointCost: Float!
   description: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  claimers: UserCreateNestedManyWithoutClaimedRewardsInput
 }
 
 input RewardFindManyArgs {
@@ -6093,6 +6341,12 @@ input RewardFindManyArgs {
 
 input RewardFindUniqueArgs {
   where: RewardWhereUniqueInput!
+}
+
+input RewardListRelationFilter {
+  every: RewardWhereInput
+  some: RewardWhereInput
+  none: RewardWhereInput
 }
 
 type RewardMaxAggregate {
@@ -6118,15 +6372,15 @@ input RewardNullableRelationFilter {
   isNot: RewardWhereInput
 }
 
+input RewardOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input RewardOrderByWithRelationInput {
   id: SortOrder
   name: SortOrder
-  pointCost: SortOrder
   description: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
   images: ImagesOrderByRelationAggregateInput
-  claimers: UserOrderByRelationAggregateInput
 }
 
 enum RewardScalarFieldEnum {
@@ -6138,6 +6392,15 @@ enum RewardScalarFieldEnum {
   updatedAt
 }
 
+input RewardScalarWhereInput {
+  AND: [RewardScalarWhereInput!]
+  OR: [RewardScalarWhereInput!]
+  NOT: [RewardScalarWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  description: StringFilter
+}
+
 type RewardSumAggregate {
   id: Int
   pointCost: Float
@@ -6145,12 +6408,31 @@ type RewardSumAggregate {
 
 input RewardUpdateInput {
   name: StringFieldUpdateOperationsInput
-  pointCost: FloatFieldUpdateOperationsInput
   description: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   images: ImagesUpdateManyWithoutRewardImageNestedInput
-  claimers: UserUpdateManyWithoutClaimedRewardsNestedInput
+}
+
+input RewardUpdateManyMutationInput {
+  name: StringFieldUpdateOperationsInput
+  description: StringFieldUpdateOperationsInput
+}
+
+input RewardUpdateManyWithoutClaimersNestedInput {
+  create: [RewardCreateWithoutClaimersInput!]
+  connectOrCreate: [RewardCreateOrConnectWithoutClaimersInput!]
+  upsert: [RewardUpsertWithWhereUniqueWithoutClaimersInput!]
+  set: [RewardWhereUniqueInput!]
+  disconnect: [RewardWhereUniqueInput!]
+  delete: [RewardWhereUniqueInput!]
+  connect: [RewardWhereUniqueInput!]
+  update: [RewardUpdateWithWhereUniqueWithoutClaimersInput!]
+  updateMany: [RewardUpdateManyWithWhereWithoutClaimersInput!]
+  deleteMany: [RewardScalarWhereInput!]
+}
+
+input RewardUpdateManyWithWhereWithoutClaimersInput {
+  where: RewardScalarWhereInput!
+  data: RewardUpdateManyMutationInput!
 }
 
 input RewardUpdateOneArgs {
@@ -6173,13 +6455,20 @@ input RewardUpdateToOneWithWhereWithoutImagesInput {
   data: RewardUpdateWithoutImagesInput!
 }
 
+input RewardUpdateWithoutClaimersInput {
+  name: StringFieldUpdateOperationsInput
+  description: StringFieldUpdateOperationsInput
+  images: ImagesUpdateManyWithoutRewardImageNestedInput
+}
+
 input RewardUpdateWithoutImagesInput {
   name: StringFieldUpdateOperationsInput
-  pointCost: FloatFieldUpdateOperationsInput
   description: StringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  claimers: UserUpdateManyWithoutClaimedRewardsNestedInput
+}
+
+input RewardUpdateWithWhereUniqueWithoutClaimersInput {
+  where: RewardWhereUniqueInput!
+  data: RewardUpdateWithoutClaimersInput!
 }
 
 input RewardUpsertWithoutImagesInput {
@@ -6188,18 +6477,20 @@ input RewardUpsertWithoutImagesInput {
   where: RewardWhereInput
 }
 
+input RewardUpsertWithWhereUniqueWithoutClaimersInput {
+  where: RewardWhereUniqueInput!
+  update: RewardUpdateWithoutClaimersInput!
+  create: RewardCreateWithoutClaimersInput!
+}
+
 input RewardWhereInput {
   AND: [RewardWhereInput!]
   OR: [RewardWhereInput!]
   NOT: [RewardWhereInput!]
   id: IntFilter
   name: StringFilter
-  pointCost: FloatFilter
   description: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   images: ImagesListRelationFilter
-  claimers: UserListRelationFilter
 }
 
 input RewardWhereUniqueInput {
@@ -6208,12 +6499,8 @@ input RewardWhereUniqueInput {
   OR: [RewardWhereInput!]
   NOT: [RewardWhereInput!]
   name: StringFilter
-  pointCost: FloatFilter
   description: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   images: ImagesListRelationFilter
-  claimers: UserListRelationFilter
 }
 
 type School {
@@ -6563,23 +6850,6 @@ type ShippingCountAggregate {
   _all: Int!
 }
 
-input ShippingCreateArgs {
-  data: ShippingCreateInput!
-}
-
-input ShippingCreateInput {
-  logisticName: String!
-  deliveryDate: DateTime
-  shippingStatus: ShippingStatus!
-  courier: String
-  estimatedTime: String
-  trackingNo: String
-  createdAt: DateTime
-  updatedAt: DateTime
-  address: AddressCreateNestedOneWithoutShippingInput!
-  order: OrderCreateNestedOneWithoutShippingInput!
-}
-
 input ShippingCreateNestedOneWithoutOrderInput {
   create: ShippingCreateWithoutOrderInput
   connectOrCreate: ShippingCreateOrConnectWithoutOrderInput
@@ -6599,25 +6869,18 @@ input ShippingCreateOrConnectWithoutOrderInput {
 input ShippingCreateWithoutAddressInput {
   logisticName: String!
   deliveryDate: DateTime
-  shippingStatus: ShippingStatus!
   courier: String
   estimatedTime: String
   trackingNo: String
-  createdAt: DateTime
-  updatedAt: DateTime
   order: OrderCreateNestedOneWithoutShippingInput!
 }
 
 input ShippingCreateWithoutOrderInput {
   logisticName: String!
   deliveryDate: DateTime
-  shippingStatus: ShippingStatus!
   courier: String
   estimatedTime: String
   trackingNo: String
-  createdAt: DateTime
-  updatedAt: DateTime
-  address: AddressCreateNestedOneWithoutShippingInput!
 }
 
 input ShippingFindManyArgs {
@@ -6669,14 +6932,10 @@ input ShippingOrderByWithRelationInput {
   id: SortOrder
   logisticName: SortOrder
   deliveryDate: SortOrderInput
-  shippingStatus: SortOrder
-  addressId: SortOrder
   courier: SortOrderInput
   estimatedTime: SortOrderInput
   trackingNo: SortOrderInput
   orderId: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
   address: AddressOrderByWithRelationInput
   order: OrderOrderByWithRelationInput
 }
@@ -6705,24 +6964,6 @@ type ShippingSumAggregate {
   id: Int
   addressId: Int
   orderId: Int
-}
-
-input ShippingUpdateInput {
-  logisticName: StringFieldUpdateOperationsInput
-  deliveryDate: NullableDateTimeFieldUpdateOperationsInput
-  shippingStatus: EnumShippingStatusFieldUpdateOperationsInput
-  courier: NullableStringFieldUpdateOperationsInput
-  estimatedTime: NullableStringFieldUpdateOperationsInput
-  trackingNo: NullableStringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  address: AddressUpdateOneRequiredWithoutShippingNestedInput
-  order: OrderUpdateOneRequiredWithoutShippingNestedInput
-}
-
-input ShippingUpdateOneArgs {
-  data: ShippingUpdateInput!
-  where: ShippingWhereUniqueInput!
 }
 
 input ShippingUpdateOneWithoutAddressNestedInput {
@@ -6758,24 +6999,18 @@ input ShippingUpdateToOneWithWhereWithoutOrderInput {
 input ShippingUpdateWithoutAddressInput {
   logisticName: StringFieldUpdateOperationsInput
   deliveryDate: NullableDateTimeFieldUpdateOperationsInput
-  shippingStatus: EnumShippingStatusFieldUpdateOperationsInput
   courier: NullableStringFieldUpdateOperationsInput
   estimatedTime: NullableStringFieldUpdateOperationsInput
   trackingNo: NullableStringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   order: OrderUpdateOneRequiredWithoutShippingNestedInput
 }
 
 input ShippingUpdateWithoutOrderInput {
   logisticName: StringFieldUpdateOperationsInput
   deliveryDate: NullableDateTimeFieldUpdateOperationsInput
-  shippingStatus: EnumShippingStatusFieldUpdateOperationsInput
   courier: NullableStringFieldUpdateOperationsInput
   estimatedTime: NullableStringFieldUpdateOperationsInput
   trackingNo: NullableStringFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
   address: AddressUpdateOneRequiredWithoutShippingNestedInput
 }
 
@@ -6798,33 +7033,25 @@ input ShippingWhereInput {
   id: IntFilter
   logisticName: StringFilter
   deliveryDate: DateTimeNullableFilter
-  shippingStatus: EnumShippingStatusFilter
-  addressId: IntFilter
   courier: StringNullableFilter
   estimatedTime: StringNullableFilter
   trackingNo: StringNullableFilter
   orderId: IntFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   address: AddressRelationFilter
   order: OrderRelationFilter
 }
 
 input ShippingWhereUniqueInput {
   id: Int
-  addressId: Int
   orderId: Int
   AND: [ShippingWhereInput!]
   OR: [ShippingWhereInput!]
   NOT: [ShippingWhereInput!]
   logisticName: StringFilter
   deliveryDate: DateTimeNullableFilter
-  shippingStatus: EnumShippingStatusFilter
   courier: StringNullableFilter
   estimatedTime: StringNullableFilter
   trackingNo: StringNullableFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
   address: AddressRelationFilter
   order: OrderRelationFilter
 }
@@ -6871,6 +7098,240 @@ input StringNullableFilter {
   not: NestedStringNullableFilter
 }
 
+type Subdistrict {
+  id: Int!
+  name: String!
+  districtId: Int!
+  postalCode: String!
+  district: District!
+  _count: SubdistrictCount!
+}
+
+type SubdistrictAvgAggregate {
+  id: Float
+  districtId: Float
+}
+
+type SubdistrictCount {
+  address: Int!
+}
+
+type SubdistrictCountAggregate {
+  id: Int!
+  name: Int!
+  districtId: Int!
+  postalCode: Int!
+  _all: Int!
+}
+
+input SubdistrictCreateManyDistrictInput {
+  id: Int
+  name: String!
+  postalCode: String!
+}
+
+input SubdistrictCreateManyDistrictInputEnvelope {
+  data: [SubdistrictCreateManyDistrictInput!]!
+  skipDuplicates: Boolean
+}
+
+input SubdistrictCreateNestedManyWithoutDistrictInput {
+  create: [SubdistrictCreateWithoutDistrictInput!]
+  connectOrCreate: [SubdistrictCreateOrConnectWithoutDistrictInput!]
+  createMany: SubdistrictCreateManyDistrictInputEnvelope
+  connect: [SubdistrictWhereUniqueInput!]
+}
+
+input SubdistrictCreateNestedOneWithoutAddressInput {
+  create: SubdistrictCreateWithoutAddressInput
+  connectOrCreate: SubdistrictCreateOrConnectWithoutAddressInput
+  connect: SubdistrictWhereUniqueInput
+}
+
+input SubdistrictCreateOrConnectWithoutAddressInput {
+  where: SubdistrictWhereUniqueInput!
+  create: SubdistrictCreateWithoutAddressInput!
+}
+
+input SubdistrictCreateOrConnectWithoutDistrictInput {
+  where: SubdistrictWhereUniqueInput!
+  create: SubdistrictCreateWithoutDistrictInput!
+}
+
+input SubdistrictCreateWithoutAddressInput {
+  name: String!
+  postalCode: String!
+  district: DistrictCreateNestedOneWithoutSubdistrictsInput!
+}
+
+input SubdistrictCreateWithoutDistrictInput {
+  name: String!
+  postalCode: String!
+  address: AddressCreateNestedManyWithoutSubdistrictInput
+}
+
+input SubdistrictFindManyArgs {
+  where: SubdistrictWhereInput
+  orderBy: [SubdistrictOrderByWithRelationInput!]
+  take: Int
+  skip: Int
+  distinct: [SubdistrictScalarFieldEnum!]
+}
+
+input SubdistrictFindUniqueArgs {
+  where: SubdistrictWhereUniqueInput!
+}
+
+input SubdistrictListRelationFilter {
+  every: SubdistrictWhereInput
+  some: SubdistrictWhereInput
+  none: SubdistrictWhereInput
+}
+
+type SubdistrictMaxAggregate {
+  id: Int
+  name: String
+  districtId: Int
+  postalCode: String
+}
+
+type SubdistrictMinAggregate {
+  id: Int
+  name: String
+  districtId: Int
+  postalCode: String
+}
+
+input SubdistrictOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input SubdistrictOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  districtId: SortOrder
+  postalCode: SortOrder
+  district: DistrictOrderByWithRelationInput
+  address: AddressOrderByRelationAggregateInput
+}
+
+input SubdistrictRelationFilter {
+  is: SubdistrictWhereInput
+  isNot: SubdistrictWhereInput
+}
+
+enum SubdistrictScalarFieldEnum {
+  id
+  name
+  districtId
+  postalCode
+}
+
+input SubdistrictScalarWhereInput {
+  AND: [SubdistrictScalarWhereInput!]
+  OR: [SubdistrictScalarWhereInput!]
+  NOT: [SubdistrictScalarWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  districtId: IntFilter
+  postalCode: StringFilter
+}
+
+type SubdistrictSumAggregate {
+  id: Int
+  districtId: Int
+}
+
+input SubdistrictUpdateManyMutationInput {
+  name: StringFieldUpdateOperationsInput
+  postalCode: StringFieldUpdateOperationsInput
+}
+
+input SubdistrictUpdateManyWithoutDistrictNestedInput {
+  create: [SubdistrictCreateWithoutDistrictInput!]
+  connectOrCreate: [SubdistrictCreateOrConnectWithoutDistrictInput!]
+  upsert: [SubdistrictUpsertWithWhereUniqueWithoutDistrictInput!]
+  createMany: SubdistrictCreateManyDistrictInputEnvelope
+  set: [SubdistrictWhereUniqueInput!]
+  disconnect: [SubdistrictWhereUniqueInput!]
+  delete: [SubdistrictWhereUniqueInput!]
+  connect: [SubdistrictWhereUniqueInput!]
+  update: [SubdistrictUpdateWithWhereUniqueWithoutDistrictInput!]
+  updateMany: [SubdistrictUpdateManyWithWhereWithoutDistrictInput!]
+  deleteMany: [SubdistrictScalarWhereInput!]
+}
+
+input SubdistrictUpdateManyWithWhereWithoutDistrictInput {
+  where: SubdistrictScalarWhereInput!
+  data: SubdistrictUpdateManyMutationInput!
+}
+
+input SubdistrictUpdateOneRequiredWithoutAddressNestedInput {
+  create: SubdistrictCreateWithoutAddressInput
+  connectOrCreate: SubdistrictCreateOrConnectWithoutAddressInput
+  upsert: SubdistrictUpsertWithoutAddressInput
+  connect: SubdistrictWhereUniqueInput
+  update: SubdistrictUpdateToOneWithWhereWithoutAddressInput
+}
+
+input SubdistrictUpdateToOneWithWhereWithoutAddressInput {
+  where: SubdistrictWhereInput
+  data: SubdistrictUpdateWithoutAddressInput!
+}
+
+input SubdistrictUpdateWithoutAddressInput {
+  name: StringFieldUpdateOperationsInput
+  postalCode: StringFieldUpdateOperationsInput
+  district: DistrictUpdateOneRequiredWithoutSubdistrictsNestedInput
+}
+
+input SubdistrictUpdateWithoutDistrictInput {
+  name: StringFieldUpdateOperationsInput
+  postalCode: StringFieldUpdateOperationsInput
+  address: AddressUpdateManyWithoutSubdistrictNestedInput
+}
+
+input SubdistrictUpdateWithWhereUniqueWithoutDistrictInput {
+  where: SubdistrictWhereUniqueInput!
+  data: SubdistrictUpdateWithoutDistrictInput!
+}
+
+input SubdistrictUpsertWithoutAddressInput {
+  update: SubdistrictUpdateWithoutAddressInput!
+  create: SubdistrictCreateWithoutAddressInput!
+  where: SubdistrictWhereInput
+}
+
+input SubdistrictUpsertWithWhereUniqueWithoutDistrictInput {
+  where: SubdistrictWhereUniqueInput!
+  update: SubdistrictUpdateWithoutDistrictInput!
+  create: SubdistrictCreateWithoutDistrictInput!
+}
+
+input SubdistrictWhereInput {
+  AND: [SubdistrictWhereInput!]
+  OR: [SubdistrictWhereInput!]
+  NOT: [SubdistrictWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  districtId: IntFilter
+  postalCode: StringFilter
+  district: DistrictRelationFilter
+  address: AddressListRelationFilter
+}
+
+input SubdistrictWhereUniqueInput {
+  id: Int
+  AND: [SubdistrictWhereInput!]
+  OR: [SubdistrictWhereInput!]
+  NOT: [SubdistrictWhereInput!]
+  name: StringFilter
+  districtId: IntFilter
+  postalCode: StringFilter
+  district: DistrictRelationFilter
+  address: AddressListRelationFilter
+}
+
 enum Theme {
   LIGHT
   DARK
@@ -6886,6 +7347,7 @@ type Transaction {
   toAccountId: Int!
   invoiceId: Int
   installmentId: Int
+  uniqueCode: Int!
   createdAt: DateTime!
   fromAccount: Account!
   toAccount: Account!
@@ -6900,6 +7362,7 @@ type TransactionAvgAggregate {
   toAccountId: Float
   invoiceId: Float
   installmentId: Float
+  uniqueCode: Float
 }
 
 enum TransactionCategory {
@@ -6921,20 +7384,29 @@ type TransactionCountAggregate {
   toAccountId: Int!
   invoiceId: Int!
   installmentId: Int!
+  uniqueCode: Int!
   createdAt: Int!
   _all: Int!
+}
+
+input TransactionCreateArgs {
+  data: TransactionCreateInput!
+}
+
+input TransactionCreateInput {
+  amount: Float!
+  proofUrl: String
+  transactionCategory: TransactionCategory!
+  invoice: InvoiceCreateNestedOneWithoutTransactionsInput
 }
 
 input TransactionCreateManyFromAccountInput {
   id: Int
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  toAccountId: Int!
   invoiceId: Int
   installmentId: Int
-  createdAt: DateTime
 }
 
 input TransactionCreateManyFromAccountInputEnvelope {
@@ -6946,12 +7418,8 @@ input TransactionCreateManyInvoiceInput {
   id: Int
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  fromAccountId: Int!
-  toAccountId: Int!
   installmentId: Int
-  createdAt: DateTime
 }
 
 input TransactionCreateManyInvoiceInputEnvelope {
@@ -6963,12 +7431,9 @@ input TransactionCreateManyToAccountInput {
   id: Int
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  fromAccountId: Int!
   invoiceId: Int
   installmentId: Int
-  createdAt: DateTime
 }
 
 input TransactionCreateManyToAccountInputEnvelope {
@@ -6976,24 +7441,10 @@ input TransactionCreateManyToAccountInputEnvelope {
   skipDuplicates: Boolean
 }
 
-input TransactionCreateNestedManyWithoutFromAccountInput {
-  create: [TransactionCreateWithoutFromAccountInput!]
-  connectOrCreate: [TransactionCreateOrConnectWithoutFromAccountInput!]
-  createMany: TransactionCreateManyFromAccountInputEnvelope
-  connect: [TransactionWhereUniqueInput!]
-}
-
 input TransactionCreateNestedManyWithoutInvoiceInput {
   create: [TransactionCreateWithoutInvoiceInput!]
   connectOrCreate: [TransactionCreateOrConnectWithoutInvoiceInput!]
   createMany: TransactionCreateManyInvoiceInputEnvelope
-  connect: [TransactionWhereUniqueInput!]
-}
-
-input TransactionCreateNestedManyWithoutToAccountInput {
-  create: [TransactionCreateWithoutToAccountInput!]
-  connectOrCreate: [TransactionCreateOrConnectWithoutToAccountInput!]
-  createMany: TransactionCreateManyToAccountInputEnvelope
   connect: [TransactionWhereUniqueInput!]
 }
 
@@ -7026,45 +7477,28 @@ input TransactionCreateOrConnectWithoutToAccountInput {
 input TransactionCreateWithoutFromAccountInput {
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  createdAt: DateTime
-  toAccount: AccountCreateNestedOneWithoutTransactionDestinationInput!
   invoice: InvoiceCreateNestedOneWithoutTransactionsInput
-  Installment: InstallmentCreateNestedOneWithoutTransactionInput
 }
 
 input TransactionCreateWithoutInstallmentInput {
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  createdAt: DateTime
-  fromAccount: AccountCreateNestedOneWithoutTransactionOriginsInput!
-  toAccount: AccountCreateNestedOneWithoutTransactionDestinationInput!
   invoice: InvoiceCreateNestedOneWithoutTransactionsInput
 }
 
 input TransactionCreateWithoutInvoiceInput {
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  createdAt: DateTime
-  fromAccount: AccountCreateNestedOneWithoutTransactionOriginsInput!
-  toAccount: AccountCreateNestedOneWithoutTransactionDestinationInput!
-  Installment: InstallmentCreateNestedOneWithoutTransactionInput
 }
 
 input TransactionCreateWithoutToAccountInput {
   amount: Float!
   proofUrl: String
-  status: TransactionStatus!
   transactionCategory: TransactionCategory!
-  createdAt: DateTime
-  fromAccount: AccountCreateNestedOneWithoutTransactionOriginsInput!
   invoice: InvoiceCreateNestedOneWithoutTransactionsInput
-  Installment: InstallmentCreateNestedOneWithoutTransactionInput
 }
 
 input TransactionFindManyArgs {
@@ -7095,6 +7529,7 @@ type TransactionMaxAggregate {
   toAccountId: Int
   invoiceId: Int
   installmentId: Int
+  uniqueCode: Int
   createdAt: DateTime
 }
 
@@ -7108,6 +7543,7 @@ type TransactionMinAggregate {
   toAccountId: Int
   invoiceId: Int
   installmentId: Int
+  uniqueCode: Int
   createdAt: DateTime
 }
 
@@ -7124,17 +7560,10 @@ input TransactionOrderByWithRelationInput {
   id: SortOrder
   amount: SortOrder
   proofUrl: SortOrderInput
-  status: SortOrder
   transactionCategory: SortOrder
-  fromAccountId: SortOrder
-  toAccountId: SortOrder
   invoiceId: SortOrderInput
   installmentId: SortOrderInput
-  createdAt: SortOrder
-  fromAccount: AccountOrderByWithRelationInput
-  toAccount: AccountOrderByWithRelationInput
   invoice: InvoiceOrderByWithRelationInput
-  Installment: InstallmentOrderByWithRelationInput
 }
 
 enum TransactionScalarFieldEnum {
@@ -7147,6 +7576,7 @@ enum TransactionScalarFieldEnum {
   toAccountId
   invoiceId
   installmentId
+  uniqueCode
   createdAt
 }
 
@@ -7157,13 +7587,9 @@ input TransactionScalarWhereInput {
   id: IntFilter
   amount: FloatFilter
   proofUrl: StringNullableFilter
-  status: EnumTransactionStatusFilter
   transactionCategory: EnumTransactionCategoryFilter
-  fromAccountId: IntFilter
-  toAccountId: IntFilter
   invoiceId: IntNullableFilter
   installmentId: IntNullableFilter
-  createdAt: DateTimeFilter
 }
 
 enum TransactionStatus {
@@ -7181,6 +7607,7 @@ type TransactionSumAggregate {
   toAccountId: Int
   invoiceId: Int
   installmentId: Int
+  uniqueCode: Int
 }
 
 enum TransactionType {
@@ -7191,9 +7618,7 @@ enum TransactionType {
 input TransactionUpdateManyMutationInput {
   amount: FloatFieldUpdateOperationsInput
   proofUrl: NullableStringFieldUpdateOperationsInput
-  status: EnumTransactionStatusFieldUpdateOperationsInput
   transactionCategory: EnumTransactionCategoryFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
 }
 
 input TransactionUpdateManyWithoutFromAccountNestedInput {
@@ -7207,20 +7632,6 @@ input TransactionUpdateManyWithoutFromAccountNestedInput {
   connect: [TransactionWhereUniqueInput!]
   update: [TransactionUpdateWithWhereUniqueWithoutFromAccountInput!]
   updateMany: [TransactionUpdateManyWithWhereWithoutFromAccountInput!]
-  deleteMany: [TransactionScalarWhereInput!]
-}
-
-input TransactionUpdateManyWithoutInvoiceNestedInput {
-  create: [TransactionCreateWithoutInvoiceInput!]
-  connectOrCreate: [TransactionCreateOrConnectWithoutInvoiceInput!]
-  upsert: [TransactionUpsertWithWhereUniqueWithoutInvoiceInput!]
-  createMany: TransactionCreateManyInvoiceInputEnvelope
-  set: [TransactionWhereUniqueInput!]
-  disconnect: [TransactionWhereUniqueInput!]
-  delete: [TransactionWhereUniqueInput!]
-  connect: [TransactionWhereUniqueInput!]
-  update: [TransactionUpdateWithWhereUniqueWithoutInvoiceInput!]
-  updateMany: [TransactionUpdateManyWithWhereWithoutInvoiceInput!]
   deleteMany: [TransactionScalarWhereInput!]
 }
 
@@ -7243,73 +7654,23 @@ input TransactionUpdateManyWithWhereWithoutFromAccountInput {
   data: TransactionUpdateManyMutationInput!
 }
 
-input TransactionUpdateManyWithWhereWithoutInvoiceInput {
-  where: TransactionScalarWhereInput!
-  data: TransactionUpdateManyMutationInput!
-}
-
 input TransactionUpdateManyWithWhereWithoutToAccountInput {
   where: TransactionScalarWhereInput!
   data: TransactionUpdateManyMutationInput!
 }
 
-input TransactionUpdateOneWithoutInstallmentNestedInput {
-  create: TransactionCreateWithoutInstallmentInput
-  connectOrCreate: TransactionCreateOrConnectWithoutInstallmentInput
-  upsert: TransactionUpsertWithoutInstallmentInput
-  disconnect: TransactionWhereInput
-  delete: TransactionWhereInput
-  connect: TransactionWhereUniqueInput
-  update: TransactionUpdateToOneWithWhereWithoutInstallmentInput
-}
-
-input TransactionUpdateToOneWithWhereWithoutInstallmentInput {
-  where: TransactionWhereInput
-  data: TransactionUpdateWithoutInstallmentInput!
-}
-
 input TransactionUpdateWithoutFromAccountInput {
   amount: FloatFieldUpdateOperationsInput
   proofUrl: NullableStringFieldUpdateOperationsInput
-  status: EnumTransactionStatusFieldUpdateOperationsInput
   transactionCategory: EnumTransactionCategoryFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  toAccount: AccountUpdateOneRequiredWithoutTransactionDestinationNestedInput
   invoice: InvoiceUpdateOneWithoutTransactionsNestedInput
-  Installment: InstallmentUpdateOneWithoutTransactionNestedInput
-}
-
-input TransactionUpdateWithoutInstallmentInput {
-  amount: FloatFieldUpdateOperationsInput
-  proofUrl: NullableStringFieldUpdateOperationsInput
-  status: EnumTransactionStatusFieldUpdateOperationsInput
-  transactionCategory: EnumTransactionCategoryFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  fromAccount: AccountUpdateOneRequiredWithoutTransactionOriginsNestedInput
-  toAccount: AccountUpdateOneRequiredWithoutTransactionDestinationNestedInput
-  invoice: InvoiceUpdateOneWithoutTransactionsNestedInput
-}
-
-input TransactionUpdateWithoutInvoiceInput {
-  amount: FloatFieldUpdateOperationsInput
-  proofUrl: NullableStringFieldUpdateOperationsInput
-  status: EnumTransactionStatusFieldUpdateOperationsInput
-  transactionCategory: EnumTransactionCategoryFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  fromAccount: AccountUpdateOneRequiredWithoutTransactionOriginsNestedInput
-  toAccount: AccountUpdateOneRequiredWithoutTransactionDestinationNestedInput
-  Installment: InstallmentUpdateOneWithoutTransactionNestedInput
 }
 
 input TransactionUpdateWithoutToAccountInput {
   amount: FloatFieldUpdateOperationsInput
   proofUrl: NullableStringFieldUpdateOperationsInput
-  status: EnumTransactionStatusFieldUpdateOperationsInput
   transactionCategory: EnumTransactionCategoryFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  fromAccount: AccountUpdateOneRequiredWithoutTransactionOriginsNestedInput
   invoice: InvoiceUpdateOneWithoutTransactionsNestedInput
-  Installment: InstallmentUpdateOneWithoutTransactionNestedInput
 }
 
 input TransactionUpdateWithWhereUniqueWithoutFromAccountInput {
@@ -7317,32 +7678,15 @@ input TransactionUpdateWithWhereUniqueWithoutFromAccountInput {
   data: TransactionUpdateWithoutFromAccountInput!
 }
 
-input TransactionUpdateWithWhereUniqueWithoutInvoiceInput {
-  where: TransactionWhereUniqueInput!
-  data: TransactionUpdateWithoutInvoiceInput!
-}
-
 input TransactionUpdateWithWhereUniqueWithoutToAccountInput {
   where: TransactionWhereUniqueInput!
   data: TransactionUpdateWithoutToAccountInput!
-}
-
-input TransactionUpsertWithoutInstallmentInput {
-  update: TransactionUpdateWithoutInstallmentInput!
-  create: TransactionCreateWithoutInstallmentInput!
-  where: TransactionWhereInput
 }
 
 input TransactionUpsertWithWhereUniqueWithoutFromAccountInput {
   where: TransactionWhereUniqueInput!
   update: TransactionUpdateWithoutFromAccountInput!
   create: TransactionCreateWithoutFromAccountInput!
-}
-
-input TransactionUpsertWithWhereUniqueWithoutInvoiceInput {
-  where: TransactionWhereUniqueInput!
-  update: TransactionUpdateWithoutInvoiceInput!
-  create: TransactionCreateWithoutInvoiceInput!
 }
 
 input TransactionUpsertWithWhereUniqueWithoutToAccountInput {
@@ -7358,17 +7702,10 @@ input TransactionWhereInput {
   id: IntFilter
   amount: FloatFilter
   proofUrl: StringNullableFilter
-  status: EnumTransactionStatusFilter
   transactionCategory: EnumTransactionCategoryFilter
-  fromAccountId: IntFilter
-  toAccountId: IntFilter
   invoiceId: IntNullableFilter
   installmentId: IntNullableFilter
-  createdAt: DateTimeFilter
-  fromAccount: AccountRelationFilter
-  toAccount: AccountRelationFilter
   invoice: InvoiceNullableRelationFilter
-  Installment: InstallmentNullableRelationFilter
 }
 
 input TransactionWhereUniqueInput {
@@ -7379,16 +7716,9 @@ input TransactionWhereUniqueInput {
   NOT: [TransactionWhereInput!]
   amount: FloatFilter
   proofUrl: StringNullableFilter
-  status: EnumTransactionStatusFilter
   transactionCategory: EnumTransactionCategoryFilter
-  fromAccountId: IntFilter
-  toAccountId: IntFilter
   invoiceId: IntNullableFilter
-  createdAt: DateTimeFilter
-  fromAccount: AccountRelationFilter
-  toAccount: AccountRelationFilter
   invoice: InvoiceNullableRelationFilter
-  Installment: InstallmentNullableRelationFilter
 }
 
 type User {
@@ -7531,6 +7861,7 @@ input UserCreateInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateManyReferredByInput {
@@ -7549,12 +7880,6 @@ input UserCreateManyReferredByInput {
 input UserCreateManyReferredByInputEnvelope {
   data: [UserCreateManyReferredByInput!]!
   skipDuplicates: Boolean
-}
-
-input UserCreateNestedManyWithoutClaimedRewardsInput {
-  create: [UserCreateWithoutClaimedRewardsInput!]
-  connectOrCreate: [UserCreateOrConnectWithoutClaimedRewardsInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateNestedManyWithoutProjectsInvestmentInput {
@@ -7632,11 +7957,6 @@ input UserCreateOrConnectWithoutCheckInsInput {
   create: UserCreateWithoutCheckInsInput!
 }
 
-input UserCreateOrConnectWithoutClaimedRewardsInput {
-  where: UserWhereUniqueInput!
-  create: UserCreateWithoutClaimedRewardsInput!
-}
-
 input UserCreateOrConnectWithoutFilesCreatedInput {
   where: UserWhereUniqueInput!
   create: UserCreateWithoutFilesCreatedInput!
@@ -7702,6 +8022,7 @@ input UserCreateWithoutAccountsInput {
   referredBy: UserCreateNestedOneWithoutReferredUsersInput
   school: SchoolCreateNestedOneWithoutStudentsInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutAddressInput {
@@ -7719,6 +8040,7 @@ input UserCreateWithoutAddressInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutCheckInsInput {
@@ -7737,24 +8059,7 @@ input UserCreateWithoutCheckInsInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
-}
-
-input UserCreateWithoutClaimedRewardsInput {
-  firstName: String!
-  lastName: String
-  email: String!
-  userRole: UserRole
-  userType: UserType!
-  avatarUrl: String
-  whatsappNumber: String!
-  password: String!
-  status: UserStatus
-  theme: Theme
-  address: AddressCreateNestedOneWithoutUserInput!
-  referredBy: UserCreateNestedOneWithoutReferredUsersInput
-  school: SchoolCreateNestedOneWithoutStudentsInput
-  accounts: AccountCreateNestedManyWithoutUserInput
-  orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutFilesCreatedInput {
@@ -7773,6 +8078,7 @@ input UserCreateWithoutFilesCreatedInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutHotelsCreatedInput {
@@ -7791,6 +8097,7 @@ input UserCreateWithoutHotelsCreatedInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutOrdersInput {
@@ -7808,6 +8115,7 @@ input UserCreateWithoutOrdersInput {
   referredBy: UserCreateNestedOneWithoutReferredUsersInput
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutPointTransactionsInput {
@@ -7826,6 +8134,7 @@ input UserCreateWithoutPointTransactionsInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutProgramsCreatedInput {
@@ -7844,6 +8153,7 @@ input UserCreateWithoutProgramsCreatedInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutProgramsParticipationInput {
@@ -7862,6 +8172,7 @@ input UserCreateWithoutProgramsParticipationInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutProjectsInvestmentInput {
@@ -7880,6 +8191,7 @@ input UserCreateWithoutProjectsInvestmentInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutReferredByInput {
@@ -7897,6 +8209,7 @@ input UserCreateWithoutReferredByInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutReferredUsersInput {
@@ -7915,6 +8228,7 @@ input UserCreateWithoutReferredUsersInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserCreateWithoutUserNotificationsInput {
@@ -7933,6 +8247,7 @@ input UserCreateWithoutUserNotificationsInput {
   school: SchoolCreateNestedOneWithoutStudentsInput
   accounts: AccountCreateNestedManyWithoutUserInput
   orders: OrderCreateNestedManyWithoutOrderByInput
+  claimedRewards: RewardCreateNestedManyWithoutClaimersInput
 }
 
 input UserFindManyArgs {
@@ -8213,6 +8528,7 @@ input UserOrderByWithRelationInput {
   accounts: AccountOrderByRelationAggregateInput
   orders: OrderOrderByRelationAggregateInput
   hotelsCreated: HotelOrderByRelationAggregateInput
+  claimedRewards: RewardOrderByRelationAggregateInput
   programsCreated: ProgramOrderByRelationAggregateInput
 }
 
@@ -8310,6 +8626,7 @@ input UserUpdateInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8327,19 +8644,6 @@ input UserUpdateManyMutationInput {
   updatedAt: DateTimeFieldUpdateOperationsInput
   deletedAt: NullableDateTimeFieldUpdateOperationsInput
   theme: EnumThemeFieldUpdateOperationsInput
-}
-
-input UserUpdateManyWithoutClaimedRewardsNestedInput {
-  create: [UserCreateWithoutClaimedRewardsInput!]
-  connectOrCreate: [UserCreateOrConnectWithoutClaimedRewardsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutClaimedRewardsInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutClaimedRewardsInput!]
-  updateMany: [UserUpdateManyWithWhereWithoutClaimedRewardsInput!]
-  deleteMany: [UserScalarWhereInput!]
 }
 
 input UserUpdateManyWithoutProgramsParticipationNestedInput {
@@ -8380,11 +8684,6 @@ input UserUpdateManyWithoutReferredByNestedInput {
   update: [UserUpdateWithWhereUniqueWithoutReferredByInput!]
   updateMany: [UserUpdateManyWithWhereWithoutReferredByInput!]
   deleteMany: [UserScalarWhereInput!]
-}
-
-input UserUpdateManyWithWhereWithoutClaimedRewardsInput {
-  where: UserScalarWhereInput!
-  data: UserUpdateManyMutationInput!
 }
 
 input UserUpdateManyWithWhereWithoutProgramsParticipationInput {
@@ -8549,6 +8848,7 @@ input UserUpdateWithoutAccountsInput {
   school: SchoolUpdateOneWithoutStudentsNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8573,6 +8873,7 @@ input UserUpdateWithoutAddressInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8597,31 +8898,7 @@ input UserUpdateWithoutCheckInsInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
-  programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
-}
-
-input UserUpdateWithoutClaimedRewardsInput {
-  firstName: StringFieldUpdateOperationsInput
-  lastName: NullableStringFieldUpdateOperationsInput
-  email: StringFieldUpdateOperationsInput
-  userRole: EnumUserRoleFieldUpdateOperationsInput
-  userType: EnumUserTypeFieldUpdateOperationsInput
-  avatarUrl: NullableStringFieldUpdateOperationsInput
-  whatsappNumber: StringFieldUpdateOperationsInput
-  password: StringFieldUpdateOperationsInput
-  status: EnumUserStatusFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-  deletedAt: NullableDateTimeFieldUpdateOperationsInput
-  theme: EnumThemeFieldUpdateOperationsInput
-  address: AddressUpdateOneRequiredWithoutUserNestedInput
-  referredBy: UserUpdateOneWithoutReferredUsersNestedInput
-  referredUsers: UserUpdateManyWithoutReferredByNestedInput
-  checkIns: CheckInUpdateManyWithoutUserNestedInput
-  school: SchoolUpdateOneWithoutStudentsNestedInput
-  accounts: AccountUpdateManyWithoutUserNestedInput
-  orders: OrderUpdateManyWithoutOrderByNestedInput
-  hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8647,6 +8924,7 @@ input UserUpdateWithoutFilesCreatedInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8671,6 +8949,7 @@ input UserUpdateWithoutHotelsCreatedInput {
   school: SchoolUpdateOneWithoutStudentsNestedInput
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8695,6 +8974,7 @@ input UserUpdateWithoutOrdersInput {
   school: SchoolUpdateOneWithoutStudentsNestedInput
   accounts: AccountUpdateManyWithoutUserNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8720,6 +9000,7 @@ input UserUpdateWithoutProgramsCreatedInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
 }
 
 input UserUpdateWithoutProgramsParticipationInput {
@@ -8744,6 +9025,7 @@ input UserUpdateWithoutProgramsParticipationInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8769,6 +9051,7 @@ input UserUpdateWithoutProjectsInvestmentInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8793,6 +9076,7 @@ input UserUpdateWithoutReferredByInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8817,6 +9101,7 @@ input UserUpdateWithoutReferredUsersInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -8842,12 +9127,8 @@ input UserUpdateWithoutUserNotificationsInput {
   accounts: AccountUpdateManyWithoutUserNestedInput
   orders: OrderUpdateManyWithoutOrderByNestedInput
   hotelsCreated: HotelUpdateManyWithoutCreatedByNestedInput
+  claimedRewards: RewardUpdateManyWithoutClaimersNestedInput
   programsCreated: ProgramUpdateManyWithoutCreatedByNestedInput
-}
-
-input UserUpdateWithWhereUniqueWithoutClaimedRewardsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutClaimedRewardsInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutProgramsParticipationInput {
@@ -8919,12 +9200,6 @@ input UserUpsertWithoutUserNotificationsInput {
   where: UserWhereInput
 }
 
-input UserUpsertWithWhereUniqueWithoutClaimedRewardsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutClaimedRewardsInput!
-  create: UserCreateWithoutClaimedRewardsInput!
-}
-
 input UserUpsertWithWhereUniqueWithoutProgramsParticipationInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutProgramsParticipationInput!
@@ -8970,6 +9245,7 @@ input UserWhereInput {
   accounts: AccountListRelationFilter
   orders: OrderListRelationFilter
   hotelsCreated: HotelListRelationFilter
+  claimedRewards: RewardListRelationFilter
   programsCreated: ProgramListRelationFilter
 }
 
@@ -9000,6 +9276,7 @@ input UserWhereUniqueInput {
   accounts: AccountListRelationFilter
   orders: OrderListRelationFilter
   hotelsCreated: HotelListRelationFilter
+  claimedRewards: RewardListRelationFilter
   programsCreated: ProgramListRelationFilter
 }
 

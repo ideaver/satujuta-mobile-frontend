@@ -51,6 +51,103 @@ class AppDialog {
     );
   }
 
+  static Future<void> showSuccessDialog(
+    NavigatorState navigator, {
+    String? title,
+    String? subtitle,
+  }) async {
+    showDialog(
+      context: navigator.context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AppDialogWidget(
+          child: Column(
+            children: [
+              const SizedBox(height: 22),
+              const Icon(
+                Icons.check_circle,
+                color: AppColors.greenLv1,
+                size: 72,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                title ?? 'Success',
+                textAlign: TextAlign.center,
+                style: AppTextStyle.extraBold(navigator.context, fontSize: 18),
+              ),
+              subtitle != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        subtitle,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.medium(navigator.context, fontSize: 12),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<void> showFailedDialog(
+    NavigatorState navigator, {
+    String? title,
+    String? subtitle,
+    String? error,
+  }) async {
+    showDialog(
+      context: navigator.context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AppDialogWidget(
+          child: Column(
+            children: [
+              const SizedBox(height: 22),
+              const Icon(
+                Icons.cancel,
+                color: AppColors.red,
+                size: 72,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                title ?? 'Failed',
+                textAlign: TextAlign.center,
+                style: AppTextStyle.extraBold(navigator.context, fontSize: 18),
+              ),
+              subtitle != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        subtitle,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.medium(navigator.context, fontSize: 12),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              error != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        error.toString().length > 35 ? error.toString().substring(0, 50) : error.toString(),
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.medium(
+                          navigator.context,
+                          fontSize: 12,
+                          color: AppColors.baseLv5,
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   static Future<void> showErrorDialog(
     NavigatorState navigator, {
     String? title,
@@ -188,7 +285,7 @@ class AppDialogWidget extends StatelessWidget {
             child: Text(
               title!,
               textAlign: TextAlign.center,
-              style: AppTextStyle.bold(context),
+              style: AppTextStyle.extraBold(context, fontSize: 18),
             ),
           )
         : const SizedBox.shrink();

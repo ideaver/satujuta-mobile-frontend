@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:satujuta_app_mobile/app/service/graphql/gql_error_parser.dart';
 import 'package:satujuta_app_mobile/app/service/graphql/gql_user_service.dart';
 
+import '../app/service/graphql/query/generated/user_find_many.graphql.dart';
 import '../app/service/graphql/query/generated/user_find_one.graphql.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/service/network_checker/network_checker_service.dart';
@@ -20,14 +22,33 @@ class UserViewModel extends ChangeNotifier {
     user = null;
   }
 
+  // TODO REMOVE DEV PURPOSE ONLY
+  Future<List<Query$UserFindMany$userFindMany>?> getAllUser() async {
+    var res = await GqlUserService.getAllUsers();
+
+    if (res.parsedData?.userFindMany != null && !res.hasException) {
+      cl(res.parsedData!.userFindMany?.length);
+      return res.parsedData!.userFindMany!;
+    } else {
+      cl('[getAllUser].error = ${gqlErrorParser(res)}');
+      return null;
+    }
+  }
+
   Future<void> getUser() async {
     // TODO LOGIN GET USER ID
-
     // TODO REMOVE DEV PURPOSE ONLY
-    var users = await GqlUserService.getAllUsers();
-    String userId = users?.first.id ?? "c5e4f2db-080b-41ba-8df8-033c19fe55c6";
+    var users = await getAllUser();
+    String userId = users?.first.id ?? "8a976aa9-2007-45ef-9b0a-d8545b81ebc6";
 
-    user = await GqlUserService.getUserById(userId);
+    var res = await GqlUserService.getUserById(userId);
+
+    if (res.parsedData?.userFindOne != null && !res.hasException) {
+      user = res.parsedData!.userFindOne;
+    } else {
+      cl('[getUser].error = ${gqlErrorParser(res)}');
+      return;
+    }
 
     cl(user?.toJson());
 

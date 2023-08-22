@@ -23,27 +23,27 @@ class _SettingsPasswordState extends State<SettingsPassword> {
         child: AppTextFieldsWrapper(
           textFields: [
             AppTextField(
+              type: AppTextFieldType.password,
               suffixIcon: Image.asset(
                 AppAssets.passwordIconPath,
               ),
-              obscureText: true,
               lableText: 'Password Lama',
             ),
             AppTextField(
+              type: AppTextFieldType.password,
               suffixIcon: Image.asset(
                 AppAssets.passwordIconPath,
               ),
-              obscureText: true,
               lableText: 'Password Baru',
             ),
             AppTextField(
               onTap: () {
                 // TODO
               },
+              type: AppTextFieldType.password,
               suffixIcon: Image.asset(
                 AppAssets.successIconPath,
               ),
-              obscureText: true,
               lableText: 'Ulangi Password',
             ),
           ],

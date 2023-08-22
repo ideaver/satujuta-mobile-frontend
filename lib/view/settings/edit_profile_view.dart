@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import 'component/edit_profile_account.dart';
 import 'component/edit_profile_biodata.dart';
@@ -23,13 +26,45 @@ class EditProfileView extends StatefulWidget {
 }
 
 class _EditProfileViewState extends State<EditProfileView> with TickerProviderStateMixin {
+  final _editProfileViewModel = locator<EditProfileViewModel>();
+
   late TabController tabController;
 
   @override
   void initState() {
-    super.initState();
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(tabListener);
+
+    _editProfileViewModel.firstName = TextEditingController();
+    _editProfileViewModel.lastName = TextEditingController();
+    _editProfileViewModel.addressName = TextEditingController();
+    _editProfileViewModel.postalCode = TextEditingController();
+    _editProfileViewModel.whatsappNumber = TextEditingController();
+    _editProfileViewModel.email = TextEditingController();
+    _editProfileViewModel.password = TextEditingController();
+    _editProfileViewModel.confirmPassword = TextEditingController();
+    _editProfileViewModel.referralCode = TextEditingController();
+    _editProfileViewModel.bank = TextEditingController();
+    _editProfileViewModel.bankAccountNumber = TextEditingController();
+
+    _editProfileViewModel.initEditProfileView();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _editProfileViewModel.firstName.dispose();
+    _editProfileViewModel.lastName.dispose();
+    _editProfileViewModel.addressName.dispose();
+    _editProfileViewModel.postalCode.dispose();
+    _editProfileViewModel.whatsappNumber.dispose();
+    _editProfileViewModel.email.dispose();
+    _editProfileViewModel.password.dispose();
+    _editProfileViewModel.confirmPassword.dispose();
+    _editProfileViewModel.referralCode.dispose();
+    _editProfileViewModel.bank.dispose();
+    _editProfileViewModel.bankAccountNumber.dispose();
+    super.dispose();
   }
 
   void tabListener() {
@@ -38,12 +73,6 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.baseLv7,
-      ),
-    );
-
     return Scaffold(
       backgroundColor: AppColors.white,
       body: NestedScrollView(
@@ -103,15 +132,19 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
   }
 
   Widget body() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
-      child: Column(
-        children: [
-          userPhoto(),
-          tabBar(),
-          tabBarViews(),
-        ],
-      ),
+    return Consumer<EditProfileViewModel>(
+      builder: (context, model, _) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
+          child: Column(
+            children: [
+              userPhoto(model),
+              tabBar(),
+              tabBarViews(model),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -127,7 +160,7 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
     );
   }
 
-  Widget userPhoto() {
+  Widget userPhoto(EditProfileViewModel model) {
     return Column(
       children: [
         const SizedBox(height: AppSizes.padding),
@@ -144,14 +177,17 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
           child: Center(
             child: Stack(
               children: [
-                ClipOval(
-                  child: SizedBox(
-                      width: 150,
-                      height: 150,
-                      child: Image(
-                          image: AssetImage(
-                        AppAssets.userImage1Path,
-                      ))),
+                AppImage(
+                  image: model.user?.avatarUrl ?? '',
+                  width: 150,
+                  height: 150,
+                  borderRadius: 100,
+                  backgroundColor: AppColors.baseLv7,
+                  errorWidget: const Icon(
+                    Icons.person_rounded,
+                    size: 82,
+                    color: AppColors.baseLv4,
+                  ),
                 ),
                 Positioned(
                   bottom: 0,
@@ -264,80 +300,60 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
     );
   }
 
-  Widget tabBarViews() {
-    return AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: tabController.index == 0
-            ? wrapEditBiodata()
-            : tabController.index == 1
-                ? wrapEditAccount()
-                : wrapEditCommision());
+  Widget tabBarViews(EditProfileViewModel model) {
+    return Column(
+      children: [
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: tabController.index == 0
+              ? wrapEditBiodata()
+              : tabController.index == 1
+                  ? wrapEditAccount()
+                  : wrapEditCommision(),
+        ),
+        updateButton(model),
+      ],
+    );
   }
 
   Widget wrapEditBiodata() {
-    return Column(
-      children: [
-        const EditProfileBiodata(
-          name: 'Agus Susanto',
-          address: 'jln ambarawa no 1 Semarang',
-          city: 'Surabaya',
-          posCode: '60241',
-          noWa: '+62908327587',
-          email: 'Agus@gmail.com',
-        ),
-        changeButton(
-          'Simpan Perubahan',
-          () {
-            // TO DO
-          },
-        ),
-      ],
+    return const EditProfileBiodata(
+      name: 'Agus Susanto',
+      address: 'jln ambarawa no 1 Semarang',
+      city: 'Surabaya',
+      posCode: '60241',
+      noWa: '+62908327587',
+      email: 'Agus@gmail.com',
     );
   }
 
   Widget wrapEditAccount() {
-    return Column(
-      children: [
-        const EditProfileAccount(
-          noWa: '+62908327587',
-          email: 'Agususanto@gmail.com',
-        ),
-        changeButton(
-          'Simpan Perubahan',
-          () {
-            // TO DO
-          },
-        ),
-      ],
+    return const EditProfileAccount(
+      noWa: '+62908327587',
+      email: 'Agususanto@gmail.com',
     );
   }
 
   Widget wrapEditCommision() {
-    return Column(
-      children: [
-        EditProfileCommission(
-          codeRef: '#123513UHD',
-          noRek: '1234 5678 9101',
-        ),
-        changeButton(
-          'Simpan Perubahan',
-          () {
-            // TO DO
-          },
-        ),
-      ],
+    return const EditProfileCommission(
+      codeRef: '#123513UHD',
+      noRek: '1234 5678 9101',
     );
   }
 
-  Widget changeButton(String text, dynamic functionButton) {
+  Widget updateButton(EditProfileViewModel model) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: AppSizes.padding / 2,
         bottom: AppSizes.padding * 2,
       ),
-      child: AppButton(text: text, onTap: functionButton),
+      child: AppButton(
+        text: "Simpan Perubahan",
+        onTap: () {
+          final navigator = Navigator.of(context);
+          model.updateProfile(navigator);
+        },
+      ),
     );
   }
-
-  // ===
 }

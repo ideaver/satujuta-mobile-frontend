@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:satujuta_app_mobile/app/service/graphql/gql_error_parser.dart';
 import 'package:satujuta_app_mobile/app/service/graphql/gql_user_service.dart';
 
 import '../app/service/graphql/graphql_service.dart';
@@ -37,21 +38,26 @@ class MemberListViewModel extends ChangeNotifier {
       return;
     }
 
-    userMembers = await GqlUserService.getAllUserMembers(
+    var res = await GqlUserService.getAllUserMembers(
       userViewModel.user!.id,
       skip: loadmore ? skip : null,
     );
 
-    if (userMembers != null && userMembers!.isNotEmpty) {
-      skip = userMembers!.length - 1;
-      userMembersActive = userMembers!.where((e) => e.status == Enum$UserStatus.ACTIVE).toList();
-      userMembersInactive = userMembers!.where((e) => e.status != Enum$UserStatus.INACTIVE).toList();
+    if (res.parsedData != null && !res.hasException) {
+      userMembers = res.parsedData?.userFindMany;
+
+      if (userMembers != null && userMembers!.isNotEmpty) {
+        skip = userMembers!.length - 1;
+        userMembersActive = userMembers!.where((e) => e.status == Enum$UserStatus.ACTIVE).toList();
+        userMembersInactive = userMembers!.where((e) => e.status != Enum$UserStatus.INACTIVE).toList();
+      }
+
+      cl('[getAllUserMembers].userMembersActive = ${userMembersActive?.length}');
+
+      notifyListeners();
+    } else {
+      cl('[getAllUserMembers].error = ${gqlErrorParser(res)}');
     }
-
-    cl('[getAllUserMembers].userMembersActive = ${userMembersActive?.length}');
-    cl('[getAllUserMembers].userMembers?.first = ${userMembers?.first.status}');
-
-    notifyListeners();
   }
 
   int calculateMemberPoint(List<Query$UserFindMany$userFindMany$PointTransactions>? pointTransactions) {

@@ -1,0 +1,48 @@
+query HotelFindMany($hotelFindManyArgs: HotelFindManyArgs!) {
+  hotelFindMany(hotelFindManyArgs: $hotelFindManyArgs) {
+    id
+    name
+    address {
+      id
+      name
+      city {
+        name
+      }
+      district {
+        name
+      }
+      # postalCode {
+      #   code
+      # }
+    }
+    description
+    rating
+    startDate
+    quota
+    createdBy {
+      id
+      firstName
+      lastName
+      email
+      avatarUrl
+    }
+    createdAt
+    updatedAt
+    images {
+      url
+    }
+    _count {
+      checkIns
+    }
+    # checkIns {
+    #   user {
+    #     id
+    #     firstName
+    #     lastName
+    #     avatarUrl
+    #   }
+    #   checkInAt
+    #   createdAt
+    # }
+  }
+}

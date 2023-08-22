@@ -1,0 +1,18 @@
+mutation UserUpdateOne($userUpdateOneArgs: UserUpdateOneArgs!) {
+  userUpdateOne(userUpdateOneArgs: $userUpdateOneArgs) {
+    id
+    firstName
+    lastName
+    email
+    userRole
+    userType
+    avatarUrl
+    whatsappNumber
+    referralCode
+    status
+    schoolId
+    createdAt
+    updatedAt
+    theme
+  }
+}

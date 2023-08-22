@@ -24,9 +24,9 @@ query HotelFindOne($hotelFindUniqueArgs: HotelFindUniqueArgs!) {
       district {
         name
       }
-      postalCode {
-        code
-      }
+      # postalCode {
+      #   code
+      # }
     }
     checkIns {
       user {

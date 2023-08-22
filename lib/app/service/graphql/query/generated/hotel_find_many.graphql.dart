@@ -370,28 +370,6 @@ const documentNodeQueryHotelFindMany = DocumentNode(definitions: [
                 ]),
               ),
               FieldNode(
-                name: NameNode(value: 'postalCode'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'code'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -1119,7 +1097,6 @@ class Query$HotelFindMany$hotelFindMany$address {
     required this.name,
     required this.city,
     required this.district,
-    required this.postalCode,
     this.$__typename = 'Address',
   });
 
@@ -1129,7 +1106,6 @@ class Query$HotelFindMany$hotelFindMany$address {
     final l$name = json['name'];
     final l$city = json['city'];
     final l$district = json['district'];
-    final l$postalCode = json['postalCode'];
     final l$$__typename = json['__typename'];
     return Query$HotelFindMany$hotelFindMany$address(
       id: (l$id as int),
@@ -1138,8 +1114,6 @@ class Query$HotelFindMany$hotelFindMany$address {
           (l$city as Map<String, dynamic>)),
       district: Query$HotelFindMany$hotelFindMany$address$district.fromJson(
           (l$district as Map<String, dynamic>)),
-      postalCode: Query$HotelFindMany$hotelFindMany$address$postalCode.fromJson(
-          (l$postalCode as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
@@ -1151,8 +1125,6 @@ class Query$HotelFindMany$hotelFindMany$address {
   final Query$HotelFindMany$hotelFindMany$address$city city;
 
   final Query$HotelFindMany$hotelFindMany$address$district district;
-
-  final Query$HotelFindMany$hotelFindMany$address$postalCode postalCode;
 
   final String $__typename;
 
@@ -1166,8 +1138,6 @@ class Query$HotelFindMany$hotelFindMany$address {
     _resultData['city'] = l$city.toJson();
     final l$district = district;
     _resultData['district'] = l$district.toJson();
-    final l$postalCode = postalCode;
-    _resultData['postalCode'] = l$postalCode.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1179,14 +1149,12 @@ class Query$HotelFindMany$hotelFindMany$address {
     final l$name = name;
     final l$city = city;
     final l$district = district;
-    final l$postalCode = postalCode;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$city,
       l$district,
-      l$postalCode,
       l$$__typename,
     ]);
   }
@@ -1218,11 +1186,6 @@ class Query$HotelFindMany$hotelFindMany$address {
     final l$district = district;
     final lOther$district = other.district;
     if (l$district != lOther$district) {
-      return false;
-    }
-    final l$postalCode = postalCode;
-    final lOther$postalCode = other.postalCode;
-    if (l$postalCode != lOther$postalCode) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1258,14 +1221,11 @@ abstract class CopyWith$Query$HotelFindMany$hotelFindMany$address<TRes> {
     String? name,
     Query$HotelFindMany$hotelFindMany$address$city? city,
     Query$HotelFindMany$hotelFindMany$address$district? district,
-    Query$HotelFindMany$hotelFindMany$address$postalCode? postalCode,
     String? $__typename,
   });
   CopyWith$Query$HotelFindMany$hotelFindMany$address$city<TRes> get city;
   CopyWith$Query$HotelFindMany$hotelFindMany$address$district<TRes>
       get district;
-  CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<TRes>
-      get postalCode;
 }
 
 class _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
@@ -1286,7 +1246,6 @@ class _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
     Object? name = _undefined,
     Object? city = _undefined,
     Object? district = _undefined,
-    Object? postalCode = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$HotelFindMany$hotelFindMany$address(
@@ -1300,10 +1259,6 @@ class _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
         district: district == _undefined || district == null
             ? _instance.district
             : (district as Query$HotelFindMany$hotelFindMany$address$district),
-        postalCode: postalCode == _undefined || postalCode == null
-            ? _instance.postalCode
-            : (postalCode
-                as Query$HotelFindMany$hotelFindMany$address$postalCode),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1320,13 +1275,6 @@ class _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
     return CopyWith$Query$HotelFindMany$hotelFindMany$address$district(
         local$district, (e) => call(district: e));
   }
-
-  CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<TRes>
-      get postalCode {
-    final local$postalCode = _instance.postalCode;
-    return CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode(
-        local$postalCode, (e) => call(postalCode: e));
-  }
 }
 
 class _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
@@ -1340,7 +1288,6 @@ class _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
     String? name,
     Query$HotelFindMany$hotelFindMany$address$city? city,
     Query$HotelFindMany$hotelFindMany$address$district? district,
-    Query$HotelFindMany$hotelFindMany$address$postalCode? postalCode,
     String? $__typename,
   }) =>
       _res;
@@ -1349,10 +1296,6 @@ class _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address<TRes>
   CopyWith$Query$HotelFindMany$hotelFindMany$address$district<TRes>
       get district =>
           CopyWith$Query$HotelFindMany$hotelFindMany$address$district.stub(
-              _res);
-  CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<TRes>
-      get postalCode =>
-          CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode.stub(
               _res);
 }
 
@@ -1612,140 +1555,6 @@ class _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address$district<TRes>
 
   call({
     String? name,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$HotelFindMany$hotelFindMany$address$postalCode {
-  Query$HotelFindMany$hotelFindMany$address$postalCode({
-    required this.code,
-    this.$__typename = 'PostalCode',
-  });
-
-  factory Query$HotelFindMany$hotelFindMany$address$postalCode.fromJson(
-      Map<String, dynamic> json) {
-    final l$code = json['code'];
-    final l$$__typename = json['__typename'];
-    return Query$HotelFindMany$hotelFindMany$address$postalCode(
-      code: (l$code as int),
-      $__typename: (l$$__typename as String),
-    );
-  }
-
-  final int code;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$code = code;
-    _resultData['code'] = l$code;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$code = code;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$code,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$HotelFindMany$hotelFindMany$address$postalCode) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$code = code;
-    final lOther$code = other.code;
-    if (l$code != lOther$code) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$HotelFindMany$hotelFindMany$address$postalCode
-    on Query$HotelFindMany$hotelFindMany$address$postalCode {
-  CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<
-          Query$HotelFindMany$hotelFindMany$address$postalCode>
-      get copyWith =>
-          CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<
-    TRes> {
-  factory CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode(
-    Query$HotelFindMany$hotelFindMany$address$postalCode instance,
-    TRes Function(Query$HotelFindMany$hotelFindMany$address$postalCode) then,
-  ) = _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address$postalCode;
-
-  factory CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address$postalCode;
-
-  TRes call({
-    int? code,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address$postalCode<TRes>
-    implements
-        CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<TRes> {
-  _CopyWithImpl$Query$HotelFindMany$hotelFindMany$address$postalCode(
-    this._instance,
-    this._then,
-  );
-
-  final Query$HotelFindMany$hotelFindMany$address$postalCode _instance;
-
-  final TRes Function(Query$HotelFindMany$hotelFindMany$address$postalCode)
-      _then;
-
-  static const _undefined = <dynamic, dynamic>{};
-
-  TRes call({
-    Object? code = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$HotelFindMany$hotelFindMany$address$postalCode(
-        code:
-            code == _undefined || code == null ? _instance.code : (code as int),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address$postalCode<
-        TRes>
-    implements
-        CopyWith$Query$HotelFindMany$hotelFindMany$address$postalCode<TRes> {
-  _CopyWithStubImpl$Query$HotelFindMany$hotelFindMany$address$postalCode(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? code,
     String? $__typename,
   }) =>
       _res;

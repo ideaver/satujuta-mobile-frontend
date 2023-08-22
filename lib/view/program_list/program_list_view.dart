@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/utility/duration_formatter.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
@@ -71,6 +72,9 @@ class _ProgramListViewState extends State<ProgramListView> {
         expandedTitleScale: 1.5,
       ),
       bottom: tabBar(),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.baseLv7,
+      ),
     );
   }
 
@@ -256,7 +260,7 @@ class _ProgramListViewState extends State<ProgramListView> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
           const SizedBox(height: AppSizes.padding),

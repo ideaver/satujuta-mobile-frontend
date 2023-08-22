@@ -1,0 +1,7 @@
+query SchoolFindMany($schoolFindManyArgs: SchoolFindManyArgs!) {
+  schoolFindMany(schoolFindManyArgs: $schoolFindManyArgs) {
+    id
+    name
+    addressId
+  }
+}

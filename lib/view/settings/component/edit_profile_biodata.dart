@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../app/asset/app_icons.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
@@ -8,10 +9,11 @@ import '../../../../widget/atom/app_button.dart';
 import '../../../../widget/atom/app_modal.dart';
 import '../../../../widget/atom/app_text_field.dart';
 import '../../../../widget/atom/app_text_fields_wrapper.dart';
+import '../../../view_model/edit_profile_view_model.dart';
 
 class EditProfileBiodata extends StatefulWidget {
   const EditProfileBiodata({
-    Key? key,
+    super.key,
     this.name,
     this.address,
     this.city,
@@ -35,88 +37,110 @@ class EditProfileBiodata extends StatefulWidget {
 class _EditProfileBiodataState extends State<EditProfileBiodata> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
-      child: Container(
-        color: AppColors.white,
-        child: AppTextFieldsWrapper(
-          textFields: [
-            AppTextField(
-              suffixIcon: Icon(
-                Icons.person_outline_rounded,
-              ),
-              lableText: 'Nama Lengkap',
-              hintText: widget.name,
+    return Consumer<EditProfileViewModel>(
+      builder: (context, model, _) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
+          child: Container(
+            color: AppColors.white,
+            child: AppTextFieldsWrapper(
+              textFields: [
+                AppTextField(
+                  controller: model.firstName,
+                  suffixIcon: const Icon(
+                    CupertinoIcons.person,
+                  ),
+                  lableText: 'Nama Depan',
+                  hintText: widget.name,
+                ),
+                AppTextField(
+                  controller: model.lastName,
+                  suffixIcon: const Icon(
+                    CupertinoIcons.person,
+                  ),
+                  lableText: 'Nama Belakang',
+                  hintText: widget.name,
+                ),
+                AppTextField(
+                  controller: model.addressName,
+                  suffixIcon: Icon(
+                    Icons.location_on_outlined,
+                  ),
+                  lableText: 'Alamat',
+                  hintText: widget.address,
+                ),
+                AppTextField(
+                  enabled: false,
+                  onTap: () {
+                    AppModal.show(
+                      context: context,
+                      title: 'Provinsi',
+                      child: cityList(),
+                    );
+                  },
+                  suffixIcon: const Icon(
+                    Icons.keyboard_arrow_down,
+                  ),
+                  lableText: 'Provinsi',
+                  hintText: widget.city,
+                ),
+                AppTextField(
+                  enabled: false,
+                  onTap: () {
+                    AppModal.show(
+                      context: context,
+                      title: 'Kota',
+                      child: cityList(),
+                    );
+                  },
+                  suffixIcon: const Icon(
+                    Icons.keyboard_arrow_down,
+                  ),
+                  lableText: 'Kota',
+                  hintText: widget.city,
+                ),
+                AppTextField(
+                  enabled: false,
+                  onTap: () {
+                    AppModal.show(
+                      context: context,
+                      title: 'Kecamatan',
+                      child: districtList(),
+                    );
+                  },
+                  suffixIcon: const Icon(
+                    Icons.keyboard_arrow_down,
+                  ),
+                  lableText: 'Kecamatan',
+                ),
+                AppTextField(
+                  enabled: false,
+                  onTap: () {
+                    AppModal.show(
+                      context: context,
+                      title: 'Kelurahan',
+                      child: districtList(),
+                    );
+                  },
+                  suffixIcon: const Icon(
+                    Icons.keyboard_arrow_down,
+                  ),
+                  lableText: 'Kelurahan',
+                ),
+                AppTextField(
+                  enabled: false,
+                  controller: model.postalCode,
+                  suffixIcon: const Icon(
+                    CupertinoIcons.mail,
+                  ),
+                  lableText: 'Kode Pos',
+                  hintText: widget.posCode,
+                ),
+              ],
             ),
-            AppTextField(
-              suffixIcon: Icon(
-                Icons.location_on_outlined,
-              ),
-              lableText: 'Alamat',
-              hintText: widget.address,
-            ),
-            AppTextField(
-              enabled: false,
-              onTap: () {
-                AppModal.show(
-                  context: context,
-                  title: 'Kota',
-                  child: cityList(),
-                );
-              },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
-              ),
-              lableText: 'Kota',
-              hintText: widget.city,
-            ),
-            AppTextField(
-              enabled: false,
-              onTap: () {
-                AppModal.show(
-                  context: context,
-                  title: 'Kecamatan',
-                  child: districtList(),
-                );
-              },
-              suffixIcon: const Icon(
-                Icons.keyboard_arrow_down,
-              ),
-              lableText: 'Kecamatan',
-            ),
-            AppTextField(
-              onTap: () {
-                // TODO
-              },
-              suffixIcon: const Icon(
-                Icons.mail_outline_rounded,
-              ),
-              lableText: 'Kode Pos',
-              hintText: widget.posCode,
-            ),
-            AppTextField(
-              onTap: () {
-                // TODO
-              },
-              suffixIcon: const Icon(
-                CustomIcon.contact_icon,
-              ),
-              lableText: 'No. Whatsapp',
-              hintText: widget.noWa,
-            ),
-            AppTextField(
-              onTap: () {
-                // TODO
-              },
-              suffixIcon: const Icon(
-                Icons.mail_outline_rounded,
-              ),
-              lableText: 'Email',
-              hintText: widget.email,
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -196,7 +220,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
           ),
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 5,
+            itemCount: 0,
             itemBuilder: (context, i) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 6),
@@ -263,7 +287,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
           ),
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 5,
+            itemCount: 0,
             itemBuilder: (context, i) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 6),

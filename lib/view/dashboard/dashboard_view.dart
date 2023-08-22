@@ -3,10 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/currency_formatter.dart';
-import 'package:satujuta_app_mobile/view_model/member_list_view_model.dart';
-import 'package:satujuta_app_mobile/view_model/program_list_view_model.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -20,8 +16,12 @@ import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_text_field.dart';
 import '../../app/service/graphql/query/generated/user_find_many.graphql.dart';
+import '../../app/utility/currency_formatter.dart';
+import '../../view_model/member_list_view_model.dart';
+import '../../view_model/program_list_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_progress_indicator.dart';
 import '../referral/referral_detail_view.dart';
 import '../student/student_registration_view.dart';
 
@@ -101,6 +101,9 @@ class _DashboardViewState extends State<DashboardView> {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: AppColors.baseLv7,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.baseLv7,
+      ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -110,12 +113,16 @@ class _DashboardViewState extends State<DashboardView> {
             },
             child: Row(
               children: [
-                ClipOval(
-                  child: AppImage(
-                    image: userViewModel.user?.avatarUrl ?? '',
-                    width: 32,
-                    height: 32,
+                AppImage(
+                  image: userViewModel.user?.avatarUrl ?? '',
+                  width: 32,
+                  height: 32,
+                  errorWidget: const Icon(
+                    Icons.person_rounded,
+                    color: AppColors.baseLv4,
                   ),
+                  borderRadius: 100,
+                  backgroundColor: AppColors.baseLv6,
                 ),
                 const SizedBox(width: AppSizes.padding / 2),
                 Text(

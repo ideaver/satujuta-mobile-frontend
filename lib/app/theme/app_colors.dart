@@ -57,15 +57,25 @@ class AppColors {
   static const Color baseLv8 = Color(0xFFFCFCFD);
 
   // Primary subcolors
-  // static const Color primaryLv2 = Color(0xFF23262F);
-  // static const Color primaryLv3 = Color(0xFF353945);
-  // static const Color primaryLv4 = Color(0xFFB1B5C3);
-  // static const Color primaryLv5 = Color(0xFFB1B5C3);
-  // static const Color primaryLv6 = Color(0xFFE6E8EC);
-  // static const Color primaryLv7 = Color(0xFFF4F5F6);
-  // static const Color primaryLv8 = Color(0xFFFCFCFD);
+  static const Color primaryLv2 = Color(0xFF23262F);
+  static const Color primaryLv3 = Color(0xFF353945);
+  static const Color primaryLv4 = Color(0xFFB1B5C3);
+  static const Color primaryLv5 = Color(0xFFB1B5C3);
+  static const Color primaryLv6 = Color(0xFFE6E8EC);
+  static const Color primaryLv7 = Color(0xFFF4F5F6);
+  static const Color primaryLv8 = Color(0xFFFCFCFD);
 
+  // Tangerine
   static const Color tangerine = Color(0xFFfd9f34);
+
+  // Green
+  static const Color greenLv1 = Color(0xFF07BD74);
+  static const Color greenLv2 = Color(0xFF28C687);
+  static const Color greenLv3 = Color(0xFF49CF99);
+  static const Color greenLv4 = Color(0xFF6AD7AC);
+  static const Color greenLv5 = Color(0xFF8BE0BE);
+  static const Color greenLv6 = Color(0xFFACE9D1);
+  static const Color greenLv7 = Color(0xFFCDF2E3);
 
   // Gradient Text
   static const Color darkBlue = Color(0xFF0500FF);

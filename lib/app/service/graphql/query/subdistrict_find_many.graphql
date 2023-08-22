@@ -1,0 +1,7 @@
+query SubdistrictFindMany($subdistrictFindManyArgs: SubdistrictFindManyArgs!) {
+  subdistrictFindMany(subdistrictFindManyArgs: $subdistrictFindManyArgs) {
+    id
+    name
+    postalCode
+  }
+}

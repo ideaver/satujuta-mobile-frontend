@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 
+import '../../../view_model/address_view_model.dart';
+import '../../../view_model/edit_profile_view_model.dart';
 import '../../../view_model/login_view_model.dart';
 import '../../../view_model/main_view_model.dart';
 import '../../../view_model/member_list_view_model.dart';
@@ -16,7 +18,9 @@ void setupServiceLocator() {
   locator.registerLazySingleton(() => NetworkCheckerService());
   locator.registerLazySingleton(() => MainViewModel());
   locator.registerLazySingleton(() => UserViewModel());
+  locator.registerLazySingleton(() => EditProfileViewModel());
   locator.registerLazySingleton(() => ProgramListViewModel());
   locator.registerLazySingleton(() => MemberListViewModel());
   locator.registerFactory(() => LoginViewModel());
+  locator.registerFactory(() => AddressViewModel());
 }

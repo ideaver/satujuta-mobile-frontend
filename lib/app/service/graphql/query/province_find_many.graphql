@@ -1,0 +1,6 @@
+query ProvinceFindMany($provinceFindManyArgs: ProvinceFindManyArgs!) {
+  provinceFindMany(provinceFindManyArgs: $provinceFindManyArgs) {
+    id
+    name
+  }
+}
