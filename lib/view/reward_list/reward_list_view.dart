@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
+import 'package:flutter/services.dart';
 
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-import '../../app/widget/app_button.dart';
-import '../../app/widget/app_image.dart';
-import '../../app/widget/app_not_found_widget.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_not_found_widget.dart';
 
 class RewardListView extends StatefulWidget {
   const RewardListView({Key? key}) : super(key: key);
@@ -52,6 +53,9 @@ class _RewardListViewState extends State<RewardListView> {
         expandedTitleScale: 1.5,
       ),
       bottom: tabBar(),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.baseLv7,
+      ),
     );
   }
 
@@ -166,8 +170,7 @@ class _RewardListViewState extends State<RewardListView> {
     if (selectedCategory == 0) {
       return const AppNotFoundWidget(
         title: 'Maaf, Belum Ada Reward Tersedia Untuk Kamu',
-        subtitle:
-            'Kamu bisa kumpulkan banyak poin untuk mendapatkan hadiah yang menarik',
+        subtitle: 'Kamu bisa kumpulkan banyak poin untuk mendapatkan hadiah yang menarik',
       );
     }
 

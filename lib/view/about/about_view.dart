@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/const/app_sizes.dart';
-import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
-import 'package:satujuta_app_mobile/app/widget/app_button.dart';
-import 'package:satujuta_app_mobile/app/widget/my_icon_button.dart';
 
-import '../../app/const/app_assets.dart';
-import '../../app/theme/app_colors.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../widget/atom/app_icon_button.dart';
 
 class AboutView extends StatefulWidget {
   const AboutView({super.key});
@@ -23,17 +23,15 @@ class _AboutViewState extends State<AboutView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
-        leading: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: AppIconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icons.arrow_back_rounded,
-              iconColor: AppColors.base,
-              backgroundColor: Colors.white,
-            ),
+        leading: Padding(
+          padding: const EdgeInsets.all(8),
+          child: AppIconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icons.arrow_back_rounded,
+            iconColor: AppColors.base,
+            backgroundColor: Colors.white,
           ),
         ),
       ),
@@ -74,7 +72,7 @@ class _AboutViewState extends State<AboutView> {
                           color: AppColors.white,
                         ),
                       ),
-                      SizedBox(height: AppSizes.height),
+                      const SizedBox(height: AppSizes.height),
                       Text(
                         'Last Updated 21/03/2023',
                         style: AppTextStyle.regular(
@@ -83,7 +81,7 @@ class _AboutViewState extends State<AboutView> {
                           color: AppColors.white,
                         ),
                       ),
-                      SizedBox(height: AppSizes.height),
+                      const SizedBox(height: AppSizes.height),
                       AppButton(
                         width: 200,
                         text: 'Update Sekarang',
@@ -94,12 +92,12 @@ class _AboutViewState extends State<AboutView> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: AppSizes.padding * 2,
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: AppSizes.padding),
-                    padding: EdgeInsets.all(
+                    margin: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
+                    padding: const EdgeInsets.all(
                       AppSizes.padding,
                     ),
                     decoration: BoxDecoration(
@@ -114,7 +112,7 @@ class _AboutViewState extends State<AboutView> {
                           AppAssets.shortLogoPath,
                           scale: 3,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: AppSizes.padding,
                         ),
                         Column(
@@ -128,7 +126,7 @@ class _AboutViewState extends State<AboutView> {
                                 color: AppColors.white,
                               ),
                             ),
-                            SizedBox(height: AppSizes.height / 2),
+                            const SizedBox(height: AppSizes.height / 2),
                             Text(
                               'v2 1.0 (12345)',
                               style: AppTextStyle.regular(
@@ -142,12 +140,12 @@ class _AboutViewState extends State<AboutView> {
                       ],
                     ),
                   ),
-                  SizedBox(height: AppSizes.padding * 4),
+                  const SizedBox(height: AppSizes.padding * 4),
                   Image.asset(
                     AppAssets.emojiHappyIlus2Path,
                     scale: 3,
                   ),
-                  SizedBox(height: AppSizes.padding * 6),
+                  const SizedBox(height: AppSizes.padding * 6),
                   Text(
                     'Build With Love By\nWWW.DSAAGROUP.COM',
                     textAlign: TextAlign.center,
@@ -157,7 +155,7 @@ class _AboutViewState extends State<AboutView> {
                       color: AppColors.white,
                     ),
                   ),
-                  SizedBox(height: AppSizes.padding * 6),
+                  const SizedBox(height: AppSizes.padding * 6),
                   AppButton(
                     text: 'Visit Developer',
                     onTap: () {},

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/widget/app_button.dart';
-import 'package:satujuta_app_mobile/app/widget/app_image.dart';
-import 'package:satujuta_app_mobile/app/widget/app_not_found_widget.dart';
-import 'package:satujuta_app_mobile/view/student/student_registration_view.dart';
 
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_not_found_widget.dart';
+import '../student/student_registration_view.dart';
 
 class StudentHotelPickerView extends StatefulWidget {
   const StudentHotelPickerView({Key? key}) : super(key: key);

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/const/app_assets.dart';
-import 'package:satujuta_app_mobile/app/theme/app_colors.dart';
-import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
-import 'package:satujuta_app_mobile/view/register/components/reg_commission.dart';
 
-import '../../app/const/app_consts.dart';
-import '../../app/const/app_sizes.dart';
-import '../../app/widget/app_button.dart';
-import '../../app/widget/app_expansion_list_tile.dart';
-import '../../app/widget/my_custom_text.dart';
-import '../../app/widget/my_icon_button.dart';
-import '../../app/widget/my_separated.dart';
-import '../molecules/referral_Invitation/circle_user.dart';
-import '../molecules/referral_Invitation/my_invite_button.dart';
-import '../molecules/referral_Invitation/my_text_line.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/asset/app_icons.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../app/const/app_consts.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_expansion_list_tile.dart';
+import '../../widget/atom/app_custom_text.dart';
+import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_separated.dart';
+import '../../widget/molecule/referral_Invitation/circle_user.dart';
+import '../../widget/molecule/referral_Invitation/ref_invite_button.dart';
+import '../../widget/molecule/referral_Invitation/ref_text_line.dart';
+import '../register/components/reg_commission.dart';
 
 class ReferralDetailView extends StatefulWidget {
   final PageStateEnum pageState;
@@ -218,13 +219,13 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
             AppSizes.radius * 2,
           )),
       child: Container(
-        margin: EdgeInsets.all(AppSizes.padding),
+        margin: const EdgeInsets.all(AppSizes.padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               child: Container(
-                padding: EdgeInsets.all(AppSizes.padding / 2),
+                padding: const EdgeInsets.all(AppSizes.padding / 2),
                 decoration: BoxDecoration(
                     color: AppColors.baseLv7,
                     borderRadius: BorderRadius.circular(
@@ -245,14 +246,14 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
                               color: AppColors.base,
                             ),
                           ),
-                          SizedBox(width: 4),
-                          Icon(
+                          const SizedBox(width: 4),
+                          const Icon(
                             CustomIcon.copy_document,
                             color: AppColors.primary,
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       Text(
@@ -264,7 +265,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: AppSizes.padding / 1.5,
             ),
             Text(
@@ -302,23 +303,23 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
         child: Container(
           child: Column(
             children: [
-              MyTextLine(
-                title: MyCustomText(
+              RefTextLine(
+                title: AppCustomText(
                   text: 'Undang Teman Anda',
                   style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
                 ),
                 gap: 8,
-                subTitle: MyCustomText(
+                subTitle: AppCustomText(
                   text: 'Lorem ipsum dolor sit amet, consectetur',
                   style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
                 ),
               ),
-              MySeparated(sizeWidth: 0, sizeHeight: 8),
+              const AppSeparated(sizeWidth: 0, sizeHeight: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
-                child: MyInviteButton(
+                child: RefInviteButton(
                   functionButton: () {},
-                  leadingButton: CircleUser(
+                  leadingButton: const CircleUser(
                     imageFriend1: AppAssets.userImage1Path,
                     imageFriend2: AppAssets.userImage2Path,
                     imageFriend3: AppAssets.userImage3Path,
@@ -336,7 +337,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
 
   Widget tabBar() {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         top: AppSizes.padding,
         bottom: AppSizes.padding * 1.5,
       ),
@@ -425,7 +426,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
         child: tabController.index == 0
             ? poinItems()
             : tabController.index == 1
-                ? RegCommission()
+                ? const RegCommission()
                 : rewardItems());
   }
 
@@ -523,15 +524,15 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
           ),
           const SizedBox(height: AppSizes.padding / 4),
           Container(
-            padding: EdgeInsets.all(AppSizes.padding / 2.7),
+            padding: const EdgeInsets.all(AppSizes.padding / 2.7),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.access_time_sharp,
                   size: 15,
                   color: AppColors.baseLv4,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
@@ -597,18 +598,18 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
             ],
           ),
           Container(
-            padding: EdgeInsets.all(AppSizes.padding / 4),
+            padding: const EdgeInsets.all(AppSizes.padding / 4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.access_time_sharp,
                       size: 15,
                       color: AppColors.baseLv4,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Text(
@@ -669,7 +670,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
               isShow ? 'Tampilkan Semua' : 'Sembunyikan ',
               style: AppTextStyle.bold(context, fontSize: 14, color: AppColors.primary),
             ),
-            SizedBox(
+            const SizedBox(
               width: AppSizes.height,
             ),
             Icon(

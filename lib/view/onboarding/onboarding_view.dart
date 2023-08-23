@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:satujuta_app_mobile/view/login/login_view.dart';
-import 'package:satujuta_app_mobile/view/register/register_view.dart';
-
-import '../../app/const/app_assets.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../login/login_view.dart';
+import '../register/register_view.dart';
 import 'components/ob_slide.dart';
 
 class OnboardingView extends StatefulWidget {

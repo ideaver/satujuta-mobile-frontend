@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/widget/app_button.dart';
-import 'package:satujuta_app_mobile/app/widget/app_image.dart';
-import 'package:satujuta_app_mobile/app/widget/app_not_found_widget.dart';
 
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_not_found_widget.dart';
 
 class HotelPicker extends StatefulWidget {
   const HotelPicker({Key? key}) : super(key: key);
@@ -115,9 +115,7 @@ class _HotelPickerState extends State<HotelPicker> {
                     child: Icon(
                       Icons.dashboard_outlined,
                       size: 16,
-                      color: selectedLocation == -1
-                          ? AppColors.white
-                          : AppColors.base,
+                      color: selectedLocation == -1 ? AppColors.white : AppColors.base,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -138,8 +136,7 @@ class _HotelPickerState extends State<HotelPicker> {
     if (selectedLocation == 0) {
       return AppNotFoundWidget(
         title: 'Maaf, Belum Ada Hotel Di Lokasi Ini',
-        subtitle:
-            "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
+        subtitle: "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
       );
     }
 
@@ -253,15 +250,9 @@ class _HotelPickerState extends State<HotelPicker> {
                 setState(() {});
               },
               enable: selectedHotel == null || selectedHotel == i,
-              text: selectedHotel == null || selectedHotel != i
-                  ? 'Pilih'
-                  : 'Anda memilih ini',
-              leftIcon: selectedHotel == null || selectedHotel != i
-                  ? null
-                  : Icons.check_circle,
-              buttonColor: selectedHotel == null
-                  ? AppColors.primary
-                  : AppColors.secondary,
+              text: selectedHotel == null || selectedHotel != i ? 'Pilih' : 'Anda memilih ini',
+              leftIcon: selectedHotel == null || selectedHotel != i ? null : Icons.check_circle,
+              buttonColor: selectedHotel == null ? AppColors.primary : AppColors.secondary,
             ),
           ],
         ),

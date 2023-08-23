@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/const/app_assets.dart';
-import 'package:satujuta_app_mobile/app/theme/app_text_style.dart';
-import 'package:satujuta_app_mobile/app/widget/app_button.dart';
-import 'package:satujuta_app_mobile/app/widget/app_image.dart';
 
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/widget/app_widget_list_wrapper.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_widget_list_wrapper.dart';
 
 class PaymentStatusView extends StatefulWidget {
   final bool isSucess;
@@ -70,9 +70,7 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
             child: AppImage(
-              image: widget.isSucess
-                  ? AppAssets.successIlusPath
-                  : AppAssets.failedIlusPath,
+              image: widget.isSucess ? AppAssets.successIlusPath : AppAssets.failedIlusPath,
               imgProvider: ImgProvider.assetImage,
             ),
           ),

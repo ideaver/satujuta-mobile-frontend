@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/widget/app_image.dart';
-import 'package:satujuta_app_mobile/app/widget/app_modal.dart';
 
-import '../../../app/const/app_assets.dart';
-import '../../../app/const/app_sizes.dart';
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_text_style.dart';
-import '../../../app/widget/app_button.dart';
-import '../../../app/widget/app_text_field.dart';
-import '../../../app/widget/app_text_fields_wrapper.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../../widget/atom/app_button.dart';
+import '../../../../widget/atom/app_image.dart';
+import '../../../../widget/atom/app_modal.dart';
+import '../../../../widget/atom/app_text_field.dart';
+import '../../../../widget/atom/app_text_fields_wrapper.dart';
 
 class RegCommission extends StatefulWidget {
   const RegCommission({Key? key}) : super(key: key);

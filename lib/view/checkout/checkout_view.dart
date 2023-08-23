@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/widget/app_button.dart';
 
-import '../../app/const/app_assets.dart';
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-import '../../app/widget/app_expansion_list_tile.dart';
-import '../../app/widget/app_gradient_text.dart';
-import '../../app/widget/app_image.dart';
-import '../../app/widget/app_modal.dart';
-import '../../app/widget/app_widget_list_wrapper.dart';
-import '../../app/widget/my_icon_button.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_expansion_list_tile.dart';
+import '../../../widget/atom/app_gradient_text.dart';
+import '../../../widget/atom/app_image.dart';
+import '../../../widget/atom/app_modal.dart';
+import '../../../widget/atom/app_widget_list_wrapper.dart';
+import '../../widget/atom/app_icon_button.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({Key? key}) : super(key: key);
@@ -836,140 +836,141 @@ class _CheckoutViewState extends State<CheckoutView> {
       children: [
         orderStatus(),
         Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height - 280,
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height - 280,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                AppExpansionListTile(
+                  title: 'Transfer Bank',
+                  icon: Icons.credit_card,
+                  expand: true,
+                  children: [
+                    ...List.generate(5, (index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 6),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(AppSizes.radius),
+                        ),
+                        child: RadioListTile(
+                          value: null,
+                          groupValue: null,
+                          onChanged: (value) {},
+                          title: Row(
+                            children: [
+                              const SizedBox(
+                                width: 50,
+                                child: AppImage(
+                                  image: AppAssets.bankMandiriImgPath,
+                                  imgProvider: ImgProvider.assetImage,
+                                ),
+                              ),
+                              const SizedBox(width: AppSizes.padding),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Bank Mandiri',
+                                    style: AppTextStyle.bold(context),
+                                  ),
+                                  const SizedBox(height: AppSizes.padding / 2),
+                                  Text(
+                                    'Admin Fee Rp 2.500',
+                                    style: AppTextStyle.regular(
+                                      context,
+                                      fontSize: 12,
+                                      color: AppColors.baseLv4,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          activeColor: AppColors.primary,
+                          contentPadding: const EdgeInsets.fromLTRB(
+                            AppSizes.padding,
+                            AppSizes.padding / 1.8,
+                            AppSizes.padding / 1.8,
+                            AppSizes.padding / 1.8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppSizes.radius),
+                          ),
+                          controlAffinity: ListTileControlAffinity.trailing,
+                        ),
+                      );
+                    })
+                  ],
+                ),
+                const SizedBox(height: AppSizes.padding),
+                AppExpansionListTile(
+                  title: 'Virtual Account',
+                  icon: Icons.credit_card,
+                  expand: true,
+                  children: [
+                    ...List.generate(5, (index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 6),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(AppSizes.radius),
+                        ),
+                        child: RadioListTile(
+                          value: null,
+                          groupValue: null,
+                          onChanged: (value) {},
+                          title: Row(
+                            children: [
+                              const SizedBox(
+                                width: 50,
+                                child: AppImage(
+                                  image: AppAssets.bankMandiriImgPath,
+                                  imgProvider: ImgProvider.assetImage,
+                                ),
+                              ),
+                              const SizedBox(width: AppSizes.padding),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Bank Mandiri',
+                                    style: AppTextStyle.bold(context),
+                                  ),
+                                  const SizedBox(height: AppSizes.padding / 2),
+                                  Text(
+                                    'Admin Fee Rp 2.500',
+                                    style: AppTextStyle.regular(
+                                      context,
+                                      fontSize: 12,
+                                      color: AppColors.baseLv4,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          activeColor: AppColors.primary,
+                          contentPadding: const EdgeInsets.fromLTRB(
+                            AppSizes.padding,
+                            AppSizes.padding / 1.8,
+                            AppSizes.padding / 1.8,
+                            AppSizes.padding / 1.8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppSizes.radius),
+                          ),
+                          controlAffinity: ListTileControlAffinity.trailing,
+                        ),
+                      );
+                    })
+                  ],
+                )
+              ],
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  AppExpansionListTile(
-                    title: 'Transfer Bank',
-                    icon: Icons.credit_card,
-                    expand: true,
-                    children: [
-                      ...List.generate(5, (index) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 6),
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(AppSizes.radius),
-                          ),
-                          child: RadioListTile(
-                            value: null,
-                            groupValue: null,
-                            onChanged: (value) {},
-                            title: Row(
-                              children: [
-                                const SizedBox(
-                                  width: 50,
-                                  child: AppImage(
-                                    image: AppAssets.bankMandiriImgPath,
-                                    imgProvider: ImgProvider.assetImage,
-                                  ),
-                                ),
-                                const SizedBox(width: AppSizes.padding),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bank Mandiri',
-                                      style: AppTextStyle.bold(context),
-                                    ),
-                                    const SizedBox(height: AppSizes.padding / 2),
-                                    Text(
-                                      'Admin Fee Rp 2.500',
-                                      style: AppTextStyle.regular(
-                                        context,
-                                        fontSize: 12,
-                                        color: AppColors.baseLv4,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            activeColor: AppColors.primary,
-                            contentPadding: const EdgeInsets.fromLTRB(
-                              AppSizes.padding,
-                              AppSizes.padding / 1.8,
-                              AppSizes.padding / 1.8,
-                              AppSizes.padding / 1.8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppSizes.radius),
-                            ),
-                            controlAffinity: ListTileControlAffinity.trailing,
-                          ),
-                        );
-                      })
-                    ],
-                  ),
-                  SizedBox(height: AppSizes.padding),
-                  AppExpansionListTile(
-                    title: 'Virtual Account',
-                    icon: Icons.credit_card,
-                    expand: true,
-                    children: [
-                      ...List.generate(5, (index) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 6),
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(AppSizes.radius),
-                          ),
-                          child: RadioListTile(
-                            value: null,
-                            groupValue: null,
-                            onChanged: (value) {},
-                            title: Row(
-                              children: [
-                                const SizedBox(
-                                  width: 50,
-                                  child: AppImage(
-                                    image: AppAssets.bankMandiriImgPath,
-                                    imgProvider: ImgProvider.assetImage,
-                                  ),
-                                ),
-                                const SizedBox(width: AppSizes.padding),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bank Mandiri',
-                                      style: AppTextStyle.bold(context),
-                                    ),
-                                    const SizedBox(height: AppSizes.padding / 2),
-                                    Text(
-                                      'Admin Fee Rp 2.500',
-                                      style: AppTextStyle.regular(
-                                        context,
-                                        fontSize: 12,
-                                        color: AppColors.baseLv4,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            activeColor: AppColors.primary,
-                            contentPadding: const EdgeInsets.fromLTRB(
-                              AppSizes.padding,
-                              AppSizes.padding / 1.8,
-                              AppSizes.padding / 1.8,
-                              AppSizes.padding / 1.8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppSizes.radius),
-                            ),
-                            controlAffinity: ListTileControlAffinity.trailing,
-                          ),
-                        );
-                      })
-                    ],
-                  )
-                ],
-              ),
-            )),
+          ),
+        ),
         const SizedBox(height: AppSizes.padding),
         AppButton(
           onTap: () {

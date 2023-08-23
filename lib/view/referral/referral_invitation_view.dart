@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:satujuta_app_mobile/app/const/app_assets.dart';
-import 'package:satujuta_app_mobile/app/widget/app_expansion_list_tile.dart';
-import 'package:satujuta_app_mobile/app/widget/my_custom_text.dart';
-import 'package:satujuta_app_mobile/app/widget/my_separated.dart';
-import 'package:satujuta_app_mobile/view/molecules/referral_Invitation/my_invite_button.dart';
-import 'package:satujuta_app_mobile/view/organisms/referral_inivitation/wrap._code_referral.dart';
 
-import '../../app/const/app_consts.dart';
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-import '../../app/widget/my_icon_button.dart';
-import '../molecules/referral_Invitation/circle_user.dart';
-import '../molecules/referral_Invitation/my_text_line.dart';
-import '../organisms/custom_nav_button.dart';
-import '../organisms/referral_inivitation/background_referral.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/asset/app_icons.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../app/const/app_consts.dart';
+import '../../../widget/atom/app_expansion_list_tile.dart';
+import '../../../widget/organism/referral_inivitation/background_referral.dart';
+import '../../../widget/organism/referral_inivitation/wrap._code_referral.dart';
+import '../../widget/atom/app_custom_text.dart';
+import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_separated.dart';
+import '../../widget/molecule/referral_Invitation/circle_user.dart';
+import '../../widget/molecule/referral_Invitation/ref_invite_button.dart';
+import '../../widget/molecule/referral_Invitation/ref_text_line.dart';
 
 class QuestionCard extends StatefulWidget {
   const QuestionCard({
@@ -81,7 +81,7 @@ class _QuestionCardState extends State<QuestionCard> {
           ),
           subtitle: Visibility(
             visible: showQuestion,
-            child: MyCustomText(
+            child: AppCustomText(
               text: widget.question!,
               style: AppTextStyle.regular(
                 context,
@@ -118,14 +118,14 @@ class ReferralCard extends StatelessWidget {
         AppSizes.radius,
       )),
       tileColor: AppColors.baseLv6,
-      title: MyCustomText(
+      title: AppCustomText(
           text: title!,
           style: AppTextStyle.bold(
             context,
             fontSize: 12,
             color: AppColors.baseLv4,
           )),
-      subtitle: MyCustomText(
+      subtitle: AppCustomText(
           text: subtitle!,
           style: AppTextStyle.bold(
             context,
@@ -178,13 +178,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
             sliverAppBarWidget(),
           ];
         },
-        body: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            body(),
-            CustomNavBottom(indexIndicator: 2),
-          ],
-        ),
+        body: body(),
       ),
     );
   }
@@ -246,7 +240,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
           wrapInviteFriend(context),
           wrapReferralCard(),
           wrapListQuestion(),
-          SizedBox(height: AppSizes.height * 9)
+          const SizedBox(height: AppSizes.height * 9)
         ],
       ),
     );
@@ -269,7 +263,7 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
   }
 
   Widget background() {
-    return BackgroudReferral();
+    return const BackgroudReferral();
   }
 
   Widget wrapContentReferral() {
@@ -294,22 +288,26 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
       children: [
         QuestionCard(
           titleQuestion: 'Bagaimana Cara Gabung Jadi Member SatuJuta?',
-          question: 'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
+          question:
+              'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
         ),
         SizedBox(height: AppSizes.height / 3),
         QuestionCard(
           titleQuestion: 'Apa Yang Akan Saya Dapatkan Kalau Bergabung Dengan Komunitas SatuJuta?',
-          question: 'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
+          question:
+              'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
         ),
         SizedBox(height: AppSizes.height / 3),
         QuestionCard(
           titleQuestion: 'Bagaimana Cara Dapatkan Poin?',
-          question: 'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
+          question:
+              'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
         ),
         SizedBox(height: AppSizes.height / 3),
         QuestionCard(
           titleQuestion: 'Siapa Saja Yang Bisa Daftar Jadi Member SatuJuta?',
-          question: 'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
+          question:
+              'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
         ),
       ],
     );
@@ -352,36 +350,34 @@ class _ReferralInvitationViewState extends State<ReferralInvitationView> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSizes.padding),
-        child: Container(
-          child: Column(
-            children: [
-              MyTextLine(
-                title: MyCustomText(
-                  text: 'Undang Teman Anda',
-                  style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
-                ),
-                gap: 8,
-                subTitle: MyCustomText(
-                  text: 'Lorem ipsum dolor sit amet, consectetur',
-                  style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
-                ),
+        child: Column(
+          children: [
+            RefTextLine(
+              title: AppCustomText(
+                text: 'Undang Teman Anda',
+                style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
               ),
-              MySeparated(sizeWidth: 0, sizeHeight: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
-                child: MyInviteButton(
-                  functionButton: () {},
-                  leadingButton: CircleUser(
-                    imageFriend1: AppAssets.userImage1Path,
-                    imageFriend2: AppAssets.userImage2Path,
-                    imageFriend3: AppAssets.userImage3Path,
-                    countFriend: '9',
-                  ),
-                  textButton: 'Undang Lebih Banyak',
+              gap: 8,
+              subTitle: AppCustomText(
+                text: 'Lorem ipsum dolor sit amet, consectetur',
+                style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
+              ),
+            ),
+            const AppSeparated(sizeWidth: 0, sizeHeight: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
+              child: RefInviteButton(
+                functionButton: () {},
+                leadingButton: const CircleUser(
+                  imageFriend1: AppAssets.userImage1Path,
+                  imageFriend2: AppAssets.userImage2Path,
+                  imageFriend3: AppAssets.userImage3Path,
+                  countFriend: '9',
                 ),
-              )
-            ],
-          ),
+                textButton: 'Undang Lebih Banyak',
+              ),
+            )
+          ],
         ),
       ),
     );

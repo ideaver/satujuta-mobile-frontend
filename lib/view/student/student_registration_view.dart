@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:satujuta_app_mobile/app/widget/app_modal.dart';
-import 'package:satujuta_app_mobile/app/widget/my_icon_button.dart';
-import 'package:satujuta_app_mobile/view/student/component/student_form.dart';
 
-import '../../app/const/app_assets.dart';
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-import '../../app/widget/app_button.dart';
-
-import 'component/regisStudentStatus.dart';
+import '../../../app/asset/app_assets.dart';
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_sizes.dart';
+import '../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../../widget/atom/app_modal.dart';
+import '../../widget/atom/app_icon_button.dart';
+import 'component/student_form.dart';
+import 'component/student_reg_status.dart';
 
 class StudentRegistrationView extends StatefulWidget {
   const StudentRegistrationView({
@@ -127,7 +126,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             AppModal.show(
               context: context,
               title: '',
-              child: RegisStudentStatus(
+              child: StudentRegStatus(
                 isSuccess: true,
               ),
             );

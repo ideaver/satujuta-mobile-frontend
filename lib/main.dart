@@ -1,35 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
+import 'package:satujuta_gql_client/graphql_service.dart';
 
+import 'app/locale/app_locale.dart';
 import 'app/route/app_routes.dart';
-import 'app/theme/app_colors.dart';
+import 'app/service/locator/service_locator.dart';
+import 'app/service/network_checker/network_checker_service.dart';
 import 'app/theme/app_theme.dart';
-import 'view/menu_view.dart';
+import 'view/main/main_view.dart';
+import 'view_model/address_view_model.dart';
+import 'view_model/edit_profile_view_model.dart';
+import 'view_model/login_view_model.dart';
+import 'view_model/main_view_model.dart';
+import 'view_model/member_list_view_model.dart';
+import 'view_model/program_list_view_model.dart';
+import 'view_model/user_view_model.dart';
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: AppColors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarColor: AppColors.white,
-      statusBarIconBrightness: Brightness.dark,
-    ),
-  );
+Future<void> main() async {
+  // Initialize binding
+  WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize date formatting
+  initializeDateFormatting();
+
+  // Setup service locator
+  setupServiceLocator();
+
+  // Initialize Firebase (google-service.json required)
+  // await Firebase.initializeApp();
+
+  // Initialize FCM service (google-service.json required)
+  // await FcmService.initNotification();
+
+  // Initialize local notification service
+  // await LocalNotifService.initLocalNotifService();
+
+  // Initialize GraphQLService
+  GraphQLService.init(getToken: AuthService.getToken);
+
+  // Set/lock orientationgvhvgj
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Set overlay style
+  SystemChrome.setSystemUIOverlayStyle(AppTheme.lightOverlayStyle);
+
+  // runApp()
   runApp(const MyApp());
 }
 
+// Root widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'SatuJuta',
-      theme: AppTheme.getTheme(),
-      routes: AppRoutes.routes,
-      home: const MenuView(),
+    return MultiProvider(
+      providers: [
+        // Providers
+        ChangeNotifierProvider(create: (_) => locator<NetworkCheckerService>()),
+        ChangeNotifierProvider(create: (_) => locator<MainViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<UserViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<EditProfileViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<ProgramListViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<MemberListViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<AddressViewModel>()),
+      ],
+      child: MaterialApp(
+        title: 'SatuJuta',
+        theme: AppTheme.getTheme(),
+        debugShowCheckedModeBanner: true,
+        initialRoute: MainView.routeName,
+        routes: AppRoutes.routes,
+        // home: const SplashView(),
+        locale: AppLocale.defaultLocale,
+        supportedLocales: AppLocale.supportedLocales,
+        localizationsDelegates: AppLocale.localizationsDelegates,
+      ),
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:satujuta_app_mobile/app/const/app_assets.dart';
 
-import '../../app/const/app_sizes.dart';
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_text_style.dart';
-
-import '../../app/widget/app_not_found_widget.dart';
-import '../../app/widget/my_icon_button.dart';
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/asset/app_icons.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_not_found_widget.dart';
+import '../../widget/atom/app_icon_button.dart';
 
 class MarketingGalleryView extends StatefulWidget {
   const MarketingGalleryView({

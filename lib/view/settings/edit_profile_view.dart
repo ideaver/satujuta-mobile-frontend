@@ -1,0 +1,359 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
+
+import '../../../../app/asset/app_assets.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_sizes.dart';
+import '../../../../app/theme/app_text_style.dart';
+import '../../../widget/atom/app_button.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/edit_profile_view_model.dart';
+import '../../widget/atom/app_icon_button.dart';
+import 'component/edit_profile_account.dart';
+import 'component/edit_profile_biodata.dart';
+import 'component/edit_profile_commission.dart';
+
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({
+    Key? key,
+  }) : super(key: key);
+
+  static const String routeName = '/edit-profile';
+
+  @override
+  State<EditProfileView> createState() => _EditProfileViewState();
+}
+
+class _EditProfileViewState extends State<EditProfileView> with TickerProviderStateMixin {
+  final _editProfileViewModel = locator<EditProfileViewModel>();
+
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    tabController.addListener(tabListener);
+
+    _editProfileViewModel.firstName = TextEditingController();
+    _editProfileViewModel.lastName = TextEditingController();
+    _editProfileViewModel.addressName = TextEditingController();
+    _editProfileViewModel.postalCode = TextEditingController();
+    _editProfileViewModel.whatsappNumber = TextEditingController();
+    _editProfileViewModel.email = TextEditingController();
+    _editProfileViewModel.password = TextEditingController();
+    _editProfileViewModel.confirmPassword = TextEditingController();
+    _editProfileViewModel.referralCode = TextEditingController();
+    _editProfileViewModel.bank = TextEditingController();
+    _editProfileViewModel.bankAccountNumber = TextEditingController();
+
+    _editProfileViewModel.initEditProfileView();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _editProfileViewModel.firstName.dispose();
+    _editProfileViewModel.lastName.dispose();
+    _editProfileViewModel.addressName.dispose();
+    _editProfileViewModel.postalCode.dispose();
+    _editProfileViewModel.whatsappNumber.dispose();
+    _editProfileViewModel.email.dispose();
+    _editProfileViewModel.password.dispose();
+    _editProfileViewModel.confirmPassword.dispose();
+    _editProfileViewModel.referralCode.dispose();
+    _editProfileViewModel.bank.dispose();
+    _editProfileViewModel.bankAccountNumber.dispose();
+    super.dispose();
+  }
+
+  void tabListener() {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      body: NestedScrollView(
+        physics: const BouncingScrollPhysics(),
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            sliverAppBarWidget(),
+          ];
+        },
+        body: body(),
+      ),
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      title: title(),
+    );
+  }
+
+  Widget title() {
+    return Text(
+      'Profile',
+      style: AppTextStyle.bold(context, fontSize: 18),
+    );
+  }
+
+  Widget backButton() {
+    return AppIconButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: Icons.arrow_back,
+      iconSize: 18,
+      iconColor: AppColors.base,
+      backgroundColor: AppColors.white,
+      padding: const EdgeInsets.all(AppSizes.padding / 2),
+    );
+  }
+
+  SliverAppBar sliverAppBarWidget() {
+    return SliverAppBar(
+      pinned: true,
+      expandedHeight: 170,
+      elevation: 0.5,
+      leading: backButton(),
+      title: title(),
+      automaticallyImplyLeading: false,
+      flexibleSpace: FlexibleSpaceBar(
+        background: sliverBackground(),
+        expandedTitleScale: 1,
+      ),
+    );
+  }
+
+  Widget body() {
+    return Consumer<EditProfileViewModel>(
+      builder: (context, model, _) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
+          child: Column(
+            children: [
+              userPhoto(model),
+              tabBar(),
+              tabBarViews(model),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget sliverBackground() {
+    return Container(
+      padding: const EdgeInsets.all(AppSizes.padding),
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(AppAssets.backgroundPath),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget userPhoto(EditProfileViewModel model) {
+    return Column(
+      children: [
+        const SizedBox(height: AppSizes.padding),
+        Text(
+          "Foto Profile",
+          style: AppTextStyle.bold(context),
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(
+            vertical: AppSizes.padding,
+          ),
+          width: 150,
+          height: 150,
+          child: Center(
+            child: Stack(
+              children: [
+                AppImage(
+                  image: model.user?.avatarUrl ?? '',
+                  width: 150,
+                  height: 150,
+                  borderRadius: 100,
+                  backgroundColor: AppColors.baseLv7,
+                  errorWidget: const Icon(
+                    Icons.person_rounded,
+                    size: 82,
+                    color: AppColors.baseLv4,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: () {
+                      // TODO
+                    },
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        AppAssets.editIconPath,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSizes.padding),
+      ],
+    );
+  }
+
+  Widget tabBar() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: AppSizes.padding,
+      ),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppColors.baseLv6,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: TabBar(
+        controller: tabController,
+        physics: const NeverScrollableScrollPhysics(),
+        labelColor: AppColors.base,
+        indicator: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        tabs: [
+          Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  AppAssets.personFormIconPath,
+                ),
+                const SizedBox(width: AppSizes.padding / 3),
+                Flexible(
+                  child: Text(
+                    "Data Diri",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.bold(context, fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  AppAssets.lockDarkIconPath,
+                ),
+                const SizedBox(width: AppSizes.padding / 3),
+                Flexible(
+                  child: Text(
+                    "Akun",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.bold(context, fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  AppAssets.coinFormIconPath,
+                ),
+                const SizedBox(width: AppSizes.padding / 3),
+                Flexible(
+                  child: Text(
+                    "Komisi",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.bold(context, fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget tabBarViews(EditProfileViewModel model) {
+    return Column(
+      children: [
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: tabController.index == 0
+              ? wrapEditBiodata()
+              : tabController.index == 1
+                  ? wrapEditAccount()
+                  : wrapEditCommision(),
+        ),
+        updateButton(model),
+      ],
+    );
+  }
+
+  Widget wrapEditBiodata() {
+    return const EditProfileBiodata(
+      name: 'Agus Susanto',
+      address: 'jln ambarawa no 1 Semarang',
+      city: 'Surabaya',
+      posCode: '60241',
+      noWa: '+62908327587',
+      email: 'Agus@gmail.com',
+    );
+  }
+
+  Widget wrapEditAccount() {
+    return const EditProfileAccount(
+      noWa: '+62908327587',
+      email: 'Agususanto@gmail.com',
+    );
+  }
+
+  Widget wrapEditCommision() {
+    return const EditProfileCommission(
+      codeRef: '#123513UHD',
+      noRek: '1234 5678 9101',
+    );
+  }
+
+  Widget updateButton(EditProfileViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: AppSizes.padding / 2,
+        bottom: AppSizes.padding * 2,
+      ),
+      child: AppButton(
+        text: "Simpan Perubahan",
+        onTap: () {
+          final navigator = Navigator.of(context);
+          model.updateProfile(navigator);
+        },
+      ),
+    );
+  }
+}

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../app/const/app_assets.dart';
+import '../../app/asset/app_assets.dart';
 import '../../app/theme/app_colors.dart';
-import '../onboarding/onboarding_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -14,26 +13,32 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  _loadNextScreen() async {
-    final navigator = Navigator.of(context);
-
-    await Future.delayed(const Duration(milliseconds: 3000));
-    navigator.push(
-      MaterialPageRoute(
-        builder: (context) => const OnboardingView(),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    _loadNextScreen();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    // return Scaffold(
+    //   body: Operation<GUserFindManyData, GUserFindManyVars>(
+    //     client: GqlService.client,
+    //     operationRequest: GUserFindManyReq(
+    //       (b) => b..vars.userFindManyArgs.take = 50,
+    //     ),
+    //     builder: (context, response, error) {
+    //       if (response!.loading) {
+    //         return const Center(child: CircularProgressIndicator());
+    //       }
+
+    //       final users = response.data?.userFindMany?.toList() ?? [];
+
+    //       return ListView.builder(
+    //         itemCount: users.length,
+    //         itemBuilder: (context, index) => Text(
+    //           users[index].email, // Non nullable
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
     return Scaffold(
       body: Container(
         color: AppColors.primary,
