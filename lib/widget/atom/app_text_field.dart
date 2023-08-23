@@ -23,6 +23,7 @@ class AppTextField extends StatefulWidget {
   final bool enabled;
   final bool showVisibilityButton;
   final Color? fillColor;
+  final Color disabledColor;
   final Function()? onTap;
   final Function(String)? onChanged;
   final Function()? onEditingComplete;
@@ -53,6 +54,7 @@ class AppTextField extends StatefulWidget {
     this.textInputAction,
     this.inputFormatters,
     this.fillColor,
+    this.disabledColor = AppColors.baseLv4,
   });
 
   @override
@@ -89,7 +91,7 @@ class _AppTextFieldState extends State<AppTextField> {
           inputFormatters: inputFormatters(),
           style: AppTextStyle.medium(
             context,
-            color: AppColors.base,
+            color: widget.enabled ? AppColors.base : widget.disabledColor,
             fontSize: 16,
           ),
           decoration: InputDecoration(

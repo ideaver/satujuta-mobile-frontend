@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
+import 'package:satujuta_gql_client/graphql_service.dart';
 
 import 'app/locale/app_locale.dart';
 import 'app/route/app_routes.dart';
@@ -35,6 +37,9 @@ Future<void> main() async {
 
   // Initialize local notification service
   // await LocalNotifService.initLocalNotifService();
+
+  // Initialize GraphQLService
+  GraphQLService.init(getToken: AuthService.getToken);
 
   // Set/lock orientationgvhvgj
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

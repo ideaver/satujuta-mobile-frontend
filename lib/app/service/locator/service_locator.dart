@@ -7,20 +7,18 @@ import '../../../view_model/main_view_model.dart';
 import '../../../view_model/member_list_view_model.dart';
 import '../../../view_model/program_list_view_model.dart';
 import '../../../view_model/user_view_model.dart';
-import '../graphql/graphql_service.dart';
 import '../network_checker/network_checker_service.dart';
 
 final GetIt locator = GetIt.instance;
 
 // Service Locator
 void setupServiceLocator() {
-  locator.registerLazySingleton(() => GraphQLService());
   locator.registerLazySingleton(() => NetworkCheckerService());
   locator.registerLazySingleton(() => MainViewModel());
   locator.registerLazySingleton(() => UserViewModel());
   locator.registerLazySingleton(() => EditProfileViewModel());
   locator.registerLazySingleton(() => ProgramListViewModel());
   locator.registerLazySingleton(() => MemberListViewModel());
+  locator.registerLazySingleton(() => AddressViewModel());
   locator.registerFactory(() => LoginViewModel());
-  locator.registerFactory(() => AddressViewModel());
 }

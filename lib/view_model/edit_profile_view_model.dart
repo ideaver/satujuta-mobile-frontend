@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/app/service/graphql/gql_error_parser.dart';
-import 'package:satujuta_app_mobile/app/service/graphql/gql_user_service.dart';
 import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
+import 'package:satujuta_gql_client/gql_error_parser.dart';
+import 'package:satujuta_gql_client/gql_user_service.dart';
+import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql.dart';
 
-import '../app/service/graphql/query/generated/user_update_one.graphql.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
@@ -19,12 +19,13 @@ class EditProfileViewModel extends ChangeNotifier {
 
   String? avatarUrl;
 
-  String? city; // TODO
-  String? district; // TODO
-
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
   TextEditingController addressName = TextEditingController();
+  TextEditingController province = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController district = TextEditingController();
+  TextEditingController subdistrict = TextEditingController();
 
   TextEditingController postalCode = TextEditingController();
 
@@ -73,7 +74,7 @@ class EditProfileViewModel extends ChangeNotifier {
 
     AppDialog.showDialogProgress(navigator);
 
-    var updatedData = Mutation$UserUpdateOne$userUpdateOne(
+    var updateUser = Mutation$UserUpdateOne$userUpdateOne(
       id: user!.id,
       firstName: firstName.text,
       lastName: lastName.text,
@@ -90,7 +91,7 @@ class EditProfileViewModel extends ChangeNotifier {
       theme: user!.theme,
     );
 
-    var res = await GqlUserService.updateUser(updatedData);
+    var res = await GqlUserService.userUpdateOne(updateUser);
 
     cl('[updateProfile].res = $res');
 

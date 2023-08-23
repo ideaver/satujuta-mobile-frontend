@@ -1,6 +1,0 @@
-query CityFindMany($cityFindManyArgs: CityFindManyArgs!) {
-  cityFindMany(cityFindManyArgs: $cityFindManyArgs) {
-    id
-    name
-  }
-}

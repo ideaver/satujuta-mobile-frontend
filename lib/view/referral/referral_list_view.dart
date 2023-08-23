@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
+import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -11,7 +12,6 @@ import '../../../app/const/app_consts.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_text_field.dart';
-import '../../app/service/graphql/query/generated/user_find_many.graphql.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/member_list_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';

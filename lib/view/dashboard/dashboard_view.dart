@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -15,7 +16,6 @@ import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_text_field.dart';
-import '../../app/service/graphql/query/generated/user_find_many.graphql.dart';
 import '../../app/utility/currency_formatter.dart';
 import '../../view_model/member_list_view_model.dart';
 import '../../view_model/program_list_view_model.dart';

@@ -32,8 +32,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  # satujuta_gql_client: 
-  #   path: ../satujuta-gql-client
+  satujuta_gql_client: 
+    path: ../satujuta-gql-client
   cupertino_icons: ^1.0.2
   file_picker: ^5.2.5
   open_filex: ^4.3.2
@@ -56,7 +56,7 @@ dependencies:
   http: ^0.13.6
   collection: ^1.17.2
   # ferry_flutter: ^0.8.1
-  graphql_flutter: ^5.1.2
+  # graphql_flutter: ^5.1.2
   jwt_decode: ^0.3.1
   photo_view: ^0.14.0
   optimized_cached_image: ^3.0.1
@@ -65,14 +65,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   easy_sidemenu: ^0.5.0
   webview_flutter: ^4.2.2
-  
-
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.6
-  graphql_codegen: ^0.13.5
+  # build_runner: ^2.4.6
+  # graphql_codegen: ^0.13.5
   # ferry_generator: ^0.8.1
 
   # The "flutter_lints" package below contains a set of recommended lints to

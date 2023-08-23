@@ -1,46 +1,167 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/app/service/graphql/gql_user_service.dart';
 import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
+import 'package:satujuta_gql_client/gql_address_service.dart';
+import 'package:satujuta_gql_client/gql_error_parser.dart';
+import 'package:satujuta_gql_client/operations/generated/city_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/district_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/province_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/subdistrict_find_many.graphql.dart';
 
-import '../app/service/graphql/query/generated/user_update_one.graphql.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
+import '../widget/atom/app_dialog.dart';
 
 class AddressViewModel extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
   final network = locator<NetworkCheckerService>();
   final userViewModel = locator<UserViewModel>();
 
-  Mutation$UserUpdateOne$userUpdateOne? user;
+  List<Query$ProvinceFindMany$provinceFindMany>? provinceFindMany;
+  List<Query$CityFindMany$cityFindMany>? cityFindMany;
+  List<Query$DistrictFindMany$districtFindMany>? districtFindMany;
+  List<Query$SubdistrictFindMany$subdistrictFindMany>? subdistrictFindMany;
 
-  Future<void> getProvinces() async {
-    var res = await GqlUserService.getAllUsers();
+  Query$ProvinceFindMany$provinceFindMany? selectedProvince;
+  Query$CityFindMany$cityFindMany? selectedCity;
+  Query$DistrictFindMany$districtFindMany? selectedDistrict;
+  Query$SubdistrictFindMany$subdistrictFindMany? selectedSubdistrict;
 
-    cl('[getProvinces].res = $res');
+  void resetState() {
+    provinceFindMany = null;
+    cityFindMany = null;
+    districtFindMany = null;
+    subdistrictFindMany = null;
+    selectedProvince = null;
+    selectedCity = null;
+    selectedDistrict = null;
+    selectedSubdistrict = null;
+  }
 
-    // if (res.parsedData?.userUpdateOne != null && !res.hasException) {
-    //   await userViewModel.getUser();
-    //   user = res.parsedData!.userUpdateOne;
-    //   notifyListeners();
+  Future<void> getProvinces(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
+    var res = await GqlAddressService.provinceFindMany(
+      skip: skip,
+      contains: contains,
+    );
 
-    //   navigator.pop();
-    //   AppDialog.showSuccessDialog(
-    //     navigator,
-    //     title: 'Sukses!',
-    //     subtitle: 'Profil berhasil diperbarui',
-    //   );
-    // } else {
-    //   cl('[updateProfile].error = ${gqlErrorParser(res)}');
-    //   navigator.pop();
-    //   AppDialog.showFailedDialog(
-    //     navigator,
-    //     error: gqlErrorParser(res),
-    //   );
-    //   return;
-    // }
+    if (res.parsedData?.provinceFindMany != null && !res.hasException) {
+      provinceFindMany = res.parsedData!.provinceFindMany;
+      notifyListeners();
+    } else {
+      cl('[getProvinces].error = ${gqlErrorParser(res)}');
+      AppDialog.showFailedDialog(
+        navigator,
+        error: gqlErrorParser(res),
+      );
+    }
 
-    // cl(user?.toJson());
+    cl('[getProvinces].provinceFindMany.length = ${provinceFindMany?.length}');
+  }
+
+  Future<void> getCities(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
+    if (selectedProvince == null) {
+      cl('[getCities].selectedProvince null ');
+      return;
+    }
+
+    var res = await GqlAddressService.cityFindMany(
+      provinceId: selectedProvince!.id,
+      skip: skip,
+      contains: contains,
+    );
+
+    if (res.parsedData?.cityFindMany != null && !res.hasException) {
+      cityFindMany = res.parsedData!.cityFindMany;
+      notifyListeners();
+    } else {
+      cl('[getCities].error = ${gqlErrorParser(res)}');
+      AppDialog.showFailedDialog(
+        navigator,
+        error: gqlErrorParser(res),
+      );
+    }
+
+    cl('[getCities].cityFindMany.length = ${cityFindMany?.length}');
+  }
+
+  Future<void> getDistrict(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
+    if (selectedCity == null) {
+      cl('[getDistrict].selectedCity null ');
+      return;
+    }
+
+    var res = await GqlAddressService.districtFindMany(
+      cityId: selectedCity!.id,
+      skip: skip,
+      contains: contains,
+    );
+
+    if (res.parsedData?.districtFindMany != null && !res.hasException) {
+      districtFindMany = res.parsedData!.districtFindMany;
+      notifyListeners();
+    } else {
+      cl('[getDistrict].error = ${gqlErrorParser(res)}');
+      AppDialog.showFailedDialog(
+        navigator,
+        error: gqlErrorParser(res),
+      );
+    }
+
+    cl('[getDistrict].districtFindMany.length = ${districtFindMany?.length}');
+  }
+
+  Future<void> getSubdistrict(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
+    if (selectedDistrict == null) {
+      cl('[getSubdistrict].selectedDistrict null ');
+      return;
+    }
+
+    var res = await GqlAddressService.subdistrictFindMany(
+      districtId: selectedDistrict!.id,
+      skip: skip,
+      contains: contains,
+    );
+
+    if (res.parsedData?.subdistrictFindMany != null && !res.hasException) {
+      subdistrictFindMany = res.parsedData!.subdistrictFindMany;
+      notifyListeners();
+    } else {
+      cl('[getSubdistrict].error = ${gqlErrorParser(res)}');
+      AppDialog.showFailedDialog(
+        navigator,
+        error: gqlErrorParser(res),
+      );
+    }
+
+    cl('[getSubdistrict].subdistrictFindMany.length = ${subdistrictFindMany?.length}');
+  }
+
+  void onSelectProvince(Query$ProvinceFindMany$provinceFindMany provice) {
+    selectedProvince = provice;
+    notifyListeners();
+
+    cl('[onSelectProvince].provice = ${provice.name}');
+  }
+
+  void onSelectCity(Query$CityFindMany$cityFindMany city) {
+    selectedCity = city;
+    notifyListeners();
+
+    cl('[onSelectCity].city = ${city.name}');
+  }
+
+  void onSelectDistrict(Query$DistrictFindMany$districtFindMany district) {
+    selectedDistrict = district;
+    notifyListeners();
+
+    cl('[onSelectDistrict].district = ${district.name}');
+  }
+
+  void onSelectSubdistrict(Query$SubdistrictFindMany$subdistrictFindMany subdistrict) {
+    selectedSubdistrict = subdistrict;
+    notifyListeners();
+
+    cl('[onSelectSubdistrict].subdistrict = ${subdistrict.name}');
   }
 }

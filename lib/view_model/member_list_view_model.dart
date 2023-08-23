@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/app/service/graphql/gql_error_parser.dart';
-import 'package:satujuta_app_mobile/app/service/graphql/gql_user_service.dart';
+import 'package:satujuta_gql_client/gql_error_parser.dart';
+import 'package:satujuta_gql_client/gql_user_service.dart';
+import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
+import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
-import '../app/service/graphql/graphql_service.dart';
-import '../app/service/graphql/query/generated/user_find_many.graphql.dart';
-import '../app/service/graphql/schema/generated/schema.graphql.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
@@ -15,16 +14,11 @@ class MemberListViewModel extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
 
   final network = locator<NetworkCheckerService>();
-  final client = locator<GraphQLService>().client;
   final userViewModel = locator<UserViewModel>();
 
   List<Query$UserFindMany$userFindMany>? userMembers;
   List<Query$UserFindMany$userFindMany>? userMembersActive;
   List<Query$UserFindMany$userFindMany>? userMembersInactive;
-
-  // PAGINATION PURPOSE
-  // Set skip value to the end of current fetched data index
-  int? skip;
 
   void resetState() {
     userMembers = null;
@@ -32,15 +26,15 @@ class MemberListViewModel extends ChangeNotifier {
     userMembersInactive = null;
   }
 
-  Future<void> getAllUserMembers({bool loadmore = false}) async {
+  Future<void> getAllUserMembers({int skip = 0}) async {
     if (userViewModel.user == null) {
       cl('[getAllUserMembers].user null');
       return;
     }
 
-    var res = await GqlUserService.getAllUserMembers(
+    var res = await GqlUserService.referredUserFindManyByReferrerId(
       userViewModel.user!.id,
-      skip: loadmore ? skip : null,
+      skip: skip,
     );
 
     if (res.parsedData != null && !res.hasException) {

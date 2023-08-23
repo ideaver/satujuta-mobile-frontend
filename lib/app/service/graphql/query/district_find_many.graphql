@@ -1,6 +1,0 @@
-query DistrictFindMany($districtFindManyArgs: DistrictFindManyArgs!) {
-  districtFindMany(districtFindManyArgs: $districtFindManyArgs) {
-    id
-    name
-  }
-}

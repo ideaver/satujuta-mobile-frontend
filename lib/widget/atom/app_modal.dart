@@ -6,13 +6,13 @@ import '../../app/theme/app_text_style.dart';
 import 'app_icon_button.dart';
 
 class AppModal {
-  static Future<void> show({
+  static Future show({
     required BuildContext context,
     required String title,
     required Widget child,
     Color? backgroundColor,
-  }) {
-    return showModalBottomSheet<void>(
+  }) async {
+    return await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: backgroundColor ?? AppColors.baseLv7,
@@ -24,30 +24,37 @@ class AppModal {
       ),
       builder: (BuildContext context) {
         return Padding(
-          padding: const EdgeInsets.all(AppSizes.padding),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: AppSizes.padding / 2),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SizedBox(width: 32),
-                  Text(
-                    title,
-                    style: AppTextStyle.bold(context, fontSize: 18),
-                  ),
-                  AppIconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icons.cancel_outlined,
-                  )
-                ],
-              ),
-              const SizedBox(height: AppSizes.padding * 1.5),
-              child,
-            ],
+          padding: EdgeInsets.fromLTRB(
+            AppSizes.padding,
+            AppSizes.padding,
+            AppSizes.padding,
+            MediaQuery.of(context).viewInsets.bottom + AppSizes.padding,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: AppSizes.padding / 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(width: 32),
+                    Text(
+                      title,
+                      style: AppTextStyle.bold(context, fontSize: 18),
+                    ),
+                    AppIconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icons.cancel_outlined,
+                    )
+                  ],
+                ),
+                const SizedBox(height: AppSizes.padding * 1.5),
+                child,
+              ],
+            ),
           ),
         );
       },

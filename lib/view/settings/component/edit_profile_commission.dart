@@ -40,6 +40,7 @@ class _EditProfileCommissionState extends State<EditProfileCommission> {
             child: AppTextFieldsWrapper(
               textFields: [
                 AppTextField(
+                  enabled: false,
                   controller: model.referralCode,
                   lableText: 'Kode Refferal',
                   hintText: widget.codeRef,
@@ -60,6 +61,7 @@ class _EditProfileCommissionState extends State<EditProfileCommission> {
                   hintText: widget.bank,
                 ),
                 AppTextField(
+                  type: AppTextFieldType.number,
                   controller: model.bankAccountNumber,
                   lableText: 'No Rekening',
                   hintText: widget.noRek,

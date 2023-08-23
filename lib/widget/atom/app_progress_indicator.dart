@@ -42,7 +42,7 @@ class AppProgressIndicator extends StatelessWidget {
                     style: AppTextStyle.medium(
                       context,
                       fontSize: 10,
-                      color: AppColors.baseLv2,
+                      color: textColor,
                     ),
                   ),
                 )

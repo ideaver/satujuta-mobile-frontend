@@ -59,26 +59,26 @@ class MainViewModel extends ChangeNotifier {
   }
 
   Future<void> refreshMainView(NavigatorState navigator) async {
-    // try {
-    if (isLoggedIn) {
-      await userViewModel.getUser();
+    try {
+      if (isLoggedIn) {
+        await userViewModel.getUser();
 
-      // check is user exist
-      if (userViewModel.user == null) {
-        showLoginErrorDialog(
-          navigator,
-          error: 'User Null',
-        );
-        return;
+        // check is user exist
+        if (userViewModel.user == null) {
+          showLoginErrorDialog(
+            navigator,
+            error: 'User Null',
+          );
+          return;
+        }
+
+        await programListViewModel.getAllPrograms();
+        await memberListViewModel.getAllUserMembers();
       }
-
-      await programListViewModel.getAllPrograms();
-      await memberListViewModel.getAllUserMembers();
+    } catch (e) {
+      cl(e);
+      showLoginErrorDialog(navigator, error: e.toString());
     }
-    // } catch (e) {
-    //   cl(e);
-    //   showLoginErrorDialog(navigator, error: e.toString());
-    // }
   }
 
   void onChangedPage(int i) {
@@ -96,15 +96,9 @@ class MainViewModel extends ChangeNotifier {
     final loginViewModel = locator<LoginViewModel>();
     loginViewModel.logOut(navigator);
 
-    showDialog(
-      context: navigator.context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AppDialogWidget(
-          title: 'Oops! Something Went Wrong',
-          text: '$message\n\n$errorMessage',
-        );
-      },
+    AppDialog.showErrorDialog(
+      navigator,
+      error: '$message\n\n$errorMessage',
     );
   }
 }
