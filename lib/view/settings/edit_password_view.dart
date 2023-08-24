@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
-import '../../app/asset/app_assets.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_text_field.dart';
 import '../../widget/atom/app_text_fields_wrapper.dart';
@@ -20,18 +22,25 @@ class EditPasswordView extends StatefulWidget {
   State<EditPasswordView> createState() => _EditPasswordViewState();
 }
 
-class _EditPasswordViewState extends State<EditPasswordView> with TickerProviderStateMixin {
-  late TabController tabController;
+class _EditPasswordViewState extends State<EditPasswordView> {
+  final _editProfileViewModel = locator<EditProfileViewModel>();
 
   @override
   void initState() {
+    _editProfileViewModel.passwordCtrl = TextEditingController();
+    _editProfileViewModel.newPasswordCtrl = TextEditingController();
+    _editProfileViewModel.confirmPasswordCtrl = TextEditingController();
+
+    _editProfileViewModel.initEditProfileView();
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
-    tabController.addListener(tabListener);
   }
 
-  void tabListener() {
-    setState(() {});
+  @override
+  void dispose() {
+    _editProfileViewModel.passwordCtrl.dispose();
+    _editProfileViewModel.newPasswordCtrl.dispose();
+    _editProfileViewModel.confirmPasswordCtrl.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,94 +81,160 @@ class _EditPasswordViewState extends State<EditPasswordView> with TickerProvider
   }
 
   Widget body() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      child: Column(
-        children: [
-          const SizedBox(height: AppSizes.padding / 2),
-          AppTextFieldsWrapper(
-            textFields: [
-              AppTextField(
-                type: AppTextFieldType.password,
-                lableText: 'Password Lama',
-                onChanged: (val) {},
-              ),
-              AppTextField(
-                type: AppTextFieldType.password,
-                showVisibilityButton: false,
-                lableText: 'Password Baru',
-                onChanged: (val) {},
-              ),
-              AppTextField(
-                type: AppTextFieldType.password,
-                showVisibilityButton: false,
-                lableText: 'Ulangi Password',
-                onChanged: (val) {},
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          // validatorInfo(),
-          const SizedBox(height: AppSizes.padding),
-          changeButton(),
-        ],
-      ),
-    );
+    return Consumer<EditProfileViewModel>(builder: (context, model, _) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(AppSizes.padding),
+        child: Column(
+          children: [
+            const SizedBox(height: AppSizes.padding / 2),
+            AppTextFieldsWrapper(
+              textFields: [
+                AppTextField(
+                  controller: model.passwordCtrl,
+                  type: AppTextFieldType.password,
+                  lableText: 'Password Lama',
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                ),
+                AppTextField(
+                  controller: model.newPasswordCtrl,
+                  type: AppTextFieldType.password,
+                  showVisibilityButton: false,
+                  lableText: 'Password Baru',
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                ),
+                AppTextField(
+                  controller: model.confirmPasswordCtrl,
+                  type: AppTextFieldType.password,
+                  showVisibilityButton: false,
+                  lableText: 'Ulangi Password',
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.padding),
+            validatorInfo(model),
+            const SizedBox(height: AppSizes.padding),
+            changeButton(model),
+          ],
+        ),
+      );
+    });
   }
 
-  Widget changeButton() {
+  Widget changeButton(EditProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(
         top: AppSizes.padding / 2,
         bottom: AppSizes.padding * 2,
       ),
       child: AppButton(
+        onTap: () {
+          final navigator = Navigator.of(context);
+          model.onTapUpdatePassword(navigator);
+        },
         text: 'Change',
-        onTap: () {},
+        enable: enableButton(model),
       ),
     );
   }
 
-  Widget validatorInfo() {
+  bool enableButton(EditProfileViewModel model) {
+    if (model.newPasswordCtrl.text.contains(RegExp(r'[A-Z]')) &&
+        model.newPasswordCtrl.text.length > 5 &&
+        model.newPasswordCtrl.text.contains(RegExp(r'[0-9]')) &&
+        model.newPasswordCtrl.text.isNotEmpty &&
+        model.newPasswordCtrl.text == model.confirmPasswordCtrl.text) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Widget validatorInfo(EditProfileViewModel model) {
+    bool isContainUppercase = model.newPasswordCtrl.text.contains(RegExp(r'[A-Z]'));
+    bool isLengthMoreThan5 = model.newPasswordCtrl.text.length > 5;
+    bool isContainerNumber = model.newPasswordCtrl.text.contains(RegExp(r'[0-9]'));
+    bool isConfirmPassValid =
+        model.newPasswordCtrl.text.isNotEmpty && model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
+
     return Column(
       children: [
-        Row(
-          children: [
-            Image.asset(
-              AppAssets.successIconPath,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              'Besar atau kecil karakter',
-              style: AppTextStyle.medium(context),
-            ),
-          ],
+        Opacity(
+          opacity: isContainUppercase ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isContainUppercase ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Besar atau kecil karakter',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: AppSizes.padding / 2),
-        Row(
-          children: [
-            Image.asset(
-              AppAssets.failedIconPath,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '6 atau lebih karakter',
-              style: AppTextStyle.medium(context),
-            ),
-          ],
+        Opacity(
+          opacity: isLengthMoreThan5 ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isLengthMoreThan5 ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                '6 atau lebih karakter',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: AppSizes.padding / 2),
-        Row(
-          children: [
-            Image.asset(
-              AppAssets.unsuccessIconPath,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              'Setidaknya 1 nomor',
-              style: AppTextStyle.medium(context),
-            ),
-          ],
+        Opacity(
+          opacity: isContainerNumber ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isContainerNumber ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Setidaknya 1 nomor',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Opacity(
+          opacity: isConfirmPassValid ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isConfirmPassValid ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Ulangi password harus sama',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
         ),
       ],
     );

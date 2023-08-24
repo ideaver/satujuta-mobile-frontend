@@ -39,7 +39,7 @@ class AddressViewModel extends ChangeNotifier {
     selectedSubdistrict = null;
   }
 
-  Future<void> getProvinces(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
+  Future<void> getProvinces(NavigatorState navigator, {int skip = 0, String? contains}) async {
     var res = await GqlAddressService.provinceFindMany(
       skip: skip,
       contains: contains,
@@ -59,14 +59,14 @@ class AddressViewModel extends ChangeNotifier {
     cl('[getProvinces].provinceFindMany.length = ${provinceFindMany?.length}');
   }
 
-  Future<void> getCities(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
-    if (selectedProvince == null) {
-      cl('[getCities].selectedProvince null ');
-      return;
-    }
-
+  Future<void> getCities(
+    NavigatorState navigator, {
+    required int provinceId,
+    int skip = 0,
+    String? contains,
+  }) async {
     var res = await GqlAddressService.cityFindMany(
-      provinceId: selectedProvince!.id,
+      provinceId: provinceId,
       skip: skip,
       contains: contains,
     );
@@ -85,14 +85,14 @@ class AddressViewModel extends ChangeNotifier {
     cl('[getCities].cityFindMany.length = ${cityFindMany?.length}');
   }
 
-  Future<void> getDistrict(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
-    if (selectedCity == null) {
-      cl('[getDistrict].selectedCity null ');
-      return;
-    }
-
+  Future<void> getDistrict(
+    NavigatorState navigator, {
+    required int cityId,
+    int skip = 0,
+    String? contains,
+  }) async {
     var res = await GqlAddressService.districtFindMany(
-      cityId: selectedCity!.id,
+      cityId: cityId,
       skip: skip,
       contains: contains,
     );
@@ -111,14 +111,14 @@ class AddressViewModel extends ChangeNotifier {
     cl('[getDistrict].districtFindMany.length = ${districtFindMany?.length}');
   }
 
-  Future<void> getSubdistrict(NavigatorState navigator, {int skip = 0, String contains = ''}) async {
-    if (selectedDistrict == null) {
-      cl('[getSubdistrict].selectedDistrict null ');
-      return;
-    }
-
+  Future<void> getSubdistrict(
+    NavigatorState navigator, {
+    required int districtId,
+    int skip = 0,
+    String? contains,
+  }) async {
     var res = await GqlAddressService.subdistrictFindMany(
-      districtId: selectedDistrict!.id,
+      districtId: districtId,
       skip: skip,
       contains: contains,
     );
@@ -137,31 +137,31 @@ class AddressViewModel extends ChangeNotifier {
     cl('[getSubdistrict].subdistrictFindMany.length = ${subdistrictFindMany?.length}');
   }
 
-  void onSelectProvince(Query$ProvinceFindMany$provinceFindMany provice) {
-    selectedProvince = provice;
+  void onSelectProvince(Query$ProvinceFindMany$provinceFindMany province) {
+    selectedProvince = province;
     notifyListeners();
 
-    cl('[onSelectProvince].provice = ${provice.name}');
+    cl('[onSelectProvince].province = ${province.id}: ${province.name}');
   }
 
   void onSelectCity(Query$CityFindMany$cityFindMany city) {
     selectedCity = city;
     notifyListeners();
 
-    cl('[onSelectCity].city = ${city.name}');
+    cl('[onSelectCity].city =  ${city.id}: ${city.name}');
   }
 
   void onSelectDistrict(Query$DistrictFindMany$districtFindMany district) {
     selectedDistrict = district;
     notifyListeners();
 
-    cl('[onSelectDistrict].district = ${district.name}');
+    cl('[onSelectDistrict].district = ${district.id}: ${district.name}');
   }
 
   void onSelectSubdistrict(Query$SubdistrictFindMany$subdistrictFindMany subdistrict) {
     selectedSubdistrict = subdistrict;
     notifyListeners();
 
-    cl('[onSelectSubdistrict].subdistrict = ${subdistrict.name}');
+    cl('[onSelectSubdistrict].subdistrict =  ${subdistrict.id}: ${subdistrict.name}');
   }
 }

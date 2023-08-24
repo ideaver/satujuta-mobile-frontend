@@ -22,8 +22,8 @@ import '../../view_model/program_list_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_progress_indicator.dart';
-import '../referral/referral_detail_view.dart';
 import '../student/student_registration_view.dart';
+import '../user/user_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -109,7 +109,10 @@ class _DashboardViewState extends State<DashboardView> {
         children: [
           GestureDetector(
             onTap: () {
-              // TODO
+              Navigator.pushNamed(
+                context,
+                UserView.viewAsMeRouteName,
+              );
             },
             child: Row(
               children: [
@@ -136,7 +139,7 @@ class _DashboardViewState extends State<DashboardView> {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                ReferralDetailView.viewAsMeRouteName,
+                UserView.viewAsMeRouteName,
               );
             },
             text: '${userViewModel.userPoint}',

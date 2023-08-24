@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/asset/app_icons.dart';
@@ -8,6 +11,7 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../app/const/app_consts.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_expansion_list_tile.dart';
+import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_custom_text.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_separated.dart';
@@ -15,23 +19,24 @@ import '../../widget/molecule/referral_Invitation/circle_user.dart';
 import '../../widget/molecule/referral_Invitation/ref_invite_button.dart';
 import '../../widget/molecule/referral_Invitation/ref_text_line.dart';
 import '../register/components/reg_commission.dart';
+import '../settings/edit_profile_view.dart';
 
-class ReferralDetailView extends StatefulWidget {
+class UserView extends StatefulWidget {
   final PageStateEnum pageState;
-  const ReferralDetailView({Key? key, required this.pageState}) : super(key: key);
+  const UserView({Key? key, required this.pageState}) : super(key: key);
 
-  static const String viewAsMeRouteName = '/my-referral-detail';
+  static const String viewAsMeRouteName = '/user';
 
-  const ReferralDetailView.viewAsMe({
+  const UserView.viewAsMe({
     Key? key,
     this.pageState = PageStateEnum.viewAsMe,
   }) : super(key: key);
 
   @override
-  State<ReferralDetailView> createState() => _ReferralDetailViewState();
+  State<UserView> createState() => _UserViewState();
 }
 
-class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProviderStateMixin {
+class _UserViewState extends State<UserView> with TickerProviderStateMixin {
   late TabController tabController;
   bool isShow = true;
   int a = 3;
@@ -80,7 +85,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
           'Detail Profil',
           style: AppTextStyle.bold(context, fontSize: 18),
         ),
-        moreButton(),
+        editButton(),
       ],
     );
   }
@@ -98,10 +103,13 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
     );
   }
 
-  Widget moreButton() {
+  Widget editButton() {
     return AppIconButton(
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.pushNamed(
+          context,
+          EditProfileView.routeName,
+        );
       },
       icon: CustomIcon.edit_icon,
       iconSize: 18,
@@ -129,139 +137,143 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
   }
 
   Widget body() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      child: Column(
-        children: [
-          wrapMyRefCode(),
-          countMemberAndTask(),
-          wrapInviteFriend(),
-          tabBar(),
-          tabBarViews(),
-        ],
-      ),
-    );
+    return Consumer<UserViewModel>(builder: (context, model, _) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(AppSizes.padding),
+        child: Column(
+          children: [
+            wrapMyRefCode(model),
+            countMemberAndTask(),
+            wrapInviteFriend(),
+            tabBar(),
+            tabBarViews(),
+          ],
+        ),
+      );
+    });
   }
 
   Widget background() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            left: 44,
-            bottom: 169,
-            child: Container(
-              width: 619,
-              height: 619,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromRGBO(55, 114, 255, 0.05),
+    return Consumer<UserViewModel>(builder: (context, model, _) {
+      return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              left: 44,
+              bottom: 169,
+              child: Container(
+                width: 619,
+                height: 619,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromRGBO(55, 114, 255, 0.05),
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(
-              top: AppSizes.padding * 4,
-            ),
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  maxRadius: 80,
-                  backgroundImage: AssetImage(
-                    AppAssets.userImage1Path,
-                  ),
-                ),
-                const SizedBox(
-                  height: AppSizes.height * 2,
-                ),
-                SizedBox(
-                  width: 100,
-                  height: 40,
-                  child: AppButton(
-                    onTap: () {
-                      // TODO
-                    },
-                    text: '50 Poin',
-                    fontSize: 12,
-                    leftIcon: CustomIcon.coin_icon,
-                    buttonColor: AppColors.yellow,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: AppSizes.padding / 4,
-                      horizontal: AppSizes.padding / 2,
+            Container(
+              padding: const EdgeInsets.only(top: AppSizes.padding * 4),
+              child: Column(
+                children: [
+                  AppImage(
+                    image: model.user!.avatarUrl ?? '',
+                    width: 150,
+                    height: 150,
+                    borderRadius: 100,
+                    backgroundColor: AppColors.baseLv6,
+                    errorWidget: const Icon(
+                      Icons.person_rounded,
+                      size: 82,
+                      color: AppColors.baseLv4,
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: AppSizes.height * 2,
-                ),
-                Text(
-                  'Agus Susanto',
-                  style: AppTextStyle.bold(
-                    context,
-                    fontSize: 24,
+                  const SizedBox(height: AppSizes.height * 2),
+                  SizedBox(
+                    width: 100,
+                    height: 40,
+                    child: AppButton(
+                      onTap: () {
+                        // TODO
+                      },
+                      text: '${model.userPoint} Poin',
+                      fontSize: 12,
+                      leftIcon: CustomIcon.coin_icon,
+                      buttonColor: AppColors.yellow,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSizes.padding / 4,
+                        horizontal: AppSizes.padding / 2,
+                      ),
+                    ),
                   ),
-                )
-              ],
+                  const SizedBox(height: AppSizes.height * 2),
+                  Text(
+                    '${model.user!.firstName} ${model.user!.lastName}',
+                    style: AppTextStyle.bold(
+                      context,
+                      fontSize: 24,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 
-  Widget wrapMyRefCode() {
+  Widget wrapMyRefCode(UserViewModel model) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(
-            AppSizes.radius * 2,
-          )),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(
+          AppSizes.radius * 2,
+        ),
+      ),
       child: Container(
         margin: const EdgeInsets.all(AppSizes.padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              child: Container(
-                padding: const EdgeInsets.all(AppSizes.padding / 2),
-                decoration: BoxDecoration(
-                    color: AppColors.baseLv7,
-                    borderRadius: BorderRadius.circular(
-                      AppSizes.radius * 2,
-                    )),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSizes.padding / 1.5),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'UHND14145',
-                            style: AppTextStyle.bold(
-                              context,
-                              fontSize: 16,
-                              color: AppColors.base,
-                            ),
+              padding: const EdgeInsets.all(AppSizes.padding / 2),
+              decoration: BoxDecoration(
+                color: AppColors.baseLv7,
+                borderRadius: BorderRadius.circular(
+                  AppSizes.radius * 2,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(AppSizes.padding / 1.5),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          model.user!.referralCode,
+                          style: AppTextStyle.bold(
+                            context,
+                            fontSize: 16,
+                            color: AppColors.base,
                           ),
-                          const SizedBox(width: 4),
-                          const Icon(
-                            CustomIcon.copy_document,
-                            color: AppColors.primary,
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        'Bergabung Sejak 23 Mei 2023',
-                        style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 12),
-                      ),
-                    ],
-                  ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          CustomIcon.copy_document,
+                          color: AppColors.primary,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      'Bergabung Sejak ${DateFormatter.normal(model.user!.createdAt)}',
+                      style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 12),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -269,7 +281,7 @@ class _ReferralDetailViewState extends State<ReferralDetailView> with TickerProv
               height: AppSizes.padding / 1.5,
             ),
             Text(
-              'Diinvite Oleh Budi Susanto',
+              'Diinvite Oleh ${model.user!.referredBy?.firstName ?? '-'} ${model.user!.referredBy?.lastName ?? ''}',
               style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 12),
             ),
           ],

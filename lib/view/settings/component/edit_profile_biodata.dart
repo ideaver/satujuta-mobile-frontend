@@ -52,7 +52,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
     final navigator = Navigator.of(context);
 
     return Consumer2<EditProfileViewModel, AddressViewModel>(
-      builder: (context, model, address, _) {
+      builder: (context, editProfile, address, _) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
           child: Container(
@@ -60,7 +60,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
             child: AppTextFieldsWrapper(
               textFields: [
                 AppTextField(
-                  controller: model.firstName,
+                  controller: editProfile.firstNameCtrl,
                   suffixIcon: const Icon(
                     CupertinoIcons.person,
                   ),
@@ -68,7 +68,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                   hintText: widget.name,
                 ),
                 AppTextField(
-                  controller: model.lastName,
+                  controller: editProfile.lastNameCtrl,
                   suffixIcon: const Icon(
                     CupertinoIcons.person,
                   ),
@@ -76,7 +76,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                   hintText: widget.name,
                 ),
                 AppTextField(
-                  controller: model.addressName,
+                  controller: editProfile.addressNameCtrl,
                   suffixIcon: const Icon(
                     Icons.location_on_outlined,
                   ),
@@ -85,21 +85,22 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 ),
                 AppTextField(
                   enabled: false,
-                  controller: model.province,
+                  controller: editProfile.provinceCtrl,
                   onTap: () async {
                     var province = await AppModal.show(
                       context: context,
                       title: 'Provinsi',
-                      child: addressList(AddressType.province),
+                      child: addressList(AddressType.province, 0),
                     );
 
                     if (province != null) {
                       cl(province);
-                      model.province.text = province.name;
-                      model.city.clear();
-                      model.district.clear();
-                      model.subdistrict.clear();
-                      model.postalCode.clear();
+                      editProfile.provinceId = province.id;
+                      editProfile.provinceCtrl.text = province.name;
+                      editProfile.cityCtrl.clear();
+                      editProfile.districtCtrl.clear();
+                      editProfile.subdistrictCtrl.clear();
+                      editProfile.postalCodeCtrl.clear();
                       address.selectedCity = null;
                       address.selectedDistrict = null;
                       address.selectedSubdistrict = null;
@@ -114,9 +115,9 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 ),
                 AppTextField(
                   enabled: false,
-                  controller: model.city,
+                  controller: editProfile.cityCtrl,
                   onTap: () async {
-                    if (address.selectedProvince == null) {
+                    if (editProfile.provinceId == null) {
                       AppSnackbar.show(navigator, title: 'Pilih provinsi terlebih dahulu');
                       return;
                     }
@@ -124,15 +125,16 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     var city = await AppModal.show(
                       context: context,
                       title: 'Kota',
-                      child: addressList(AddressType.city),
+                      child: addressList(AddressType.city, editProfile.provinceId!),
                     );
 
                     if (city != null) {
                       cl(city);
-                      model.city.text = city.name;
-                      model.district.clear();
-                      model.subdistrict.clear();
-                      model.postalCode.clear();
+                      editProfile.cityId = city.id;
+                      editProfile.cityCtrl.text = city.name;
+                      editProfile.districtCtrl.clear();
+                      editProfile.subdistrictCtrl.clear();
+                      editProfile.postalCodeCtrl.clear();
                       address.selectedDistrict = null;
                       address.selectedSubdistrict = null;
                     }
@@ -146,9 +148,9 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 ),
                 AppTextField(
                   enabled: false,
-                  controller: model.district,
+                  controller: editProfile.districtCtrl,
                   onTap: () async {
-                    if (address.selectedCity == null) {
+                    if (editProfile.cityId == null) {
                       AppSnackbar.show(navigator, title: 'Pilih kota terlebih dahulu');
                       return;
                     }
@@ -156,14 +158,15 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     var district = await AppModal.show(
                       context: context,
                       title: 'Kecamatan',
-                      child: addressList(AddressType.district),
+                      child: addressList(AddressType.district, editProfile.cityId!),
                     );
 
                     if (district != null) {
                       cl(district);
-                      model.district.text = district.name;
-                      model.subdistrict.clear();
-                      model.postalCode.clear();
+                      editProfile.districtId = district.id;
+                      editProfile.districtCtrl.text = district.name;
+                      editProfile.subdistrictCtrl.clear();
+                      editProfile.postalCodeCtrl.clear();
                       address.selectedSubdistrict = null;
                     }
                   },
@@ -175,9 +178,9 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 ),
                 AppTextField(
                   enabled: false,
-                  controller: model.subdistrict,
+                  controller: editProfile.subdistrictCtrl,
                   onTap: () async {
-                    if (address.selectedDistrict == null) {
+                    if (editProfile.districtId == null) {
                       AppSnackbar.show(navigator, title: 'Pilih kecamatan terlebih dahulu');
                       return;
                     }
@@ -185,13 +188,14 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     var subdistrict = await AppModal.show(
                       context: context,
                       title: 'Kelurahan',
-                      child: addressList(AddressType.subdistrict),
+                      child: addressList(AddressType.subdistrict, editProfile.districtId!),
                     );
 
                     if (subdistrict != null) {
                       cl(subdistrict);
-                      model.subdistrict.text = subdistrict.name;
-                      model.postalCode.text = subdistrict.postalCode;
+                      editProfile.subdistrictId = subdistrict.id;
+                      editProfile.subdistrictCtrl.text = subdistrict.name;
+                      editProfile.postalCodeCtrl.text = subdistrict.postalCode;
                     }
                   },
                   suffixIcon: const Icon(
@@ -202,7 +206,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 ),
                 AppTextField(
                   enabled: false,
-                  controller: model.postalCode,
+                  controller: editProfile.postalCodeCtrl,
                   suffixIcon: const Icon(
                     CupertinoIcons.mail,
                   ),
@@ -271,7 +275,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
   //   );
   // }
 
-  Widget addressList(AddressType type) {
+  Widget addressList(AddressType type, int parentId) {
     final navigator = Navigator.of(context);
     final addressViewModel = locator<AddressViewModel>();
 
@@ -280,15 +284,15 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
     }
 
     if (type == AddressType.city) {
-      addressViewModel.getCities(navigator);
+      addressViewModel.getCities(navigator, provinceId: parentId);
     }
 
     if (type == AddressType.district) {
-      addressViewModel.getDistrict(navigator);
+      addressViewModel.getDistrict(navigator, cityId: parentId);
     }
 
     if (type == AddressType.subdistrict) {
-      addressViewModel.getSubdistrict(navigator);
+      addressViewModel.getSubdistrict(navigator, districtId: parentId);
     }
 
     return Consumer<AddressViewModel>(builder: (context, model, _) {
@@ -314,15 +318,15 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 }
 
                 if (type == AddressType.city) {
-                  await model.getCities(navigator, contains: val);
+                  await model.getCities(navigator, provinceId: parentId, contains: val);
                 }
 
                 if (type == AddressType.district) {
-                  await model.getDistrict(navigator, contains: val);
+                  await model.getDistrict(navigator, cityId: parentId, contains: val);
                 }
 
                 if (type == AddressType.subdistrict) {
-                  await model.getSubdistrict(navigator, contains: val);
+                  await model.getSubdistrict(navigator, districtId: parentId, contains: val);
                 }
               },
             ),
@@ -433,13 +437,6 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
           ),
           const SizedBox(height: AppSizes.padding),
           AppButton(
-            enable: (type == AddressType.province
-                ? model.selectedProvince != null
-                : type == AddressType.city
-                    ? model.selectedCity != null
-                    : type == AddressType.district
-                        ? model.selectedDistrict != null
-                        : model.selectedSubdistrict != null),
             onTap: () {
               if (type == AddressType.province) {
                 Navigator.pop(context, model.selectedProvince);
@@ -457,6 +454,13 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 Navigator.pop(context, model.selectedSubdistrict);
               }
             },
+            enable: (type == AddressType.province
+                ? model.selectedProvince != null
+                : type == AddressType.city
+                    ? model.selectedCity != null
+                    : type == AddressType.district
+                        ? model.selectedDistrict != null
+                        : model.selectedSubdistrict != null),
             text: 'Pilih',
           ),
         ],

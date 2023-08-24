@@ -55,41 +55,5 @@ class UserViewModel extends ChangeNotifier {
     cl(user?.toJson());
 
     notifyListeners();
-
-    calculateUserPoint();
-    calculateUserCommssion();
-  }
-
-  void calculateUserPoint() {
-    if (user == null) {
-      return;
-    }
-
-    if (user!.PointTransactions != null) {
-      var points = user!.PointTransactions!.map((e) => e.amount).toList();
-
-      if (points.isNotEmpty) {
-        userPoint = points.reduce((v, e) => v + e).toInt();
-      }
-    }
-
-    notifyListeners();
-  }
-
-  void calculateUserCommssion() {
-    if (user == null) {
-      return;
-    }
-
-    // TODO GET COMMISION
-    // if (user!.claimedRewards != null) {
-    //   var commission = user!.claimedRewards.map((e) => e.);
-
-    //   if (points.isNotEmpty) {
-    //     userCommission = commission.reduce((v, e) => v + e).toInt();
-    //   }
-    // }
-
-    notifyListeners();
   }
 }

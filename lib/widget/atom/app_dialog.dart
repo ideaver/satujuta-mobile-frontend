@@ -135,7 +135,7 @@ class AppDialog {
                         textAlign: TextAlign.center,
                         style: AppTextStyle.medium(
                           navigator.context,
-                          fontSize: 12,
+                          fontSize: 10,
                           color: AppColors.baseLv5,
                         ),
                       ),
@@ -159,19 +159,39 @@ class AppDialog {
       barrierDismissible: false,
       builder: (context) {
         return AppDialogWidget(
-          title: title ?? 'Oops!',
           child: Column(
             children: [
-              Text(
-                message ?? 'Something went wrong, please contact your system administrator or try restart the app',
-                textAlign: TextAlign.center,
-                style: AppTextStyle.medium(navigator.context),
+              const SizedBox(height: 22),
+              const Icon(
+                Icons.error,
+                color: AppColors.red,
+                size: 72,
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
               Text(
-                error.toString().length > 35 ? error.toString().substring(0, 15) : error.toString(),
+                title ?? 'Oops!',
                 textAlign: TextAlign.center,
-                style: AppTextStyle.regular(navigator.context),
+                style: AppTextStyle.extraBold(navigator.context, fontSize: 18),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  message ?? 'Something went wrong, please contact your system administrator or try restart the app',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyle.medium(navigator.context, fontSize: 12),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  error.toString().length > 35 ? error.toString().substring(0, 50) : error.toString(),
+                  textAlign: TextAlign.center,
+                  style: AppTextStyle.medium(
+                    navigator.context,
+                    fontSize: 10,
+                    color: AppColors.baseLv5,
+                  ),
+                ),
               ),
             ],
           ),
