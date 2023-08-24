@@ -35,17 +35,17 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(tabListener);
 
-    _editProfileViewModel.firstName = TextEditingController();
-    _editProfileViewModel.lastName = TextEditingController();
-    _editProfileViewModel.addressName = TextEditingController();
-    _editProfileViewModel.postalCode = TextEditingController();
-    _editProfileViewModel.whatsappNumber = TextEditingController();
-    _editProfileViewModel.email = TextEditingController();
-    _editProfileViewModel.password = TextEditingController();
-    _editProfileViewModel.confirmPassword = TextEditingController();
-    _editProfileViewModel.referralCode = TextEditingController();
-    _editProfileViewModel.bank = TextEditingController();
-    _editProfileViewModel.bankAccountNumber = TextEditingController();
+    _editProfileViewModel.firstNameCtrl = TextEditingController();
+    _editProfileViewModel.lastNameCtrl = TextEditingController();
+    _editProfileViewModel.addressNameCtrl = TextEditingController();
+    _editProfileViewModel.postalCodeCtrl = TextEditingController();
+    _editProfileViewModel.whatsappNumberCtrl = TextEditingController();
+    _editProfileViewModel.emailCtrl = TextEditingController();
+    _editProfileViewModel.passwordCtrl = TextEditingController();
+    _editProfileViewModel.confirmPasswordCtrl = TextEditingController();
+    _editProfileViewModel.referralCodeCtrl = TextEditingController();
+    _editProfileViewModel.bankNameCtrl = TextEditingController();
+    _editProfileViewModel.bankAccountNumberCtrl = TextEditingController();
 
     _editProfileViewModel.initEditProfileView();
     super.initState();
@@ -53,17 +53,17 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
 
   @override
   void dispose() {
-    _editProfileViewModel.firstName.dispose();
-    _editProfileViewModel.lastName.dispose();
-    _editProfileViewModel.addressName.dispose();
-    _editProfileViewModel.postalCode.dispose();
-    _editProfileViewModel.whatsappNumber.dispose();
-    _editProfileViewModel.email.dispose();
-    _editProfileViewModel.password.dispose();
-    _editProfileViewModel.confirmPassword.dispose();
-    _editProfileViewModel.referralCode.dispose();
-    _editProfileViewModel.bank.dispose();
-    _editProfileViewModel.bankAccountNumber.dispose();
+    _editProfileViewModel.firstNameCtrl.dispose();
+    _editProfileViewModel.lastNameCtrl.dispose();
+    _editProfileViewModel.addressNameCtrl.dispose();
+    _editProfileViewModel.postalCodeCtrl.dispose();
+    _editProfileViewModel.whatsappNumberCtrl.dispose();
+    _editProfileViewModel.emailCtrl.dispose();
+    _editProfileViewModel.passwordCtrl.dispose();
+    _editProfileViewModel.confirmPasswordCtrl.dispose();
+    _editProfileViewModel.referralCodeCtrl.dispose();
+    _editProfileViewModel.bankNameCtrl.dispose();
+    _editProfileViewModel.bankAccountNumberCtrl.dispose();
     super.dispose();
   }
 
@@ -348,11 +348,11 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
         bottom: AppSizes.padding * 2,
       ),
       child: AppButton(
-        text: "Simpan Perubahan",
         onTap: () {
           final navigator = Navigator.of(context);
-          model.updateProfile(navigator);
+          model.onTapUpdateProfile(navigator);
         },
+        text: "Simpan Perubahan",
       ),
     );
   }

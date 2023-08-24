@@ -35,7 +35,7 @@ class _EditProfileAccountState extends State<EditProfileAccount> {
                 AppTextFieldsWrapper(
                   textFields: [
                     AppTextField(
-                      controller: model.whatsappNumber,
+                      controller: model.whatsappNumberCtrl,
                       enabled: false,
                       type: AppTextFieldType.phone,
                       suffixIcon: const Icon(
@@ -45,7 +45,7 @@ class _EditProfileAccountState extends State<EditProfileAccount> {
                       hintText: widget.noWa,
                     ),
                     AppTextField(
-                      controller: model.email,
+                      controller: model.emailCtrl,
                       enabled: false,
                       suffixIcon: const Icon(
                         CupertinoIcons.mail,
