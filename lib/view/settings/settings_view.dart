@@ -8,7 +8,7 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import 'about_view.dart';
-import 'component/settings_items.dart';
+import 'components/settings_items.dart';
 import 'edit_password_view.dart';
 import 'edit_profile_view.dart';
 
