@@ -16,6 +16,10 @@ class RewardTransactionsList extends StatefulWidget {
 }
 
 class _RewardTransactionsListState extends State<RewardTransactionsList> {
+  int lastSkip = 0;
+  int skip = 0;
+  bool isLoadingMore = false;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserViewModel>(builder: (context, model, _) {
@@ -36,6 +40,8 @@ class _RewardTransactionsListState extends State<RewardTransactionsList> {
         );
       }
 
+      skip = model.userPointTransactions!.length - 1;
+
       return Padding(
         padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
         child: AppExpansionListTile(
@@ -46,11 +52,21 @@ class _RewardTransactionsListState extends State<RewardTransactionsList> {
             ...List.generate(model.userClaimedRewards!.length, (i) {
               return rewardItemCard(i);
             }),
-            loadMoreButton(
-              onTap: () {
-                model.getUserClaimedRewards(skip: model.userClaimedRewards!.length - 1);
-              },
-            ),
+            lastSkip == skip
+                ? const SizedBox.shrink()
+                : loadMoreButton(
+                    onTap: () {
+                      isLoadingMore = true;
+                      setState(() {});
+
+                      var currSkip = model.userPointTransactions!.length;
+                      model.getUserClaimedRewards(skip: model.userClaimedRewards!.length - 1);
+
+                      isLoadingMore = false;
+                      lastSkip = currSkip;
+                      setState(() {});
+                    },
+                  ),
           ],
         ),
       );
@@ -157,7 +173,7 @@ class _RewardTransactionsListState extends State<RewardTransactionsList> {
             const SizedBox(
               width: AppSizes.height,
             ),
-            Icon(
+            const Icon(
               Icons.arrow_downward,
               size: AppSizes.height,
               color: AppColors.primary,

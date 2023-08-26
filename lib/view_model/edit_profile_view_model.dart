@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
@@ -12,13 +11,10 @@ import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
 import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
 import 'address_view_model.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-  final network = locator<NetworkCheckerService>();
   final userViewModel = locator<UserViewModel>();
   final addressViewModel = locator<AddressViewModel>();
 

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
+import 'package:satujuta_app_mobile/view_model/hotel_list_view_model.dart';
+import 'package:satujuta_app_mobile/view_model/school_list_view_model.dart';
 import 'package:satujuta_gql_client/graphql_service.dart';
 
 import 'app/locale/app_locale.dart';
@@ -19,6 +21,7 @@ import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
 import 'view_model/member_list_view_model.dart';
 import 'view_model/program_list_view_model.dart';
+import 'view_model/student_reg_view_model.dart';
 import 'view_model/user_view_model.dart';
 
 Future<void> main() async {
@@ -72,6 +75,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<AddressViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<AccountViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<DashboardViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<StudentRegViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<SchoolListViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<HotelListViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',

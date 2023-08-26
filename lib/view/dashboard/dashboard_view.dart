@@ -153,12 +153,21 @@ class _DashboardViewState extends State<DashboardView> {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(100),
       ),
-      child: const AppTextField(
-        prefixIcon: Icon(
+      child: AppTextField(
+        onTap: () async {
+          final mainViewModel = locator<MainViewModel>();
+          final memberListViewModel = locator<MemberListViewModel>();
+          mainViewModel.onChangedPage(2);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            memberListViewModel.searchFocusNode.requestFocus();
+          });
+        },
+        enabled: false,
+        prefixIcon: const Icon(
           Icons.search,
         ),
         hintText: 'Cari Nama Anggota Anda',
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.padding / 2,
           vertical: AppSizes.padding / 4,
         ),

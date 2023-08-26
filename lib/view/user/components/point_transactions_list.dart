@@ -43,6 +43,8 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
         );
       }
 
+      skip = model.userPointTransactions!.length - 1;
+
       return Padding(
         padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
         child: AppExpansionListTile(
@@ -53,22 +55,19 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
             ...List.generate(model.userPointTransactions!.length, (i) {
               return poinItemCard(model.userPointTransactions![i]);
             }),
-            lastSkip == model.userPointTransactions!.length - 1
+            lastSkip == skip
                 ? const SizedBox.shrink()
                 : loadMoreButton(
                     onTap: () async {
-                      setState(() {
-                        isLoadingMore = true;
-                      });
+                      isLoadingMore = true;
+                      setState(() {});
 
                       var currSkip = model.userPointTransactions!.length;
-                      await model.getUserPointTransactions(skip: model.userPointTransactions!.length - 1);
+                      await model.getUserPointTransactions(skip: skip);
 
-                      setState(() {
-                        isLoadingMore = false;
-                        lastSkip = currSkip;
-                        skip = model.userPointTransactions!.length - 1;
-                      });
+                      isLoadingMore = false;
+                      lastSkip = currSkip;
+                      setState(() {});
                     },
                   ),
           ],

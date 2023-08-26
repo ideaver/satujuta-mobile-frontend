@@ -21,7 +21,7 @@ class AppTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final TextInputType? keyboardtype;
   final bool enabled;
-  final bool showVisibilityButton;
+  final bool showSuffixButton;
   final Color? fillColor;
   final Color disabledColor;
   final Function()? onTap;
@@ -33,6 +33,7 @@ class AppTextField extends StatefulWidget {
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focus;
 
   const AppTextField({
     super.key,
@@ -43,7 +44,7 @@ class AppTextField extends StatefulWidget {
     this.suffixIcon,
     this.keyboardtype,
     this.enabled = true,
-    this.showVisibilityButton = true,
+    this.showSuffixButton = true,
     this.onTap,
     this.onChanged,
     this.onEditingComplete,
@@ -55,6 +56,7 @@ class AppTextField extends StatefulWidget {
     this.inputFormatters,
     this.fillColor,
     this.disabledColor = AppColors.baseLv4,
+    this.focus,
   });
 
   @override
@@ -89,6 +91,7 @@ class _AppTextFieldState extends State<AppTextField> {
           keyboardType: keyboardType(),
           textInputAction: widget.textInputAction,
           inputFormatters: inputFormatters(),
+          focusNode: widget.focus,
           style: AppTextStyle.medium(
             context,
             color: widget.enabled ? AppColors.base : widget.disabledColor,
@@ -151,8 +154,12 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   Widget? suffixIconWidget() {
-    if (widget.type == AppTextFieldType.password && widget.showVisibilityButton) {
+    if (widget.type == AppTextFieldType.password && widget.showSuffixButton) {
       return textVisibilityIconButton();
+    }
+
+    if (widget.type == AppTextFieldType.search && widget.showSuffixButton) {
+      return cancelSearchButton();
     }
 
     return widget.suffixIcon;
@@ -169,6 +176,20 @@ class _AppTextFieldState extends State<AppTextField> {
         _obsecureText ? Icons.visibility_off_rounded : Icons.remove_red_eye_rounded,
         // color: AppColors.baseLv5,
         // size: widget.iconsSize,
+      ),
+    );
+  }
+
+  Widget cancelSearchButton() {
+    return GestureDetector(
+      onTap: () {
+        widget.focus?.unfocus();
+        widget.controller?.clear();
+      },
+      child: const Icon(
+        Icons.cancel_rounded,
+        color: AppColors.baseLv5,
+        size: 24,
       ),
     );
   }

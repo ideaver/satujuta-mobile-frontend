@@ -4,10 +4,13 @@ import '../../../view_model/account_view_model.dart';
 import '../../../view_model/address_view_model.dart';
 import '../../../view_model/dashboard_view_model.dart';
 import '../../../view_model/edit_profile_view_model.dart';
+import '../../../view_model/hotel_list_view_model.dart';
 import '../../../view_model/login_view_model.dart';
 import '../../../view_model/main_view_model.dart';
 import '../../../view_model/member_list_view_model.dart';
 import '../../../view_model/program_list_view_model.dart';
+import '../../../view_model/school_list_view_model.dart';
+import '../../../view_model/student_reg_view_model.dart';
 import '../../../view_model/user_view_model.dart';
 import '../network_checker/network_checker_service.dart';
 
@@ -24,5 +27,8 @@ void setupServiceLocator() {
   locator.registerLazySingleton(() => AddressViewModel());
   locator.registerLazySingleton(() => AccountViewModel());
   locator.registerLazySingleton(() => DashboardViewModel());
+  locator.registerLazySingleton(() => StudentRegViewModel());
+  locator.registerLazySingleton(() => SchoolListViewModel());
+  locator.registerLazySingleton(() => HotelListViewModel());
   locator.registerFactory(() => LoginViewModel());
 }

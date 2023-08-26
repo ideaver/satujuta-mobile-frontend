@@ -34,7 +34,7 @@ class _StudentHotelPickerViewState extends State<StudentHotelPickerView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(), 
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             sliverAppBarWidget(),

@@ -39,7 +39,7 @@ class _EditProfileAccountState extends State<EditProfileAccount> {
                       enabled: false,
                       type: AppTextFieldType.phone,
                       suffixIcon: const Icon(
-                        CupertinoIcons.phone,
+                        CupertinoIcons.phone_circle,
                       ),
                       lableText: 'Nomor WhatsApp',
                       hintText: widget.noWa,

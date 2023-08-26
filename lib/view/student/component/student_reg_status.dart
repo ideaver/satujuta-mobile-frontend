@@ -12,12 +12,11 @@ import '../../../widget/atom/app_icon_button.dart';
 import '../../checkout/student_checkout_view.dart';
 
 class StudentRegStatus extends StatefulWidget {
-  final bool isSuccess;
-
   const StudentRegStatus({
     super.key,
-    required this.isSuccess,
   });
+
+  static const String routeName = '/student-reg-status';
 
   @override
   State<StudentRegStatus> createState() => _StudentRegStatusState();
@@ -29,7 +28,9 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    bool isSuccess = ModalRoute.of(context)?.settings.arguments as bool;
+
+    return SizedBox(
       height: MediaQuery.of(context).size.height - (AppSizes.padding * 12),
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -39,12 +40,12 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
                 child: AppImage(
-                  image: widget.isSuccess ? AppAssets.successIlusPath : AppAssets.failedIlusPath,
+                  image: isSuccess ? AppAssets.successIlusPath : AppAssets.failedIlusPath,
                   imgProvider: ImgProvider.assetImage,
                 ),
               ),
               Text(
-                widget.isSuccess ? 'Data Berhasil Dibuat' : 'Data Gagal Dibuat',
+                isSuccess ? 'Data Berhasil Dibuat' : 'Data Gagal Dibuat',
                 style: AppTextStyle.bold(context, fontSize: 20),
               ),
               const SizedBox(height: AppSizes.padding / 1.5),

@@ -17,6 +17,10 @@ class CommissionTransactionsList extends StatefulWidget {
 }
 
 class _CommissionTransactionsListState extends State<CommissionTransactionsList> {
+  int lastSkip = 0;
+  int skip = 0;
+  bool isLoadingMore = false;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserViewModel>(builder: (context, model, _) {
@@ -31,11 +35,13 @@ class _CommissionTransactionsListState extends State<CommissionTransactionsList>
         return Padding(
           padding: const EdgeInsets.all(AppSizes.padding * 2),
           child: Text(
-            '(Riwayat komisi Kosong)',
+            '(Riwayat komisi kosong)',
             style: AppTextStyle.bold(context, color: AppColors.baseLv4),
           ),
         );
       }
+
+      skip = model.userPointTransactions!.length - 1;
 
       return Padding(
         padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
@@ -47,11 +53,22 @@ class _CommissionTransactionsListState extends State<CommissionTransactionsList>
             ...List.generate(model.userCommissionTransactions!.length, (i) {
               return commissionItemCard(i);
             }),
-            loadMoreButton(
-              onTap: () {
-                model.getUserCommissionTransactions(skip: model.userPointTransactions!.length - 1);
-              },
-            ),
+            lastSkip == skip
+                ? const SizedBox.shrink()
+                : loadMoreButton(
+                    onTap: () {
+                      isLoadingMore = true;
+                      setState(() {});
+
+                      var currSkip = model.userPointTransactions!.length;
+
+                      model.getUserCommissionTransactions(skip: model.userPointTransactions!.length - 1);
+
+                      isLoadingMore = false;
+                      lastSkip = currSkip;
+                      setState(() {});
+                    },
+                  ),
           ],
         ),
       );
@@ -180,7 +197,7 @@ class _CommissionTransactionsListState extends State<CommissionTransactionsList>
             const SizedBox(
               width: AppSizes.height,
             ),
-            Icon(
+            const Icon(
               Icons.arrow_downward,
               size: AppSizes.height,
               color: AppColors.primary,

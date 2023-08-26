@@ -21,6 +21,7 @@ import '../../view/settings/edit_password_view.dart';
 import '../../view/settings/edit_profile_view.dart';
 import '../../view/settings/settings_view.dart';
 import '../../view/splash/splash_view.dart';
+import '../../view/student/component/student_reg_status.dart';
 import '../../view/student/student_registration_view.dart';
 import '../../view/user/user_view.dart';
 import '../../view/web_view/web_view.dart';
@@ -49,6 +50,7 @@ class AppRoutes {
     EditPasswordView.routeName: (context) => const EditPasswordView(),
     MarketingGalleryView.routeName: (context) => const MarketingGalleryView(),
     StudentRegistrationView.routeName: (context) => const StudentRegistrationView(),
+    StudentRegStatus.routeName: (context) => const StudentRegStatus(),
     StudentHotelPickerView.routeName: (context) => const StudentHotelPickerView(),
     StudentCheckoutView.routeName: (context) => const StudentCheckoutView(),
     AboutView.routeName: (context) => const AboutView(),

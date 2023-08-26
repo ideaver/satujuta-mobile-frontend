@@ -100,7 +100,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
                 AppTextField(
                   controller: model.newPasswordCtrl,
                   type: AppTextFieldType.password,
-                  showVisibilityButton: false,
+                  showSuffixButton: false,
                   lableText: 'Password Baru',
                   onChanged: (val) {
                     setState(() {});
@@ -109,7 +109,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
                 AppTextField(
                   controller: model.confirmPasswordCtrl,
                   type: AppTextFieldType.password,
-                  showVisibilityButton: false,
+                  showSuffixButton: false,
                   lableText: 'Ulangi Password',
                   onChanged: (val) {
                     setState(() {});

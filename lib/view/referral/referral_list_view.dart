@@ -51,10 +51,21 @@ class _ReferralListViewState extends State<ReferralListView> {
 
   @override
   void initState() {
+    _memberListViewModel.searchCtrl = TextEditingController();
+    _memberListViewModel.searchFocusNode = FocusNode();
+    _memberListViewModel.addListener(_memberListViewModel.focusListener);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _memberListViewModel.getAllUserMembers();
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _memberListViewModel.searchCtrl.dispose();
+    _memberListViewModel.searchFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -165,13 +176,16 @@ class _ReferralListViewState extends State<ReferralListView> {
 
   Widget body() {
     return Consumer<MemberListViewModel>(builder: (context, model, _) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          searchField(model),
-          tabBar(),
-          memberList(model),
-        ],
+      return SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            searchField(model),
+            tabBar(),
+            memberList(model),
+          ],
+        ),
       );
     });
   }
@@ -190,23 +204,36 @@ class _ReferralListViewState extends State<ReferralListView> {
       ),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: AppTextField(
-              prefixIcon: Icon(
+              type: AppTextFieldType.search,
+              controller: model.searchCtrl,
+              focus: model.searchFocusNode,
+              showSuffixButton: model.isSearchFocus,
+              prefixIcon: const Icon(
                 Icons.search,
               ),
               hintText: 'Cari',
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.padding / 2,
                 vertical: AppSizes.padding / 4,
               ),
             ),
           ),
-          const SizedBox(width: AppSizes.padding / 2),
-          sortButton(),
-          const SizedBox(width: AppSizes.padding),
-          inviteButton(),
-          const SizedBox(width: AppSizes.padding),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: model.isSearchFocus
+                ? const SizedBox.shrink()
+                : Row(
+                    children: [
+                      const SizedBox(width: AppSizes.padding / 2),
+                      sortButton(),
+                      const SizedBox(width: AppSizes.padding),
+                      inviteButton(),
+                      const SizedBox(width: AppSizes.padding),
+                    ],
+                  ),
+          ),
         ],
       ),
     );

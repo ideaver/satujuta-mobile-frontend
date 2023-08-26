@@ -56,6 +56,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
+      appBar: appBar(),
       body: NestedScrollView(
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -71,7 +72,10 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
   AppBar appBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.baseLv7,
+      ),
+      backgroundColor: AppColors.baseLv7,
       title: title(),
     );
   }
@@ -125,12 +129,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
       automaticallyImplyLeading: false,
       expandedHeight: 420,
       flexibleSpace: FlexibleSpaceBar(
-        background: Column(
-          children: [
-            appBar(),
-            background(),
-          ],
-        ),
+        background: background(),
         expandedTitleScale: 1,
       ),
     );

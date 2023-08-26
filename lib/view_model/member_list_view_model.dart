@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:satujuta_gql_client/gql_error_parser.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
 import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
 import 'user_view_model.dart';
 
 class MemberListViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-
-  final network = locator<NetworkCheckerService>();
   final userViewModel = locator<UserViewModel>();
+
+  TextEditingController searchCtrl = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
+  bool isSearchFocus = false;
 
   List<Query$UserFindMany$userFindMany>? userMembers;
   List<Query$UserFindMany$userFindMany>? userMembersActive;
@@ -24,6 +23,17 @@ class MemberListViewModel extends ChangeNotifier {
     userMembers = null;
     userMembersActive = null;
     userMembersInactive = null;
+  }
+
+  void focusListener() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (searchFocusNode.hasFocus) {
+        isSearchFocus = true;
+      } else {
+        isSearchFocus = false;
+      }
+      notifyListeners();
+    });
   }
 
   Future<void> getAllUserMembers({int skip = 0}) async {
@@ -37,7 +47,7 @@ class MemberListViewModel extends ChangeNotifier {
       skip: skip,
     );
 
-    if (res.parsedData != null && !res.hasException) {
+    if (res.parsedData?.userFindMany != null && !res.hasException) {
       userMembers = res.parsedData?.userFindMany;
 
       if (userMembers != null && userMembers!.isNotEmpty) {
