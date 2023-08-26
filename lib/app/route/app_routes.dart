@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/view/project_list/project_list_view.dart';
 
 import '../../view/checkout/checkout_view.dart';
 import '../../view/checkout/student_checkout_view.dart';
@@ -52,6 +53,7 @@ class AppRoutes {
     StudentHotelPickerView.routeName: (context) => const StudentHotelPickerView(),
     StudentCheckoutView.routeName: (context) => const StudentCheckoutView(),
     AboutView.routeName: (context) => const AboutView(),
+    ProjectListView.routeName: (context) => const ProjectListView(),
     WebView.routeName: (context) => const WebView(),
   };
 }
