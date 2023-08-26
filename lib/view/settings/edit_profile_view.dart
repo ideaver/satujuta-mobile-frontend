@@ -10,9 +10,9 @@ import '../../../widget/atom/app_button.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
-import 'component/edit_profile_account.dart';
-import 'component/edit_profile_biodata.dart';
-import 'component/edit_profile_commission.dart';
+import 'components/edit_profile_account.dart';
+import 'components/edit_profile_biodata.dart';
+import 'components/edit_profile_commission.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({

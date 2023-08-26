@@ -13,6 +13,7 @@ import 'app/theme/app_theme.dart';
 import 'view/main/main_view.dart';
 import 'view_model/account_view_model.dart';
 import 'view_model/address_view_model.dart';
+import 'view_model/dashboard_view_model.dart';
 import 'view_model/edit_profile_view_model.dart';
 import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<MemberListViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<AddressViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<AccountViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<DashboardViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',
