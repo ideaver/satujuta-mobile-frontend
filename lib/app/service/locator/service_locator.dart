@@ -4,7 +4,7 @@ import '../../../view_model/account_view_model.dart';
 import '../../../view_model/address_view_model.dart';
 import '../../../view_model/dashboard_view_model.dart';
 import '../../../view_model/edit_profile_view_model.dart';
-import '../../../view_model/hotel_list_view_model.dart';
+import '../../../view_model/hotel_picker_view_model.dart';
 import '../../../view_model/login_view_model.dart';
 import '../../../view_model/main_view_model.dart';
 import '../../../view_model/member_list_view_model.dart';
@@ -29,6 +29,6 @@ void setupServiceLocator() {
   locator.registerLazySingleton(() => DashboardViewModel());
   locator.registerLazySingleton(() => StudentRegViewModel());
   locator.registerLazySingleton(() => SchoolListViewModel());
-  locator.registerLazySingleton(() => HotelListViewModel());
+  locator.registerLazySingleton(() => HotelPickerViewModel());
   locator.registerFactory(() => LoginViewModel());
 }

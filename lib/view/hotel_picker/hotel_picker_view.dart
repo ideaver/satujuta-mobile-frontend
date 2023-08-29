@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -6,30 +10,47 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/hotel_picker_view_model.dart';
+import '../../widget/atom/app_progress_indicator.dart';
 
 class HotelPicker extends StatefulWidget {
-  const HotelPicker({Key? key}) : super(key: key);
+  final String title;
 
-  static const String routeName = '/hotel-picker';
+  const HotelPicker({
+    super.key,
+    required this.title,
+  });
+
+  static const String userHotelRouteName = '/hotel-picker';
+  static const String studentHotelRouteName = '/student-hotel-picker';
+
+  const HotelPicker.user({
+    super.key,
+    this.title = "Pilih Hotel Menginap Anda",
+  });
+
+  const HotelPicker.student({
+    super.key,
+    this.title = "Pilih Hotel Menginap Siswa",
+  });
 
   @override
   State<HotelPicker> createState() => _HotelPickerState();
 }
 
 class _HotelPickerState extends State<HotelPicker> {
-  int selectedLocation = -1;
-  int? selectedHotel;
+  final hotelPickerViewModel = locator<HotelPickerViewModel>();
 
-  List<String> locations = [
-    'Jakarta',
-    'Bandung',
-    'Surabaya',
-    'Bekasi',
-    'Bogor',
-  ];
+  int selectedTabIndex = -1;
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
+    final provinceId = ModalRoute.of(context)?.settings.arguments as int?;
+
+    hotelPickerViewModel.initHotelPicker(navigator, provinceId);
+
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
@@ -45,26 +66,33 @@ class _HotelPickerState extends State<HotelPicker> {
     );
   }
 
-  SliverAppBar sliverAppBarWidget() {
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      expandedHeight: 170,
-      pinned: true,
-      backgroundColor: AppColors.baseLv7,
-      elevation: 0.5,
-      flexibleSpace: FlexibleSpaceBar(
-        title: title(),
-        expandedTitleScale: 1.5,
-      ),
-      bottom: tabBar(),
-    );
+  Widget sliverAppBarWidget() {
+    return Consumer<HotelPickerViewModel>(builder: (context, model, _) {
+      return SliverAppBar(
+        automaticallyImplyLeading: false,
+        expandedHeight: model.cityFindMany == null || model.cityFindMany!.isEmpty ? 62 : 170,
+        pinned: true,
+        backgroundColor: AppColors.baseLv7,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: AppColors.baseLv7,
+        ),
+        elevation: 0.5,
+        flexibleSpace: FlexibleSpaceBar(
+          title: title(model),
+          expandedTitleScale: 1.5,
+        ),
+        bottom: model.cityFindMany == null || model.cityFindMany!.isEmpty ? null : tabBar(),
+      );
+    });
   }
 
-  Widget title() {
+  Widget title(HotelPickerViewModel model) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSizes.padding * 3),
+      padding: EdgeInsets.only(
+        bottom: model.cityFindMany == null || model.cityFindMany!.isEmpty ? 0 : AppSizes.padding * 4,
+      ),
       child: Text(
-        'Pilih Hotel Menginap Anda',
+        widget.title,
         style: AppTextStyle.bold(context, fontSize: 14),
       ),
     );
@@ -73,29 +101,30 @@ class _HotelPickerState extends State<HotelPicker> {
   PreferredSizeWidget tabBar() {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 50),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSizes.padding,
-          vertical: AppSizes.padding,
-        ),
-        child: Row(
-          children: [
-            tabWidget(-1),
-            ...List.generate(locations.length, (i) {
-              return tabWidget(i);
-            })
-          ],
-        ),
-      ),
+      child: Consumer<HotelPickerViewModel>(builder: (context, model, _) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.padding,
+            vertical: AppSizes.padding,
+          ),
+          child: Row(
+            children: [
+              tabWidget(model, -1),
+              ...List.generate(model.cityFindMany!.length, (i) {
+                return tabWidget(model, i);
+              })
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  Widget tabWidget(int i) {
+  Widget tabWidget(HotelPickerViewModel model, int i) {
     return GestureDetector(
       onTap: () {
-        selectedLocation = i;
-        setState(() {});
+        model.onSelectCity(model.cityFindMany![i]);
       },
       child: Container(
         margin: const EdgeInsets.only(right: AppSizes.padding / 2),
@@ -104,7 +133,7 @@ class _HotelPickerState extends State<HotelPicker> {
           horizontal: AppSizes.padding,
         ),
         decoration: BoxDecoration(
-          color: selectedLocation == i ? AppColors.primary : AppColors.white,
+          color: selectedTabIndex == i ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Row(
@@ -115,15 +144,15 @@ class _HotelPickerState extends State<HotelPicker> {
                     child: Icon(
                       Icons.dashboard_outlined,
                       size: 16,
-                      color: selectedLocation == -1 ? AppColors.white : AppColors.base,
+                      color: selectedTabIndex == -1 ? AppColors.white : AppColors.base,
                     ),
                   )
                 : const SizedBox.shrink(),
             Text(
-              i == -1 ? 'Semua' : locations[i],
+              i == -1 ? 'Semua' : model.cityFindMany![i].name,
               style: AppTextStyle.semiBold(
                 context,
-                color: selectedLocation == i ? AppColors.white : AppColors.base,
+                color: selectedTabIndex == i ? AppColors.white : AppColors.base,
               ),
             ),
           ],
@@ -133,29 +162,32 @@ class _HotelPickerState extends State<HotelPicker> {
   }
 
   Widget body() {
-    if (selectedLocation == 0) {
-      return AppNotFoundWidget(
-        title: 'Maaf, Belum Ada Hotel Di Lokasi Ini',
-        subtitle: "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
-      );
-    }
+    return Consumer<HotelPickerViewModel>(builder: (context, model, _) {
+      if (model.hotelFindMany == null) {
+        return const AppProgressIndicator();
+      }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: AppSizes.padding),
-      child: ListView.builder(
+      if (model.hotelFindMany!.isEmpty) {
+        return const AppNotFoundWidget(
+          title: 'Maaf, Belum Ada Hotel Di Lokasi Ini',
+          subtitle: "Kami akan segera menambahkan daftar hotel yang kamu inginkan",
+        );
+      }
+
+      return ListView.builder(
         shrinkWrap: true,
-        itemCount: 5,
+        itemCount: model.hotelFindMany!.length,
         padding: const EdgeInsets.all(AppSizes.padding),
         itemBuilder: (context, i) {
-          return hotelCard(i);
+          return hotelCard(model, i);
         },
-      ),
-    );
+      );
+    });
   }
 
-  Widget hotelCard(int i) {
+  Widget hotelCard(HotelPickerViewModel model, int i) {
     return Opacity(
-      opacity: selectedHotel == null || selectedHotel == i ? 1 : 0.5,
+      opacity: model.selectedHotel == null || model.selectedHotel == model.hotelFindMany![i] ? 1 : 0.5,
       child: Container(
         margin: const EdgeInsets.only(bottom: AppSizes.padding),
         padding: const EdgeInsets.all(AppSizes.padding),
@@ -185,7 +217,7 @@ class _HotelPickerState extends State<HotelPicker> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Bandung, Jawa Barat',
+                      '${model.hotelFindMany![i].address.subdistrict.district.city.name}, ${model.hotelFindMany![i].address.subdistrict.district.city.province.name}',
                       style: AppTextStyle.regular(context, fontSize: 12),
                     ),
                   ],
@@ -199,7 +231,7 @@ class _HotelPickerState extends State<HotelPicker> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '03/10',
+                      '${model.hotelFindMany![i].$_count.checkIns}/${model.hotelFindMany![i].quota}',
                       style: AppTextStyle.bold(context, fontSize: 12),
                     ),
                   ],
@@ -211,14 +243,20 @@ class _HotelPickerState extends State<HotelPicker> {
               aspectRatio: 1.5,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-                child: const AppImage(
-                  image: randomImage,
+                child: AppImage(
+                  image: model.hotelFindMany![i].images?.first.url ?? '',
+                  backgroundColor: AppColors.baseLv7,
+                  errorWidget: const Icon(
+                    CupertinoIcons.building_2_fill,
+                    color: AppColors.baseLv4,
+                    size: 32,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: AppSizes.padding),
             Text(
-              'Grand Cordela Hotel Bandung',
+              model.hotelFindMany![i].name,
               style: AppTextStyle.bold(context, fontSize: 16),
             ),
             const SizedBox(height: AppSizes.padding),
@@ -235,24 +273,18 @@ class _HotelPickerState extends State<HotelPicker> {
             ),
             const SizedBox(height: AppSizes.padding),
             Text(
-              'If each interior angle is doubled of each exterior angle of a regular polygon with n sides, then the value of n is:',
+              model.hotelFindMany![i].description,
               style: AppTextStyle.regular(context, fontSize: 14),
             ),
             const SizedBox(height: AppSizes.padding),
             AppButton(
               onTap: () {
-                // TODO
-                if (selectedHotel == null) {
-                  selectedHotel = i;
-                } else {
-                  selectedHotel = null;
-                }
-                setState(() {});
+                model.onSelectHotel(model.hotelFindMany![i]);
               },
-              enable: selectedHotel == null || selectedHotel == i,
-              text: selectedHotel == null || selectedHotel != i ? 'Pilih' : 'Anda memilih ini',
-              leftIcon: selectedHotel == null || selectedHotel != i ? null : Icons.check_circle,
-              buttonColor: selectedHotel == null ? AppColors.primary : AppColors.secondary,
+              enable: model.selectedHotel == null || model.selectedHotel == model.hotelFindMany![i],
+              text: model.selectedHotel == null ? 'Pilih' : 'Anda memilih ini',
+              leftIcon: model.selectedHotel == null ? null : Icons.check_circle,
+              buttonColor: model.selectedHotel == null ? AppColors.primary : AppColors.secondary,
             ),
           ],
         ),
@@ -261,68 +293,70 @@ class _HotelPickerState extends State<HotelPicker> {
   }
 
   Widget bottomSheet() {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      child: selectedHotel == null
-          ? const SizedBox.shrink()
-          : Container(
-              padding: const EdgeInsets.all(AppSizes.padding),
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(AppSizes.radius * 2),
-                  topRight: Radius.circular(AppSizes.radius * 2),
+    return Consumer<HotelPickerViewModel>(builder: (context, model, _) {
+      return AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: model.selectedHotel == null
+            ? const SizedBox.shrink()
+            : Container(
+                padding: const EdgeInsets.all(AppSizes.padding),
+                decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(AppSizes.radius * 2),
+                    topRight: Radius.circular(AppSizes.radius * 2),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(0, -4),
+                      blurRadius: 22,
+                    ),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    offset: Offset(0, -4),
-                    blurRadius: 22,
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Grand Cordela Hotel Bandung',
-                    style: AppTextStyle.bold(context, fontSize: 16),
-                  ),
-                  const SizedBox(height: AppSizes.padding),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.timelapse_outlined,
-                        size: 12,
-                        color: AppColors.baseLv4,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Perkiraan check-in menginap',
-                        style: AppTextStyle.medium(
-                          context,
-                          fontSize: 12,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.selectedHotel!.name,
+                      style: AppTextStyle.bold(context, fontSize: 16),
+                    ),
+                    const SizedBox(height: AppSizes.padding),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.timelapse_outlined,
+                          size: 12,
                           color: AppColors.baseLv4,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSizes.padding / 4),
-                  Text(
-                    'Medi 2023 - Juli 2023',
-                    style: AppTextStyle.bold(context, fontSize: 14),
-                  ),
-                  const SizedBox(height: AppSizes.padding),
-                  AppButton(
-                    text: 'Berikutnya',
-                    onTap: () {
-                      // TODO
-                    },
-                  ),
-                ],
+                        const SizedBox(width: 4),
+                        Text(
+                          'Perkiraan check-in menginap',
+                          style: AppTextStyle.medium(
+                            context,
+                            fontSize: 12,
+                            color: AppColors.baseLv4,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSizes.padding / 4),
+                    Text(
+                      '${DateFormatter.normal(model.selectedHotel!.startDate)} ',
+                      style: AppTextStyle.bold(context, fontSize: 14),
+                    ),
+                    const SizedBox(height: AppSizes.padding),
+                    AppButton(
+                      text: 'Pilih',
+                      onTap: () {
+                        Navigator.pop(context, model.selectedHotel);
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-    );
+      );
+    });
   }
 }

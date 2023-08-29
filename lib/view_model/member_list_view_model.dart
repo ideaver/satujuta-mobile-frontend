@@ -64,17 +64,16 @@ class MemberListViewModel extends ChangeNotifier {
     }
   }
 
-  int calculateMemberPoint(List<Query$UserFindMany$userFindMany$PointTransactions>? pointTransactions) {
-    if (pointTransactions != null) {
-      var points = pointTransactions.map((e) => e.amount).toList();
+  Future<int> getMemberPoints(String userId) async {
+    var res = await GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
+      userId: userId,
+    );
 
-      if (points.isNotEmpty) {
-        return points.reduce((v, e) => v + e).toInt();
-      }
-
+    if (res.parsedData?.pointTransactionFindFirst?.currentBalance != null && !res.hasException) {
+      return (res.parsedData!.pointTransactionFindFirst?.currentBalance ?? 0).toInt();
+    } else {
+      cl('[getMemberPoints].error = ${gqlErrorParser(res)}');
       return 0;
     }
-
-    return 0;
   }
 }

@@ -4,7 +4,6 @@ import '../../view/checkout/checkout_view.dart';
 import '../../view/checkout/student_checkout_view.dart';
 import '../../view/dashboard/dashboard_view.dart';
 import '../../view/hotel_picker/hotel_picker_view.dart';
-import '../../view/hotel_picker/student_hotel_picker_view.dart';
 import '../../view/login/login_view.dart';
 import '../../view/login/reset_pass_view.dart';
 import '../../view/main/main_view.dart';
@@ -35,7 +34,6 @@ class AppRoutes {
     RegisterView.routeName: (context) => const RegisterView(),
     DashboardView.routeName: (context) => const DashboardView(),
     OnboardingView.routeName: (context) => const OnboardingView(),
-    HotelPicker.routeName: (context) => const HotelPicker(),
     CheckoutView.routeName: (context) => const CheckoutView(),
     ProgramListView.routeName: (context) => const ProgramListView(),
     RewardListView.routeName: (context) => const RewardListView(),
@@ -51,7 +49,8 @@ class AppRoutes {
     MarketingGalleryView.routeName: (context) => const MarketingGalleryView(),
     StudentRegistrationView.routeName: (context) => const StudentRegistrationView(),
     StudentRegStatus.routeName: (context) => const StudentRegStatus(),
-    StudentHotelPickerView.routeName: (context) => const StudentHotelPickerView(),
+    HotelPicker.userHotelRouteName: (context) => const HotelPicker.user(),
+    HotelPicker.studentHotelRouteName: (context) => const HotelPicker.student(),
     StudentCheckoutView.routeName: (context) => const StudentCheckoutView(),
     AboutView.routeName: (context) => const AboutView(),
     WebView.routeName: (context) => const WebView(),

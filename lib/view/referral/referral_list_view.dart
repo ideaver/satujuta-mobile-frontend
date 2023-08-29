@@ -414,24 +414,7 @@ class _ReferralListViewState extends State<ReferralListView> {
                         ),
                       ),
                       const SizedBox(height: AppSizes.padding / 3),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.stars,
-                            size: 18,
-                            color: AppColors.yellow,
-                          ),
-                          const SizedBox(width: AppSizes.padding / 4),
-                          Text(
-                            '${model.calculateMemberPoint(member.PointTransactions)} Poin',
-                            style: AppTextStyle.medium(
-                              context,
-                              fontSize: 12,
-                              color: AppColors.baseLv4,
-                            ),
-                          ),
-                        ],
-                      )
+                      memberPoints(member.id),
                     ],
                   ),
                 ),
@@ -458,6 +441,32 @@ class _ReferralListViewState extends State<ReferralListView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget memberPoints(String userId) {
+    return FutureBuilder(
+      future: _memberListViewModel.getMemberPoints(userId),
+      builder: (context, snapshot) {
+        return Row(
+          children: [
+            const Icon(
+              Icons.stars,
+              size: 18,
+              color: AppColors.yellow,
+            ),
+            const SizedBox(width: AppSizes.padding / 4),
+            Text(
+              '${snapshot.data} Poin',
+              style: AppTextStyle.medium(
+                context,
+                fontSize: 12,
+                color: AppColors.baseLv4,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

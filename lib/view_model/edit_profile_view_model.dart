@@ -62,16 +62,16 @@ class EditProfileViewModel extends ChangeNotifier {
 
     firstNameCtrl.text = user!.firstName;
     lastNameCtrl.text = user!.lastName ?? '';
-    addressNameCtrl.text = user!.address.name;
-    provinceCtrl.text = user!.address.province.name;
-    cityCtrl.text = user!.address.city.name;
-    districtCtrl.text = user!.address.district.name;
+    addressNameCtrl.text = user!.address.subdistrict.name;
+    provinceCtrl.text = user!.address.subdistrict.district.city.province.name;
+    cityCtrl.text = user!.address.subdistrict.district.city.name;
+    districtCtrl.text = user!.address.subdistrict.district.name;
     subdistrictCtrl.text = user!.address.subdistrict.name;
     postalCodeCtrl.text = user!.address.subdistrict.postalCode;
 
-    provinceId = user!.address.province.id;
-    cityId = user!.address.city.id;
-    districtId = user!.address.district.id;
+    provinceId = user!.address.subdistrict.district.city.province.id;
+    cityId = user!.address.subdistrict.district.city.id;
+    districtId = user!.address.subdistrict.district.id;
     subdistrictId = user!.address.subdistrict.id;
 
     whatsappNumberCtrl.text = user!.whatsappNumber;
@@ -138,9 +138,8 @@ class EditProfileViewModel extends ChangeNotifier {
       } else {
         cl('[onTapUpdatePassword].resProfile.error = $errRes');
         navigator.pop();
-        AppDialog.showFailedDialog(
+        AppDialog.showErrorDialog(
           navigator,
-          subtitle: "Password lama yang kamu masukkan salah",
           error: "errRes: $errRes",
         );
       }
@@ -197,22 +196,22 @@ class EditProfileViewModel extends ChangeNotifier {
     var address = Mutation$UserUpdateOne$userUpdateOne$address(
       id: 0,
       name: addressNameCtrl.text,
-      province: Mutation$UserUpdateOne$userUpdateOne$address$province(
-        id: provinceId!,
-        name: provinceCtrl.text,
-      ),
-      city: Mutation$UserUpdateOne$userUpdateOne$address$city(
-        id: cityId!,
-        name: cityCtrl.text,
-      ),
-      district: Mutation$UserUpdateOne$userUpdateOne$address$district(
-        id: districtId!,
-        name: districtCtrl.text,
-      ),
       subdistrict: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict(
         id: subdistrictId!,
         name: subdistrictCtrl.text,
         postalCode: postalCodeCtrl.text,
+        district: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district(
+          id: districtId!,
+          name: districtCtrl.text,
+          city: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district$city(
+            id: cityId!,
+            name: cityCtrl.text,
+            province: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district$city$province(
+              id: provinceId!,
+              name: provinceCtrl.text,
+            ),
+          ),
+        ),
       ),
     );
 

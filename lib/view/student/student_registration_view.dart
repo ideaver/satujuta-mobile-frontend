@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/validator.dart';
+import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 
 import '../../../app/asset/app_assets.dart';
 import '../../../app/theme/app_colors.dart';
@@ -17,8 +18,7 @@ import '../../widget/atom/app_snackbar.dart';
 import '../../widget/atom/app_text_field.dart';
 import '../../widget/atom/app_text_fields_wrapper.dart';
 import '../../widget/organism/address/address_list_modal.dart';
-import '../hotel_picker/student_hotel_picker_view.dart';
-import 'component/student_reg_status.dart';
+import '../hotel_picker/hotel_picker_view.dart';
 
 class StudentRegistrationView extends StatefulWidget {
   const StudentRegistrationView({
@@ -36,12 +36,6 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.white,
-      ),
-    );
-
     return Scaffold(
       backgroundColor: AppColors.white,
       body: NestedScrollView(
@@ -134,7 +128,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
           children: [
             form(student, address),
             validatorInfo(student),
-            nextButton(student),
+            registerStudentButton(student),
           ],
         ),
       );
@@ -297,21 +291,16 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             hintText: '60241',
             disabledColor: AppColors.base,
           ),
-          AppTextField(
-            onTap: () {
-              // TODO
-            },
-            suffixIcon: const Icon(
+          const AppTextField(
+            type: AppTextFieldType.number,
+            suffixIcon: Icon(
               CupertinoIcons.phone_circle,
             ),
             lableText: 'No. Whatsapp',
             hintText: 'Masukkan No. Whatsapp Aktif',
           ),
-          AppTextField(
-            onTap: () {
-              // TODO
-            },
-            suffixIcon: const Icon(
+          const AppTextField(
+            suffixIcon: Icon(
               CupertinoIcons.mail,
             ),
             lableText: 'Email',
@@ -319,8 +308,17 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
           ),
           AppTextField(
             enabled: false,
-            onTap: () {
+            controller: student.schoolNameCtrl,
+            disabledColor: AppColors.base,
+            onTap: () async {
               // TODO
+              // var hotel = await Navigator.pushNamed(context, HotelPicker.userHotelRouteName);
+
+              // if (hotel != null && hotel is Query$HotelFindMany$hotelFindMany) {
+              //   cl(hotel);
+              //   student.selectedHotel = hotel;
+              //   student.hotelNameCtrl.text = hotel.name;
+              // }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_right,
@@ -329,9 +327,20 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
           ),
           AppTextField(
             enabled: false,
-            onTap: () {
-              // TODO
-              Navigator.pushNamed(context, StudentHotelPickerView.routeName);
+            controller: student.hotelNameCtrl,
+            disabledColor: AppColors.base,
+            onTap: () async {
+              var hotel = await Navigator.pushNamed(
+                context,
+                HotelPicker.userHotelRouteName,
+                arguments: student.provinceId,
+              );
+
+              if (hotel != null && hotel is Query$HotelFindMany$hotelFindMany) {
+                cl(hotel);
+                student.selectedHotel = hotel;
+                student.hotelNameCtrl.text = hotel.name;
+              }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_right,
@@ -344,10 +353,8 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
   }
 
   Widget validatorInfo(StudentRegViewModel model) {
-    bool isEmailValid = model.emailCtrl.text.isNotEmpty &&
-        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(model.emailCtrl.text);
-    bool isWhatsappNumberValid = model.whatsappNumberCtrl.text.isNotEmpty &&
-        RegExp(r'(^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$)').hasMatch(model.whatsappNumberCtrl.text);
+    bool isEmailValid = Validator.isEmailValid(model.emailCtrl.text);
+    bool isWhatsappNumberValid = Validator.isPhoneNumberValid(model.whatsappNumberCtrl.text);
 
     return Column(
       children: [
@@ -390,13 +397,14 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
     );
   }
 
-  Widget nextButton(StudentRegViewModel model) {
+  Widget registerStudentButton(StudentRegViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
       child: AppButton(
-        text: "Berikutnya",
+        text: "Daftarkan Siswa",
         onTap: () {
-          Navigator.pushNamed(context, StudentRegStatus.routeName);
+          final navigator = Navigator.of(context);
+          model.onTapRegisterStudent(navigator);
         },
       ),
     );

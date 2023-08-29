@@ -8,16 +8,16 @@ import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
 import '../student/student_registration_view.dart';
 
-class StudentHotelPickerView extends StatefulWidget {
-  const StudentHotelPickerView({Key? key}) : super(key: key);
+class ____StudentHotelPickerView extends StatefulWidget {
+  const ____StudentHotelPickerView({Key? key}) : super(key: key);
 
   static const String routeName = '/student-hotel-picker';
 
   @override
-  State<StudentHotelPickerView> createState() => _StudentHotelPickerViewState();
+  State<____StudentHotelPickerView> createState() => _____StudentHotelPickerViewState();
 }
 
-class _StudentHotelPickerViewState extends State<StudentHotelPickerView> {
+class _____StudentHotelPickerViewState extends State<____StudentHotelPickerView> {
   int selectedLocation = -1;
   int? selectedHotel;
 
@@ -34,7 +34,7 @@ class _StudentHotelPickerViewState extends State<StudentHotelPickerView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
-        physics: const BouncingScrollPhysics(), 
+        physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             sliverAppBarWidget(),

@@ -3,17 +3,22 @@ import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 import 'package:satujuta_gql_client/gql_error_parser.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/user_create_one.graphql.dart';
+import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
+import '../view/student/component/student_reg_status.dart';
+import '../widget/atom/app_dialog.dart';
 import 'address_view_model.dart';
 
 class StudentRegViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();
   final addressViewModel = locator<AddressViewModel>();
 
-  Mutation$UserUpdateOne$userUpdateOne? user;
+  Mutation$UserCreate$userCreateOne? student;
 
   TextEditingController firstNameCtrl = TextEditingController();
   TextEditingController lastNameCtrl = TextEditingController();
@@ -32,33 +37,55 @@ class StudentRegViewModel extends ChangeNotifier {
   TextEditingController whatsappNumberCtrl = TextEditingController();
   TextEditingController emailCtrl = TextEditingController();
 
+  Query$SchoolFindMany$schoolFindMany? selectedSchool;
+  Query$HotelFindMany$hotelFindMany? selectedHotel;
+  TextEditingController schoolNameCtrl = TextEditingController();
+  TextEditingController hotelNameCtrl = TextEditingController();
+
   void initEditProfileView() async {
-    firstNameCtrl.text = user!.firstName;
-    lastNameCtrl.text = user!.lastName ?? '';
-    addressNameCtrl.text = user!.address.name;
-    provinceCtrl.text = user!.address.province.name;
-    cityCtrl.text = user!.address.city.name;
-    districtCtrl.text = user!.address.district.name;
-    subdistrictCtrl.text = user!.address.subdistrict.name;
-    postalCodeCtrl.text = user!.address.subdistrict.postalCode;
+    // firstNameCtrl.text = user!.firstName;
+    // lastNameCtrl.text = user!.lastName ?? '';
+    // addressNameCtrl.text = user!.address.subdistrict.name;
+    // provinceCtrl.text = user!.address.subdistrict.district.city.province.name;
+    // cityCtrl.text = user!.address.subdistrict.district.city.name;
+    // districtCtrl.text = user!.address.subdistrict.district.name;
+    // subdistrictCtrl.text = user!.address.subdistrict.name;
+    // postalCodeCtrl.text = user!.address.subdistrict.postalCode;
 
-    provinceId = user!.address.province.id;
-    cityId = user!.address.city.id;
-    districtId = user!.address.district.id;
-    subdistrictId = user!.address.subdistrict.id;
+    // provinceId = user!.address.subdistrict.district.city.province.id;
+    // cityId = user!.address.subdistrict.district.city.id;
+    // districtId = user!.address.subdistrict.district.id;
+    // subdistrictId = user!.address.subdistrict.id;
 
-    whatsappNumberCtrl.text = user!.whatsappNumber;
-    emailCtrl.text = user!.email;
+    // whatsappNumberCtrl.text = user!.whatsappNumber;
+    // emailCtrl.text = user!.email;
   }
 
-  bool updateProfileValidator(NavigatorState navigator) {
-    if (user == null) {
-      cl('[updateProfile].user null');
-      return false;
-    }
+  void onTapRegisterStudent(NavigatorState navigator) async {
+    bool isValid = regStudentValidator(navigator);
 
+    if (isValid) {
+      AppDialog.showDialogProgress(navigator);
+
+      var errRes = await registerStudent(navigator);
+
+      if (errRes == null) {
+        navigator.pop();
+        navigator.pushReplacementNamed(StudentRegStatus.routeName);
+      } else {
+        cl('[onTapRegisterStudent].resProfile.error = $errRes');
+        navigator.pop();
+        AppDialog.showErrorDialog(
+          navigator,
+          error: "errRes: $errRes",
+        );
+      }
+    }
+  }
+
+  bool regStudentValidator(NavigatorState navigator) {
     if (firstNameCtrl.text.isEmpty) {
-      cl('[updateProfile].firstName empty');
+      cl('[regStudentValidator].firstName empty');
       AppSnackbar.show(navigator, title: 'Mohon masukkan nama depan anda!');
       return false;
     }
@@ -68,64 +95,64 @@ class StudentRegViewModel extends ChangeNotifier {
         cityId == null ||
         districtId == null ||
         subdistrictId == null) {
-      cl('[updateProfile].adress null');
-      AppSnackbar.show(navigator, title: 'Mohon lengkapi alamat anda!');
+      cl('[regStudentValidator].adress null');
+      AppSnackbar.show(navigator, title: 'Mohon lengkapi alamat siswa!');
       return false;
     }
 
     return true;
   }
 
-  Future<String?> updateUserProfile(NavigatorState navigator) async {
-    var address = Mutation$UserUpdateOne$userUpdateOne$address(
+  Future<String?> registerStudent(NavigatorState navigator) async {
+    var address = Mutation$UserCreate$userCreateOne$address(
       id: 0,
       name: addressNameCtrl.text,
-      province: Mutation$UserUpdateOne$userUpdateOne$address$province(
-        id: provinceId!,
-        name: provinceCtrl.text,
-      ),
-      city: Mutation$UserUpdateOne$userUpdateOne$address$city(
-        id: cityId!,
-        name: cityCtrl.text,
-      ),
-      district: Mutation$UserUpdateOne$userUpdateOne$address$district(
-        id: districtId!,
-        name: districtCtrl.text,
-      ),
-      subdistrict: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict(
+      subdistrict: Mutation$UserCreate$userCreateOne$address$subdistrict(
         id: subdistrictId!,
         name: subdistrictCtrl.text,
         postalCode: postalCodeCtrl.text,
+        district: Mutation$UserCreate$userCreateOne$address$subdistrict$district(
+          id: districtId!,
+          name: districtCtrl.text,
+          city: Mutation$UserCreate$userCreateOne$address$subdistrict$district$city(
+            id: cityId!,
+            name: cityCtrl.text,
+            province: Mutation$UserCreate$userCreateOne$address$subdistrict$district$city$province(
+              id: provinceId!,
+              name: provinceCtrl.text,
+            ),
+          ),
+        ),
       ),
     );
 
-    cl('[updateUserProfile].address = ${address.toJson()}');
+    cl('[registerStudent].address = ${address.toJson()}');
 
-    var updateUser = Mutation$UserUpdateOne$userUpdateOne(
-      id: user!.id,
+    var studentData = Mutation$UserCreate$userCreateOne(
+      id: "",
       firstName: firstNameCtrl.text,
       lastName: lastNameCtrl.text,
       email: emailCtrl.text,
-      userRole: user!.userRole,
-      userType: user!.userType,
+      userRole: Enum$UserRole.STUDENT,
+      userType: Enum$UserType.STUDENT,
       whatsappNumber: whatsappNumberCtrl.text,
-      status: user!.status,
-      theme: user!.theme,
+      status: Enum$UserStatus.ACTIVE,
+      theme: Enum$Theme.LIGHT,
       address: address,
-      referralCode: user!.referralCode,
-      createdAt: user!.createdAt,
+      referralCode: userViewModel.user!.referralCode,
+      createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),
     );
 
-    var res = await GqlUserService.userUpdateOne(updateUser);
+    var res = await GqlUserService.userCreateOne(studentData);
 
-    cl('[updateProfile].res = $res');
+    cl('[registerStudent].res = $res');
 
-    if (res.parsedData?.userUpdateOne != null && !res.hasException) {
-      user = res.parsedData!.userUpdateOne;
+    if (res.parsedData?.userCreateOne != null && !res.hasException) {
+      student = res.parsedData!.userCreateOne;
       notifyListeners();
 
-      cl('[updateProfile].user = ${user?.toJson()}');
+      cl('[registerStudent].student = ${student?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);

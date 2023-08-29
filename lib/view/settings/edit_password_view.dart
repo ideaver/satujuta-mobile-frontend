@@ -6,6 +6,7 @@ import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/validator.dart';
 import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_text_field.dart';
@@ -145,10 +146,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
   }
 
   bool enableButton(EditProfileViewModel model) {
-    if (model.newPasswordCtrl.text.contains(RegExp(r'[A-Z]')) &&
-        model.newPasswordCtrl.text.length > 5 &&
-        model.newPasswordCtrl.text.contains(RegExp(r'[0-9]')) &&
-        model.newPasswordCtrl.text.isNotEmpty &&
+    if (Validator.isPasswordValid(model.newPasswordCtrl.text) &&
         model.newPasswordCtrl.text == model.confirmPasswordCtrl.text) {
       return true;
     } else {
@@ -157,9 +155,9 @@ class _EditPasswordViewState extends State<EditPasswordView> {
   }
 
   Widget validatorInfo(EditProfileViewModel model) {
-    bool isContainUppercase = model.newPasswordCtrl.text.contains(RegExp(r'[A-Z]'));
+    bool isContainUppercase = Validator.isContainsUppercase(model.newPasswordCtrl.text);
     bool isLengthMoreThan5 = model.newPasswordCtrl.text.length > 5;
-    bool isContainerNumber = model.newPasswordCtrl.text.contains(RegExp(r'[0-9]'));
+    bool isContainerNumber = Validator.isContainsNumber(model.newPasswordCtrl.text);
     bool isConfirmPassValid =
         model.newPasswordCtrl.text.isNotEmpty && model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
 
