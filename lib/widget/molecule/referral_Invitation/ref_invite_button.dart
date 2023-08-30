@@ -9,17 +9,17 @@ class RefInviteButton extends StatelessWidget {
     super.key,
     this.textButton,
     this.leadingButton,
-    required this.functionButton,
+    required this.onTap,
   });
 
-  final dynamic functionButton;
+  final dynamic onTap;
   final String? textButton;
   final Widget? leadingButton;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: functionButton,
+      onPressed: onTap,
       style: ButtonStyle(
         visualDensity: VisualDensity.compact,
         shape: MaterialStateProperty.all(

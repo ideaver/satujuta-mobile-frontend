@@ -318,37 +318,41 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
         ),
         child: Padding(
           padding: const EdgeInsets.all(AppSizes.padding),
-          child: Container(
-            child: Column(
-              children: [
-                const SizedBox(height: AppSizes.padding / 2),
-                Text(
-                  'Undang Teman Anda',
-                  style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
+          child: Column(
+            children: [
+              const SizedBox(height: AppSizes.padding / 2),
+              Text(
+                'Undang Teman Anda',
+                style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
+              ),
+              const SizedBox(height: AppSizes.padding / 2),
+              Text(
+                'Undang lebih banyak teman Anda untuk mendapatkan lebih banyak point',
+                textAlign: TextAlign.center,
+                style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
+              ),
+              const SizedBox(height: AppSizes.padding / 2),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSizes.padding / 2),
+                child: RefInviteButton(
+                  onTap: () {
+                    final mainViewModel = locator<MainViewModel>();
+
+                    // Go to member page
+                    Navigator.pop(context);
+                    mainViewModel.onChangedPage(2);
+                  },
+                  leadingButton: userMemberThumbs(model),
+                  // leadingButton: const CircleUser(
+                  //   imageFriend1: AppAssets.userImage1Path,
+                  //   imageFriend2: AppAssets.userImage2Path,
+                  //   imageFriend3: AppAssets.userImage3Path,
+                  //   countFriend: '9',
+                  // ),
+                  textButton: 'Undang Lebih Banyak',
                 ),
-                const SizedBox(height: AppSizes.padding / 2),
-                Text(
-                  'Undang lebih banyak teman Anda untuk mendapatkan lebih banyak point',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
-                ),
-                const SizedBox(height: AppSizes.padding / 2),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSizes.padding / 2),
-                  child: RefInviteButton(
-                    functionButton: () {},
-                    leadingButton: userMemberThumbs(model),
-                    // leadingButton: const CircleUser(
-                    //   imageFriend1: AppAssets.userImage1Path,
-                    //   imageFriend2: AppAssets.userImage2Path,
-                    //   imageFriend3: AppAssets.userImage3Path,
-                    //   countFriend: '9',
-                    // ),
-                    textButton: 'Undang Lebih Banyak',
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       );
@@ -386,8 +390,16 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        const AppImage(
-                          image: randomImage,
+                        AppImage(
+                          image: model.userMembers?[i].avatarUrl ?? '-',
+                          width: 26,
+                          height: 26,
+                          backgroundColor: AppColors.baseLv7,
+                          errorWidget: const Icon(
+                            Icons.person_rounded,
+                            color: AppColors.baseLv4,
+                            size: 16,
+                          ),
                         ),
                         model.userMembers!.length < 4
                             ? const SizedBox.shrink()

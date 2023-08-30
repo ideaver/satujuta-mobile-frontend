@@ -131,7 +131,7 @@ class AppDialog {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        error.toString().length > 35 ? error.toString().substring(0, 50) : error.toString(),
+                        error.toString().length > 50 ? error.toString().substring(0, 50) : error.toString(),
                         textAlign: TextAlign.center,
                         style: AppTextStyle.medium(
                           navigator.context,
@@ -184,7 +184,7 @@ class AppDialog {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
-                  error.toString().length > 35 ? error.toString().substring(0, 50) : error.toString(),
+                  error.toString().length > 50 ? error.toString().substring(0, 50) : error.toString(),
                   textAlign: TextAlign.center,
                   style: AppTextStyle.medium(
                     navigator.context,

@@ -42,8 +42,6 @@ class HotelPicker extends StatefulWidget {
 class _HotelPickerState extends State<HotelPicker> {
   final hotelPickerViewModel = locator<HotelPickerViewModel>();
 
-  int selectedTabIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
@@ -123,8 +121,14 @@ class _HotelPickerState extends State<HotelPicker> {
 
   Widget tabWidget(HotelPickerViewModel model, int i) {
     return GestureDetector(
-      onTap: () {
-        model.onSelectCity(model.cityFindMany![i]);
+      onTap: () async {
+        final navigator = Navigator.of(context);
+
+        if (i >= 0) {
+          model.onSelectCity(navigator, model.cityFindMany![i], i);
+        } else {
+          model.onSelectCity(navigator, null, i);
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(right: AppSizes.padding / 2),
@@ -133,7 +137,7 @@ class _HotelPickerState extends State<HotelPicker> {
           horizontal: AppSizes.padding,
         ),
         decoration: BoxDecoration(
-          color: selectedTabIndex == i ? AppColors.primary : AppColors.white,
+          color: model.selectedTabIndex == i ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Row(
@@ -144,7 +148,7 @@ class _HotelPickerState extends State<HotelPicker> {
                     child: Icon(
                       Icons.dashboard_outlined,
                       size: 16,
-                      color: selectedTabIndex == -1 ? AppColors.white : AppColors.base,
+                      color: model.selectedTabIndex == -1 ? AppColors.white : AppColors.base,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -152,7 +156,7 @@ class _HotelPickerState extends State<HotelPicker> {
               i == -1 ? 'Semua' : model.cityFindMany![i].name,
               style: AppTextStyle.semiBold(
                 context,
-                color: selectedTabIndex == i ? AppColors.white : AppColors.base,
+                color: model.selectedTabIndex == i ? AppColors.white : AppColors.base,
               ),
             ),
           ],

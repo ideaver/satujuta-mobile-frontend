@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/external_launcher.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -17,6 +18,7 @@ import '../../view_model/program_list_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_progress_indicator.dart';
+import '../member/member_invitation_view.dart';
 import '../student/student_registration_view.dart';
 import '../user/user_view.dart';
 import 'components/dashboard_chart.dart';
@@ -135,10 +137,10 @@ class _DashboardViewState extends State<DashboardView> {
           userPointCard(userViewModel),
           userCommission(userViewModel),
           const DashboardChart(),
-          nextRewardTarget(),
+          // nextRewardTarget(),
           registeredMemberAndProgram(),
-          orderStatus(),
-          withdrawalStatus(),
+          // orderStatus(),
+          // withdrawalStatus(),
           whatsAppConsulCard(),
           const SizedBox(height: AppSizes.height * 8)
         ],
@@ -227,20 +229,29 @@ class _DashboardViewState extends State<DashboardView> {
                   style: AppTextStyle.extraBold(context, fontSize: 20),
                 ),
                 const SizedBox(height: AppSizes.padding * 1.5),
-                const Row(
+                Row(
                   children: [
                     AppIconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          UserView.viewAsMeRouteName,
+                        );
+                      },
                       backgroundColor: AppColors.white,
                       icon: Icons.info_outline,
                       iconSize: 22,
-                      padding: EdgeInsets.all(AppSizes.padding / 2),
+                      padding: const EdgeInsets.all(AppSizes.padding / 2),
                     ),
-                    SizedBox(width: AppSizes.padding / 2),
+                    const SizedBox(width: AppSizes.padding / 2),
                     AppIconButton(
+                      onPressed: () {
+                        model.shareProfile();
+                      },
                       backgroundColor: AppColors.white,
                       icon: Icons.share_outlined,
                       iconSize: 22,
-                      padding: EdgeInsets.all(AppSizes.padding / 2),
+                      padding: const EdgeInsets.all(AppSizes.padding / 2),
                     ),
                   ],
                 ),
@@ -267,13 +278,7 @@ class _DashboardViewState extends State<DashboardView> {
           children: [
             AppButton(
               onTap: () {
-                // TODO
-
-                // Navigator.pushNamedAndRemoveUntil(
-                //   context,
-                //   ReferralView.viewAsMeRouteName,
-                //   ModalRoute.withName(DashboardView.routeName),
-                // );
+                Navigator.pushNamed(context, MemberInvitationView.viewAsMeRouteName);
               },
               text: 'Undang',
               fontSize: 12,
@@ -327,8 +332,16 @@ class _DashboardViewState extends State<DashboardView> {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        const AppImage(
-                          image: randomImage,
+                        AppImage(
+                          image: model.userMembers?[i].avatarUrl ?? '-',
+                          width: 26,
+                          height: 26,
+                          backgroundColor: AppColors.baseLv7,
+                          errorWidget: const Icon(
+                            Icons.person_rounded,
+                            color: AppColors.baseLv4,
+                            size: 16,
+                          ),
                         ),
                         model.userMembers!.length < 4
                             ? const SizedBox.shrink()
@@ -542,7 +555,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
             const SizedBox(height: AppSizes.padding),
             AppButton(
-              onTap: () {
+              onTap: () async {
                 Navigator.pushNamed(
                   context,
                   StudentRegistrationView.routeName,
@@ -785,7 +798,10 @@ class _DashboardViewState extends State<DashboardView> {
                 const SizedBox(height: AppSizes.padding * 2),
                 AppButton(
                   onTap: () {
-                    // TODO
+                    ExternalLauncher.openWhatsApp(
+                      phone: "6281938298740",
+                      message: "Halo, saya ingin konsultasi praktik bahasa inggris di SatuJuta App",
+                    );
                   },
                   text: 'Mulai Konsultasi Via WhatsApp',
                   fontSize: 14,

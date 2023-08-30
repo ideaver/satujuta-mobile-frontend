@@ -17,11 +17,14 @@ class HotelPickerViewModel extends ChangeNotifier {
 
   Query$HotelFindMany$hotelFindMany? selectedHotel;
 
+  int selectedTabIndex = -1;
+
   void resetState() {
     cityFindMany = null;
     hotelFindMany = null;
     selectedCity = null;
     selectedHotel = null;
+    selectedTabIndex = -1;
   }
 
   void initHotelPicker(NavigatorState navigator, int? provinceId) async {
@@ -95,7 +98,6 @@ class HotelPickerViewModel extends ChangeNotifier {
     var res = await GqlHotelService.hotelFindManyByCityId(
       cityId: cityId,
       skip: skip,
-      contains: contains,
     );
 
     if (res.parsedData?.hotelFindMany != null && !res.hasException) {
@@ -112,9 +114,14 @@ class HotelPickerViewModel extends ChangeNotifier {
     cl('[getHotelsByCityId].cityFindMany.length = ${cityFindMany?.length}');
   }
 
-  void onSelectCity(Query$CityFindMany$cityFindMany? city) {
+  void onSelectCity(NavigatorState navigator, Query$CityFindMany$cityFindMany? city, int tabIndex) {
     selectedCity = city;
+    selectedTabIndex = tabIndex;
     notifyListeners();
+
+    if (city != null) {
+      getHotelsByCityId(navigator, cityId: city.id);
+    }
 
     cl('[onSelectCity].selectedCity =  ${selectedCity?.id}: ${selectedCity?.name}');
   }

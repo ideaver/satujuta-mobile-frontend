@@ -10,6 +10,7 @@ import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
+import '../app/utility/validator.dart';
 import '../view/student/component/student_reg_status.dart';
 import '../widget/atom/app_dialog.dart';
 import 'address_view_model.dart';
@@ -41,6 +42,7 @@ class StudentRegViewModel extends ChangeNotifier {
   Query$HotelFindMany$hotelFindMany? selectedHotel;
   TextEditingController schoolNameCtrl = TextEditingController();
   TextEditingController hotelNameCtrl = TextEditingController();
+  TextEditingController passwordCtrl = TextEditingController();
 
   void initEditProfileView() async {
     // firstNameCtrl.text = user!.firstName;
@@ -70,8 +72,12 @@ class StudentRegViewModel extends ChangeNotifier {
       var errRes = await registerStudent(navigator);
 
       if (errRes == null) {
+        userViewModel.getUser();
         navigator.pop();
-        navigator.pushReplacementNamed(StudentRegStatus.routeName);
+        navigator.pushReplacementNamed(
+          StudentRegStatus.routeName,
+          arguments: true,
+        );
       } else {
         cl('[onTapRegisterStudent].resProfile.error = $errRes');
         navigator.pop();
@@ -128,6 +134,24 @@ class StudentRegViewModel extends ChangeNotifier {
 
     cl('[registerStudent].address = ${address.toJson()}');
 
+    var referredBy = Mutation$UserCreate$userCreateOne$referredBy(
+      id: userViewModel.user!.id,
+      firstName: userViewModel.user!.firstName,
+      lastName: userViewModel.user!.lastName,
+      referralCode: userViewModel.user!.referralCode,
+    );
+
+    var school = Mutation$UserCreate$userCreateOne$school(
+      id: selectedSchool!.id,
+      name: selectedSchool!.name,
+      address: Mutation$UserCreate$userCreateOne$school$address(
+        name: selectedSchool!.address.name,
+        subdistrictId: selectedSchool!.address.subdistrict.id,
+      ),
+      createdAt: DateTime.now().toIso8601String(),
+      updatedAt: DateTime.now().toIso8601String(),
+    );
+
     var studentData = Mutation$UserCreate$userCreateOne(
       id: "",
       firstName: firstNameCtrl.text,
@@ -139,12 +163,18 @@ class StudentRegViewModel extends ChangeNotifier {
       status: Enum$UserStatus.ACTIVE,
       theme: Enum$Theme.LIGHT,
       address: address,
-      referralCode: userViewModel.user!.referralCode,
+      referralCode: "",
+      referredBy: referredBy,
+      school: school,
+      accounts: [],
       createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),
     );
 
-    var res = await GqlUserService.userCreateOne(studentData);
+    var res = await GqlUserService.userCreateOne(
+      studentData,
+      passwordCtrl.text,
+    );
 
     cl('[registerStudent].res = $res');
 
@@ -156,6 +186,27 @@ class StudentRegViewModel extends ChangeNotifier {
       return null;
     } else {
       return gqlErrorParser(res);
+    }
+  }
+
+  bool studentRegValidator() {
+    if (firstNameCtrl.text.isNotEmpty &&
+        addressNameCtrl.text.isNotEmpty &&
+        provinceId != null &&
+        cityId != null &&
+        districtId != null &&
+        subdistrictId != null &&
+        whatsappNumberCtrl.text.isNotEmpty &&
+        Validator.isPhoneNumberValid(whatsappNumberCtrl.text) &&
+        emailCtrl.text.isNotEmpty &&
+        Validator.isEmailValid(emailCtrl.text) &&
+        selectedSchool != null &&
+        selectedHotel != null &&
+        passwordCtrl.text.isNotEmpty &&
+        Validator.isPasswordValid(passwordCtrl.text)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

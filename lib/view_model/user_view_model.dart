@@ -8,6 +8,7 @@ import 'package:satujuta_gql_client/operations/generated/transaction_find_many.g
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../app/utility/console_log.dart';
 
@@ -214,5 +215,33 @@ class UserViewModel extends ChangeNotifier {
     } else {
       cl('[getUserClaimedRewards].error = ${gqlErrorParser(res)}');
     }
+  }
+
+  Future<void> shareProfile() async {
+    if (user == null) {
+      return;
+    }
+
+    var title = '${user!.firstName} ${user!.lastName ?? ''}';
+    var point = "Points: $totalUserPoint";
+
+    await Share.share(
+      '$title\n\n$point',
+      subject: "SatuJuta App",
+    );
+  }
+
+  Future<void> shareReferralCode() async {
+    if (user == null) {
+      return;
+    }
+
+    var title = 'Join SatuJuta App';
+    var point = "Kode Referral: ${user!.referralCode}";
+
+    await Share.share(
+      '$title\n\n$point',
+      subject: "SatuJuta App",
+    );
   }
 }

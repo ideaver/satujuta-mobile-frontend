@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
+import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 
 import '../../../../app/theme/app_colors.dart';
@@ -17,29 +18,29 @@ import '../../view_model/member_list_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_not_found_widget.dart';
 
-class ReferralListView extends StatefulWidget {
+class MemberListView extends StatefulWidget {
   final PageStateEnum pageState;
 
-  const ReferralListView({Key? key, required this.pageState}) : super(key: key);
+  const MemberListView({Key? key, required this.pageState}) : super(key: key);
 
-  static const String viewAsMeRouteName = '/my-referral';
-  static const String viewAsOtherRouteName = '/other-user-referral';
+  static const String viewAsMeRouteName = '/my-members';
+  static const String viewAsOtherRouteName = '/other-user-members';
 
-  const ReferralListView.viewAsMe({
+  const MemberListView.viewAsMe({
     super.key,
     this.pageState = PageStateEnum.viewAsMe,
   });
 
-  const ReferralListView.viewAsOther({
+  const MemberListView.viewAsOther({
     super.key,
     this.pageState = PageStateEnum.viewAsOther,
   });
 
   @override
-  State<ReferralListView> createState() => _ReferralListViewState();
+  State<MemberListView> createState() => _MemberListViewState();
 }
 
-class _ReferralListViewState extends State<ReferralListView> {
+class _MemberListViewState extends State<MemberListView> {
   final _memberListViewModel = locator<MemberListViewModel>();
 
   int selectedMemberStatus = -1;
@@ -176,16 +177,13 @@ class _ReferralListViewState extends State<ReferralListView> {
 
   Widget body() {
     return Consumer<MemberListViewModel>(builder: (context, model, _) {
-      return SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            searchField(model),
-            tabBar(),
-            memberList(model),
-          ],
-        ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          searchField(model),
+          tabBar(),
+          memberList(model),
+        ],
       );
     });
   }
@@ -380,15 +378,23 @@ class _ReferralListViewState extends State<ReferralListView> {
             child: Row(
               children: [
                 Container(
-                  width: 48,
-                  height: 48,
+                  width: 52,
+                  height: 52,
                   decoration: const BoxDecoration(
                     color: AppColors.baseLv7,
                     shape: BoxShape.circle,
                   ),
                   child: ClipOval(
                     child: AppImage(
-                      image: member.avatarUrl ?? '',
+                      image: member.avatarUrl ?? '-',
+                      width: 52,
+                      height: 52,
+                      backgroundColor: AppColors.baseLv7,
+                      errorWidget: const Icon(
+                        Icons.person_rounded,
+                        color: AppColors.baseLv4,
+                        size: 26,
+                      ),
                     ),
                   ),
                 ),
@@ -446,7 +452,9 @@ class _ReferralListViewState extends State<ReferralListView> {
 
   Widget memberPoints(String userId) {
     return FutureBuilder(
-      future: _memberListViewModel.getMemberPoints(userId),
+      future: GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
+        userId: userId,
+      ),
       builder: (context, snapshot) {
         return Row(
           children: [
@@ -457,7 +465,7 @@ class _ReferralListViewState extends State<ReferralListView> {
             ),
             const SizedBox(width: AppSizes.padding / 4),
             Text(
-              '${snapshot.data} Poin',
+              '${(snapshot.data?.parsedData?.pointTransactionFindFirst?.currentBalance ?? 0).toInt()} Poin',
               style: AppTextStyle.medium(
                 context,
                 fontSize: 12,

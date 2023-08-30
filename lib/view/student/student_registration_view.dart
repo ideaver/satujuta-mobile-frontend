@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:satujuta_app_mobile/app/utility/validator.dart';
+import 'package:satujuta_app_mobile/widget/organism/school/school_list_modal.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 
 import '../../../app/asset/app_assets.dart';
@@ -99,7 +100,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             const SizedBox(
               height: 20,
               child: AppIconButton(
-                icon: Icons.info_outline,
+                icon: Icons.person_add_alt_1_rounded,
               ),
             ),
           ],
@@ -142,23 +143,45 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
       child: AppTextFieldsWrapper(
         textFields: [
-          const AppTextField(
-            suffixIcon: Icon(
+          AppTextField(
+            controller: student.firstNameCtrl,
+            suffixIcon: const Icon(
               CupertinoIcons.person_alt_circle,
             ),
-            lableText: 'Nama',
-            hintText: 'Masukkkan Nama Lengkap Siswa',
+            lableText: 'Nama Depan',
+            hintText: 'Masukkkan Nama Depan Siswa',
+            onChanged: (val) {
+              setState(() {});
+            },
           ),
-          const AppTextField(
-            suffixIcon: Icon(
+          AppTextField(
+            controller: student.lastNameCtrl,
+            suffixIcon: const Icon(
+              CupertinoIcons.person_alt_circle,
+            ),
+            lableText: 'Nama Belakang',
+            hintText: 'Masukkkan Nama Belakang Siswa',
+            onChanged: (val) {
+              setState(() {});
+            },
+          ),
+          AppTextField(
+            controller: student.addressNameCtrl,
+            suffixIcon: const Icon(
               Icons.location_on_outlined,
             ),
             lableText: 'Alamat',
-            hintText: 'Masukkkan Nama Lengkap Siswa',
+            hintText: 'Masukkkan Alamat Siswa',
+            onChanged: (val) {
+              setState(() {});
+            },
           ),
           AppTextField(
             enabled: false,
+            controller: student.provinceCtrl,
             onTap: () async {
+              FocusScope.of(context).unfocus();
+
               var province = await AppModal.show(
                 context: context,
                 title: 'Provinsi',
@@ -179,16 +202,21 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 address.selectedCity = null;
                 address.selectedDistrict = null;
                 address.selectedSubdistrict = null;
+                setState(() {});
               }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_down,
             ),
             lableText: 'Provinsi',
+            disabledColor: AppColors.base,
           ),
           AppTextField(
             enabled: false,
+            controller: student.cityCtrl,
             onTap: () async {
+              FocusScope.of(context).unfocus();
+
               if (student.provinceId == null) {
                 AppSnackbar.show(navigator, title: 'Pilih provinsi terlebih dahulu');
                 return;
@@ -212,16 +240,21 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 student.postalCodeCtrl.clear();
                 address.selectedDistrict = null;
                 address.selectedSubdistrict = null;
+                setState(() {});
               }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_down,
             ),
             lableText: 'Kota',
+            disabledColor: AppColors.base,
           ),
           AppTextField(
             enabled: false,
+            controller: student.districtCtrl,
             onTap: () async {
+              FocusScope.of(context).unfocus();
+
               if (student.cityId == null) {
                 AppSnackbar.show(navigator, title: 'Pilih kota terlebih dahulu');
                 return;
@@ -243,17 +276,21 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 student.subdistrictCtrl.clear();
                 student.postalCodeCtrl.clear();
                 address.selectedSubdistrict = null;
+                setState(() {});
               }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_down,
             ),
             lableText: 'Kecamatan',
+            disabledColor: AppColors.base,
           ),
           AppTextField(
             enabled: false,
             controller: student.subdistrictCtrl,
             onTap: () async {
+              FocusScope.of(context).unfocus();
+
               if (student.districtId == null) {
                 AppSnackbar.show(navigator, title: 'Pilih kecamatan terlebih dahulu');
                 return;
@@ -273,6 +310,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 student.subdistrictId = subdistrict.id;
                 student.subdistrictCtrl.text = subdistrict.name;
                 student.postalCodeCtrl.text = subdistrict.postalCode;
+                setState(() {});
               }
             },
             suffixIcon: const Icon(
@@ -289,36 +327,49 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             ),
             lableText: 'Kode Pos',
             hintText: '60241',
-            disabledColor: AppColors.base,
           ),
-          const AppTextField(
+          AppTextField(
+            controller: student.whatsappNumberCtrl,
             type: AppTextFieldType.number,
-            suffixIcon: Icon(
+            suffixIcon: const Icon(
               CupertinoIcons.phone_circle,
             ),
             lableText: 'No. Whatsapp',
             hintText: 'Masukkan No. Whatsapp Aktif',
+            onChanged: (val) {
+              setState(() {});
+            },
           ),
-          const AppTextField(
-            suffixIcon: Icon(
+          AppTextField(
+            controller: student.emailCtrl,
+            suffixIcon: const Icon(
               CupertinoIcons.mail,
             ),
             lableText: 'Email',
             hintText: 'Masukkan Email Siswa',
+            onChanged: (val) {
+              setState(() {});
+            },
           ),
           AppTextField(
             enabled: false,
             controller: student.schoolNameCtrl,
             disabledColor: AppColors.base,
             onTap: () async {
-              // TODO
-              // var hotel = await Navigator.pushNamed(context, HotelPicker.userHotelRouteName);
+              FocusScope.of(context).unfocus();
 
-              // if (hotel != null && hotel is Query$HotelFindMany$hotelFindMany) {
-              //   cl(hotel);
-              //   student.selectedHotel = hotel;
-              //   student.hotelNameCtrl.text = hotel.name;
-              // }
+              var school = await AppModal.show(
+                context: context,
+                title: 'Pilih Sekolah',
+                child: const SchoolListModal(),
+              );
+
+              if (school != null) {
+                cl(school);
+                student.selectedSchool = school;
+                student.schoolNameCtrl.text = school.name;
+                setState(() {});
+              }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_right,
@@ -330,6 +381,8 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             controller: student.hotelNameCtrl,
             disabledColor: AppColors.base,
             onTap: () async {
+              FocusScope.of(context).unfocus();
+
               var hotel = await Navigator.pushNamed(
                 context,
                 HotelPicker.userHotelRouteName,
@@ -340,12 +393,21 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 cl(hotel);
                 student.selectedHotel = hotel;
                 student.hotelNameCtrl.text = hotel.name;
+                setState(() {});
               }
             },
             suffixIcon: const Icon(
               Icons.keyboard_arrow_right,
             ),
             lableText: 'Hotel',
+          ),
+          AppTextField(
+            controller: student.passwordCtrl,
+            type: AppTextFieldType.password,
+            lableText: 'Password Akun Siswa',
+            onChanged: (val) {
+              setState(() {});
+            },
           ),
         ],
       ),
@@ -355,39 +417,96 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
   Widget validatorInfo(StudentRegViewModel model) {
     bool isEmailValid = Validator.isEmailValid(model.emailCtrl.text);
     bool isWhatsappNumberValid = Validator.isPhoneNumberValid(model.whatsappNumberCtrl.text);
+    bool isLengthMoreThan5 = model.passwordCtrl.text.length > 5;
+    bool isContainUppercase = Validator.isContainsUppercase(model.passwordCtrl.text);
+    bool isContainerNumber = Validator.isContainsNumber(model.passwordCtrl.text);
 
     return Column(
       children: [
-        Visibility(
-          visible: isEmailValid,
+        Opacity(
+          opacity: isEmailValid ? 1.0 : 0.5,
           child: Row(
             children: [
-              const Icon(
-                Icons.cancel,
-                color: AppColors.red,
+              Icon(
+                Icons.check_circle,
+                color: isEmailValid ? AppColors.greenLv1 : AppColors.baseLv4,
                 size: 18,
               ),
               const SizedBox(width: 6),
               Text(
-                'Email tidak valid',
+                'Email valid',
                 style: AppTextStyle.medium(context),
               ),
             ],
           ),
         ),
         const SizedBox(height: AppSizes.padding / 2),
-        Visibility(
-          visible: isWhatsappNumberValid,
+        Opacity(
+          opacity: isWhatsappNumberValid ? 1.0 : 0.5,
           child: Row(
             children: [
-              const Icon(
-                Icons.cancel,
-                color: AppColors.red,
+              Icon(
+                Icons.check_circle,
+                color: isWhatsappNumberValid ? AppColors.greenLv1 : AppColors.baseLv4,
                 size: 18,
               ),
               const SizedBox(width: 6),
               Text(
-                'Nomor WhatsApp tidak valid',
+                'Nomor WhatsApp valid',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Opacity(
+          opacity: isContainUppercase ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isContainUppercase ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Password mengandung karakter besar atau kecil',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Opacity(
+          opacity: isLengthMoreThan5 ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isLengthMoreThan5 ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Password 6 atau lebih karakter',
+                style: AppTextStyle.medium(context),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSizes.padding / 2),
+        Opacity(
+          opacity: isContainerNumber ? 1.0 : 0.5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: isContainerNumber ? AppColors.greenLv1 : AppColors.baseLv4,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Password mengandung Setidaknya 1 angka',
                 style: AppTextStyle.medium(context),
               ),
             ],
@@ -401,11 +520,12 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
       child: AppButton(
-        text: "Daftarkan Siswa",
         onTap: () {
           final navigator = Navigator.of(context);
           model.onTapRegisterStudent(navigator);
         },
+        text: "Daftarkan Siswa",
+        enable: model.studentRegValidator(),
       ),
     );
   }

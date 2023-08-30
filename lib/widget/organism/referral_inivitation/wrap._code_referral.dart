@@ -18,18 +18,18 @@ class WrapContentCodeRef extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     required this.textButton,
-    required this.functionButton,
-    required this.functionShareButton,
-    required this.functionRefButton,
+    required this.onTapCopyButton,
+    required this.onTapShareButton,
+    required this.onTapTaskButton,
   });
 
   final String? title;
   final String? subtitle;
   final String? textButton;
   final IconData? icon;
-  final dynamic functionButton;
-  final dynamic functionShareButton;
-  final dynamic functionRefButton;
+  final dynamic onTapCopyButton;
+  final dynamic onTapShareButton;
+  final dynamic onTapTaskButton;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +47,20 @@ class WrapContentCodeRef extends StatelessWidget {
                     style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 24),
                   ),
                   gap: AppSizes.height * 2,
-                  subTitle: AppCustomText(text: subtitle!, style: AppTextStyle.regular(context, fontSize: 14)),
+                  subTitle: AppCustomText(
+                    text: subtitle!,
+                    style: AppTextStyle.regular(
+                      context,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
           WrapCodeReferral(
             textButton: textButton,
             icon: icon,
-            functionButton: functionButton,
-            functionRefButton: functionRefButton,
-            functionShareButton: functionShareButton,
+            onTapCopyButton: onTapCopyButton,
+            onTapTaskButton: onTapTaskButton,
+            onTapShareButton: onTapShareButton,
           )
         ],
       ),
@@ -65,26 +71,25 @@ class WrapContentCodeRef extends StatelessWidget {
 class WrapCodeReferral extends StatelessWidget {
   const WrapCodeReferral({
     super.key,
-    required this.functionButton,
-    required this.functionShareButton,
-    required this.functionRefButton,
+    required this.onTapCopyButton,
+    required this.onTapShareButton,
+    required this.onTapTaskButton,
     required this.icon,
     required this.textButton,
   });
 
-  final dynamic functionButton;
-  final dynamic functionShareButton;
-  final dynamic functionRefButton;
+  final dynamic onTapCopyButton;
+  final dynamic onTapShareButton;
+  final dynamic onTapTaskButton;
   final IconData? icon;
   final String? textButton;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column(
       children: [
         RefButtonWithCustomIcon(
-          onPressed: functionButton!,
+          onPressed: onTapCopyButton!,
           text: textButton!,
           icon: icon!,
         ),
@@ -92,11 +97,12 @@ class WrapCodeReferral extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: functionShareButton,
+              onTap: onTapShareButton,
               child: const AppIconButton(
                 icon: Icons.share_outlined,
-                backgroundColor: AppColors.baseLv5,
-                iconSize: 25,
+                backgroundColor: AppColors.baseLv7,
+                iconSize: 24,
+                iconColor: AppColors.baseLv4,
                 padding: EdgeInsets.all(AppSizes.padding),
               ),
             ),
@@ -104,11 +110,11 @@ class WrapCodeReferral extends StatelessWidget {
               width: AppSizes.padding,
             ),
             GestureDetector(
-              onTap: functionRefButton,
+              onTap: onTapTaskButton,
               child: const AppIconButton(
                 icon: CustomIcon.inventory,
-                backgroundColor: AppColors.baseLv6,
-                iconSize: 25,
+                backgroundColor: AppColors.baseLv7,
+                iconSize: 24,
                 padding: EdgeInsets.all(AppSizes.padding),
                 iconColor: AppColors.baseLv4,
               ),

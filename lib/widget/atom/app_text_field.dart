@@ -22,6 +22,10 @@ class AppTextField extends StatefulWidget {
   final TextInputType? keyboardtype;
   final bool enabled;
   final bool showSuffixButton;
+  final bool showCounter;
+  final int? minLines;
+  final int? maxLines;
+  final int? maxLength;
   final Color? fillColor;
   final Color disabledColor;
   final Function()? onTap;
@@ -45,7 +49,11 @@ class AppTextField extends StatefulWidget {
     this.keyboardtype,
     this.enabled = true,
     this.showSuffixButton = true,
+    this.showCounter = false,
+    this.minLines,
     this.onTap,
+    this.maxLines,
+    this.maxLength,
     this.onChanged,
     this.onEditingComplete,
     this.padding,
@@ -86,6 +94,9 @@ class _AppTextFieldState extends State<AppTextField> {
           controller: widget.controller,
           enabled: widget.enabled,
           obscureText: _obsecureText,
+          minLines: widget.minLines,
+          maxLines: widget.type == AppTextFieldType.password ? 1 : widget.maxLines,
+          maxLength: widget.maxLength ?? (widget.type == AppTextFieldType.password ? 16 : widget.maxLength),
           onChanged: widget.onChanged,
           onEditingComplete: widget.onEditingComplete,
           keyboardType: keyboardType(),
@@ -98,6 +109,7 @@ class _AppTextFieldState extends State<AppTextField> {
             fontSize: 16,
           ),
           decoration: InputDecoration(
+            counterText: widget.showCounter ? null : '',
             labelText: widget.lableText,
             prefixIcon: widget.prefixIcon,
             suffixIcon: suffixIconWidget(),

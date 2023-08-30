@@ -1,6 +1,6 @@
 class Validator {
   static RegExp emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  static RegExp phoneNumberRegex = RegExp(r'(^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$)');
+  static RegExp phoneNumberRegex = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
   static RegExp uppercaseRegex = RegExp(r'[A-Z]');
   static RegExp numberRegex = RegExp(r'[0-9]');
 

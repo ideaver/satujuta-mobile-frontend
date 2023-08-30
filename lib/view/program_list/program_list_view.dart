@@ -230,9 +230,12 @@ class _ProgramListViewState extends State<ProgramListView> {
                     size: 12,
                     color: AppColors.baseLv4,
                   ),
-                  const SizedBox(width: AppSizes.padding / 2),
+                  const SizedBox(width: AppSizes.padding / 4),
                   Text(
-                    model.programs![i].dueDate != null ? DateFormatter.slashDate(model.programs![i].dueDate!) : '-',
+                    model.programs![i].dueDate != null &&
+                            !DateTime.parse(model.programs![i].dueDate!).difference(DateTime.now()).isNegative
+                        ? '${DurationFormatter.formatDetailed(DateTime.parse(model.programs![i].dueDate!), DateTime.now())} lagi'
+                        : 'Sudah Berakhir',
                     style: AppTextStyle.regular(
                       context,
                       fontSize: 12,
@@ -248,11 +251,9 @@ class _ProgramListViewState extends State<ProgramListView> {
                     size: 12,
                     color: AppColors.baseLv4,
                   ),
-                  const SizedBox(width: AppSizes.padding / 2),
+                  const SizedBox(width: AppSizes.padding / 4),
                   Text(
-                    model.programs![i].dueDate != null
-                        ? '${DurationFormatter.format(DateTime.now(), DateTime.parse(model.programs![i].dueDate!))} Hari Lagi'
-                        : '-',
+                    model.programs![i].dueDate != null ? DateFormatter.slashDate(model.programs![i].dueDate!) : '-',
                     style: AppTextStyle.regular(
                       context,
                       fontSize: 12,

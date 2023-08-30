@@ -155,11 +155,10 @@ class _EditPasswordViewState extends State<EditPasswordView> {
   }
 
   Widget validatorInfo(EditProfileViewModel model) {
-    bool isContainUppercase = Validator.isContainsUppercase(model.newPasswordCtrl.text);
     bool isLengthMoreThan5 = model.newPasswordCtrl.text.length > 5;
+    bool isContainUppercase = Validator.isContainsUppercase(model.newPasswordCtrl.text);
     bool isContainerNumber = Validator.isContainsNumber(model.newPasswordCtrl.text);
-    bool isConfirmPassValid =
-        model.newPasswordCtrl.text.isNotEmpty && model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
+    bool isConfirmPassValid = model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
 
     return Column(
       children: [
@@ -174,7 +173,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
               ),
               const SizedBox(width: 6),
               Text(
-                'Besar atau kecil karakter',
+                'Password menngandung karakter besar atau kecil',
                 style: AppTextStyle.medium(context),
               ),
             ],
@@ -192,7 +191,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
               ),
               const SizedBox(width: 6),
               Text(
-                '6 atau lebih karakter',
+                'Password 6 atau lebih karakter',
                 style: AppTextStyle.medium(context),
               ),
             ],
@@ -210,7 +209,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
               ),
               const SizedBox(width: 6),
               Text(
-                'Setidaknya 1 nomor',
+                'Password mengandung setidaknya 1 angka',
                 style: AppTextStyle.medium(context),
               ),
             ],

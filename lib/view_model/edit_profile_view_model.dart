@@ -12,6 +12,7 @@ import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
+import '../app/utility/validator.dart';
 import 'address_view_model.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
@@ -181,10 +182,10 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   bool updatePasswordValidator() {
-    if (newPasswordCtrl.text.contains(RegExp(r'[A-Z]')) &&
+    if (newPasswordCtrl.text.isNotEmpty &&
         newPasswordCtrl.text.length > 5 &&
-        newPasswordCtrl.text.contains(RegExp(r'[0-9]')) &&
-        newPasswordCtrl.text.isNotEmpty &&
+        Validator.isContainsUppercase(newPasswordCtrl.text) &&
+        Validator.isContainsNumber(newPasswordCtrl.text) &&
         newPasswordCtrl.text == confirmPasswordCtrl.text) {
       return true;
     } else {

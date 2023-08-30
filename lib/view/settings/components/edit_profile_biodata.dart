@@ -77,6 +77,8 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                   enabled: false,
                   controller: editProfile.provinceCtrl,
                   onTap: () async {
+                    FocusScope.of(context).unfocus();
+
                     var province = await AppModal.show(
                       context: context,
                       title: 'Provinsi',
@@ -110,6 +112,8 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                   enabled: false,
                   controller: editProfile.cityCtrl,
                   onTap: () async {
+                    FocusScope.of(context).unfocus();
+
                     if (editProfile.provinceId == null) {
                       AppSnackbar.show(navigator, title: 'Pilih provinsi terlebih dahulu');
                       return;
@@ -146,6 +150,8 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                   enabled: false,
                   controller: editProfile.districtCtrl,
                   onTap: () async {
+                    FocusScope.of(context).unfocus();
+
                     if (editProfile.cityId == null) {
                       AppSnackbar.show(navigator, title: 'Pilih kota terlebih dahulu');
                       return;
@@ -179,6 +185,8 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                   enabled: false,
                   controller: editProfile.subdistrictCtrl,
                   onTap: () async {
+                    FocusScope.of(context).unfocus();
+
                     if (editProfile.districtId == null) {
                       AppSnackbar.show(navigator, title: 'Pilih kecamatan terlebih dahulu');
                       return;

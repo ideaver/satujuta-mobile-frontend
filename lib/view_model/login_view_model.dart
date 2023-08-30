@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
 import '../widget/atom/app_dialog.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-  final network = locator<NetworkCheckerService>();
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -26,16 +20,7 @@ class LoginViewModel extends ChangeNotifier {
 
     logOut(navigator);
 
-    showDialog(
-      context: navigator.context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AppDialogWidget(
-          title: 'Oops! Something Went Wrong',
-          text: '$message\n\n$errorMessage',
-        );
-      },
-    );
+    AppDialog.showErrorDialog(navigator, message: message, error: errorMessage);
   }
 
   void logOut(NavigatorState navigator) async {}

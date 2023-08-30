@@ -9,18 +9,28 @@ class SchoolListViewModel extends ChangeNotifier {
 
   List<Query$SchoolFindMany$schoolFindMany>? schools;
 
+  Query$SchoolFindMany$schoolFindMany? selectedSchool;
+
   void resetState() {
     schools = null;
+    selectedSchool = null;
   }
 
-  Future<void> getAllSchools({int skip = 0}) async {
+  Future<void> getSchools(NavigatorState navigator, {int skip = 0, String? contains}) async {
     var res = await GqlSchoolService.schoolFindMany(skip: skip);
 
     if (res.parsedData?.schoolFindMany != null && !res.hasException) {
       schools = res.parsedData?.schoolFindMany;
       notifyListeners();
     } else {
-      cl('[getAllSchools].error = ${gqlErrorParser(res)}');
+      cl('[getSchools].error = ${gqlErrorParser(res)}');
     }
+  }
+
+  void onSelectSchool(Query$SchoolFindMany$schoolFindMany school) {
+    selectedSchool = school;
+    notifyListeners();
+
+    cl('[onSelectSchool].selectedSchool = ${selectedSchool?.id}: ${selectedSchool?.name}');
   }
 }
