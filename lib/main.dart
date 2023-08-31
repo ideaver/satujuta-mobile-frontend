@@ -15,12 +15,14 @@ import 'app/theme/app_theme.dart';
 import 'view/main/main_view.dart';
 import 'view_model/account_view_model.dart';
 import 'view_model/address_view_model.dart';
+import 'view_model/checkout_view_model.dart';
 import 'view_model/dashboard_view_model.dart';
 import 'view_model/edit_profile_view_model.dart';
 import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
 import 'view_model/member_list_view_model.dart';
 import 'view_model/program_list_view_model.dart';
+import 'view_model/register_view_model.dart';
 import 'view_model/student_reg_view_model.dart';
 import 'view_model/user_view_model.dart';
 
@@ -68,6 +70,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<NetworkCheckerService>()),
         ChangeNotifierProvider(create: (_) => locator<MainViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<LoginViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<RegisterViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<UserViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<EditProfileViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<ProgramListViewModel>()),
@@ -78,6 +81,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<StudentRegViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<SchoolListViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<HotelPickerViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<CheckoutViewModel>()),
       ],
       child: MaterialApp(
         title: 'SatuJuta',

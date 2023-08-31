@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
@@ -18,6 +18,10 @@ class MemberListViewModel extends ChangeNotifier {
   List<Query$UserFindMany$userFindMany>? userMembers;
   List<Query$UserFindMany$userFindMany>? userMembersActive;
   List<Query$UserFindMany$userFindMany>? userMembersInactive;
+
+  // Students
+  List<Query$UserFindMany$userFindMany>? userStudentsActive;
+  List<Query$UserFindMany$userFindMany>? userStudentsInactive;
 
   void resetState() {
     userMembers = null;
@@ -54,6 +58,8 @@ class MemberListViewModel extends ChangeNotifier {
         skip = userMembers!.length - 1;
         userMembersActive = userMembers!.where((e) => e.status == Enum$UserStatus.ACTIVE).toList();
         userMembersInactive = userMembers!.where((e) => e.status != Enum$UserStatus.INACTIVE).toList();
+        userStudentsActive = userMembersActive!.where((e) => e.userRole == Enum$UserRole.STUDENT).toList();
+        userStudentsInactive = userMembersInactive!.where((e) => e.userRole == Enum$UserRole.STUDENT).toList();
       }
 
       cl('[getAllUserMembers].userMembersActive = ${userMembersActive?.length}');

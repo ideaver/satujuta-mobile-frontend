@@ -372,7 +372,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
               }
             },
             suffixIcon: const Icon(
-              Icons.keyboard_arrow_right,
+              Icons.keyboard_arrow_down,
             ),
             lableText: 'Sekolah',
           ),
@@ -385,7 +385,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
 
               var hotel = await Navigator.pushNamed(
                 context,
-                HotelPicker.userHotelRouteName,
+                HotelPicker.studentHotelRouteName,
                 arguments: student.provinceId,
               );
 
@@ -401,14 +401,14 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             ),
             lableText: 'Hotel',
           ),
-          AppTextField(
-            controller: student.passwordCtrl,
-            type: AppTextFieldType.password,
-            lableText: 'Password Akun Siswa',
-            onChanged: (val) {
-              setState(() {});
-            },
-          ),
+          // AppTextField(
+          //   controller: student.passwordCtrl,
+          //   type: AppTextFieldType.password,
+          //   lableText: 'Password Akun Siswa',
+          //   onChanged: (val) {
+          //     setState(() {});
+          //   },
+          // ),
         ],
       ),
     );
@@ -417,9 +417,9 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
   Widget validatorInfo(StudentRegViewModel model) {
     bool isEmailValid = Validator.isEmailValid(model.emailCtrl.text);
     bool isWhatsappNumberValid = Validator.isPhoneNumberValid(model.whatsappNumberCtrl.text);
-    bool isLengthMoreThan5 = model.passwordCtrl.text.length > 5;
-    bool isContainUppercase = Validator.isContainsUppercase(model.passwordCtrl.text);
-    bool isContainerNumber = Validator.isContainsNumber(model.passwordCtrl.text);
+    // bool isLengthMoreThan5 = model.passwordCtrl.text.length > 5;
+    // bool isContainUppercase = Validator.isContainsUppercase(model.passwordCtrl.text);
+    // bool isContainerNumber = Validator.isContainsNumber(model.passwordCtrl.text);
 
     return Column(
       children: [
@@ -458,60 +458,60 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             ],
           ),
         ),
-        const SizedBox(height: AppSizes.padding / 2),
-        Opacity(
-          opacity: isContainUppercase ? 1.0 : 0.5,
-          child: Row(
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: isContainUppercase ? AppColors.greenLv1 : AppColors.baseLv4,
-                size: 18,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                'Password mengandung karakter besar atau kecil',
-                style: AppTextStyle.medium(context),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppSizes.padding / 2),
-        Opacity(
-          opacity: isLengthMoreThan5 ? 1.0 : 0.5,
-          child: Row(
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: isLengthMoreThan5 ? AppColors.greenLv1 : AppColors.baseLv4,
-                size: 18,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                'Password 6 atau lebih karakter',
-                style: AppTextStyle.medium(context),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppSizes.padding / 2),
-        Opacity(
-          opacity: isContainerNumber ? 1.0 : 0.5,
-          child: Row(
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: isContainerNumber ? AppColors.greenLv1 : AppColors.baseLv4,
-                size: 18,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                'Password mengandung Setidaknya 1 angka',
-                style: AppTextStyle.medium(context),
-              ),
-            ],
-          ),
-        ),
+        // const SizedBox(height: AppSizes.padding / 2),
+        // Opacity(
+        //   opacity: isContainUppercase ? 1.0 : 0.5,
+        //   child: Row(
+        //     children: [
+        //       Icon(
+        //         Icons.check_circle,
+        //         color: isContainUppercase ? AppColors.greenLv1 : AppColors.baseLv4,
+        //         size: 18,
+        //       ),
+        //       const SizedBox(width: 6),
+        //       Text(
+        //         'Password mengandung karakter besar atau kecil',
+        //         style: AppTextStyle.medium(context),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(height: AppSizes.padding / 2),
+        // Opacity(
+        //   opacity: isLengthMoreThan5 ? 1.0 : 0.5,
+        //   child: Row(
+        //     children: [
+        //       Icon(
+        //         Icons.check_circle,
+        //         color: isLengthMoreThan5 ? AppColors.greenLv1 : AppColors.baseLv4,
+        //         size: 18,
+        //       ),
+        //       const SizedBox(width: 6),
+        //       Text(
+        //         'Password 6 atau lebih karakter',
+        //         style: AppTextStyle.medium(context),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(height: AppSizes.padding / 2),
+        // Opacity(
+        //   opacity: isContainerNumber ? 1.0 : 0.5,
+        //   child: Row(
+        //     children: [
+        //       Icon(
+        //         Icons.check_circle,
+        //         color: isContainerNumber ? AppColors.greenLv1 : AppColors.baseLv4,
+        //         size: 18,
+        //       ),
+        //       const SizedBox(width: 6),
+        //       Text(
+        //         'Password mengandung Setidaknya 1 angka',
+        //         style: AppTextStyle.medium(context),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }
@@ -521,6 +521,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
       child: AppButton(
         onTap: () {
+          FocusScope.of(context).unfocus();
           final navigator = Navigator.of(context);
           model.onTapRegisterStudent(navigator);
         },

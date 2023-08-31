@@ -308,38 +308,13 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: tabController.index == 0
-              ? wrapEditBiodata()
+              ? const EditProfileBiodata()
               : tabController.index == 1
-                  ? wrapEditAccount()
-                  : wrapEditCommision(),
+                  ? const EditProfileAccount()
+                  : const EditProfileCommission(),
         ),
         updateButton(model),
       ],
-    );
-  }
-
-  Widget wrapEditBiodata() {
-    return const EditProfileBiodata(
-      name: 'Agus Susanto',
-      address: 'jln ambarawa no 1 Semarang',
-      city: 'Surabaya',
-      posCode: '60241',
-      noWa: '+62908327587',
-      email: 'Agus@gmail.com',
-    );
-  }
-
-  Widget wrapEditAccount() {
-    return const EditProfileAccount(
-      noWa: '+62908327587',
-      email: 'Agususanto@gmail.com',
-    );
-  }
-
-  Widget wrapEditCommision() {
-    return const EditProfileCommission(
-      codeRef: '#123513UHD',
-      noRek: '1234 5678 9101',
     );
   }
 

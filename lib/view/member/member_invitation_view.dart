@@ -338,7 +338,7 @@ class _MemberInvitationViewState extends State<MemberInvitationView> {
                             size: 16,
                           ),
                         ),
-                        model.userMembers!.length < 4
+                        i < 4
                             ? const SizedBox.shrink()
                             : Container(
                                 width: 26,

@@ -1,4 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/currency_formatter.dart';
+import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
+import 'package:satujuta_gql_client/operations/generated/order_find_one.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -7,10 +12,14 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_gradient_text.dart';
-import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_widget_list_wrapper.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/checkout_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_image.dart';
+import '../../widget/organism/payment_method/payment_method_list_modal.dart';
+import '../main/main_view.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({Key? key}) : super(key: key);
@@ -25,20 +34,47 @@ class _CheckoutViewState extends State<CheckoutView> {
   bool isOrderItemsShowed = true;
   bool isOrderShipmentShowed = true;
 
+  final _checkoutViewModel = locator<CheckoutViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _checkoutViewModel.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            sliverAppBarWidget(),
-          ];
-        },
-        body: body(),
-      ),
-      bottomSheet: bottomButton(),
-    );
+    final orderId = ModalRoute.of(context)?.settings.arguments as int?;
+
+    if (orderId != null) {
+      _checkoutViewModel.getOrder(orderId);
+    } else {
+      Navigator.pop(context);
+    }
+
+    return ChangeNotifierProvider.value(
+        value: _checkoutViewModel,
+        builder: (context, snapshot) {
+          return Consumer<CheckoutViewModel>(builder: (context, model, _) {
+            return Scaffold(
+              body: NestedScrollView(
+                physics: const BouncingScrollPhysics(),
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    sliverAppBarWidget(),
+                  ];
+                },
+                body: body(model),
+              ),
+              bottomSheet: bottomButton(model),
+            );
+          });
+        });
   }
 
   SliverAppBar sliverAppBarWidget() {
@@ -118,23 +154,23 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget body() {
+  Widget body(CheckoutViewModel model) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSizes.padding),
       child: Column(
         children: [
-          orderStatus(),
-          orderInfo(),
-          orderItems(),
-          orderShipment(),
-          orderPricing(),
+          orderStatus(model),
+          orderInfo(model),
+          orderItems(model),
+          orderShipment(model),
+          orderPricing(model),
           const SizedBox(height: 100),
         ],
       ),
     );
   }
 
-  Widget orderStatus() {
+  Widget orderStatus(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: Container(
@@ -215,7 +251,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget orderInfo() {
+  Widget orderInfo(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppWidgetListWrapper(
@@ -253,7 +289,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ],
                   ),
                   Text(
-                    '#123456789',
+                    model.order?.id.toString() ?? '-',
                     style: AppTextStyle.bold(context),
                   ),
                 ],
@@ -292,7 +328,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ],
                   ),
                   Text(
-                    '24 Agustus 2023',
+                    DateFormatter.normal(model.order!.createdAt),
                     style: AppTextStyle.bold(context),
                   ),
                 ],
@@ -304,23 +340,23 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget orderItems() {
+  Widget orderItems(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppExpansionListTile(
-        title: '4 Item Order',
+        title: '${model.order!.cart?.length ?? 0} Item Order',
         icon: Icons.timelapse_rounded,
         expand: true,
         children: [
-          ...List.generate(4, (i) {
-            return orderItemCard(i);
+          ...List.generate(model.order!.cart!.length, (i) {
+            return orderItemCard(model.order!.cart![i], i);
           }),
         ],
       ),
     );
   }
 
-  Widget orderItemCard(int i) {
+  Widget orderItemCard(Query$OrderFindOne$orderFindOne$cart cart, int i) {
     return Container(
       margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -358,7 +394,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        i == 0 ? 'Paket PREMIUM SatuJuta Membership' : 'Hotel Borobudur',
+                        cart.membershipItem?.name ?? '',
                         style: AppTextStyle.extraBold(
                           context,
                           fontSize: 16,
@@ -366,7 +402,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                       const SizedBox(height: AppSizes.padding / 4),
                       Text(
-                        i == 0 ? 'Berlisensi PT Satu Juta Kampung Inggris ' : 'Pilihan Hotel Anda',
+                        cart.membershipItem?.description ?? '',
                         style: AppTextStyle.regular(
                           context,
                           fontSize: 12,
@@ -390,7 +426,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               borderRadius: BorderRadius.circular(100),
             ),
             child: Text(
-              i == 0 ? 'Rp. 1.000.000' : 'FREE',
+              CurrencyFormatter.format(cart.membershipItem?.price ?? 0),
               style: AppTextStyle.bold(
                 context,
                 fontSize: 12,
@@ -403,7 +439,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget orderShipment() {
+  Widget orderShipment(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppExpansionListTile(
@@ -412,16 +448,16 @@ class _CheckoutViewState extends State<CheckoutView> {
         backgroundColor: AppColors.white,
         expand: true,
         children: [
-          shipmentReceiver(),
+          shipmentReceiver(model),
           const SizedBox(height: AppSizes.padding / 4),
-          shipmentService(),
+          shipmentService(model),
           const SizedBox(height: AppSizes.padding / 2),
         ],
       ),
     );
   }
 
-  Widget shipmentReceiver() {
+  Widget shipmentReceiver(CheckoutViewModel model) {
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: AppSizes.padding / 8,
@@ -448,7 +484,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(width: AppSizes.padding / 2),
                     Expanded(
                       child: Text(
-                        'Anton Prabowo',
+                        '${model.order!.shipping?.address.user?.firstName ?? '-'} ${model.order!.shipping?.address.user?.lastName ?? ''}',
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.extraBold(context),
@@ -488,7 +524,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    '+62811122223333',
+                    '${model.order!.shipping?.address.user?.whatsappNumber ?? '-'}',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.medium(context),
@@ -513,7 +549,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  'jln ambarawa no 1 Semarang - Jawa Timur, Indonesia',
+                  '${model.order!.shipping?.address.name ?? '-'}, ${model.order!.shipping?.address.user?.address.subdistrict.district.city.name ?? '-'}, ${model.order!.shipping?.address.user?.address.subdistrict.district.city.province.name ?? '-'}, Indonesia',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -532,7 +568,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  '223344',
+                  '${model.order!.shipping?.address.user?.address.subdistrict.postalCode ?? '-'}',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -545,7 +581,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget shipmentService() {
+  Widget shipmentService(CheckoutViewModel model) {
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: AppSizes.padding / 8,
@@ -572,7 +608,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(width: AppSizes.padding / 2),
                     Expanded(
                       child: Text(
-                        'JNE Reguler',
+                        model.order!.shipping?.courier ?? '-',
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.extraBold(context),
@@ -612,7 +648,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    '2-3 Hari',
+                    model.order!.shipping?.estimatedTime ?? '-',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.medium(context),
@@ -637,7 +673,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  'Pengiriman Tanggal: -',
+                  'Pengiriman Tanggal: ${model.order!.shipping != null ? DateFormatter.normal(model.order!.shipping?.deliveryDate ?? '') : '-'}',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -660,7 +696,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(width: AppSizes.padding / 2),
                     Expanded(
                       child: Text(
-                        'No. Resi: - \n Paket akan dikirim setelah pembayaran',
+                        'No. Resi: ${model.order!.shipping?.trackingNo ?? '-'} \n Paket akan dikirim setelah pembayaran',
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.medium(context),
@@ -687,7 +723,8 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  'Biaya Ongkir: -',
+                  // TODO BIAYA ONGKIR
+                  'Biaya Ongkir:  ${model.order!.shipping?.trackingNo ?? '-'}',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -700,7 +737,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget orderPricing() {
+  Widget orderPricing(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppWidgetListWrapper(
@@ -729,7 +766,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ],
                   ),
                   Text(
-                    '#22112211',
+                    "${model.order!.invoice.id}",
                     style: AppTextStyle.extraBold(context),
                   ),
                 ],
@@ -750,7 +787,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     style: AppTextStyle.regular(context),
                   ),
                   Text(
-                    'Rp. 1.000.000',
+                    CurrencyFormatter.format(model.order!.invoice.amount),
                     style: AppTextStyle.regular(context),
                   ),
                 ],
@@ -771,7 +808,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     style: AppTextStyle.regular(context),
                   ),
                   Text(
-                    'Rp. 5000',
+                    CurrencyFormatter.format(model.order!.invoice.adminFee),
                     style: AppTextStyle.regular(context),
                   ),
                 ],
@@ -792,7 +829,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     style: AppTextStyle.extraBold(context),
                   ),
                   Text(
-                    'Rp. 1.000.5000',
+                    CurrencyFormatter.format(model.order!.invoice.amount + model.order!.invoice.adminFee),
                     style: AppTextStyle.extraBold(context),
                   ),
                 ],
@@ -804,10 +841,10 @@ class _CheckoutViewState extends State<CheckoutView> {
     );
   }
 
-  Widget bottomButton() {
+  Widget bottomButton(CheckoutViewModel model) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.padding),
-      height: 94,
+      // height: 70,
       decoration: const BoxDecoration(
         color: AppColors.white,
         boxShadow: [
@@ -818,168 +855,72 @@ class _CheckoutViewState extends State<CheckoutView> {
           ),
         ],
       ),
-      child: AppButton(
-        text: 'Pilih Metode Pembayaran',
-        onTap: () {
-          AppModal.show(
-            context: context,
-            title: 'Pilih Metode Pembayaran',
-            child: paymentMethodList(),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget paymentMethodList() {
-    return Column(
-      children: [
-        orderStatus(),
-        Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height - 280,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                AppExpansionListTile(
-                  title: 'Transfer Bank',
-                  icon: Icons.credit_card,
-                  expand: true,
-                  children: [
-                    ...List.generate(5, (index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(AppSizes.radius),
-                        ),
-                        child: RadioListTile(
-                          value: null,
-                          groupValue: null,
-                          onChanged: (value) {},
-                          title: Row(
-                            children: [
-                              const SizedBox(
-                                width: 50,
-                                child: AppImage(
-                                  image: AppAssets.bankMandiriImgPath,
-                                  imgProvider: ImgProvider.assetImage,
-                                ),
-                              ),
-                              const SizedBox(width: AppSizes.padding),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Bank Mandiri',
-                                    style: AppTextStyle.bold(context),
-                                  ),
-                                  const SizedBox(height: AppSizes.padding / 2),
-                                  Text(
-                                    'Admin Fee Rp 2.500',
-                                    style: AppTextStyle.regular(
-                                      context,
-                                      fontSize: 12,
-                                      color: AppColors.baseLv4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          model.selectedPaymentMethod != null
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: AppSizes.padding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Metode Pembayaran',
+                        style: AppTextStyle.semiBold(context),
+                      ),
+                      Row(
+                        children: [
+                          AppImage(
+                            image: model.selectedPaymentMethod!.logoUrl,
+                            width: 32,
+                            height: 24,
+                            backgroundColor: AppColors.baseLv6,
+                            borderRadius: 8,
+                            errorWidget: const Icon(
+                              CupertinoIcons.building_2_fill,
+                              color: AppColors.baseLv4,
+                              size: 12,
+                            ),
                           ),
-                          activeColor: AppColors.primary,
-                          contentPadding: const EdgeInsets.fromLTRB(
-                            AppSizes.padding,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
+                          const SizedBox(width: AppSizes.padding / 2),
+                          Text(
+                            model.selectedPaymentMethod?.name ?? "-",
+                            style: AppTextStyle.extraBold(context),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppSizes.radius),
-                          ),
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      );
-                    })
-                  ],
-                ),
-                const SizedBox(height: AppSizes.padding),
-                AppExpansionListTile(
-                  title: 'Virtual Account',
-                  icon: Icons.credit_card,
-                  expand: true,
-                  children: [
-                    ...List.generate(5, (index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(AppSizes.radius),
-                        ),
-                        child: RadioListTile(
-                          value: null,
-                          groupValue: null,
-                          onChanged: (value) {},
-                          title: Row(
-                            children: [
-                              const SizedBox(
-                                width: 50,
-                                child: AppImage(
-                                  image: AppAssets.bankMandiriImgPath,
-                                  imgProvider: ImgProvider.assetImage,
-                                ),
-                              ),
-                              const SizedBox(width: AppSizes.padding),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Bank Mandiri',
-                                    style: AppTextStyle.bold(context),
-                                  ),
-                                  const SizedBox(height: AppSizes.padding / 2),
-                                  Text(
-                                    'Admin Fee Rp 2.500',
-                                    style: AppTextStyle.regular(
-                                      context,
-                                      fontSize: 12,
-                                      color: AppColors.baseLv4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          activeColor: AppColors.primary,
-                          contentPadding: const EdgeInsets.fromLTRB(
-                            AppSizes.padding,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppSizes.radius),
-                          ),
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      );
-                    })
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 )
-              ],
-            ),
+              : const SizedBox.shrink(),
+          AppButton(
+            onTap: () async {
+              if (model.selectedPaymentMethod == null) {
+                var method = await AppModal.show(
+                  context: context,
+                  title: 'Pilih Metode Pembayaran',
+                  child: const PaymentMethodListModal(),
+                );
+
+                if (method != null) {
+                  model.onSelectPaymentMethod(method);
+                }
+              } else {
+                // TODO HANDLE ORDER SUMMARY
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  MainView.routeName,
+                  (route) => false,
+                );
+              }
+            },
+            buttonColor: model.selectedPaymentMethod == null ? AppColors.primary : AppColors.greenLv1,
+            height: 54,
+            padding: EdgeInsets.zero,
+            text: model.selectedPaymentMethod == null ? 'Pilih Metode Pembayaran' : 'Bayar',
           ),
-        ),
-        const SizedBox(height: AppSizes.padding),
-        AppButton(
-          onTap: () {
-            // TODO
-            Navigator.pop(context);
-          },
-          text: 'Pilih',
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

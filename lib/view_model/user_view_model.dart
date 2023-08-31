@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/point_transaction_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/reward_claim_find_many.graphql.dart';

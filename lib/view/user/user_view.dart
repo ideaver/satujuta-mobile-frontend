@@ -401,7 +401,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                             size: 16,
                           ),
                         ),
-                        model.userMembers!.length < 4
+                        i < 4
                             ? const SizedBox.shrink()
                             : Container(
                                 width: 26,

@@ -181,18 +181,20 @@ class AppDialog {
                   style: AppTextStyle.medium(navigator.context, fontSize: 12),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  error.toString().length > 50 ? error.toString().substring(0, 50) : error.toString(),
-                  textAlign: TextAlign.center,
-                  style: AppTextStyle.medium(
-                    navigator.context,
-                    fontSize: 10,
-                    color: AppColors.baseLv5,
-                  ),
-                ),
-              ),
+              error != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        error.toString().length > 50 ? error.toString().substring(0, 50) : error.toString(),
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.medium(
+                          navigator.context,
+                          fontSize: 10,
+                          color: AppColors.baseLv5,
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         );

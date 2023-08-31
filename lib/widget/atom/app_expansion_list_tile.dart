@@ -11,6 +11,7 @@ class AppExpansionListTile extends StatefulWidget {
   final Color? backgroundColor;
   final bool expand;
   final List<Widget> children;
+  final Function(bool)? onChanged;
 
   const AppExpansionListTile({
     Key? key,
@@ -19,6 +20,7 @@ class AppExpansionListTile extends StatefulWidget {
     this.icon,
     this.backgroundColor,
     this.expand = false,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -47,6 +49,9 @@ class _AppExpansionListTileState extends State<AppExpansionListTile> {
               onTap: () {
                 isExpanded = !isExpanded;
                 setState(() {});
+                if (widget.onChanged != null) {
+                  widget.onChanged!(isExpanded);
+                }
               },
               child: Container(
                 padding: const EdgeInsets.all(AppSizes.padding),

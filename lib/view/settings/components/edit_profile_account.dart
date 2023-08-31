@@ -8,14 +8,7 @@ import '../../../../widget/atom/app_text_fields_wrapper.dart';
 import '../../../view_model/edit_profile_view_model.dart';
 
 class EditProfileAccount extends StatefulWidget {
-  const EditProfileAccount({
-    super.key,
-    this.noWa,
-    this.email,
-  });
-
-  final String? noWa;
-  final String? email;
+  const EditProfileAccount({super.key});
 
   @override
   State<EditProfileAccount> createState() => _EditProfileAccountState();
@@ -42,7 +35,7 @@ class _EditProfileAccountState extends State<EditProfileAccount> {
                         CupertinoIcons.phone_circle,
                       ),
                       lableText: 'Nomor WhatsApp',
-                      hintText: widget.noWa,
+                      hintText: "085366226633",
                     ),
                     AppTextField(
                       controller: model.emailCtrl,
@@ -51,7 +44,7 @@ class _EditProfileAccountState extends State<EditProfileAccount> {
                         CupertinoIcons.mail,
                       ),
                       lableText: 'Email',
-                      hintText: widget.email,
+                      hintText: "agus@gmail.com",
                     ),
                     // AppTextField(
                     //   controller: model.password,

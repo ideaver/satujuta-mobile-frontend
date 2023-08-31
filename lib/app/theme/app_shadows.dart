@@ -50,4 +50,10 @@ class AppShadows {
     blurRadius: 10.0,
     spreadRadius: 2.0,
   );
+
+  static final bottomNav = BoxShadow(
+    color: AppColors.black.withOpacity(0.08),
+    offset: const Offset(0, -4),
+    blurRadius: 60,
+  );
 }

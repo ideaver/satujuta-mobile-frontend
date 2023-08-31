@@ -14,23 +14,7 @@ import '../../../widget/atom/app_snackbar.dart';
 import '../../../widget/organism/address/address_list_modal.dart';
 
 class EditProfileBiodata extends StatefulWidget {
-  const EditProfileBiodata({
-    super.key,
-    this.name,
-    this.address,
-    this.city,
-    this.posCode,
-    this.noWa,
-    this.email,
-  });
-
-  final String? name;
-  final String? address;
-  final String? city;
-
-  final String? posCode;
-  final String? noWa;
-  final String? email;
+  const EditProfileBiodata({super.key});
 
   @override
   State<EditProfileBiodata> createState() => _EditProfileBiodataState();
@@ -52,18 +36,18 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                 AppTextField(
                   controller: editProfile.firstNameCtrl,
                   suffixIcon: const Icon(
-                    CupertinoIcons.home,
+                    CupertinoIcons.person_alt_circle,
                   ),
                   lableText: 'Nama Depan',
-                  hintText: widget.name,
+                  hintText: "Agus",
                 ),
                 AppTextField(
                   controller: editProfile.lastNameCtrl,
                   suffixIcon: const Icon(
-                    CupertinoIcons.home,
+                    CupertinoIcons.person_alt_circle,
                   ),
                   lableText: 'Nama Belakang',
-                  hintText: widget.name,
+                  hintText: "Susanto",
                 ),
                 AppTextField(
                   controller: editProfile.addressNameCtrl,
@@ -71,7 +55,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     Icons.location_on_outlined,
                   ),
                   lableText: 'Alamat',
-                  hintText: widget.address,
+                  hintText: "Jl. Anggrek no. 51",
                 ),
                 AppTextField(
                   enabled: false,
@@ -105,7 +89,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     Icons.keyboard_arrow_down,
                   ),
                   lableText: 'Provinsi',
-                  hintText: widget.city,
+                  hintText: "Jawa Timur",
                   disabledColor: AppColors.base,
                 ),
                 AppTextField(
@@ -143,7 +127,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     Icons.keyboard_arrow_down,
                   ),
                   lableText: 'Kota',
-                  hintText: widget.city,
+                  hintText: "Surabaya",
                   disabledColor: AppColors.base,
                 ),
                 AppTextField(
@@ -221,7 +205,7 @@ class _EditProfileBiodataState extends State<EditProfileBiodata> {
                     CupertinoIcons.map_pin_ellipse,
                   ),
                   lableText: 'Kode Pos',
-                  hintText: widget.posCode,
+                  hintText: "12345",
                   disabledColor: AppColors.base,
                 ),
               ],

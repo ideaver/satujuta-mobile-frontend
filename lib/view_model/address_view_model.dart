@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_gql_client/gql_address_service.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
 import 'package:satujuta_gql_client/operations/generated/city_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/district_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/province_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/subdistrict_find_many.graphql.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';

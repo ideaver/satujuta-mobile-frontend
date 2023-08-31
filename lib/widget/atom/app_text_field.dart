@@ -96,7 +96,7 @@ class _AppTextFieldState extends State<AppTextField> {
           obscureText: _obsecureText,
           minLines: widget.minLines,
           maxLines: widget.type == AppTextFieldType.password ? 1 : widget.maxLines,
-          maxLength: widget.maxLength ?? (widget.type == AppTextFieldType.password ? 16 : widget.maxLength),
+          maxLength: widget.maxLength ?? (widget.type == AppTextFieldType.password ? 14 : widget.maxLength),
           onChanged: widget.onChanged,
           onEditingComplete: widget.onEditingComplete,
           keyboardType: keyboardType(),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/user_create_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
@@ -42,28 +44,65 @@ class StudentRegViewModel extends ChangeNotifier {
   Query$HotelFindMany$hotelFindMany? selectedHotel;
   TextEditingController schoolNameCtrl = TextEditingController();
   TextEditingController hotelNameCtrl = TextEditingController();
-  TextEditingController passwordCtrl = TextEditingController();
+  // TextEditingController passwordCtrl = TextEditingController();
 
-  void initEditProfileView() async {
-    // firstNameCtrl.text = user!.firstName;
-    // lastNameCtrl.text = user!.lastName ?? '';
-    // addressNameCtrl.text = user!.address.subdistrict.name;
-    // provinceCtrl.text = user!.address.subdistrict.district.city.province.name;
-    // cityCtrl.text = user!.address.subdistrict.district.city.name;
-    // districtCtrl.text = user!.address.subdistrict.district.name;
-    // subdistrictCtrl.text = user!.address.subdistrict.name;
-    // postalCodeCtrl.text = user!.address.subdistrict.postalCode;
+  void clearState() {
+    student = null;
 
-    // provinceId = user!.address.subdistrict.district.city.province.id;
-    // cityId = user!.address.subdistrict.district.city.id;
-    // districtId = user!.address.subdistrict.district.id;
-    // subdistrictId = user!.address.subdistrict.id;
+    firstNameCtrl.clear();
+    lastNameCtrl.clear();
+    addressNameCtrl.clear();
+    provinceCtrl.clear();
+    cityCtrl.clear();
+    districtCtrl.clear();
+    subdistrictCtrl.clear();
+    postalCodeCtrl.clear();
 
-    // whatsappNumberCtrl.text = user!.whatsappNumber;
-    // emailCtrl.text = user!.email;
+    provinceId = null;
+    cityId = null;
+    districtId = null;
+    subdistrictId = null;
+
+    whatsappNumberCtrl.clear();
+    emailCtrl.clear();
+
+    selectedSchool = null;
+    schoolNameCtrl.clear();
+
+    notifyListeners();
   }
 
-  void onTapRegisterStudent(NavigatorState navigator) async {
+  void initEditProfileView({Query$UserFindMany$userFindMany? currStudent}) async {
+    if (currStudent != null) {
+      student = Mutation$UserCreate$userCreateOne.fromJson(currStudent.toJson());
+
+      firstNameCtrl.text = currStudent.firstName;
+      lastNameCtrl.text = currStudent.lastName ?? '';
+      addressNameCtrl.text = currStudent.address.subdistrict.name;
+      provinceCtrl.text = currStudent.address.subdistrict.district.city.province.name;
+      cityCtrl.text = currStudent.address.subdistrict.district.city.name;
+      districtCtrl.text = currStudent.address.subdistrict.district.name;
+      subdistrictCtrl.text = currStudent.address.subdistrict.name;
+      postalCodeCtrl.text = currStudent.address.subdistrict.postalCode;
+
+      provinceId = currStudent.address.subdistrict.district.city.province.id;
+      cityId = currStudent.address.subdistrict.district.city.id;
+      districtId = currStudent.address.subdistrict.district.id;
+      subdistrictId = currStudent.address.subdistrict.id;
+
+      whatsappNumberCtrl.text = currStudent.whatsappNumber;
+      emailCtrl.text = currStudent.email;
+
+      selectedSchool = Query$SchoolFindMany$schoolFindMany.fromJson(currStudent.school!.toJson());
+      schoolNameCtrl.text = currStudent.school!.name;
+
+      notifyListeners();
+    } else {
+      clearState();
+    }
+  }
+
+  void onTapRegisterStudent(NavigatorState navigator, {bool editStudent = false}) async {
     bool isValid = regStudentValidator(navigator);
 
     if (isValid) {
@@ -74,16 +113,26 @@ class StudentRegViewModel extends ChangeNotifier {
       if (errRes == null) {
         userViewModel.getUser();
         navigator.pop();
-        navigator.pushReplacementNamed(
-          StudentRegStatus.routeName,
+        var student = await navigator.pushNamed(
+          StudentRegStatus.successRouteName,
           arguments: true,
         );
+
+        if (student != null) {
+          // Edit student
+          initEditProfileView(
+            currStudent: student as Query$UserFindMany$userFindMany,
+          );
+        } else {
+          // Add student
+          clearState();
+        }
       } else {
         cl('[onTapRegisterStudent].resProfile.error = $errRes');
         navigator.pop();
         AppDialog.showErrorDialog(
           navigator,
-          error: "errRes: $errRes",
+          message: errRes,
         );
       }
     }
@@ -173,7 +222,8 @@ class StudentRegViewModel extends ChangeNotifier {
 
     var res = await GqlUserService.userCreateOne(
       studentData,
-      passwordCtrl.text,
+      "",
+      // passwordCtrl.text,
     );
 
     cl('[registerStudent].res = $res');
@@ -185,25 +235,109 @@ class StudentRegViewModel extends ChangeNotifier {
       cl('[registerStudent].student = ${student?.toJson()}');
       return null;
     } else {
+      cl('[registerStudent].error = ${gqlErrorParser(res)}');
+      return gqlErrorParser(res);
+    }
+  }
+
+  Future<String?> updateStudent(NavigatorState navigator) async {
+    if (student == null) {
+      return "Student data is null";
+    }
+
+    var address = Mutation$UserUpdateOne$userUpdateOne$address(
+      id: student!.address.id,
+      name: addressNameCtrl.text,
+      subdistrict: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict(
+        id: subdistrictId!,
+        name: subdistrictCtrl.text,
+        postalCode: postalCodeCtrl.text,
+        district: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district(
+          id: districtId!,
+          name: districtCtrl.text,
+          city: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district$city(
+            id: cityId!,
+            name: cityCtrl.text,
+            province: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district$city$province(
+              id: provinceId!,
+              name: provinceCtrl.text,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    cl('[updateStudent].address = ${address.toJson()}');
+
+    var referredBy = Mutation$UserUpdateOne$userUpdateOne$referredBy(
+      id: userViewModel.user!.id,
+      firstName: userViewModel.user!.firstName,
+      lastName: userViewModel.user!.lastName,
+      referralCode: userViewModel.user!.referralCode,
+    );
+
+    var school = Mutation$UserUpdateOne$userUpdateOne$school(
+      id: selectedSchool!.id,
+      name: selectedSchool!.name,
+      address: Mutation$UserUpdateOne$userUpdateOne$school$address(
+        id: selectedSchool!.address.id,
+        name: selectedSchool!.address.name,
+        subdistrictId: selectedSchool!.address.subdistrict.id,
+      ),
+      // createdAt: DateTime.now().toIso8601String(),
+      updatedAt: DateTime.now().toIso8601String(),
+    );
+
+    var studentData = Mutation$UserUpdateOne$userUpdateOne(
+      id: student!.id,
+      firstName: firstNameCtrl.text,
+      lastName: lastNameCtrl.text,
+      email: emailCtrl.text,
+      userRole: Enum$UserRole.STUDENT,
+      userType: Enum$UserType.STUDENT,
+      whatsappNumber: whatsappNumberCtrl.text,
+      status: Enum$UserStatus.ACTIVE,
+      theme: Enum$Theme.LIGHT,
+      address: address,
+      referralCode: student!.referralCode,
+      referredBy: referredBy,
+      school: school,
+      accounts: [],
+      // createdAt: student!.createdAt,
+      updatedAt: DateTime.now().toIso8601String(),
+    );
+
+    var res = await GqlUserService.userUpdateOne(
+      studentData,
+    );
+
+    cl('[updateStudent].res = $res');
+
+    if (res.parsedData?.userUpdateOne != null && !res.hasException) {
+      cl('[updateStudent].student = ${res.parsedData!.userUpdateOne.toJson()}');
+      return null;
+    } else {
+      cl('[updateStudent].error = ${gqlErrorParser(res)}');
       return gqlErrorParser(res);
     }
   }
 
   bool studentRegValidator() {
     if (firstNameCtrl.text.isNotEmpty &&
-        addressNameCtrl.text.isNotEmpty &&
-        provinceId != null &&
-        cityId != null &&
-        districtId != null &&
-        subdistrictId != null &&
-        whatsappNumberCtrl.text.isNotEmpty &&
-        Validator.isPhoneNumberValid(whatsappNumberCtrl.text) &&
-        emailCtrl.text.isNotEmpty &&
-        Validator.isEmailValid(emailCtrl.text) &&
-        selectedSchool != null &&
-        selectedHotel != null &&
-        passwordCtrl.text.isNotEmpty &&
-        Validator.isPasswordValid(passwordCtrl.text)) {
+            addressNameCtrl.text.isNotEmpty &&
+            provinceId != null &&
+            cityId != null &&
+            districtId != null &&
+            subdistrictId != null &&
+            whatsappNumberCtrl.text.isNotEmpty &&
+            Validator.isPhoneNumberValid(whatsappNumberCtrl.text) &&
+            emailCtrl.text.isNotEmpty &&
+            Validator.isEmailValid(emailCtrl.text) &&
+            selectedSchool != null
+        // selectedHotel != null &&
+        // passwordCtrl.text.isNotEmpty &&
+        // Validator.isPasswordValid(passwordCtrl.text)) {
+        ) {
       return true;
     } else {
       return false;

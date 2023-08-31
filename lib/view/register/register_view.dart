@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -6,6 +8,9 @@ import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
+import '../../app/asset/app_icons.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/register_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../login/login_view.dart';
 import 'components/reg_account.dart';
@@ -22,17 +27,23 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> with TickerProviderStateMixin {
-  late TabController tabController;
+  final registerViewModel = locator<RegisterViewModel>();
 
   @override
   void initState() {
+    registerViewModel.tabController = TabController(length: 3, vsync: this);
+    registerViewModel.tabController.addListener(tabListener);
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
-    tabController.addListener(tabListener);
   }
 
   void tabListener() {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    registerViewModel.dispose();
+    super.dispose();
   }
 
   @override
@@ -109,19 +120,14 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppIconButton(
-                onPressed: () {
-                  // TODO
-                },
+              const AppIconButton(
                 imgIcon: AppAssets.lockIconPath,
               ),
               AppButton(
                 onTap: () {
-                  // TODO
-                  Navigator.pushNamedAndRemoveUntil(
+                  Navigator.pushReplacementNamed(
                     context,
                     LoginView.routeName,
-                    ModalRoute.withName(RegisterView.routeName),
                   );
                 },
                 textColor: AppColors.primary,
@@ -142,25 +148,26 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
   }
 
   Widget body() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSizes.padding),
-      child: Column(
-        children: [
-          userPhoto(),
-          tabBar(),
-          tabBarViews(),
-          buttons(),
-        ],
-      ),
-    );
+    return Consumer<RegisterViewModel>(builder: (context, model, _) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(AppSizes.padding),
+        child: Column(
+          children: [
+            userPhoto(model),
+            tabBar(model),
+            tabBarViews(model),
+          ],
+        ),
+      );
+    });
   }
 
-  Widget userPhoto() {
+  Widget userPhoto(RegisterViewModel model) {
     return Column(
       children: [
         const SizedBox(height: AppSizes.padding),
         Text(
-          "Upload Foto Profile Anda",
+          "Foto Profil",
           style: AppTextStyle.bold(context),
         ),
         Container(
@@ -172,13 +179,16 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
           child: Center(
             child: Stack(
               children: [
-                const ClipOval(
-                  child: SizedBox(
-                    width: 150,
-                    height: 150,
-                    child: AppImage(
-                      image: randomImage,
-                    ),
+                AppImage(
+                  image: model.avatarUrl ?? '-',
+                  width: 150,
+                  height: 150,
+                  borderRadius: 100,
+                  backgroundColor: AppColors.baseLv7,
+                  errorWidget: const Icon(
+                    Icons.person_rounded,
+                    size: 82,
+                    color: AppColors.baseLv4,
                   ),
                 ),
                 Positioned(
@@ -187,6 +197,8 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
                   child: GestureDetector(
                     onTap: () {
                       // TODO
+                      final navigator = Navigator.of(context);
+                      AppSnackbar.show(navigator, title: "Coming soon");
                     },
                     child: Container(
                       width: 44,
@@ -196,8 +208,9 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
                         color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(
-                        AppAssets.editIconPath,
+                      child: const Icon(
+                        CustomIcon.edit_icon,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
@@ -211,239 +224,95 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
     );
   }
 
-  Widget tabBar() {
+  Widget tabBar(RegisterViewModel model) {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.baseLv6,
         borderRadius: BorderRadius.circular(100),
       ),
-      child: TabBar(
-        controller: tabController,
-        physics: const NeverScrollableScrollPhysics(),
-        labelColor: AppColors.base,
-        indicator: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(100),
+      child: IgnorePointer(
+        ignoring: true,
+        child: TabBar(
+          controller: model.tabController,
+          physics: const NeverScrollableScrollPhysics(),
+          labelColor: AppColors.base,
+          indicator: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(100),
+          ),
+          tabs: [
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.personFormIconPath,
+                  ),
+                  const SizedBox(width: AppSizes.padding / 3),
+                  Flexible(
+                    child: Text(
+                      "Data Diri",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.bold(context, fontSize: 12),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.lockDarkIconPath,
+                  ),
+                  const SizedBox(width: AppSizes.padding / 3),
+                  Flexible(
+                    child: Text(
+                      "Akun",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.bold(context, fontSize: 12),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.coinFormIconPath,
+                  ),
+                  const SizedBox(width: AppSizes.padding / 3),
+                  Flexible(
+                    child: Text(
+                      "Komisi",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.bold(context, fontSize: 12),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
-        tabs: [
-          Tab(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  AppAssets.personFormIconPath,
-                ),
-                const SizedBox(width: AppSizes.padding / 3),
-                Flexible(
-                  child: Text(
-                    "Data Diri",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.bold(context, fontSize: 12),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Tab(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  AppAssets.lockDarkIconPath,
-                ),
-                const SizedBox(width: AppSizes.padding / 3),
-                Flexible(
-                  child: Text(
-                    "Akun",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.bold(context, fontSize: 12),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Tab(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  AppAssets.coinFormIconPath,
-                ),
-                const SizedBox(width: AppSizes.padding / 3),
-                Flexible(
-                  child: Text(
-                    "Komisi",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.bold(context, fontSize: 12),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
 
-  Widget tabBarViews() {
+  Widget tabBarViews(RegisterViewModel model) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
-      child: tabController.index == 0
+      child: model.tabController.index == 0
           ? const RegBiodata()
-          : tabController.index == 1
+          : model.tabController.index == 1
               ? const RegAccount()
               : const RegCommission(),
-    );
-    // return Expanded(
-    //   // padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
-    //   child: TabBarView(
-    //     controller: tabController,
-    //     children: const [
-    //       RegBiodata(),
-    //       RegAccount(),
-    //       RegCommission(),
-    //     ],
-    //   ),
-    // );
-  }
-
-  Widget buttons() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.padding / 2),
-      child: tabController.index == 0
-          ? AppButton(
-              onTap: () {
-                tabController.animateTo(tabController.index + 1);
-              },
-              text: 'Berikutnya',
-            )
-          : tabController.index == 1
-              ? Column(
-                  children: [
-                    validatorInfo(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppButton(
-                            onTap: () {
-                              tabController.animateTo(tabController.index - 1);
-                            },
-                            text: 'Sebelumnya',
-                            textColor: AppColors.primary,
-                            buttonColor: AppColors.primary.withOpacity(0.12),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(100),
-                              bottomLeft: Radius.circular(100),
-                              topRight: Radius.circular(32),
-                              bottomRight: Radius.circular(32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: AppButton(
-                            onTap: () {
-                              tabController.animateTo(tabController.index + 1);
-                            },
-                            text: 'Berikutnya',
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(32),
-                              bottomLeft: Radius.circular(32),
-                              topRight: Radius.circular(100),
-                              bottomRight: Radius.circular(100),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    Expanded(
-                      child: AppButton(
-                        onTap: () {
-                          tabController.animateTo(tabController.index - 1);
-                        },
-                        text: 'Sebelumnya',
-                        textColor: AppColors.primary,
-                        buttonColor: AppColors.primary.withOpacity(0.12),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(100),
-                          bottomLeft: Radius.circular(100),
-                          topRight: Radius.circular(32),
-                          bottomRight: Radius.circular(32),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: AppButton(
-                        onTap: () {
-                          // TODO
-                          Navigator.pushNamed(context, LoginView.routeName);
-                        },
-                        text: 'Daftar',
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(32),
-                          bottomLeft: Radius.circular(32),
-                          topRight: Radius.circular(100),
-                          bottomRight: Radius.circular(100),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-    );
-  }
-
-  Widget validatorInfo() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Image.asset(
-              AppAssets.successIconPath,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              'Besar atau kecil karakter',
-              style: AppTextStyle.medium(context),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSizes.padding / 2),
-        Row(
-          children: [
-            Image.asset(
-              AppAssets.failedIconPath,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '6 atau lebih karakter',
-              style: AppTextStyle.medium(context),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSizes.padding / 2),
-        Row(
-          children: [
-            Image.asset(
-              AppAssets.unsuccessIconPath,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              'Setidaknya 1 nomor',
-              style: AppTextStyle.medium(context),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSizes.padding),
-      ],
     );
   }
 }

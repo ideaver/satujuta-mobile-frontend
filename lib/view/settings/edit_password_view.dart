@@ -147,6 +147,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
 
   bool enableButton(EditProfileViewModel model) {
     if (Validator.isPasswordValid(model.newPasswordCtrl.text) &&
+        model.newPasswordCtrl.text.isNotEmpty &&
         model.newPasswordCtrl.text == model.confirmPasswordCtrl.text) {
       return true;
     } else {
@@ -158,7 +159,8 @@ class _EditPasswordViewState extends State<EditPasswordView> {
     bool isLengthMoreThan5 = model.newPasswordCtrl.text.length > 5;
     bool isContainUppercase = Validator.isContainsUppercase(model.newPasswordCtrl.text);
     bool isContainerNumber = Validator.isContainsNumber(model.newPasswordCtrl.text);
-    bool isConfirmPassValid = model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
+    bool isConfirmPassValid =
+        model.newPasswordCtrl.text.isNotEmpty && model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
 
     return Column(
       children: [
