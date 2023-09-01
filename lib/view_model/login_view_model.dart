@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
-import 'package:satujuta_app_mobile/app/utility/console_log.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 
+import '../app/service/auth/auth_service.dart';
+import '../app/utility/console_log.dart';
 import '../view/main/main_view.dart';
+import '../widget/atom/app_dialog.dart';
+import '../widget/atom/app_snackbar.dart';
 
 class LoginViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();

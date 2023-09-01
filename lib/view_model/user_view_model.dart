@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/point_transaction_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/reward_claim_find_many.graphql.dart';
@@ -11,6 +10,7 @@ import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../app/service/auth/auth_service.dart';
 import '../app/utility/console_log.dart';
 
 class UserViewModel extends ChangeNotifier {
@@ -46,7 +46,7 @@ class UserViewModel extends ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    var userId = AuthService.auth!.userId;
+    var userId = AuthService.auth!.userId!;
 
     var res = await GqlUserService.userFindOne(userId);
 

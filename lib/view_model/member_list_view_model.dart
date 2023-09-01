@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
@@ -67,6 +69,31 @@ class MemberListViewModel extends ChangeNotifier {
       notifyListeners();
     } else {
       cl('[getAllUserMembers].error = ${gqlErrorParser(res)}');
+    }
+  }
+
+  void onTapDeleteMember(NavigatorState navigator, String userId) async {
+    AppDialog.showDialogProgress(navigator);
+
+    var errorRes = await deleteMember(userId);
+
+    if (errorRes == null) {
+      navigator.pop();
+      AppSnackbar.show(navigator, title: "Berhasil di hapus");
+    } else {
+      navigator.pop();
+      AppDialog.showErrorDialog(navigator, message: errorRes);
+    }
+  }
+
+  Future<String?> deleteMember(String userId) async {
+    var res = await GqlUserService.userRemoveOne(userId);
+
+    if (res.parsedData?.userRemove != null && !res.hasException) {
+      return null;
+    } else {
+      cl('[deleteMember].error = ${gqlErrorParser(res)}');
+      return gqlErrorParser(res);
     }
   }
 

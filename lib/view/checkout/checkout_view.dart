@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/currency_formatter.dart';
-import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
 import 'package:satujuta_gql_client/operations/generated/order_find_one.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -15,6 +13,8 @@ import '../../../widget/atom/app_gradient_text.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_widget_list_wrapper.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/currency_formatter.dart';
+import '../../app/utility/date_formatter.dart';
 import '../../view_model/checkout_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_image.dart';

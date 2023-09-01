@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
-import 'package:satujuta_app_mobile/view_model/hotel_picker_view_model.dart';
-import 'package:satujuta_app_mobile/view_model/school_list_view_model.dart';
 import 'package:satujuta_gql_client/graphql_service.dart';
 
 import 'app/locale/app_locale.dart';
 import 'app/route/app_routes.dart';
+import 'app/service/auth/auth_service.dart';
 import 'app/service/locator/service_locator.dart';
 import 'app/service/network_checker/network_checker_service.dart';
 import 'app/theme/app_theme.dart';
@@ -18,11 +16,13 @@ import 'view_model/address_view_model.dart';
 import 'view_model/checkout_view_model.dart';
 import 'view_model/dashboard_view_model.dart';
 import 'view_model/edit_profile_view_model.dart';
+import 'view_model/hotel_picker_view_model.dart';
 import 'view_model/login_view_model.dart';
 import 'view_model/main_view_model.dart';
 import 'view_model/member_list_view_model.dart';
 import 'view_model/program_list_view_model.dart';
 import 'view_model/register_view_model.dart';
+import 'view_model/school_list_view_model.dart';
 import 'view_model/student_reg_view_model.dart';
 import 'view_model/user_view_model.dart';
 

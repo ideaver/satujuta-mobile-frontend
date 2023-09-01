@@ -1,31 +1,35 @@
 import 'package:jwt_decode/jwt_decode.dart';
 
+import '../app/utility/console_log.dart';
+
 class Auth {
-  String userId;
-  String fullName;
+  String? userId;
+  String? email;
   String accessToken;
   String refreshToken;
 
   Auth({
-    required this.userId,
-    required this.fullName,
+    this.userId,
+    this.email,
     required this.accessToken,
     required this.refreshToken,
   });
 
   factory Auth.fromJson(Map<String, dynamic> data) {
     final jwt = Jwt.parseJwt(data["accessToken"]);
+
+    cl(jwt);
     return Auth(
-      userId: jwt["iss"],
-      fullName: jwt["fullName"],
+      userId: jwt["id"],
+      email: jwt["email"],
       accessToken: data["accessToken"],
       refreshToken: data["refreshToken"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "iss": userId,
-        "fullName": fullName,
+        "id": userId,
+        "email": email,
         "accessToken": accessToken,
         "refreshToken": refreshToken,
       };

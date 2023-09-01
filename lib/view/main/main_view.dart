@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/view/dashboard/dashboard_view.dart';
-import 'package:satujuta_app_mobile/widget/molecule/app_navigation_bar.dart';
 
 import '../../app/asset/app_icons.dart';
 import '../../app/const/app_consts.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../app/service/network_checker/network_checker_service.dart';
 import '../../view_model/main_view_model.dart';
+import '../../widget/molecule/app_navigation_bar.dart';
+import '../dashboard/dashboard_view.dart';
 import '../member/member_list_view.dart';
 import '../onboarding/onboarding_view.dart';
 import '../program_list/program_list_view.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -11,6 +10,7 @@ import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/date_formatter.dart';
 import '../../view_model/hotel_picker_view_model.dart';
 import '../../widget/atom/app_progress_indicator.dart';
 

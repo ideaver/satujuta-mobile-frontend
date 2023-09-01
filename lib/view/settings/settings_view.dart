@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_toggle.dart';
 
 import '../../../../app/asset/app_icons.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
+import '../../app/service/auth/auth_service.dart';
 import '../../widget/atom/app_dialog.dart';
 import 'about_view.dart';
 import 'components/settings_items.dart';
@@ -145,35 +144,17 @@ class _SettingsViewState extends State<SettingsView> {
               );
             },
           ),
-          const SizedBox(height: AppSizes.padding / 2),
-          SettingItem(
-            icon: CustomIcon.notification_icon,
-            title: 'Notifikasi',
-            subTitle: 'Enable system send notification',
-            functionButton: () {},
-            rightButton: AppToggle(
-              onChanged: (val) {},
-              value: true,
-            ),
-            // IconButton(
-            //   icon: isCheck
-            //       ? const Image(
-            //           image: AssetImage(
-            //           AppAssets.checkIconPath,
-            //         ))
-            //       : const Image(
-            //           image: AssetImage(
-            //             AppAssets.uncheckIconPath,
-            //           ),
-            //         ),
-            //   onPressed: () {
-            //     // TODO
-            //     setState(() {
-            //       isCheck ? isCheck = false : isCheck = true;
-            //     });
-            //   },
-            // ),
-          ),
+          // const SizedBox(height: AppSizes.padding / 2),
+          // SettingItem(
+          //   icon: CustomIcon.notification_icon,
+          //   title: 'Notifikasi',
+          //   subTitle: 'Enable system send notification',
+          //   functionButton: () {},
+          //   rightButton: AppToggle(
+          //     onChanged: (val) {},
+          //     value: true,
+          //   ),
+          // ),
           const SizedBox(height: AppSizes.padding / 2),
           SettingItem(
             icon: CustomIcon.about_icon,

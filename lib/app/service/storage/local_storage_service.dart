@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/model/auth_model.dart';
+
+import '../../../model/auth_model.dart';
+import '../../utility/console_log.dart';
 
 enum LocalStorageKey {
   userId,
@@ -17,11 +19,16 @@ class LocalStorageService {
   static const _storage = FlutterSecureStorage();
 
   static Future<Auth?> readAuthData() async {
-    var data = await _storage.read(key: LocalStorageKey.userAuth.name);
+    try {
+      var data = await _storage.read(key: LocalStorageKey.userAuth.name);
 
-    if (data != null) {
-      return Auth.fromJson(json.decode(data));
-    } else {
+      if (data != null) {
+        return Auth.fromJson(json.decode(data));
+      } else {
+        return null;
+      }
+    } catch (e) {
+      cl("[readAuthData].error $e");
       return null;
     }
   }

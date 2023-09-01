@@ -1,8 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 import 'package:satujuta_gql_client/gql_account_service.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/account_update_one.graphql.dart';
@@ -13,7 +10,10 @@ import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
 import '../app/utility/validator.dart';
+import '../widget/atom/app_dialog.dart';
+import '../widget/atom/app_snackbar.dart';
 import 'address_view_model.dart';
+import 'user_view_model.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();

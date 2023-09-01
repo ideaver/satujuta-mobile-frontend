@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/validator.dart';
-import 'package:satujuta_app_mobile/widget/organism/school/school_list_modal.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 
 import '../../../app/asset/app_assets.dart';
@@ -12,6 +10,7 @@ import '../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../app/utility/console_log.dart';
+import '../../app/utility/validator.dart';
 import '../../view_model/address_view_model.dart';
 import '../../view_model/student_reg_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
@@ -19,6 +18,7 @@ import '../../widget/atom/app_snackbar.dart';
 import '../../widget/atom/app_text_field.dart';
 import '../../widget/atom/app_text_fields_wrapper.dart';
 import '../../widget/organism/address/address_list_modal.dart';
+import '../../widget/organism/school/school_list_modal.dart';
 import '../hotel_picker/hotel_picker_view.dart';
 
 class StudentRegistrationView extends StatefulWidget {
@@ -358,10 +358,15 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
             onTap: () async {
               FocusScope.of(context).unfocus();
 
+              if (student.subdistrictId == null) {
+                AppSnackbar.show(navigator, title: 'Lengkapi alamat terlebih dahulu');
+                return;
+              }
+
               var school = await AppModal.show(
                 context: context,
                 title: 'Pilih Sekolah',
-                child: const SchoolListModal(),
+                child: SchoolListModal(cityId: student.cityId!),
               );
 
               if (school != null) {

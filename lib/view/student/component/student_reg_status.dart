@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/theme/app_shadows.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/asset/app_icons.dart';
@@ -14,9 +12,11 @@ import '../../../../widget/atom/app_button.dart';
 import '../../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../../widget/atom/app_image.dart';
 import '../../../app/service/locator/service_locator.dart';
+import '../../../app/theme/app_shadows.dart';
 import '../../../app/theme/app_theme.dart';
 import '../../../view_model/member_list_view_model.dart';
 import '../../../widget/atom/app_icon_button.dart';
+import '../../../widget/atom/app_progress_indicator.dart';
 import '../../checkout/student_checkout_view.dart';
 
 class StudentRegStatus extends StatefulWidget {
@@ -165,7 +165,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
           child: Column(
             children: [
               ...List.generate(model.userStudentsInactive!.length, (i) {
-                return studentCard(model.userStudentsInactive![i], i);
+                return studentCard(model, i);
               }),
             ],
           ),
@@ -174,7 +174,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
     );
   }
 
-  Widget studentCard(Query$UserFindMany$userFindMany student, int i) {
+  Widget studentCard(MemberListViewModel model, int i) {
     return Container(
       margin: EdgeInsets.only(
         top: i == 0 ? AppSizes.padding / 4 : 0,
@@ -192,7 +192,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${student.firstName} ${student.lastName}',
+                '${model.userStudentsInactive![i].firstName} ${model.userStudentsInactive![i].lastName}',
                 style: AppTextStyle.extraBold(
                   context,
                   fontSize: 16,
@@ -200,7 +200,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               ),
               const SizedBox(height: AppSizes.padding / 4),
               Text(
-                student.whatsappNumber,
+                model.userStudentsInactive![i].whatsappNumber,
                 style: AppTextStyle.regular(
                   context,
                   fontSize: 12,
@@ -209,7 +209,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               ),
               const SizedBox(height: AppSizes.padding / 2),
               Text(
-                student.address.name,
+                model.userStudentsInactive![i].address.name,
                 style: AppTextStyle.regular(
                   context,
                   fontSize: 12,
@@ -222,7 +222,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
             children: [
               AppIconButton(
                 onPressed: () {
-                  Navigator.pop(context, student);
+                  Navigator.pop(context, model.userStudentsInactive![i]);
                 },
                 icon: CustomIcon.edit_icon,
                 backgroundColor: AppColors.baseLv6,
@@ -233,7 +233,18 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               const SizedBox(width: AppSizes.padding / 2),
               AppIconButton(
                 onPressed: () {
-                  // TODO REMOVE USER
+                  final navigator = Navigator.of(context);
+                  AppDialog.show(
+                    navigator,
+                    title: "Konfirmasi",
+                    text: "Apakah kamu yakin ingin menghapus siswa ini?",
+                    rightButtonText: "Hapus",
+                    leftButtonText: "Batal",
+                    onTapRightButton: () {
+                      navigator.pop();
+                      model.onTapDeleteMember(navigator, model.userStudentsInactive![i].id);
+                    },
+                  );
                 },
                 icon: CustomIcon.trash_icon,
                 backgroundColor: AppColors.baseLv6,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -11,6 +10,7 @@ import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_image.dart';
 import 'components/edit_profile_account.dart';
 import 'components/edit_profile_biodata.dart';
 import 'components/edit_profile_commission.dart';

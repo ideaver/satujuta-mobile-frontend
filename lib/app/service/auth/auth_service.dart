@@ -86,8 +86,6 @@ class AuthService {
 
     if (res.parsedData?.authLogin != null && !res.hasException) {
       auth = Auth(
-        userId: res.parsedData!.authLogin!.user.id,
-        fullName: "${res.parsedData!.authLogin!.user.firstName} ${res.parsedData!.authLogin!.user.lastName}",
         accessToken: res.parsedData!.authLogin!.accessToken,
         refreshToken: "",
       );
@@ -101,18 +99,6 @@ class AuthService {
       return gqlErrorParser(res);
     }
   }
-
-  // Future<void> registerUser(Input$UserInput input) async {
-  //   final result = await client.mutate$RegisterUser(Options$Mutation$RegisterUser(
-  //     variables: Variables$Mutation$RegisterUser(input: input),
-  //   ));
-
-  //   final resp = result.parsedData?.auth.register;
-
-  //   if (resp is! Fragment$RegisterSuccess) {
-  //     throw gqlErrorHandler(result.exception);
-  //   }
-  // }
 
   static Future<void> logOut(NavigatorState navigator) async {
     await LocalStorageService.deleteAllData();

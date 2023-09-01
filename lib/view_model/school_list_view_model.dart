@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/utility/console_log.dart';
-import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import 'package:satujuta_gql_client/gql_school_service.dart';
 import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
+
+import '../app/utility/console_log.dart';
 
 class SchoolListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
@@ -16,8 +17,11 @@ class SchoolListViewModel extends ChangeNotifier {
     selectedSchool = null;
   }
 
-  Future<void> getSchools(NavigatorState navigator, {int skip = 0, String? contains}) async {
-    var res = await GqlSchoolService.schoolFindMany(skip: skip);
+  Future<void> getSchools(NavigatorState navigator, {required int cityId, int skip = 0, String? contains}) async {
+    var res = await GqlSchoolService.schoolFindManyByName(
+      cityId: cityId,
+      skip: skip,
+    );
 
     if (res.parsedData?.schoolFindMany != null && !res.hasException) {
       schools = res.parsedData?.schoolFindMany;

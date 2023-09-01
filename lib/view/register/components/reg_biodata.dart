@@ -234,10 +234,15 @@ class _RegBiodataState extends State<RegBiodata> {
                       onTap: () async {
                         FocusScope.of(context).unfocus();
 
+                        if (register.subdistrictId == null) {
+                          AppSnackbar.show(navigator, title: 'Lengkapi alamat terlebih dahulu');
+                          return;
+                        }
+
                         var school = await AppModal.show(
                           context: context,
                           title: 'Pilih Sekolah',
-                          child: const SchoolListModal(),
+                          child: SchoolListModal(cityId: register.cityId!),
                         );
 
                         if (school != null) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/external_launcher.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -12,6 +11,7 @@ import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_text_field.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../app/utility/currency_formatter.dart';
+import '../../app/utility/external_launcher.dart';
 import '../../view_model/main_view_model.dart';
 import '../../view_model/member_list_view_model.dart';
 import '../../view_model/program_list_view_model.dart';
@@ -86,7 +86,7 @@ class _DashboardViewState extends State<DashboardView> {
             child: Row(
               children: [
                 AppImage(
-                  image: userViewModel.user?.avatarUrl ?? '',
+                  image: userViewModel.user?.avatarUrl ?? '-',
                   width: 32,
                   height: 32,
                   errorWidget: const Icon(
@@ -168,7 +168,7 @@ class _DashboardViewState extends State<DashboardView> {
         prefixIcon: const Icon(
           Icons.search,
         ),
-        hintText: 'Cari Nama Anggota Anda',
+        hintText: 'Cari nama anggota anda',
         padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.padding / 2,
           vertical: AppSizes.padding / 4,
@@ -288,7 +288,9 @@ class _DashboardViewState extends State<DashboardView> {
               ),
             ),
             Text(
-              '${model.userMembers?.length ?? 0} Anggota',
+              model.userMembers == null || model.userMembers!.isEmpty
+                  ? 'Belum ada anggota'
+                  : '${model.userMembers?.length ?? 0} Anggota',
               style: AppTextStyle.regular(
                 context,
                 fontSize: 12,
@@ -575,7 +577,7 @@ class _DashboardViewState extends State<DashboardView> {
 
   Widget programTotal() {
     return Consumer<ProgramListViewModel>(builder: (context, model, _) {
-      int? newProgram = model.programs?.where((e) {
+      int? newProgram = model.programFindMany?.where((e) {
         return DateTime.now().difference(DateTime.parse(e.dueDate!)).inDays >= 1;
       }).length;
 
@@ -606,7 +608,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
             const SizedBox(height: AppSizes.padding / 4),
             Text(
-              '${model.programs?.length ?? 0}',
+              '${model.programFindMany?.length ?? 0}',
               style: AppTextStyle.extraBold(
                 context,
                 fontSize: 18,

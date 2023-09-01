@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view_model/program_list_view_model.dart';
 
 import '../app/service/auth/auth_service.dart';
 import '../app/service/locator/service_locator.dart';
@@ -7,6 +6,7 @@ import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
 import 'member_list_view_model.dart';
+import 'program_list_view_model.dart';
 import 'user_view_model.dart';
 
 class MainViewModel extends ChangeNotifier {

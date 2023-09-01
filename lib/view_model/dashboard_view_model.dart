@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/get_account_balance_by_custom_period.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
@@ -9,6 +8,7 @@ import '../../../app/const/app_consts.dart';
 import '../../../model/chart_model.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
+import 'user_view_model.dart';
 
 class DashboardViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();

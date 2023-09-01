@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
 import 'package:satujuta_gql_client/gql_faq_service.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
@@ -21,6 +20,7 @@ import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_custom_text.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_image.dart';
+import '../../widget/atom/app_progress_indicator.dart';
 import '../../widget/atom/app_snackbar.dart';
 import '../../widget/molecule/referral_Invitation/ref_invite_button.dart';
 

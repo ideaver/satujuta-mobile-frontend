@@ -11,11 +11,11 @@ import '../../atom/app_progress_indicator.dart';
 import '../../atom/app_text_field.dart';
 
 class SchoolListModal extends StatelessWidget {
-  // final int parentId;
+  final int cityId;
 
   const SchoolListModal({
     super.key,
-    // required this.parentId,
+    required this.cityId,
   });
 
   @override
@@ -23,7 +23,7 @@ class SchoolListModal extends StatelessWidget {
     final navigator = Navigator.of(context);
     final schoolListViewModel = locator<SchoolListViewModel>();
 
-    schoolListViewModel.getSchools(navigator);
+    schoolListViewModel.getSchools(navigator, cityId: cityId);
 
     return Consumer<SchoolListViewModel>(builder: (context, model, _) {
       return Column(
@@ -41,7 +41,7 @@ class SchoolListModal extends StatelessWidget {
               hintText: 'Cari Sekolah',
               onChanged: (val) async {
                 await Future.delayed(const Duration(seconds: 1));
-                await model.getSchools(navigator, contains: val);
+                await model.getSchools(navigator, cityId: cityId, contains: val);
               },
             ),
           ),

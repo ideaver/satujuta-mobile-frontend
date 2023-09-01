@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
-import 'package:satujuta_app_mobile/view/checkout/checkout_view.dart';
-import 'package:satujuta_app_mobile/view/hotel_picker/hotel_picker_view.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
@@ -11,9 +6,14 @@ import 'package:satujuta_gql_client/operations/generated/user_create_one.graphql
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
+import '../app/service/auth/auth_service.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
 import '../app/utility/validator.dart';
+import '../view/checkout/checkout_view.dart';
+import '../view/hotel_picker/hotel_picker_view.dart';
+import '../widget/atom/app_dialog.dart';
+import '../widget/atom/app_snackbar.dart';
 import 'address_view_model.dart';
 
 class RegisterViewModel extends ChangeNotifier {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/view/dashboard/components/dashboard_chart_period.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../app/theme/app_colors.dart';
@@ -11,6 +10,7 @@ import '../../../model/chart_model.dart';
 import '../../../view_model/dashboard_view_model.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_modal.dart';
+import 'dashboard_chart_period.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart({Key? key}) : super(key: key);
