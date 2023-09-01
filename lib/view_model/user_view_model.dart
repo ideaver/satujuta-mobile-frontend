@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
+import 'package:satujuta_app_mobile/app/service/auth/auth_service.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/point_transaction_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/reward_claim_find_many.graphql.dart';
@@ -8,6 +8,7 @@ import 'package:satujuta_gql_client/operations/generated/transaction_find_many.g
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../app/utility/console_log.dart';
@@ -45,10 +46,7 @@ class UserViewModel extends ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    // TODO LOGIN GET USER ID
-    // TODO REMOVE DEV PURPOSE ONLY
-    var users = await getAllUser();
-    String userId = users?.first.id ?? "8a976aa9-2007-45ef-9b0a-d8545b81ebc6";
+    var userId = AuthService.auth!.userId;
 
     var res = await GqlUserService.userFindOne(userId);
 

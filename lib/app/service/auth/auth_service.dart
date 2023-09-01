@@ -86,6 +86,8 @@ class AuthService {
 
     if (res.parsedData?.authLogin != null && !res.hasException) {
       auth = Auth(
+        userId: res.parsedData!.authLogin!.user.id,
+        fullName: "${res.parsedData!.authLogin!.user.firstName} ${res.parsedData!.authLogin!.user.lastName}",
         accessToken: res.parsedData!.authLogin!.accessToken,
         refreshToken: "",
       );
