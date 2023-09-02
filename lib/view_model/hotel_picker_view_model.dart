@@ -1,68 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:satujuta_gql_client/gql_address_service.dart';
 import 'package:satujuta_gql_client/gql_hotel_service.dart';
-import 'package:satujuta_gql_client/operations/generated/city_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/province_find_many.graphql.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
 
 class HotelPickerViewModel extends ChangeNotifier {
-  List<Query$CityFindMany$cityFindMany>? cityFindMany;
+  List<Query$ProvinceFindMany$provinceFindMany>? provinceFindMany;
 
   List<Query$HotelFindMany$hotelFindMany>? hotelFindMany;
 
-  Query$CityFindMany$cityFindMany? selectedCity;
+  Query$ProvinceFindMany$provinceFindMany? selectedProvince;
 
   Query$HotelFindMany$hotelFindMany? selectedHotel;
 
   int selectedTabIndex = -1;
 
   void resetState() {
-    cityFindMany = null;
+    provinceFindMany = null;
     hotelFindMany = null;
-    selectedCity = null;
+    selectedProvince = null;
     selectedHotel = null;
     selectedTabIndex = -1;
   }
 
-  void initHotelPicker(NavigatorState navigator, int? provinceId) async {
-    resetState();
-
-    if (provinceId != null) {
-      await getCities(navigator, provinceId: provinceId);
-    }
-
-    await getAllHotels(navigator);
-
-    notifyListeners();
+  void initHotelPicker(NavigatorState navigator) async {
+    getProvinces(navigator);
+    getAllHotels(navigator);
   }
 
-  Future<void> getCities(
+  Future<void> getProvinces(
     NavigatorState navigator, {
-    required int provinceId,
     int skip = 0,
     String? contains,
   }) async {
-    var res = await GqlAddressService.cityFindMany(
-      provinceId: provinceId,
+    var res = await GqlAddressService.provinceFindMany(
       skip: skip,
       contains: contains,
     );
 
-    if (res.parsedData?.cityFindMany != null && !res.hasException) {
-      cityFindMany = res.parsedData!.cityFindMany;
+    if (res.parsedData?.provinceFindMany != null && !res.hasException) {
+      provinceFindMany = res.parsedData!.provinceFindMany;
       notifyListeners();
     } else {
-      cl('[getCities].error = ${gqlErrorParser(res)}');
+      cl('[getProvinces].error = ${gqlErrorParser(res)}');
       AppDialog.showFailedDialog(
         navigator,
         error: gqlErrorParser(res),
       );
     }
 
-    cl('[getCities].cityFindMany.length = ${cityFindMany?.length}');
+    cl('[getCities].provinceFindMany.length = ${provinceFindMany?.length}');
   }
 
   Future<void> getAllHotels(
@@ -76,7 +67,12 @@ class HotelPickerViewModel extends ChangeNotifier {
     );
 
     if (res.parsedData?.hotelFindMany != null && !res.hasException) {
-      hotelFindMany = res.parsedData!.hotelFindMany;
+      if (skip == 0) {
+        hotelFindMany = res.parsedData!.hotelFindMany;
+      } else {
+        hotelFindMany?.addAll(res.parsedData!.hotelFindMany ?? []);
+      }
+
       notifyListeners();
     } else {
       cl('[getAllHotels].error = ${gqlErrorParser(res)}');
@@ -86,7 +82,37 @@ class HotelPickerViewModel extends ChangeNotifier {
       );
     }
 
-    cl('[getAllHotels].cityFindMany.length = ${cityFindMany?.length}');
+    cl('[getAllHotels].hotelFindMany.length = ${hotelFindMany?.length}');
+  }
+
+  Future<void> getHotelsByProvinceId(
+    NavigatorState navigator, {
+    required int provinceId,
+    int skip = 0,
+    String contains = "",
+  }) async {
+    var res = await GqlHotelService.hotelFindManyByProvinceId(
+      provinceId: provinceId,
+      skip: skip,
+    );
+
+    if (res.parsedData?.hotelFindMany != null && !res.hasException) {
+      if (skip == 0) {
+        hotelFindMany = res.parsedData!.hotelFindMany;
+      } else {
+        hotelFindMany?.addAll(res.parsedData!.hotelFindMany ?? []);
+      }
+
+      notifyListeners();
+    } else {
+      cl('[getHotelsByProvinceId].error = ${gqlErrorParser(res)}');
+      AppDialog.showFailedDialog(
+        navigator,
+        error: gqlErrorParser(res),
+      );
+    }
+
+    cl('[getHotelsByProvinceId].hotelFindMany.length = ${hotelFindMany?.length}');
   }
 
   Future<void> getHotelsByCityId(
@@ -111,19 +137,21 @@ class HotelPickerViewModel extends ChangeNotifier {
       );
     }
 
-    cl('[getHotelsByCityId].cityFindMany.length = ${cityFindMany?.length}');
+    cl('[getHotelsByCityId].hotelFindMany.length = ${hotelFindMany?.length}');
   }
 
-  void onSelectCity(NavigatorState navigator, Query$CityFindMany$cityFindMany? city, int tabIndex) {
-    selectedCity = city;
+  void onSelectProvince(NavigatorState navigator, Query$ProvinceFindMany$provinceFindMany? province, int tabIndex) {
+    selectedProvince = province;
     selectedTabIndex = tabIndex;
     notifyListeners();
 
-    if (city != null) {
-      getHotelsByCityId(navigator, cityId: city.id);
+    if (province != null) {
+      getHotelsByProvinceId(navigator, provinceId: province.id);
+    } else {
+      getAllHotels(navigator);
     }
 
-    cl('[onSelectCity].selectedCity =  ${selectedCity?.id}: ${selectedCity?.name}');
+    cl('[onSelectProvince].selectedProvince =  ${selectedProvince?.id}: ${selectedProvince?.name}');
   }
 
   void onSelectHotel(Query$HotelFindMany$hotelFindMany hotel) {

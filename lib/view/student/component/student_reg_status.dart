@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/view/student/student_registration_view.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -222,7 +223,11 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
             children: [
               AppIconButton(
                 onPressed: () {
-                  Navigator.pop(context, model.userStudentsInactive![i]);
+                  Navigator.pushNamed(
+                    context,
+                    StudentRegistrationView.editRouteName,
+                    arguments: model.userStudentsInactive![i],
+                  );
                 },
                 icon: CustomIcon.edit_icon,
                 backgroundColor: AppColors.baseLv6,
@@ -271,8 +276,9 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
         children: [
           Expanded(
             child: AppButton(
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                await Navigator.pushNamed(context, StudentRegistrationView.addRouteName);
+                memberListViewModel.getAllUserMembers();
               },
               text: 'Tambah Siswa',
               textColor: AppColors.primary,
@@ -290,8 +296,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
           Expanded(
             child: AppButton(
               onTap: () {
-                // TODO
-                Navigator.pushNamed(context, StudentCheckoutView.routeName);
+                Navigator.pushReplacementNamed(context, StudentCheckoutView.routeName);
               },
               text: 'Bayar',
               padding: EdgeInsets.zero,

@@ -349,7 +349,8 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                   //   imageFriend3: AppAssets.userImage3Path,
                   //   countFriend: '9',
                   // ),
-                  textButton: 'Undang Lebih Banyak',
+                  textButton:
+                      model.userMembers == null || model.userMembers!.isEmpty ? 'Undang Teman' : 'Undang Lebih Banyak',
                 ),
               )
             ],

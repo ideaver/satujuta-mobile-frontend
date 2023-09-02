@@ -12,6 +12,7 @@ import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
 import '../app/utility/validator.dart';
 import '../view/student/component/student_reg_status.dart';
+import '../view/student/student_registration_view.dart';
 import '../widget/atom/app_dialog.dart';
 import '../widget/atom/app_snackbar.dart';
 import 'address_view_model.dart';
@@ -20,8 +21,6 @@ import 'user_view_model.dart';
 class StudentRegViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();
   final addressViewModel = locator<AddressViewModel>();
-
-  Mutation$UserCreate$userCreateOne? student;
 
   TextEditingController firstNameCtrl = TextEditingController();
   TextEditingController lastNameCtrl = TextEditingController();
@@ -32,6 +31,9 @@ class StudentRegViewModel extends ChangeNotifier {
   TextEditingController subdistrictCtrl = TextEditingController();
   TextEditingController postalCodeCtrl = TextEditingController();
 
+  String? studentId;
+
+  int? addressId;
   int? provinceId;
   int? cityId;
   int? districtId;
@@ -47,7 +49,7 @@ class StudentRegViewModel extends ChangeNotifier {
   // TextEditingController passwordCtrl = TextEditingController();
 
   void clearState() {
-    student = null;
+    studentId = null;
 
     firstNameCtrl.clear();
     lastNameCtrl.clear();
@@ -58,6 +60,7 @@ class StudentRegViewModel extends ChangeNotifier {
     subdistrictCtrl.clear();
     postalCodeCtrl.clear();
 
+    addressId = null;
     provinceId = null;
     cityId = null;
     districtId = null;
@@ -68,14 +71,12 @@ class StudentRegViewModel extends ChangeNotifier {
 
     selectedSchool = null;
     schoolNameCtrl.clear();
-
-    notifyListeners();
+    selectedHotel = null;
+    hotelNameCtrl.clear();
   }
 
   void initEditProfileView({Query$UserFindMany$userFindMany? currStudent}) async {
     if (currStudent != null) {
-      student = Mutation$UserCreate$userCreateOne.fromJson(currStudent.toJson());
-
       firstNameCtrl.text = currStudent.firstName;
       lastNameCtrl.text = currStudent.lastName ?? '';
       addressNameCtrl.text = currStudent.address.subdistrict.name;
@@ -95,40 +96,39 @@ class StudentRegViewModel extends ChangeNotifier {
 
       selectedSchool = Query$SchoolFindMany$schoolFindMany.fromJson(currStudent.school!.toJson());
       schoolNameCtrl.text = currStudent.school!.name;
-
-      notifyListeners();
     } else {
       clearState();
     }
   }
 
-  void onTapRegisterStudent(NavigatorState navigator, {bool editStudent = false}) async {
-    bool isValid = regStudentValidator(navigator);
+  void onTapStudentFormButton({
+    required NavigatorState navigator,
+    required StudentRegViewState viewState,
+  }) async {
+    bool isValid = studentFormValidator(navigator);
 
     if (isValid) {
       AppDialog.showDialogProgress(navigator);
 
-      var errRes = await registerStudent(navigator);
+      var errRes =
+          viewState == StudentRegViewState.edit ? await updateStudent(navigator) : await registerStudent(navigator);
 
       if (errRes == null) {
         userViewModel.getUser();
         navigator.pop();
-        var student = await navigator.pushNamed(
-          StudentRegStatus.successRouteName,
-          arguments: true,
-        );
 
-        if (student != null) {
-          // Edit student
-          initEditProfileView(
-            currStudent: student as Query$UserFindMany$userFindMany,
+        if (viewState == StudentRegViewState.add || viewState == StudentRegViewState.edit) {
+          navigator.pop();
+        }
+
+        if (viewState == StudentRegViewState.create) {
+          navigator.pushReplacementNamed(
+            StudentRegStatus.successRouteName,
+            arguments: true,
           );
-        } else {
-          // Add student
-          clearState();
         }
       } else {
-        cl('[onTapRegisterStudent].resProfile.error = $errRes');
+        cl('[onTapStudentFormButton].resProfile.error = $errRes');
         navigator.pop();
         AppDialog.showErrorDialog(
           navigator,
@@ -138,9 +138,9 @@ class StudentRegViewModel extends ChangeNotifier {
     }
   }
 
-  bool regStudentValidator(NavigatorState navigator) {
+  bool studentFormValidator(NavigatorState navigator) {
     if (firstNameCtrl.text.isEmpty) {
-      cl('[regStudentValidator].firstName empty');
+      cl('[studentFormValidator].firstName empty');
       AppSnackbar.show(navigator, title: 'Mohon masukkan nama depan anda!');
       return false;
     }
@@ -150,7 +150,7 @@ class StudentRegViewModel extends ChangeNotifier {
         cityId == null ||
         districtId == null ||
         subdistrictId == null) {
-      cl('[regStudentValidator].adress null');
+      cl('[studentFormValidator].adress null');
       AppSnackbar.show(navigator, title: 'Mohon lengkapi alamat siswa!');
       return false;
     }
@@ -229,10 +229,7 @@ class StudentRegViewModel extends ChangeNotifier {
     cl('[registerStudent].res = $res');
 
     if (res.parsedData?.userCreateOne != null && !res.hasException) {
-      student = res.parsedData!.userCreateOne;
-      notifyListeners();
-
-      cl('[registerStudent].student = ${student?.toJson()}');
+      cl('[registerStudent].student = ${res.parsedData!.userCreateOne?.toJson()}');
       return null;
     } else {
       cl('[registerStudent].error = ${gqlErrorParser(res)}');
@@ -241,12 +238,12 @@ class StudentRegViewModel extends ChangeNotifier {
   }
 
   Future<String?> updateStudent(NavigatorState navigator) async {
-    if (student == null) {
-      return "Student data is null";
+    if (studentId == null) {
+      return "Student id is null";
     }
 
     var address = Mutation$UserUpdateOne$userUpdateOne$address(
-      id: student!.address.id,
+      id: addressId!,
       name: addressNameCtrl.text,
       subdistrict: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict(
         id: subdistrictId!,
@@ -289,7 +286,7 @@ class StudentRegViewModel extends ChangeNotifier {
     );
 
     var studentData = Mutation$UserUpdateOne$userUpdateOne(
-      id: student!.id,
+      id: studentId!,
       firstName: firstNameCtrl.text,
       lastName: lastNameCtrl.text,
       email: emailCtrl.text,
@@ -299,7 +296,7 @@ class StudentRegViewModel extends ChangeNotifier {
       status: Enum$UserStatus.PENDING,
       theme: Enum$Theme.LIGHT,
       address: address,
-      referralCode: student!.referralCode,
+      referralCode: "",
       referredBy: referredBy,
       school: school,
       accounts: [],
@@ -322,7 +319,7 @@ class StudentRegViewModel extends ChangeNotifier {
     }
   }
 
-  bool studentRegValidator() {
+  bool studentButtonValidator() {
     if (firstNameCtrl.text.isNotEmpty &&
             addressNameCtrl.text.isNotEmpty &&
             provinceId != null &&

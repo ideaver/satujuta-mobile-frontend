@@ -1,7 +1,5 @@
 import 'package:jwt_decode/jwt_decode.dart';
 
-import '../app/utility/console_log.dart';
-
 class Auth {
   String? userId;
   String? email;
@@ -18,7 +16,6 @@ class Auth {
   factory Auth.fromJson(Map<String, dynamic> data) {
     final jwt = Jwt.parseJwt(data["accessToken"]);
 
-    cl(jwt);
     return Auth(
       userId: jwt["id"],
       email: jwt["email"],

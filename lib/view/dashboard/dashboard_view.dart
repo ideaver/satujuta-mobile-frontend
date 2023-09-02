@@ -34,16 +34,9 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.baseLv7,
-      ),
+      const SystemUiOverlayStyle(statusBarColor: AppColors.baseLv7),
     );
 
     return Consumer<UserViewModel>(builder: (context, userViewModel, _) {
@@ -560,7 +553,7 @@ class _DashboardViewState extends State<DashboardView> {
               onTap: () async {
                 Navigator.pushNamed(
                   context,
-                  StudentRegistrationView.routeName,
+                  StudentRegistrationView.createRouteName,
                 );
               },
               text: 'Daftarkan Siswa',

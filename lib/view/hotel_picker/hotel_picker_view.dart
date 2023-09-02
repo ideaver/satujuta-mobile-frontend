@@ -40,15 +40,50 @@ class HotelPicker extends StatefulWidget {
 }
 
 class _HotelPickerState extends State<HotelPicker> {
+  final scrollController = ScrollController();
+
   final hotelPickerViewModel = locator<HotelPickerViewModel>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    scrollController.addListener(scrollListener);
+    hotelPickerViewModel.resetState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final navigator = Navigator.of(context);
+      hotelPickerViewModel.initHotelPicker(navigator);
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollListener() {
     final navigator = Navigator.of(context);
-    final provinceId = ModalRoute.of(context)?.settings.arguments as int?;
 
-    hotelPickerViewModel.initHotelPicker(navigator, provinceId);
+    if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      if (hotelPickerViewModel.selectedProvince == null) {
+        hotelPickerViewModel.getAllHotels(
+          navigator,
+          skip: hotelPickerViewModel.hotelFindMany?.length ?? 0,
+        );
+      } else {
+        hotelPickerViewModel.getHotelsByProvinceId(
+          navigator,
+          provinceId: hotelPickerViewModel.selectedProvince!.id,
+          skip: hotelPickerViewModel.hotelFindMany?.length ?? 0,
+        );
+      }
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
@@ -68,7 +103,7 @@ class _HotelPickerState extends State<HotelPicker> {
     return Consumer<HotelPickerViewModel>(builder: (context, model, _) {
       return SliverAppBar(
         automaticallyImplyLeading: false,
-        expandedHeight: model.cityFindMany == null || model.cityFindMany!.isEmpty ? 62 : 170,
+        expandedHeight: model.provinceFindMany == null || model.provinceFindMany!.isEmpty ? 62 : 170,
         pinned: true,
         backgroundColor: AppColors.baseLv7,
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -79,7 +114,7 @@ class _HotelPickerState extends State<HotelPicker> {
           title: title(model),
           expandedTitleScale: 1.5,
         ),
-        bottom: model.cityFindMany == null || model.cityFindMany!.isEmpty ? null : tabBar(),
+        bottom: model.provinceFindMany == null || model.provinceFindMany!.isEmpty ? null : tabBar(),
       );
     });
   }
@@ -87,7 +122,7 @@ class _HotelPickerState extends State<HotelPicker> {
   Widget title(HotelPickerViewModel model) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: model.cityFindMany == null || model.cityFindMany!.isEmpty ? 0 : AppSizes.padding * 4,
+        bottom: model.provinceFindMany == null || model.provinceFindMany!.isEmpty ? 0 : AppSizes.padding * 4,
       ),
       child: Text(
         widget.title,
@@ -109,7 +144,7 @@ class _HotelPickerState extends State<HotelPicker> {
           child: Row(
             children: [
               tabWidget(model, -1),
-              ...List.generate(model.cityFindMany!.length, (i) {
+              ...List.generate(model.provinceFindMany!.length, (i) {
                 return tabWidget(model, i);
               })
             ],
@@ -125,9 +160,9 @@ class _HotelPickerState extends State<HotelPicker> {
         final navigator = Navigator.of(context);
 
         if (i >= 0) {
-          model.onSelectCity(navigator, model.cityFindMany![i], i);
+          model.onSelectProvince(navigator, model.provinceFindMany![i], i);
         } else {
-          model.onSelectCity(navigator, null, i);
+          model.onSelectProvince(navigator, null, i);
         }
       },
       child: Container(
@@ -153,7 +188,7 @@ class _HotelPickerState extends State<HotelPicker> {
                   )
                 : const SizedBox.shrink(),
             Text(
-              i == -1 ? 'Semua' : model.cityFindMany![i].name,
+              i == -1 ? 'Semua' : model.provinceFindMany![i].name,
               style: AppTextStyle.semiBold(
                 context,
                 color: model.selectedTabIndex == i ? AppColors.white : AppColors.base,
@@ -178,13 +213,17 @@ class _HotelPickerState extends State<HotelPicker> {
         );
       }
 
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: model.hotelFindMany!.length,
-        padding: const EdgeInsets.all(AppSizes.padding),
-        itemBuilder: (context, i) {
-          return hotelCard(model, i);
-        },
+      return RawScrollbar(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        radius: const Radius.circular(100),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: model.hotelFindMany!.length,
+          padding: const EdgeInsets.all(AppSizes.padding),
+          itemBuilder: (context, i) {
+            return hotelCard(model, i);
+          },
+        ),
       );
     });
   }

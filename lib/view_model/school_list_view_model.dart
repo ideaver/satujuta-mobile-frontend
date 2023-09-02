@@ -8,27 +8,40 @@ import '../app/utility/console_log.dart';
 class SchoolListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
 
-  List<Query$SchoolFindMany$schoolFindMany>? schools;
+  List<Query$SchoolFindMany$schoolFindMany>? schoolFindMany;
 
   Query$SchoolFindMany$schoolFindMany? selectedSchool;
 
   void resetState() {
-    schools = null;
+    schoolFindMany = null;
     selectedSchool = null;
   }
 
-  Future<void> getSchools(NavigatorState navigator, {required int cityId, int skip = 0, String? contains}) async {
+  Future<void> getSchools(
+    NavigatorState navigator, {
+    required int cityId,
+    int skip = 0,
+    String contains = "",
+  }) async {
     var res = await GqlSchoolService.schoolFindManyByName(
       cityId: cityId,
       skip: skip,
+      contains: contains,
     );
 
     if (res.parsedData?.schoolFindMany != null && !res.hasException) {
-      schools = res.parsedData?.schoolFindMany;
+      if (skip == 0) {
+        schoolFindMany = res.parsedData?.schoolFindMany;
+      } else {
+        schoolFindMany?.addAll(res.parsedData?.schoolFindMany ?? []);
+      }
+
       notifyListeners();
     } else {
       cl('[getSchools].error = ${gqlErrorParser(res)}');
     }
+
+    cl('[getSchools].schoolFindMany.length = ${schoolFindMany?.length}');
   }
 
   void onSelectSchool(Query$SchoolFindMany$schoolFindMany school) {

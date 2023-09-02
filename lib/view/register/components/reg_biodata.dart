@@ -225,7 +225,7 @@ class _RegBiodataState extends State<RegBiodata> {
                       ),
                       lableText: 'Kode Pos',
                       hintText: "12345",
-                      disabledColor: AppColors.base,
+                      disabledColor: AppColors.baseLv4,
                     ),
                     AppTextField(
                       enabled: false,

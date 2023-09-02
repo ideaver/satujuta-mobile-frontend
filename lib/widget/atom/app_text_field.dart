@@ -52,7 +52,7 @@ class AppTextField extends StatefulWidget {
     this.showCounter = false,
     this.minLines,
     this.onTap,
-    this.maxLines,
+    this.maxLines = 1,
     this.maxLength,
     this.onChanged,
     this.onEditingComplete,

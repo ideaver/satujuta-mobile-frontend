@@ -222,6 +222,38 @@ class AppDialog {
       },
     );
   }
+
+  static Future<bool> showExitConfirmDialog(
+    NavigatorState navigator, {
+    String? title,
+    String? message,
+    String? rightButtonText,
+    String? leftButtonText,
+  }) async {
+    bool value = false;
+
+    await showDialog(
+      context: navigator.context,
+      builder: (context) {
+        return AppDialogWidget(
+          title: title ?? "Konfirmasi",
+          text: message ?? "Apakah kamu yakin ingin keluar dari halaman ini?",
+          rightButtonText: "Keluar",
+          leftButtonText: "Batal",
+          onTapRightButton: () {
+            navigator.pop();
+            value = true;
+          },
+          onTapLeftButton: () {
+            navigator.pop();
+            value = false;
+          },
+        );
+      },
+    );
+
+    return value;
+  }
 }
 
 // Default Dialog

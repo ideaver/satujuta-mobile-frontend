@@ -54,7 +54,7 @@ class _MemberListViewState extends State<MemberListView> {
   void initState() {
     _memberListViewModel.searchCtrl = TextEditingController();
     _memberListViewModel.searchFocusNode = FocusNode();
-    _memberListViewModel.addListener(_memberListViewModel.focusListener);
+    _memberListViewModel.searchFocusNode.addListener(_memberListViewModel.focusListener);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _memberListViewModel.getAllUserMembers();
@@ -342,9 +342,13 @@ class _MemberListViewState extends State<MemberListView> {
             : model.userMembersInactive;
 
     if (members == null || members.isEmpty) {
-      return const AppNotFoundWidget(
-        title: 'Kamu belum memiliki anggota',
-        subtitle: 'Segera menambahkan anggota dan akan kami beritahukan lewat pemberitahuan',
+      return const Expanded(
+        child: SingleChildScrollView(
+          child: AppNotFoundWidget(
+            title: 'Kamu belum memiliki anggota',
+            subtitle: 'Segera menambahkan anggota dan akan kami beritahukan lewat pemberitahuan',
+          ),
+        ),
       );
     }
 

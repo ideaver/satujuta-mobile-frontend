@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 
 import '../../../app/asset/app_assets.dart';
 import '../../../app/theme/app_colors.dart';
@@ -9,6 +11,7 @@ import '../../../app/theme/app_sizes.dart';
 import '../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_modal.dart';
+import '../../app/service/locator/service_locator.dart';
 import '../../app/utility/console_log.dart';
 import '../../app/utility/validator.dart';
 import '../../view_model/address_view_model.dart';
@@ -21,32 +24,69 @@ import '../../widget/organism/address/address_list_modal.dart';
 import '../../widget/organism/school/school_list_modal.dart';
 import '../hotel_picker/hotel_picker_view.dart';
 
-class StudentRegistrationView extends StatefulWidget {
-  const StudentRegistrationView({
-    Key? key,
-  }) : super(key: key);
+enum StudentRegViewState {
+  create,
+  add,
+  edit,
+}
 
-  static const String routeName = '/student-registration';
+class StudentRegistrationView extends StatefulWidget {
+  final StudentRegViewState viewState;
+
+  const StudentRegistrationView({
+    super.key,
+    required this.viewState,
+  });
+
+  static const String createRouteName = '/student-reg-create';
+  static const String addRouteName = '/student-reg-add';
+  static const String editRouteName = '/student-reg-edit';
+
+  const StudentRegistrationView.create({super.key, this.viewState = StudentRegViewState.create});
+  const StudentRegistrationView.add({super.key, this.viewState = StudentRegViewState.add});
+  const StudentRegistrationView.edit({super.key, this.viewState = StudentRegViewState.edit});
 
   @override
   State<StudentRegistrationView> createState() => _StudentRegistrationViewState();
 }
 
 class _StudentRegistrationViewState extends State<StudentRegistrationView> {
-  bool isCheck = true;
+  final studentViewModel = locator<StudentRegViewModel>();
+
+  @override
+  void initState() {
+    if (widget.viewState == StudentRegViewState.create) {
+      studentViewModel.clearState();
+    }
+
+    if (widget.viewState == StudentRegViewState.add) {
+      studentViewModel.clearState();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            sliverAppBarWidget(),
-          ];
-        },
-        body: body(),
+    final navigator = Navigator.of(context);
+    final currStudent = ModalRoute.of(context)?.settings.arguments as Query$UserFindMany$userFindMany?;
+
+    if (widget.viewState == StudentRegViewState.edit) {
+      studentViewModel.initEditProfileView(currStudent: currStudent);
+    }
+
+    return WillPopScope(
+      onWillPop: () => AppDialog.showExitConfirmDialog(navigator),
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        body: NestedScrollView(
+          physics: const BouncingScrollPhysics(),
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              sliverAppBarWidget(),
+            ];
+          },
+          body: body(),
+        ),
       ),
     );
   }
@@ -129,7 +169,7 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
           children: [
             form(student, address),
             validatorInfo(student),
-            registerStudentButton(student),
+            studentFormButton(student),
           ],
         ),
       );
@@ -521,17 +561,20 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
     );
   }
 
-  Widget registerStudentButton(StudentRegViewModel model) {
+  Widget studentFormButton(StudentRegViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
       child: AppButton(
         onTap: () {
           FocusScope.of(context).unfocus();
           final navigator = Navigator.of(context);
-          model.onTapRegisterStudent(navigator);
+          model.onTapStudentFormButton(
+            navigator: navigator,
+            viewState: widget.viewState,
+          );
         },
-        text: "Daftarkan Siswa",
-        enable: model.studentRegValidator(),
+        text: widget.viewState != StudentRegViewState.edit ? "Daftarkan Siswa" : "Perbarui Data Siswa",
+        enable: model.studentButtonValidator(),
       ),
     );
   }

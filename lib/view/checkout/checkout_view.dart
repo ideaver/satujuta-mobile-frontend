@@ -1,6 +1,8 @@
+import 'package:countdown_widget/countdown_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
 import 'package:satujuta_gql_client/operations/generated/order_find_one.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -16,7 +18,6 @@ import '../../app/service/locator/service_locator.dart';
 import '../../app/utility/currency_formatter.dart';
 import '../../app/utility/date_formatter.dart';
 import '../../view_model/checkout_view_model.dart';
-import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_image.dart';
 import '../../widget/organism/payment_method/payment_method_list_modal.dart';
 import '../main/main_view.dart';
@@ -31,21 +32,7 @@ class CheckoutView extends StatefulWidget {
 }
 
 class _CheckoutViewState extends State<CheckoutView> {
-  bool isOrderItemsShowed = true;
-  bool isOrderShipmentShowed = true;
-
   final _checkoutViewModel = locator<CheckoutViewModel>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _checkoutViewModel.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,23 +45,28 @@ class _CheckoutViewState extends State<CheckoutView> {
     }
 
     return ChangeNotifierProvider.value(
-        value: _checkoutViewModel,
-        builder: (context, snapshot) {
-          return Consumer<CheckoutViewModel>(builder: (context, model, _) {
+      value: _checkoutViewModel,
+      builder: (context, snapshot) {
+        return Consumer<CheckoutViewModel>(
+          builder: (context, model, _) {
+            if (model.order == null) {
+              return const Scaffold(body: AppProgressIndicator());
+            }
+
             return Scaffold(
               body: NestedScrollView(
                 physics: const BouncingScrollPhysics(),
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
-                  return [
-                    sliverAppBarWidget(),
-                  ];
+                  return [sliverAppBarWidget()];
                 },
                 body: body(model),
               ),
               bottomSheet: bottomButton(model),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
   SliverAppBar sliverAppBarWidget() {
@@ -128,25 +120,25 @@ class _CheckoutViewState extends State<CheckoutView> {
       child: Column(
         children: [
           const SizedBox(height: AppSizes.padding * 2),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppIconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icons.arrow_back_ios_rounded,
-                iconSize: 22,
-              ),
-              AppIconButton(
-                onPressed: () {
-                  // TODO
-                },
-                icon: Icons.info_outline_rounded,
-                iconSize: 22,
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     AppIconButton(
+          //       onPressed: () {
+          //         Navigator.pop(context);
+          //       },
+          //       icon: Icons.arrow_back_ios_rounded,
+          //       iconSize: 22,
+          //     ),
+          //     AppIconButton(
+          //       onPressed: () {
+          //         // TODO
+          //       },
+          //       icon: Icons.info_outline_rounded,
+          //       iconSize: 22,
+          //     ),
+          //   ],
+          // ),
           const SizedBox(height: AppSizes.padding * 2),
           title()
         ],
@@ -164,7 +156,7 @@ class _CheckoutViewState extends State<CheckoutView> {
           orderItems(model),
           orderShipment(model),
           orderPricing(model),
-          const SizedBox(height: 100),
+          const SizedBox(height: AppSizes.padding * 8),
         ],
       ),
     );
@@ -218,14 +210,23 @@ class _CheckoutViewState extends State<CheckoutView> {
                       size: 12,
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      "00:30:25",
-                      style: AppTextStyle.bold(
-                        context,
-                        fontSize: 12,
-                        color: AppColors.red,
-                      ),
-                    )
+                    CountDownWidget(
+                      // TODO
+                      duration: Duration(hours: 24),
+                      builder: (context, duration) {
+                        return Text(
+                          "${duration.inHours}:${duration.inMinutes}:${duration.inSeconds}",
+                          style: AppTextStyle.bold(
+                            context,
+                            fontSize: 12,
+                            color: AppColors.red,
+                          ),
+                        );
+                      },
+                      onDurationRemainChanged: (duration) {
+                        print('duration:${duration.toString()}');
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -440,6 +441,10 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   Widget orderShipment(CheckoutViewModel model) {
+    if (model.order!.shipping == null) {
+      return const SizedBox.shrink();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppExpansionListTile(
@@ -568,7 +573,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  '${model.order!.shipping?.address.user?.address.subdistrict.postalCode ?? '-'}',
+                  model.order!.shipping?.address.user?.address.subdistrict.postalCode ?? '-',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -844,7 +849,6 @@ class _CheckoutViewState extends State<CheckoutView> {
   Widget bottomButton(CheckoutViewModel model) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.padding),
-      // height: 70,
       decoration: const BoxDecoration(
         color: AppColors.white,
         boxShadow: [
@@ -858,41 +862,7 @@ class _CheckoutViewState extends State<CheckoutView> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          model.selectedPaymentMethod != null
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: AppSizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Metode Pembayaran',
-                        style: AppTextStyle.semiBold(context),
-                      ),
-                      Row(
-                        children: [
-                          AppImage(
-                            image: model.selectedPaymentMethod!.logoUrl,
-                            width: 32,
-                            height: 24,
-                            backgroundColor: AppColors.baseLv6,
-                            borderRadius: 8,
-                            errorWidget: const Icon(
-                              CupertinoIcons.building_2_fill,
-                              color: AppColors.baseLv4,
-                              size: 12,
-                            ),
-                          ),
-                          const SizedBox(width: AppSizes.padding / 2),
-                          Text(
-                            model.selectedPaymentMethod?.name ?? "-",
-                            style: AppTextStyle.extraBold(context),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox.shrink(),
+          model.selectedPaymentMethod != null ? paymentMethod(model) : const SizedBox.shrink(),
           AppButton(
             onTap: () async {
               if (model.selectedPaymentMethod == null) {
@@ -918,6 +888,58 @@ class _CheckoutViewState extends State<CheckoutView> {
             height: 54,
             padding: EdgeInsets.zero,
             text: model.selectedPaymentMethod == null ? 'Pilih Metode Pembayaran' : 'Bayar',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget paymentMethod(CheckoutViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSizes.padding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Metode Pembayaran',
+            style: AppTextStyle.semiBold(context),
+          ),
+          GestureDetector(
+            onTap: () async {
+              var method = await AppModal.show(
+                context: context,
+                title: 'Pilih Metode Pembayaran',
+                child: const PaymentMethodListModal(),
+              );
+
+              if (method != null) {
+                model.onSelectPaymentMethod(method);
+              }
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  AppImage(
+                    image: model.selectedPaymentMethod!.logoUrl,
+                    width: 32,
+                    height: 24,
+                    backgroundColor: AppColors.baseLv6,
+                    borderRadius: 8,
+                    errorWidget: const Icon(
+                      CupertinoIcons.building_2_fill,
+                      color: AppColors.baseLv4,
+                      size: 12,
+                    ),
+                  ),
+                  const SizedBox(width: AppSizes.padding / 2),
+                  Text(
+                    model.selectedPaymentMethod?.name ?? "-",
+                    style: AppTextStyle.extraBold(context),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
