@@ -221,9 +221,8 @@ class StudentRegViewModel extends ChangeNotifier {
     );
 
     var res = await GqlUserService.userCreateOne(
-      studentData,
-      "",
-      // passwordCtrl.text,
+      user: studentData,
+      userPassword: "",
     );
 
     cl('[registerStudent].res = $res');

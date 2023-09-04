@@ -42,7 +42,7 @@ class MemberListViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> getAllUserMembers({int skip = 0}) async {
+  Future<void> getAllUserMembers({int skip = 0, String contains = ""}) async {
     if (userViewModel.user == null) {
       cl('[getAllUserMembers].user null');
       return;
@@ -51,10 +51,15 @@ class MemberListViewModel extends ChangeNotifier {
     var res = await GqlUserService.referredUserFindManyByReferrerId(
       userViewModel.user!.id,
       skip: skip,
+      contains: contains,
     );
 
     if (res.parsedData?.userFindMany != null && !res.hasException) {
-      userMembers = res.parsedData?.userFindMany;
+      if (skip == 0) {
+        userMembers = res.parsedData?.userFindMany;
+      } else {
+        userMembers?.addAll(res.parsedData?.userFindMany ?? []);
+      }
 
       if (userMembers != null && userMembers!.isNotEmpty) {
         skip = userMembers!.length - 1;

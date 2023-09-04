@@ -148,7 +148,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
         onChanged: expandCollapse,
         children: [
           studentList(model),
-          expandCollapseButton(),
+          // expandCollapseButton(),
         ],
       );
     });
@@ -274,25 +274,25 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: AppButton(
-              onTap: () async {
-                await Navigator.pushNamed(context, StudentRegistrationView.addRouteName);
-                memberListViewModel.getAllUserMembers();
-              },
-              text: 'Tambah Siswa',
-              textColor: AppColors.primary,
-              buttonColor: AppColors.primary.withOpacity(0.12),
-              padding: EdgeInsets.zero,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(100),
-                bottomLeft: Radius.circular(100),
-                topRight: Radius.circular(32),
-                bottomRight: Radius.circular(32),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
+          // Expanded(
+          //   child: AppButton(
+          //     onTap: () async {
+          //       await Navigator.pushNamed(context, StudentRegistrationView.addRouteName);
+          //       memberListViewModel.getAllUserMembers();
+          //     },
+          //     text: 'Tambah Siswa',
+          //     textColor: AppColors.primary,
+          //     buttonColor: AppColors.primary.withOpacity(0.12),
+          //     padding: EdgeInsets.zero,
+          //     borderRadius: const BorderRadius.only(
+          //       topLeft: Radius.circular(100),
+          //       bottomLeft: Radius.circular(100),
+          //       topRight: Radius.circular(32),
+          //       bottomRight: Radius.circular(32),
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(width: 8),
           Expanded(
             child: AppButton(
               onTap: () {

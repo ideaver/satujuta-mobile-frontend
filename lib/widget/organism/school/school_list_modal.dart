@@ -29,6 +29,7 @@ class _SchoolListModalState extends State<SchoolListModal> {
 
   @override
   void initState() {
+    schoolListViewModel.searchCtrl = TextEditingController();
     scrollController.addListener(scrollListener);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -53,6 +54,7 @@ class _SchoolListModalState extends State<SchoolListModal> {
         navigator,
         cityId: widget.cityId,
         skip: schoolListViewModel.schoolFindMany?.length ?? 0,
+        contains: schoolListViewModel.searchCtrl.text,
       );
     }
   }
@@ -82,9 +84,8 @@ class _SchoolListModalState extends State<SchoolListModal> {
         borderRadius: BorderRadius.circular(100),
       ),
       child: AppTextField(
-        prefixIcon: const Icon(
-          Icons.search,
-        ),
+        controller: model.searchCtrl,
+        prefixIcon: const Icon(Icons.search),
         hintText: 'Cari Sekolah',
         onChanged: (val) async {
           if (val.length % 3 == 0) {

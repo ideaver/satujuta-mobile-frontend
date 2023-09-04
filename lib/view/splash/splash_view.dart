@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../app/asset/app_assets.dart';
 import '../../app/theme/app_colors.dart';
@@ -15,30 +16,12 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: AppColors.primary),
+    );
+
     final size = MediaQuery.of(context).size;
 
-    // return Scaffold(
-    //   body: Operation<GUserFindManyData, GUserFindManyVars>(
-    //     client: GqlService.client,
-    //     operationRequest: GUserFindManyReq(
-    //       (b) => b..vars.userFindManyArgs.take = 50,
-    //     ),
-    //     builder: (context, response, error) {
-    //       if (response!.loading) {
-    //         return const Center(child: CircularProgressIndicator());
-    //       }
-
-    //       final users = response.data?.userFindMany?.toList() ?? [];
-
-    //       return ListView.builder(
-    //         itemCount: users.length,
-    //         itemBuilder: (context, index) => Text(
-    //           users[index].email, // Non nullable
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
     return Scaffold(
       body: Container(
         color: AppColors.primary,

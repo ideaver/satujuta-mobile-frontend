@@ -28,13 +28,17 @@ class ProgramListViewModel extends ChangeNotifier {
     getAllPrograms();
   }
 
-  Future<void> getAllPrograms({int skip = 0}) async {
+  Future<void> getAllPrograms({int skip = 0, String contains = ""}) async {
     var res = selectedCategory == null
         ? await GqlProgramService.programFindMany(skip: skip)
         : await GqlProgramService.programFindManyByCategoryId(programCategoryId: selectedCategory!.id, skip: skip);
 
     if (res.parsedData?.programFindMany != null && !res.hasException) {
-      programFindMany = res.parsedData?.programFindMany;
+      if (skip == 0) {
+        programFindMany = res.parsedData?.programFindMany;
+      } else {
+        programFindMany?.addAll(res.parsedData?.programFindMany ?? []);
+      }
     } else {
       cl('[getAllPrograms].error = ${gqlErrorParser(res)}');
     }

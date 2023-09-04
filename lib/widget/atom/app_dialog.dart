@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
@@ -254,6 +255,21 @@ class AppDialog {
 
     return value;
   }
+
+  static Future<String?> showPickImageDialog(
+    NavigatorState navigator, {
+    String? title,
+    String? message,
+    String? rightButtonText,
+    String? leftButtonText,
+  }) async {
+    return await showDialog(
+      context: navigator.context,
+      builder: (context) {
+        return const PickImageDialog();
+      },
+    );
+  }
 }
 
 // Default Dialog
@@ -429,5 +445,117 @@ class AppDialogWidget extends StatelessWidget {
               ),
             ),
           );
+  }
+}
+
+class PickImageDialog extends StatelessWidget {
+  const PickImageDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: AspectRatio(
+        aspectRatio: 2,
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.0),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () async {
+                    final navigator = Navigator.of(context);
+                    final ImagePicker picker = ImagePicker();
+                    final XFile? photo = await picker.pickImage(
+                      source: ImageSource.camera,
+                    );
+
+                    navigator.pop(photo?.path);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: AppColors.baseLv7,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.0),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.camera_alt_rounded,
+                          color: AppColors.baseLv4,
+                          size: 32,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'Take Picture',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.bold(
+                            context,
+                            color: AppColors.baseLv4,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () async {
+                    final navigator = Navigator.of(context);
+                    final ImagePicker picker = ImagePicker();
+                    final XFile? photo = await picker.pickImage(
+                      source: ImageSource.gallery,
+                    );
+
+                    navigator.pop(photo?.path);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: AppColors.baseLv7,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.0),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.image,
+                          color: AppColors.baseLv4,
+                          size: 32,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'Open Gallery',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.bold(
+                            context,
+                            color: AppColors.baseLv4,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

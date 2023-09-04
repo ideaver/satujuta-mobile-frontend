@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/view/member/member_invitation_view.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 
@@ -41,6 +42,8 @@ class MemberListView extends StatefulWidget {
 }
 
 class _MemberListViewState extends State<MemberListView> {
+  final scrollController = ScrollController();
+
   final _memberListViewModel = locator<MemberListViewModel>();
 
   int selectedMemberStatus = -1;
@@ -55,6 +58,7 @@ class _MemberListViewState extends State<MemberListView> {
     _memberListViewModel.searchCtrl = TextEditingController();
     _memberListViewModel.searchFocusNode = FocusNode();
     _memberListViewModel.searchFocusNode.addListener(_memberListViewModel.focusListener);
+    scrollController.addListener(scrollListener);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _memberListViewModel.getAllUserMembers();
@@ -66,7 +70,17 @@ class _MemberListViewState extends State<MemberListView> {
   void dispose() {
     _memberListViewModel.searchCtrl.dispose();
     _memberListViewModel.searchFocusNode.dispose();
+    scrollController.dispose();
     super.dispose();
+  }
+
+  void scrollListener() {
+    if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      _memberListViewModel.getAllUserMembers(
+        skip: _memberListViewModel.userMembers?.length ?? 0,
+        contains: _memberListViewModel.searchCtrl.text,
+      );
+    }
   }
 
   @override
@@ -208,14 +222,17 @@ class _MemberListViewState extends State<MemberListView> {
               controller: model.searchCtrl,
               focus: model.searchFocusNode,
               showSuffixButton: model.isSearchFocus,
-              prefixIcon: const Icon(
-                Icons.search,
-              ),
+              prefixIcon: const Icon(Icons.search),
               hintText: 'Cari',
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.padding / 2,
                 vertical: AppSizes.padding / 4,
               ),
+              onChanged: (val) async {
+                if (val.length % 3 == 0) {
+                  await model.getAllUserMembers(contains: val);
+                }
+              },
             ),
           ),
           AnimatedSwitcher(
@@ -254,7 +271,7 @@ class _MemberListViewState extends State<MemberListView> {
 
     return AppButton(
       onTap: () {
-        // TODO
+        Navigator.pushNamed(context, MemberInvitationView.viewAsMeRouteName);
       },
       text: 'Undang',
       fontSize: 12,
@@ -353,15 +370,20 @@ class _MemberListViewState extends State<MemberListView> {
     }
 
     return Expanded(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
-        child: Column(
-          children: [
-            ...List.generate(members.length, (i) {
-              return memberCard(i, members[i], model);
-            }),
-            const SizedBox(height: AppSizes.padding * 6)
-          ],
+      child: RawScrollbar(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        radius: const Radius.circular(100),
+        child: SingleChildScrollView(
+          controller: scrollController,
+          padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
+          child: Column(
+            children: [
+              ...List.generate(members.length, (i) {
+                return memberCard(i, members[i], model);
+              }),
+              const SizedBox(height: AppSizes.padding * 6)
+            ],
+          ),
         ),
       ),
     );
@@ -369,7 +391,7 @@ class _MemberListViewState extends State<MemberListView> {
 
   Widget memberCard(int i, Query$UserFindMany$userFindMany member, MemberListViewModel model) {
     return Container(
-      margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
+      margin: EdgeInsets.only(top: i == 0 ? 0 : AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
         color: AppColors.white,

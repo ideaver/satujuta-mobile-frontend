@@ -176,7 +176,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   AppImage(
-                    image: model.user!.avatarUrl ?? '',
+                    image: model.user!.avatarUrl ?? '-',
                     width: 150,
                     height: 150,
                     borderRadius: 100,

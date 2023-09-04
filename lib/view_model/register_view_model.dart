@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
@@ -23,7 +27,7 @@ class RegisterViewModel extends ChangeNotifier {
 
   Mutation$UserCreate$userCreateOne? createdUser;
 
-  String? avatarUrl;
+  File? avatar;
 
   TextEditingController firstNameCtrl = TextEditingController();
   TextEditingController lastNameCtrl = TextEditingController();
@@ -147,6 +151,15 @@ class RegisterViewModel extends ChangeNotifier {
       updatedAt: DateTime.now().toIso8601String(),
     );
 
+    var multipartFile = avatar != null
+        ? await MultipartFile.fromPath(
+            'file',
+            avatar!.path,
+            filename: '${DateTime.now().second}.jpg',
+            contentType: MediaType("image", "jpg"),
+          )
+        : null;
+
     var userData = Mutation$UserCreate$userCreateOne(
       id: "",
       firstName: firstNameCtrl.text,
@@ -167,8 +180,9 @@ class RegisterViewModel extends ChangeNotifier {
     );
 
     var res = await GqlUserService.userCreateOne(
-      userData,
-      passwordCtrl.text,
+      user: userData,
+      userPassword: passwordCtrl.text,
+      avatarFile: multipartFile,
     );
 
     cl('[registerUser].res = $res');
@@ -202,6 +216,11 @@ class RegisterViewModel extends ChangeNotifier {
     } else {
       cl('[selectHotel].hotel null');
     }
+  }
+
+  void onChangeAvatar(String path) {
+    avatar = File(path);
+    notifyListeners();
   }
 
   bool isBiodataFormValid() {

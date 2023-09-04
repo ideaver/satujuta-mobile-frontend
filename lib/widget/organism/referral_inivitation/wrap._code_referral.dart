@@ -27,9 +27,9 @@ class WrapContentCodeRef extends StatelessWidget {
   final String? subtitle;
   final String? textButton;
   final IconData? icon;
-  final dynamic onTapCopyButton;
-  final dynamic onTapShareButton;
-  final dynamic onTapTaskButton;
+  final Function() onTapCopyButton;
+  final Function() onTapShareButton;
+  final Function() onTapTaskButton;
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +78,9 @@ class WrapCodeReferral extends StatelessWidget {
     required this.textButton,
   });
 
-  final dynamic onTapCopyButton;
-  final dynamic onTapShareButton;
-  final dynamic onTapTaskButton;
+  final Function() onTapCopyButton;
+  final Function() onTapShareButton;
+  final Function() onTapTaskButton;
   final IconData? icon;
   final String? textButton;
 
@@ -89,35 +89,31 @@ class WrapCodeReferral extends StatelessWidget {
     return Column(
       children: [
         RefButtonWithCustomIcon(
-          onPressed: onTapCopyButton!,
+          onPressed: onTapCopyButton,
           text: textButton!,
           icon: icon!,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: onTapShareButton,
-              child: const AppIconButton(
-                icon: Icons.share_outlined,
-                backgroundColor: AppColors.baseLv7,
-                iconSize: 24,
-                iconColor: AppColors.baseLv4,
-                padding: EdgeInsets.all(AppSizes.padding),
-              ),
+            AppIconButton(
+              onPressed: onTapShareButton,
+              icon: Icons.share_outlined,
+              backgroundColor: AppColors.baseLv7,
+              iconSize: 24,
+              iconColor: AppColors.baseLv4,
+              padding: const EdgeInsets.all(AppSizes.padding),
             ),
             const SizedBox(
               width: AppSizes.padding,
             ),
-            GestureDetector(
-              onTap: onTapTaskButton,
-              child: const AppIconButton(
-                icon: CustomIcon.inventory,
-                backgroundColor: AppColors.baseLv7,
-                iconSize: 24,
-                padding: EdgeInsets.all(AppSizes.padding),
-                iconColor: AppColors.baseLv4,
-              ),
+            AppIconButton(
+              onPressed: onTapTaskButton,
+              icon: CustomIcon.inventory,
+              backgroundColor: AppColors.baseLv7,
+              iconSize: 24,
+              padding: const EdgeInsets.all(AppSizes.padding),
+              iconColor: AppColors.baseLv4,
             ),
           ],
         ),

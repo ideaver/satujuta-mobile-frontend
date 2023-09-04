@@ -38,6 +38,7 @@ class _AddressListModalState extends State<AddressListModal> {
 
   @override
   void initState() {
+    addressViewModel.searchCtrl = TextEditingController();
     scrollController.addListener(scrollListener);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -77,6 +78,7 @@ class _AddressListModalState extends State<AddressListModal> {
         addressViewModel.getProvinces(
           navigator,
           skip: (addressViewModel.provinceFindMany?.length ?? 0),
+          contains: addressViewModel.searchCtrl.text,
         );
       }
 
@@ -139,9 +141,8 @@ class _AddressListModalState extends State<AddressListModal> {
         borderRadius: BorderRadius.circular(100),
       ),
       child: AppTextField(
-        prefixIcon: const Icon(
-          Icons.search,
-        ),
+        controller: model.searchCtrl,
+        prefixIcon: const Icon(Icons.search),
         hintText: 'Cari $hintTextName',
         onChanged: (val) async {
           if (val.length % 3 == 0) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/console_log.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -9,6 +11,7 @@ import '../../../widget/atom/app_button.dart';
 import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/edit_profile_view_model.dart';
+import '../../widget/atom/app_dialog.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_image.dart';
 import 'components/edit_profile_account.dart';
@@ -179,7 +182,7 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
             child: Stack(
               children: [
                 AppImage(
-                  image: model.user?.avatarUrl ?? '',
+                  image: model.avatarUrl ?? '-',
                   width: 150,
                   height: 150,
                   borderRadius: 100,
@@ -194,8 +197,42 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
                   bottom: 0,
                   right: 0,
                   child: GestureDetector(
-                    onTap: () {
-                      // TODO
+                    onTap: () async {
+                      final navigator = Navigator.of(context);
+
+                      final path = await AppDialog.showPickImageDialog(navigator);
+
+                      cl('path = $path');
+
+                      if (path != null) {
+                        CroppedFile? croppedFile = await ImageCropper().cropImage(
+                          sourcePath: path,
+                          compressQuality: 15,
+                          aspectRatioPresets: [
+                            CropAspectRatioPreset.square,
+                          ],
+                          uiSettings: [
+                            AndroidUiSettings(
+                              toolbarTitle: 'Crop Image',
+                              statusBarColor: Colors.black,
+                              toolbarColor: Colors.black,
+                              toolbarWidgetColor: Colors.white,
+                              lockAspectRatio: true,
+                              showCropGrid: false,
+                              hideBottomControls: true,
+                            ),
+                            IOSUiSettings(
+                              title: 'Crop Image',
+                              aspectRatioLockEnabled: true,
+                              hidesNavigationBar: true,
+                            ),
+                          ],
+                        );
+
+                        if (croppedFile != null) {
+                          await model.uploadUserAvatar(croppedFile.path, navigator);
+                        }
+                      }
                     },
                     child: Container(
                       width: 44,

@@ -24,14 +24,36 @@ class ProgramListView extends StatefulWidget {
 }
 
 class _ProgramListViewState extends State<ProgramListView> {
+  final scrollController = ScrollController();
+
   final _programListViewModel = locator<ProgramListViewModel>();
 
   @override
   void initState() {
+    _programListViewModel.searchCtrl = TextEditingController();
+    scrollController.addListener(scrollListener);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _programListViewModel.initProgramListView();
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _programListViewModel.searchCtrl.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollListener() {
+    // final navigator = Navigator.of(context);
+
+    if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      _programListViewModel.getAllPrograms(
+        skip: _programListViewModel.programFindMany?.length ?? 0,
+      );
+    }
   }
 
   @override
@@ -174,13 +196,18 @@ class _ProgramListViewState extends State<ProgramListView> {
           );
         }
 
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: model.programFindMany!.length,
-          padding: const EdgeInsets.all(AppSizes.padding),
-          itemBuilder: (context, i) {
-            return programCard(i, model);
-          },
+        return RawScrollbar(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          radius: const Radius.circular(100),
+          child: ListView.builder(
+            controller: scrollController,
+            shrinkWrap: true,
+            itemCount: model.programFindMany!.length,
+            padding: const EdgeInsets.all(AppSizes.padding),
+            itemBuilder: (context, i) {
+              return programCard(i, model);
+            },
+          ),
         );
       },
     );

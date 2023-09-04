@@ -10,6 +10,8 @@ import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
 
 class AddressViewModel extends ChangeNotifier {
+  TextEditingController searchCtrl = TextEditingController();
+
   List<Query$ProvinceFindMany$provinceFindMany>? provinceFindMany;
   List<Query$CityFindMany$cityFindMany>? cityFindMany;
   List<Query$DistrictFindMany$districtFindMany>? districtFindMany;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/console_log.dart';
+import 'package:satujuta_app_mobile/view/marketing/marketing_gallery_screen.dart';
 import 'package:satujuta_gql_client/gql_faq_service.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
@@ -161,7 +163,10 @@ class _MemberInvitationViewState extends State<MemberInvitationView> {
       onTapShareButton: () {
         model.shareReferralCode();
       },
-      onTapTaskButton: () {},
+      onTapTaskButton: () {
+        cl("text");
+        Navigator.pushNamed(context, MarketingGalleryView.routeName);
+      },
     );
   }
 
