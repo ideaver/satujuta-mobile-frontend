@@ -13,9 +13,7 @@ import '../../widget/atom/app_text_field.dart';
 import '../../widget/atom/app_text_fields_wrapper.dart';
 
 class EditPasswordView extends StatefulWidget {
-  const EditPasswordView({
-    Key? key,
-  }) : super(key: key);
+  const EditPasswordView({super.key});
 
   static const String routeName = '/edit-password';
 

@@ -9,7 +9,7 @@ import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class RewardTransactionsList extends StatefulWidget {
-  const RewardTransactionsList({Key? key}) : super(key: key);
+  const RewardTransactionsList({super.key}) ;
 
   @override
   State<RewardTransactionsList> createState() => _RewardTransactionsListState();

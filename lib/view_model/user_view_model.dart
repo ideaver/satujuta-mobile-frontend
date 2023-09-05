@@ -30,7 +30,6 @@ class UserViewModel extends ChangeNotifier {
     user = null;
   }
 
-  // TODO REMOVE DEV PURPOSE ONLY
   Future<List<Query$UserFindMany$userFindMany>?> getAllUser({int skip = 0}) async {
     var res = await GqlUserService.userFindMany(
       skip: skip,
@@ -48,7 +47,7 @@ class UserViewModel extends ChangeNotifier {
   Future<void> getUser() async {
     var userId = AuthService.auth!.userId!;
 
-    var res = await GqlUserService.userFindOne(userId);
+    var res = await GqlUserService.userFindOne(id: userId);
 
     if (res.parsedData?.userFindOne != null && !res.hasException) {
       user = res.parsedData!.userFindOne;
@@ -215,7 +214,7 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> shareProfile() async {
+  void shareProfile() async {
     if (user == null) {
       return;
     }
@@ -229,7 +228,7 @@ class UserViewModel extends ChangeNotifier {
     );
   }
 
-  Future<void> shareReferralCode() async {
+  void shareReferralCode() async {
     if (user == null) {
       return;
     }

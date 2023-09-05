@@ -244,15 +244,16 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
               borderRadius: BorderRadius.circular(100),
               onTap: () {},
               child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.file_download_outlined,
-                    color: AppColors.baseLv4,
-                  )),
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.file_download_outlined,
+                  color: AppColors.baseLv4,
+                ),
+              ),
             )
           ],
         ),
@@ -276,21 +277,23 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
             splashColor: Colors.black.withOpacity(0.06),
             child: Ink(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      photos[index],
-                    ),
-                    fit: BoxFit.cover,
+                image: DecorationImage(
+                  image: AssetImage(
+                    photos[index],
                   ),
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.radius * 3,
-                  )),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(
+                  AppSizes.radius * 3,
+                ),
+              ),
               child: Container(
                 decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.30),
-                    borderRadius: BorderRadius.circular(
-                      AppSizes.radius * 3,
-                    )),
+                  color: AppColors.primary.withOpacity(0.30),
+                  borderRadius: BorderRadius.circular(
+                    AppSizes.radius * 3,
+                  ),
+                ),
                 child: const Icon(
                   CustomIcon.video_circle_icon,
                   size: 60,
@@ -320,15 +323,16 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
             splashColor: Colors.black.withOpacity(0.06),
             child: Ink(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      photos[index],
-                    ),
-                    fit: BoxFit.cover,
+                image: DecorationImage(
+                  image: AssetImage(
+                    photos[index],
                   ),
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.radius * 3,
-                  )),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(
+                  AppSizes.radius * 3,
+                ),
+              ),
             ),
           ),
         );

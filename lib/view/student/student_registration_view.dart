@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 
@@ -16,6 +15,7 @@ import '../../app/utility/console_log.dart';
 import '../../app/utility/validator.dart';
 import '../../view_model/address_view_model.dart';
 import '../../view_model/student_reg_view_model.dart';
+import '../../widget/atom/app_dialog.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_snackbar.dart';
 import '../../widget/atom/app_text_field.dart';

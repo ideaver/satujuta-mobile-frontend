@@ -1,6 +1,6 @@
-import 'package:countdown_widget/countdown_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -203,21 +203,18 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                       size: 12,
                     ),
                     const SizedBox(width: 6),
-                    CountDownWidget(
-                      // TODO
-                      duration: Duration(hours: 24),
-                      builder: (context, duration) {
+                    CountdownTimer(
+                      // TODO DUE TIME
+                      endTime: DateTime.now().add(const Duration(hours: 24)).millisecondsSinceEpoch,
+                      widgetBuilder: (context, duration) {
                         return Text(
-                          "${duration.inHours}:${duration.inMinutes}:${duration.inSeconds}",
+                          "${duration?.hours ?? 0}:${duration?.min ?? 0}:${duration?.sec ?? 0}",
                           style: AppTextStyle.bold(
                             context,
                             fontSize: 12,
                             color: AppColors.red,
                           ),
                         );
-                      },
-                      onDurationRemainChanged: (duration) {
-                        print('duration:${duration.toString()}');
                       },
                     ),
                   ],

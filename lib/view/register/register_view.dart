@@ -7,12 +7,12 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
-import '../../../widget/atom/app_image.dart';
 import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/register_view_model.dart';
 import '../../widget/atom/app_dialog.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../../widget/atom/app_image.dart';
 import '../login/login_view.dart';
 import 'components/reg_account.dart';
 import 'components/reg_biodata.dart';
@@ -182,7 +182,7 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
               children: [
                 AppImage(
                   image: model.avatar?.path ?? '-',
-                  imgProvider: ImgProvider.fileImage,
+                  imgProvider: model.avatar?.path == null ? ImgProvider.networkImage : ImgProvider.fileImage,
                   width: 150,
                   height: 150,
                   borderRadius: 100,
@@ -229,6 +229,7 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
 
                         if (croppedFile != null) {
                           model.onChangeAvatar(croppedFile.path);
+                          setState(() {});
                         }
                       }
                     },

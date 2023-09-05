@@ -10,7 +10,7 @@ import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class CommissionTransactionsList extends StatefulWidget {
-  const CommissionTransactionsList({Key? key}) : super(key: key);
+  const CommissionTransactionsList({super.key}) ;
 
   @override
   State<CommissionTransactionsList> createState() => _CommissionTransactionsListState();

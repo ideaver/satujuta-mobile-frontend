@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/console_log.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -10,6 +9,7 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/console_log.dart';
 import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_dialog.dart';
 import '../../widget/atom/app_icon_button.dart';
@@ -19,9 +19,7 @@ import 'components/edit_profile_biodata.dart';
 import 'components/edit_profile_commission.dart';
 
 class EditProfileView extends StatefulWidget {
-  const EditProfileView({
-    Key? key,
-  }) : super(key: key);
+  const EditProfileView({super.key});
 
   static const String routeName = '/edit-profile';
 

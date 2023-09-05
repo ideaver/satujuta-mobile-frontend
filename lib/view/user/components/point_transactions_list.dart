@@ -12,7 +12,7 @@ import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class PointTransactionsList extends StatefulWidget {
-  const PointTransactionsList({Key? key}) : super(key: key);
+  const PointTransactionsList({super.key}) ;
 
   @override
   State<PointTransactionsList> createState() => _PointTransactionsListState();

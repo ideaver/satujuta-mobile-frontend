@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/console_log.dart';
-import 'package:satujuta_app_mobile/view/marketing/marketing_gallery_screen.dart';
 import 'package:satujuta_gql_client/gql_faq_service.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
@@ -13,30 +11,33 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../app/const/app_consts.dart';
 import '../../../view_model/member_list_view_model.dart';
 import '../../../widget/atom/app_expansion_list_tile.dart';
-import '../../../widget/organism/referral_inivitation/background_referral.dart';
-import '../../../widget/organism/referral_inivitation/wrap._code_referral.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/console_log.dart';
 import '../../app/utility/currency_formatter.dart';
 import '../../view_model/main_view_model.dart';
 import '../../view_model/user_view_model.dart';
-import '../../widget/atom/app_custom_text.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_image.dart';
 import '../../widget/atom/app_progress_indicator.dart';
 import '../../widget/atom/app_snackbar.dart';
 import '../../widget/molecule/referral_Invitation/ref_invite_button.dart';
+import '../marketing/marketing_gallery_screen.dart';
+import 'components/background_referral.dart';
+import 'components/question_card.dart';
+import 'components/referral_card.dart';
+import 'components/referral_code.dart';
 
 class MemberInvitationView extends StatefulWidget {
   final PageStateEnum pageState;
 
-  const MemberInvitationView({Key? key, required this.pageState}) : super(key: key);
+  const MemberInvitationView({super.key, required this.pageState});
 
   static const String viewAsMeRouteName = '/my-referral-invitation';
 
   const MemberInvitationView.viewAsMe({
-    Key? key,
+    super.key,
     this.pageState = PageStateEnum.viewAsMe,
-  }) : super(key: key);
+  });
 
   @override
   State<MemberInvitationView> createState() => _MemberInvitationViewState();
@@ -150,7 +151,7 @@ class _MemberInvitationViewState extends State<MemberInvitationView> {
   }
 
   Widget wrapContentReferral(UserViewModel model) {
-    return WrapContentCodeRef(
+    return ReferralCode(
       title: 'Dapatkan Komisi 10%',
       subtitle: 'Dengan Cara Mengundang Member Baru',
       textButton: 'Copy Kode Referral',
@@ -172,7 +173,7 @@ class _MemberInvitationViewState extends State<MemberInvitationView> {
 
   Widget wrapListQuestion() {
     return FutureBuilder(
-      future: GqlFaqService.faqFindMany(Enum$FaqType.REFERRAL_PAGE),
+      future: GqlFaqService.faqFindMany(type: Enum$FaqType.REFERRAL_PAGE),
       builder: (context, snapshot) {
         if (snapshot.data == null || snapshot.data!.isLoading) {
           return const AppProgressIndicator();
@@ -197,24 +198,6 @@ class _MemberInvitationViewState extends State<MemberInvitationView> {
                 ),
               );
             }),
-            // SizedBox(height: AppSizes.height / 3),
-            // QuestionCard(
-            //   titleQuestion: 'Apa Yang Akan Saya Dapatkan Kalau Bergabung Dengan Komunitas SatuJuta?',
-            //   question:
-            //       'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
-            // ),
-            // SizedBox(height: AppSizes.height / 3),
-            // QuestionCard(
-            //   titleQuestion: 'Bagaimana Cara Dapatkan Poin?',
-            //   question:
-            //       'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
-            // ),
-            // SizedBox(height: AppSizes.height / 3),
-            // QuestionCard(
-            //   titleQuestion: 'Siapa Saja Yang Bisa Daftar Jadi Member SatuJuta?',
-            //   question:
-            //       'Lorem ipsum dolor sit amet consectetur. Ipsum in ornare vestibulum sit et ipsum euismod integer sem. In sed turpis arcu est nulla rutrum tortor. Dignissim at vel.',
-            // ),
           ],
         );
       },
@@ -368,134 +351,6 @@ class _MemberInvitationViewState extends State<MemberInvitationView> {
             },
           )
         ],
-      ),
-    );
-  }
-}
-
-class QuestionCard extends StatefulWidget {
-  const QuestionCard({
-    super.key,
-    this.titleQuestion,
-    this.question,
-  });
-
-  final String? titleQuestion;
-  final String? question;
-
-  @override
-  State<QuestionCard> createState() => _QuestionCardState();
-}
-
-class _QuestionCardState extends State<QuestionCard> {
-  bool showQuestion = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: AppSizes.padding / 8,
-        horizontal: AppSizes.padding / 2,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          AppSizes.radius * 1.5,
-        ),
-        color: AppColors.baseLv7,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSizes.padding),
-        child: ListTile(
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: AppSizes.padding - 2),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: Text(
-                    widget.titleQuestion!,
-                    style: AppTextStyle.bold(
-                      context,
-                      fontSize: 14,
-                      color: AppColors.base,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      showQuestion ? showQuestion = false : showQuestion = true;
-                    });
-                  },
-                  child: Icon(
-                    showQuestion ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          subtitle: Visibility(
-            visible: showQuestion,
-            child: AppCustomText(
-              text: widget.question!,
-              style: AppTextStyle.regular(
-                context,
-                fontSize: 13,
-                color: AppColors.base,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ReferralCard extends StatelessWidget {
-  const ReferralCard({
-    super.key,
-    this.title,
-    this.subtitle,
-  });
-
-  final String? title;
-  final String? subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        vertical: AppSizes.padding,
-        horizontal: AppSizes.padding,
-      ),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-        AppSizes.radius,
-      )),
-      tileColor: AppColors.baseLv6,
-      title: AppCustomText(
-          text: title!,
-          style: AppTextStyle.bold(
-            context,
-            fontSize: 12,
-            color: AppColors.baseLv4,
-          )),
-      subtitle: AppCustomText(
-          text: subtitle!,
-          style: AppTextStyle.bold(
-            context,
-            fontSize: 24,
-            color: AppColors.base,
-          )),
-      trailing: const CircleAvatar(
-        backgroundColor: AppColors.white,
-        maxRadius: 25,
-        child: Icon(
-          CustomIcon.inventory,
-          color: AppColors.base,
-          size: 20,
-        ),
       ),
     );
   }

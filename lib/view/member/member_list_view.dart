@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/view/member/member_invitation_view.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 
@@ -18,6 +17,7 @@ import '../../view_model/member_list_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_not_found_widget.dart';
 import '../../widget/atom/app_progress_indicator.dart';
+import 'member_invitation_view.dart';
 
 class MemberListView extends StatefulWidget {
   final PageStateEnum pageState;

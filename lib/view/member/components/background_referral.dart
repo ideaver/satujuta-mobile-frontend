@@ -15,8 +15,9 @@ class BackgroudReferral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double gapImage = AppSizes.padding * 3;
-    return Container(
+    const double gapImage = AppSizes.padding * 3;
+
+    return SizedBox(
       width: width ?? MediaQuery.of(context).size.width,
       height: 400,
       child: Stack(

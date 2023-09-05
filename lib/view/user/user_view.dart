@@ -25,14 +25,14 @@ import 'components/reward_transactions_list.dart';
 
 class UserView extends StatefulWidget {
   final PageStateEnum pageState;
-  const UserView({Key? key, required this.pageState}) : super(key: key);
+  const UserView({super.key, required this.pageState});
 
   static const String viewAsMeRouteName = '/user';
 
   const UserView.viewAsMe({
-    Key? key,
+    super.key,
     this.pageState = PageStateEnum.viewAsMe,
-  }) : super(key: key);
+  });
 
   @override
   State<UserView> createState() => _UserViewState();

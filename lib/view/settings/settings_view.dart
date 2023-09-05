@@ -14,9 +14,7 @@ import 'edit_password_view.dart';
 import 'edit_profile_view.dart';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({
-    Key? key,
-  }) : super(key: key);
+  const SettingsView({super.key});
 
   static const String routeName = '/settings';
 

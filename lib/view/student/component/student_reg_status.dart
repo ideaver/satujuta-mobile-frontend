@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/view/student/student_registration_view.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/asset/app_icons.dart';
@@ -16,9 +14,11 @@ import '../../../app/service/locator/service_locator.dart';
 import '../../../app/theme/app_shadows.dart';
 import '../../../app/theme/app_theme.dart';
 import '../../../view_model/member_list_view_model.dart';
+import '../../../widget/atom/app_dialog.dart';
 import '../../../widget/atom/app_icon_button.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 import '../../checkout/student_checkout_view.dart';
+import '../student_registration_view.dart';
 
 class StudentRegStatus extends StatefulWidget {
   final bool isSuccess;
@@ -42,7 +42,6 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
   final memberListViewModel = locator<MemberListViewModel>();
 
   bool isShow = false;
-  // int a = 3;
 
   @override
   void initState() {
@@ -148,7 +147,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
         onChanged: expandCollapse,
         children: [
           studentList(model),
-          // expandCollapseButton(),
+          expandCollapseButton(),
         ],
       );
     });
@@ -300,12 +299,13 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               },
               text: 'Bayar',
               padding: EdgeInsets.zero,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(32),
-                bottomLeft: Radius.circular(32),
-                topRight: Radius.circular(100),
-                bottomRight: Radius.circular(100),
-              ),
+              borderRadius: BorderRadius.circular(100),
+              // borderRadius: const BorderRadius.only(
+              //   topLeft: Radius.circular(32),
+              //   bottomLeft: Radius.circular(32),
+              //   topRight: Radius.circular(100),
+              //   bottomRight: Radius.circular(100),
+              // ),
             ),
           ),
         ],

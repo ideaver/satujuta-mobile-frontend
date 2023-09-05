@@ -234,7 +234,7 @@ class EditProfileViewModel extends ChangeNotifier {
       updatedAt: DateTime.now().toIso8601String(),
     );
 
-    var res = await GqlUserService.userUpdateOne(updateUser);
+    var res = await GqlUserService.userUpdateOne(user: updateUser);
 
     cl('[updateProfile].res = $res');
 
@@ -273,9 +273,9 @@ class EditProfileViewModel extends ChangeNotifier {
     var newPassword = newPasswordCtrl.text;
 
     var res = await GqlUserService.passwordUpdateFromUserUpdatedOne(
-      userId,
-      currentPassword,
-      newPassword,
+      userId: userId,
+      currentPassword: currentPassword,
+      newPassword: newPassword,
     );
 
     cl('[updateUserPassword].res = $res');

@@ -129,14 +129,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  countdown_widget:
-    dependency: "direct main"
-    description:
-      name: countdown_widget
-      sha256: e35529e340e4b7d57839710124cf6792b399dd5f14785f32bda0ce0a96c42f96
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   cross_file:
     dependency: transitive
     description:
@@ -310,6 +302,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
+  flutter_countdown_timer:
+    dependency: "direct main"
+    description:
+      name: flutter_countdown_timer
+      sha256: dfcbd7d6f76a5589f78f3f3ba2f9ea2e199368eccc1adce4153ce985b9587bc5
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   flutter_hooks:
     dependency: transitive
     description:
@@ -749,14 +749,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  mutex:
-    dependency: transitive
-    description:
-      name: mutex
-      sha256: "03116a4e46282a671b46c12de649d72c0ed18188ffe12a8d0fc63e83f4ad88f4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   nested:
     dependency: transitive
     description:

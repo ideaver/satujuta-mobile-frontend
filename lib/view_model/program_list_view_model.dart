@@ -10,6 +10,7 @@ class ProgramListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
 
   List<Query$ProgramCategoryFindMany$programCategoryFindMany>? programCategories;
+  
   Query$ProgramCategoryFindMany$programCategoryFindMany? selectedCategory;
 
   List<Query$ProgramFindMany$programFindMany>? programFindMany;

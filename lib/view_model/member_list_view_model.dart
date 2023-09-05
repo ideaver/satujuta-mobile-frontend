@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
 import 'package:satujuta_gql_client/gql_user_service.dart';
 import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
@@ -8,6 +6,8 @@ import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/locator/service_locator.dart';
 import '../app/utility/console_log.dart';
+import '../widget/atom/app_dialog.dart';
+import '../widget/atom/app_snackbar.dart';
 import 'user_view_model.dart';
 
 class MemberListViewModel extends ChangeNotifier {
@@ -26,9 +26,12 @@ class MemberListViewModel extends ChangeNotifier {
   List<Query$UserFindMany$userFindMany>? userStudentsInactive;
 
   void resetState() {
+    isSearchFocus = false;
     userMembers = null;
     userMembersActive = null;
     userMembersInactive = null;
+    userStudentsActive = null;
+    userStudentsInactive = null;
   }
 
   void focusListener() {
@@ -92,7 +95,7 @@ class MemberListViewModel extends ChangeNotifier {
   }
 
   Future<String?> deleteMember(String userId) async {
-    var res = await GqlUserService.userRemoveOne(userId);
+    var res = await GqlUserService.userRemoveOne(userId: userId);
 
     if (res.parsedData?.userRemove != null && !res.hasException) {
       return null;

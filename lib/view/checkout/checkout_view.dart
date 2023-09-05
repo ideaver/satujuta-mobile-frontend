@@ -1,8 +1,7 @@
-import 'package:countdown_widget/countdown_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
 import 'package:satujuta_gql_client/operations/generated/order_find_one.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
@@ -19,6 +18,7 @@ import '../../app/utility/currency_formatter.dart';
 import '../../app/utility/date_formatter.dart';
 import '../../view_model/checkout_view_model.dart';
 import '../../widget/atom/app_image.dart';
+import '../../widget/atom/app_progress_indicator.dart';
 import '../../widget/organism/payment_method/payment_method_list_modal.dart';
 import '../main/main_view.dart';
 
@@ -210,21 +210,18 @@ class _CheckoutViewState extends State<CheckoutView> {
                       size: 12,
                     ),
                     const SizedBox(width: 6),
-                    CountDownWidget(
-                      // TODO
-                      duration: Duration(hours: 24),
-                      builder: (context, duration) {
+                    CountdownTimer(
+                      // TODO DUE TIME
+                      endTime: DateTime.now().add(const Duration(hours: 24)).millisecondsSinceEpoch,
+                      widgetBuilder: (context, duration) {
                         return Text(
-                          "${duration.inHours}:${duration.inMinutes}:${duration.inSeconds}",
+                          "${duration?.hours ?? 0}:${duration?.min ?? 0}:${duration?.sec ?? 0}",
                           style: AppTextStyle.bold(
                             context,
                             fontSize: 12,
                             color: AppColors.red,
                           ),
                         );
-                      },
-                      onDurationRemainChanged: (duration) {
-                        print('duration:${duration.toString()}');
                       },
                     ),
                   ],

@@ -15,12 +15,10 @@ import '../view/student/component/student_reg_status.dart';
 import '../view/student/student_registration_view.dart';
 import '../widget/atom/app_dialog.dart';
 import '../widget/atom/app_snackbar.dart';
-import 'address_view_model.dart';
 import 'user_view_model.dart';
 
 class StudentRegViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();
-  final addressViewModel = locator<AddressViewModel>();
 
   TextEditingController firstNameCtrl = TextEditingController();
   TextEditingController lastNameCtrl = TextEditingController();
@@ -73,6 +71,7 @@ class StudentRegViewModel extends ChangeNotifier {
     schoolNameCtrl.clear();
     selectedHotel = null;
     hotelNameCtrl.clear();
+    // passwordCtrl.clear();
   }
 
   void initEditProfileView({Query$UserFindMany$userFindMany? currStudent}) async {
@@ -110,8 +109,13 @@ class StudentRegViewModel extends ChangeNotifier {
     if (isValid) {
       AppDialog.showDialogProgress(navigator);
 
-      var errRes =
-          viewState == StudentRegViewState.edit ? await updateStudent(navigator) : await registerStudent(navigator);
+      String? errRes;
+
+      if (viewState == StudentRegViewState.edit) {
+        errRes = await updateStudent(navigator);
+      } else {
+        errRes = await registerStudent(navigator);
+      }
 
       if (errRes == null) {
         userViewModel.getUser();
@@ -304,7 +308,7 @@ class StudentRegViewModel extends ChangeNotifier {
     );
 
     var res = await GqlUserService.userUpdateOne(
-      studentData,
+      user: studentData,
     );
 
     cl('[updateStudent].res = $res');

@@ -22,7 +22,11 @@ class DashboardViewModel extends ChangeNotifier {
   List<ChartModel> chartData = [];
 
   void resetState() {
-    // user = null;
+   totalUserCommission = 0;
+   periodicUserCommissions = null;
+   startDate = DateTime.now();
+   endDate = DateTime.now();
+   selectedPeriod = Enum$Period.MONTHLY;
   }
 
   void onChangedPeriod(Enum$Period period) {

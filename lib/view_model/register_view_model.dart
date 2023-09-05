@@ -203,7 +203,6 @@ class RegisterViewModel extends ChangeNotifier {
     );
 
     if (hotel != null && hotel is Query$HotelFindMany$hotelFindMany) {
-      // TODO GET ORDER & INVOICE DATA
       selectedHotel = hotel;
       hotelNameCtrl.text = selectedHotel!.name;
       notifyListeners();
