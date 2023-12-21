@@ -37,8 +37,7 @@ class ExternalLauncher {
   }
 
   static Future<void> openMap(double latitude, double longitude) async {
-    String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
     if (!await launchUrl(Uri.parse(googleUrl))) {
       throw Exception('Could open map url $googleUrl');

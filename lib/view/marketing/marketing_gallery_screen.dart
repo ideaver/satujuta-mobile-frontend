@@ -42,12 +42,6 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.baseLv7,
-      ),
-    );
-
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
@@ -89,8 +83,9 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
       leading: backButton(),
       title: title(),
       automaticallyImplyLeading: false,
-      flexibleSpace: FlexibleSpaceBar(),
+      flexibleSpace: const FlexibleSpaceBar(),
       bottom: tabBar(),
+      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: AppColors.baseLv7),
     );
   }
 
@@ -249,15 +244,16 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
               borderRadius: BorderRadius.circular(100),
               onTap: () {},
               child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.file_download_outlined,
-                    color: AppColors.baseLv4,
-                  )),
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.file_download_outlined,
+                  color: AppColors.baseLv4,
+                ),
+              ),
             )
           ],
         ),
@@ -270,7 +266,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
       crossAxisCount: 2,
       children: List.generate(8, (index) {
         return Padding(
-          padding: EdgeInsets.all(AppSizes.padding / 4),
+          padding: const EdgeInsets.all(AppSizes.padding / 4),
           child: InkWell(
             borderRadius: BorderRadius.circular(
               AppSizes.radius * 3,
@@ -281,22 +277,24 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
             splashColor: Colors.black.withOpacity(0.06),
             child: Ink(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      photos[index],
-                    ),
-                    fit: BoxFit.cover,
+                image: DecorationImage(
+                  image: AssetImage(
+                    photos[index],
                   ),
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.radius * 3,
-                  )),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(
+                  AppSizes.radius * 3,
+                ),
+              ),
               child: Container(
                 decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.30),
-                    borderRadius: BorderRadius.circular(
-                      AppSizes.radius * 3,
-                    )),
-                child: Icon(
+                  color: AppColors.primary.withOpacity(0.30),
+                  borderRadius: BorderRadius.circular(
+                    AppSizes.radius * 3,
+                  ),
+                ),
+                child: const Icon(
                   CustomIcon.video_circle_icon,
                   size: 60,
                   color: AppColors.white,
@@ -314,7 +312,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
       crossAxisCount: 2,
       children: List.generate(8, (index) {
         return Padding(
-          padding: EdgeInsets.all(AppSizes.padding / 4),
+          padding: const EdgeInsets.all(AppSizes.padding / 4),
           child: InkWell(
             borderRadius: BorderRadius.circular(
               AppSizes.radius * 3,
@@ -325,15 +323,16 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
             splashColor: Colors.black.withOpacity(0.06),
             child: Ink(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      photos[index],
-                    ),
-                    fit: BoxFit.cover,
+                image: DecorationImage(
+                  image: AssetImage(
+                    photos[index],
                   ),
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.radius * 3,
-                  )),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(
+                  AppSizes.radius * 3,
+                ),
+              ),
             ),
           ),
         );

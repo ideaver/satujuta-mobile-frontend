@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view_model/program_list_view_model.dart';
 
 import '../app/service/auth/auth_service.dart';
 import '../app/service/locator/service_locator.dart';
 import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
-import 'login_view_model.dart';
 import 'member_list_view_model.dart';
+import 'program_list_view_model.dart';
 import 'user_view_model.dart';
 
 class MainViewModel extends ChangeNotifier {
@@ -24,6 +23,7 @@ class MainViewModel extends ChangeNotifier {
 
   // For log out purpose
   void resetState() {
+    isChecking = true;
     isLoggedIn = false;
     selectedPageIndex = 0;
 
@@ -34,19 +34,19 @@ class MainViewModel extends ChangeNotifier {
   }
 
   Future<void> checkIsLoggedIn() async {
+    isChecking = true;
+    notifyListeners();
+
     await AuthService.initAuth();
 
-    // TODO
     // login user
-    // if (AuthService.auth != null) {
-    //   isLoggedIn = true;
-    // } else {
-    //   isLoggedIn = false;
-    // }
+    if (AuthService.auth != null) {
+      isLoggedIn = true;
+    } else {
+      isLoggedIn = false;
+    }
 
-    isLoggedIn = true;
-
-    cl('isLoggedIn = $isLoggedIn');
+    cl('[checkIsLoggedIn].isLoggedIn = $isLoggedIn');
 
     isChecking = false;
     notifyListeners();
@@ -93,8 +93,7 @@ class MainViewModel extends ChangeNotifier {
 
     var message = customMessage ?? defaultMessage;
 
-    final loginViewModel = locator<LoginViewModel>();
-    loginViewModel.logOut(navigator);
+    AuthService.logOut(navigator);
 
     AppDialog.showErrorDialog(
       navigator,

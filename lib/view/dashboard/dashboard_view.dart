@@ -1,29 +1,27 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
-import '../../../app/const/app_consts.dart';
-import '../../../model/chart_model.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
-import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_text_field.dart';
+import '../../app/service/locator/service_locator.dart';
 import '../../app/utility/currency_formatter.dart';
+import '../../app/utility/external_launcher.dart';
+import '../../view_model/main_view_model.dart';
 import '../../view_model/member_list_view_model.dart';
 import '../../view_model/program_list_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_progress_indicator.dart';
+import '../member/member_invitation_view.dart';
 import '../student/student_registration_view.dart';
 import '../user/user_view.dart';
+import 'components/dashboard_chart.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -35,46 +33,10 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  List<String> periods = ['Minggu', 'Bulan', 'Tahun'];
-
-  List<ChartModel> caseByDiseases = [
-    ...List.generate(12, (index) {
-      return ChartModel(
-        x: getMonthName(index),
-        y: Random().nextInt(100),
-      );
-    })
-  ];
-
-  List<StackedColumnSeries<ChartModel, String>> _getStackedColumnSeries() {
-    return <StackedColumnSeries<ChartModel, String>>[
-      StackedColumnSeries<ChartModel, String>(
-        dataSource: caseByDiseases,
-        xValueMapper: (ChartModel data, _) => data.x,
-        yValueMapper: (ChartModel data, _) => data.y,
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(AppSizes.radius / 2),
-        width: 0.9,
-        name: 'Poin',
-      ),
-    ];
-  }
-
-  double getChartMaxY() {
-    return caseByDiseases.reduce((x, y) => x.y > y.y ? x : y).y.toDouble();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.baseLv7,
-      ),
+      const SystemUiOverlayStyle(statusBarColor: AppColors.baseLv7),
     );
 
     return Consumer<UserViewModel>(builder: (context, userViewModel, _) {
@@ -117,7 +79,7 @@ class _DashboardViewState extends State<DashboardView> {
             child: Row(
               children: [
                 AppImage(
-                  image: userViewModel.user?.avatarUrl ?? '',
+                  image: userViewModel.user?.avatarUrl ?? '-',
                   width: 32,
                   height: 32,
                   errorWidget: const Icon(
@@ -142,7 +104,7 @@ class _DashboardViewState extends State<DashboardView> {
                 UserView.viewAsMeRouteName,
               );
             },
-            text: '${userViewModel.userPoint}',
+            text: '${userViewModel.totalUserPoint}',
             fontSize: 14,
             leftIcon: Icons.stars_rounded,
             buttonColor: AppColors.yellow,
@@ -167,11 +129,11 @@ class _DashboardViewState extends State<DashboardView> {
           searchField(),
           userPointCard(userViewModel),
           userCommission(userViewModel),
-          chart(),
-          nextRewardTarget(),
+          const DashboardChart(),
+          // nextRewardTarget(),
           registeredMemberAndProgram(),
-          orderStatus(),
-          withdrawalStatus(),
+          // orderStatus(),
+          // withdrawalStatus(),
           whatsAppConsulCard(),
           const SizedBox(height: AppSizes.height * 8)
         ],
@@ -186,12 +148,21 @@ class _DashboardViewState extends State<DashboardView> {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(100),
       ),
-      child: const AppTextField(
-        prefixIcon: Icon(
+      child: AppTextField(
+        onTap: () async {
+          final mainViewModel = locator<MainViewModel>();
+          final memberListViewModel = locator<MemberListViewModel>();
+          mainViewModel.onChangedPage(2);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            memberListViewModel.searchFocusNode.requestFocus();
+          });
+        },
+        enabled: false,
+        prefixIcon: const Icon(
           Icons.search,
         ),
-        hintText: 'Cari Nama Anggota Anda',
-        padding: EdgeInsets.symmetric(
+        hintText: 'Cari nama anggota anda',
+        padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.padding / 2,
           vertical: AppSizes.padding / 4,
         ),
@@ -237,7 +208,7 @@ class _DashboardViewState extends State<DashboardView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${model.userPoint}',
+                  '${model.totalUserPoint}',
                   style: AppTextStyle.extraBold(context, fontSize: 42),
                 ),
                 const SizedBox(height: AppSizes.padding / 1.5),
@@ -251,20 +222,29 @@ class _DashboardViewState extends State<DashboardView> {
                   style: AppTextStyle.extraBold(context, fontSize: 20),
                 ),
                 const SizedBox(height: AppSizes.padding * 1.5),
-                const Row(
+                Row(
                   children: [
                     AppIconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          UserView.viewAsMeRouteName,
+                        );
+                      },
                       backgroundColor: AppColors.white,
                       icon: Icons.info_outline,
                       iconSize: 22,
-                      padding: EdgeInsets.all(AppSizes.padding / 2),
+                      padding: const EdgeInsets.all(AppSizes.padding / 2),
                     ),
-                    SizedBox(width: AppSizes.padding / 2),
+                    const SizedBox(width: AppSizes.padding / 2),
                     AppIconButton(
+                      onPressed: () {
+                        model.shareProfile();
+                      },
                       backgroundColor: AppColors.white,
                       icon: Icons.share_outlined,
                       iconSize: 22,
-                      padding: EdgeInsets.all(AppSizes.padding / 2),
+                      padding: const EdgeInsets.all(AppSizes.padding / 2),
                     ),
                   ],
                 ),
@@ -291,13 +271,7 @@ class _DashboardViewState extends State<DashboardView> {
           children: [
             AppButton(
               onTap: () {
-                // TODO
-
-                // Navigator.pushNamedAndRemoveUntil(
-                //   context,
-                //   ReferralView.viewAsMeRouteName,
-                //   ModalRoute.withName(DashboardView.routeName),
-                // );
+                Navigator.pushNamed(context, MemberInvitationView.viewAsMeRouteName);
               },
               text: 'Undang',
               fontSize: 12,
@@ -307,21 +281,23 @@ class _DashboardViewState extends State<DashboardView> {
               ),
             ),
             Text(
-              '${model.userMembers?.length ?? 0} Anggota',
+              model.userMembers == null || model.userMembers!.isEmpty
+                  ? 'Belum ada anggota'
+                  : '${model.userMembers?.length ?? 0} Anggota',
               style: AppTextStyle.regular(
                 context,
                 fontSize: 12,
               ),
             ),
-            userMemberThumbs(model.userMembers),
+            userMemberThumbs(model),
           ],
         ),
       );
     });
   }
 
-  Widget userMemberThumbs(List<Query$UserFindMany$userFindMany>? userMembers) {
-    if (userMembers == null || userMembers.isEmpty) {
+  Widget userMemberThumbs(MemberListViewModel model) {
+    if (model.userMembers == null || model.userMembers!.isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -331,50 +307,61 @@ class _DashboardViewState extends State<DashboardView> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          ...List.generate(userMembers.length > 4 ? 4 : userMembers.length, (i) {
-            return Positioned(
-              left: i == 0 ? 0 : i * 18,
-              child: Container(
-                width: 26,
-                height: 26,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  border: Border.all(
-                    width: 2,
+          ...List.generate(
+            model.userMembers!.length > 4 ? 4 : model.userMembers!.length,
+            (i) {
+              return Positioned(
+                left: i == 0 ? 0 : i * 18,
+                child: Container(
+                  width: 26,
+                  height: 26,
+                  decoration: BoxDecoration(
                     color: AppColors.white,
+                    border: Border.all(
+                      width: 2,
+                      color: AppColors.white,
+                    ),
+                    shape: BoxShape.circle,
                   ),
-                  shape: BoxShape.circle,
-                ),
-                child: ClipOval(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      const AppImage(
-                        image: randomImage,
-                      ),
-                      userMembers.length < 4
-                          ? const SizedBox.shrink()
-                          : Container(
-                              width: 26,
-                              height: 26,
-                              color: AppColors.base.withOpacity(0.54),
-                              child: Center(
-                                child: Text(
-                                  '+${userMembers.length - 4}',
-                                  style: AppTextStyle.bold(
-                                    context,
-                                    fontSize: 10,
-                                    color: AppColors.white,
+                  child: ClipOval(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        AppImage(
+                          image: model.userMembers?[i].avatarUrl ?? '-',
+                          width: 26,
+                          height: 26,
+                          backgroundColor: AppColors.baseLv7,
+                          errorWidget: const Icon(
+                            Icons.person_rounded,
+                            color: AppColors.baseLv4,
+                            size: 16,
+                          ),
+                        ),
+                        i < 4
+                            ? const SizedBox.shrink()
+                            : Container(
+                                width: 26,
+                                height: 26,
+                                color: AppColors.base.withOpacity(0.54),
+                                child: Center(
+                                  child: Text(
+                                    '+${model.userMembers!.length - 4}',
+                                    style: AppTextStyle.bold(
+                                      context,
+                                      fontSize: 10,
+                                      color: AppColors.white,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          })
+              );
+            },
+          )
         ],
       ),
     );
@@ -388,46 +375,26 @@ class _DashboardViewState extends State<DashboardView> {
         children: [
           const SizedBox(height: AppSizes.padding),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.circle,
-                    size: 12,
-                    color: AppColors.primary,
-                  ),
-                  const SizedBox(width: AppSizes.padding / 2),
-                  Text(
-                    'TOTAL KOMISI SAAT INI',
-                    style: AppTextStyle.bold(
-                      context,
-                      fontSize: 12,
-                      color: AppColors.baseLv4,
-                    ),
-                  ),
-                ],
+              const Icon(
+                Icons.circle,
+                size: 12,
+                color: AppColors.primary,
               ),
-              AppButton(
-                onTap: () {
-                  AppModal.show(
-                    context: context,
-                    title: 'Piilih Rentang',
-                    child: periodList(),
-                  );
-                },
-                text: 'BULAN',
-                fontSize: 12,
-                rightIcon: Icons.keyboard_arrow_down_rounded,
-                buttonColor: Colors.transparent,
-                textColor: AppColors.base,
-                padding: EdgeInsets.zero,
-              )
+              const SizedBox(width: AppSizes.padding / 2),
+              Text(
+                'TOTAL KOMISI SAAT INI',
+                style: AppTextStyle.bold(
+                  context,
+                  fontSize: 12,
+                  color: AppColors.baseLv4,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: AppSizes.padding / 2),
           Text(
-            CurrencyFormatter.format(userViewModel.userCommission),
+            CurrencyFormatter.format(userViewModel.totalUserCommission),
             style: AppTextStyle.extraBold(
               context,
               fontSize: 32,
@@ -448,113 +415,6 @@ class _DashboardViewState extends State<DashboardView> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget periodList() {
-    return Column(
-      children: [
-        Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height - 200,
-          ),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: periods.length,
-            itemBuilder: (context, i) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(AppSizes.radius),
-                ),
-                child: RadioListTile(
-                  value: null,
-                  groupValue: null,
-                  onChanged: (value) {},
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        periods[i],
-                        style: AppTextStyle.bold(context),
-                      ),
-                      Text(
-                        '18 Jul - 24 Jul',
-                        style: AppTextStyle.regular(
-                          context,
-                          fontSize: 14,
-                          color: AppColors.baseLv4,
-                        ),
-                      ),
-                    ],
-                  ),
-                  activeColor: AppColors.primary,
-                  contentPadding: const EdgeInsets.fromLTRB(
-                    AppSizes.padding,
-                    AppSizes.padding / 1.8,
-                    AppSizes.padding * 1.5,
-                    AppSizes.padding / 1.8,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppSizes.radius),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: AppSizes.padding),
-        AppButton(
-          onTap: () {
-            // TODO
-            Navigator.pop(context);
-          },
-          text: 'Terapkan',
-        ),
-      ],
-    );
-  }
-
-  Widget chart() {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSizes.padding / 2,
-        vertical: AppSizes.padding * 1.5,
-      ),
-      height: 250,
-      child: SfCartesianChart(
-        margin: EdgeInsets.zero,
-        plotAreaBorderWidth: 0,
-        primaryXAxis: CategoryAxis(
-          axisLine: const AxisLine(width: 0),
-          majorGridLines: const MajorGridLines(width: 0),
-          majorTickLines: const MajorTickLines(size: 0),
-          labelStyle: AppTextStyle.medium(
-            context,
-            fontSize: 10,
-            color: AppColors.baseLv4,
-          ),
-          interval: 1,
-          labelIntersectAction: AxisLabelIntersectAction.multipleRows,
-        ),
-        primaryYAxis: NumericAxis(
-          axisLine: const AxisLine(width: 0),
-          majorGridLines: const MajorGridLines(
-            color: AppColors.baseLv5,
-            dashArray: [2, 6],
-          ),
-          majorTickLines: const MajorTickLines(size: 0),
-          labelStyle: AppTextStyle.medium(
-            context,
-            fontSize: 8,
-            color: AppColors.baseLv4,
-          ),
-          maximum: getChartMaxY() + 10,
-        ),
-        series: _getStackedColumnSeries(),
-        tooltipBehavior: TooltipBehavior(enable: true),
       ),
     );
   }
@@ -639,7 +499,7 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget registeredMember() {
-    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+    return Consumer<UserViewModel>(builder: (context, model, _) {
       return Container(
         padding: const EdgeInsets.all(AppSizes.padding),
         decoration: BoxDecoration(
@@ -668,8 +528,7 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                     const SizedBox(height: AppSizes.padding / 2),
                     Text(
-                      // TODO STUDENT COUNT
-                      '${model.userMembers?.length ?? 0}',
+                      '${model.totalUserStudent}',
                       style: AppTextStyle.extraBold(
                         context,
                         fontSize: 24,
@@ -691,10 +550,10 @@ class _DashboardViewState extends State<DashboardView> {
             ),
             const SizedBox(height: AppSizes.padding),
             AppButton(
-              onTap: () {
+              onTap: () async {
                 Navigator.pushNamed(
                   context,
-                  StudentRegistrationView.routeName,
+                  StudentRegistrationView.createRouteName,
                 );
               },
               text: 'Daftarkan Siswa',
@@ -711,6 +570,10 @@ class _DashboardViewState extends State<DashboardView> {
 
   Widget programTotal() {
     return Consumer<ProgramListViewModel>(builder: (context, model, _) {
+      int? newProgram = model.programFindMany?.where((e) {
+        return DateTime.now().difference(DateTime.parse(e.dueDate!)).inDays >= 1;
+      }).length;
+
       return Container(
         padding: const EdgeInsets.all(AppSizes.padding),
         decoration: BoxDecoration(
@@ -721,14 +584,11 @@ class _DashboardViewState extends State<DashboardView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppIconButton(
-              onPressed: () {
-                // TODO
-              },
+            const AppIconButton(
               icon: Icons.campaign_rounded,
               iconSize: 16,
               backgroundColor: AppColors.baseLv7,
-              padding: const EdgeInsets.all(AppSizes.padding / 2),
+              padding: EdgeInsets.all(AppSizes.padding / 2),
             ),
             const SizedBox(height: AppSizes.padding / 2),
             Text(
@@ -741,7 +601,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
             const SizedBox(height: AppSizes.padding / 4),
             Text(
-              '${model.programs?.length ?? 0}',
+              '${model.programFindMany?.length ?? 0}',
               style: AppTextStyle.extraBold(
                 context,
                 fontSize: 18,
@@ -750,14 +610,10 @@ class _DashboardViewState extends State<DashboardView> {
             const SizedBox(height: AppSizes.padding / 2),
             AppButton(
               onTap: () {
-                // TODO
-                // Navigator.pushNamedAndRemoveUntil(
-                //   context,
-                //   ProgramListView.routeName,
-                //   ModalRoute.withName(DashboardView.routeName),
-                // );
+                final mainViewModel = locator<MainViewModel>();
+                mainViewModel.onChangedPage(1);
               },
-              text: '2 Baru',
+              text: '${newProgram ?? 0} Baru',
               fontSize: 10,
               rightIcon: Icons.arrow_right_alt_rounded,
               textColor: AppColors.base,
@@ -937,7 +793,10 @@ class _DashboardViewState extends State<DashboardView> {
                 const SizedBox(height: AppSizes.padding * 2),
                 AppButton(
                   onTap: () {
-                    // TODO
+                    ExternalLauncher.openWhatsApp(
+                      phone: "6281938298740",
+                      message: "Halo, saya ingin konsultasi praktik bahasa inggris di SatuJuta App",
+                    );
                   },
                   text: 'Mulai Konsultasi Via WhatsApp',
                   fontSize: 14,

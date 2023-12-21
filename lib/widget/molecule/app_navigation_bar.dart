@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/theme/app_shadows.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_sizes.dart';
+import '../../app/theme/app_shadows.dart';
 
 class AppNavigationBar extends StatelessWidget {
   final int index;

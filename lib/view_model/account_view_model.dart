@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
-import 'package:satujuta_gql_client/gql_account_service.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
-import 'package:satujuta_gql_client/operations/generated/bank_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/bank_find_many.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_account_service.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
-import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
 
 class AccountViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-  final network = locator<NetworkCheckerService>();
-  final userViewModel = locator<UserViewModel>();
-
   List<Query$BankFindMany$bankFindMany>? bankFindMany;
 
   Query$BankFindMany$bankFindMany? selectedBank;

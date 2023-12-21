@@ -9,15 +9,15 @@ import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_widget_list_wrapper.dart';
 
 class PaymentStatusView extends StatefulWidget {
-  final bool isSucess;
+  final bool isSuccess;
 
-  const PaymentStatusView({Key? key, required this.isSucess}) : super(key: key);
+  const PaymentStatusView({super.key, required this.isSuccess});
 
   static const String successRouteName = '/payment-status-success';
   static const String failedRouteName = '/payment-status-failed';
 
-  const PaymentStatusView.success({super.key, this.isSucess = true});
-  const PaymentStatusView.failed({super.key, this.isSucess = false});
+  const PaymentStatusView.success({super.key, this.isSuccess = true});
+  const PaymentStatusView.failed({super.key, this.isSuccess = false});
 
   @override
   State<PaymentStatusView> createState() => _PaymentStatusViewState();
@@ -70,12 +70,12 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding),
             child: AppImage(
-              image: widget.isSucess ? AppAssets.successIlusPath : AppAssets.failedIlusPath,
+              image: widget.isSuccess ? AppAssets.successIlusPath : AppAssets.failedIlusPath,
               imgProvider: ImgProvider.assetImage,
             ),
           ),
           Text(
-            widget.isSucess ? 'Berhasil' : 'Gagal',
+            widget.isSuccess ? 'Berhasil' : 'Gagal',
             style: AppTextStyle.bold(context, fontSize: 20),
           ),
           const SizedBox(height: AppSizes.padding / 1.5),
@@ -105,7 +105,7 @@ class _PaymentStatusViewState extends State<PaymentStatusView> {
             onTap: () {
               //TODO
             },
-            text: widget.isSucess ? 'Lihat Ringkasan' : 'Ulangi',
+            text: widget.isSuccess ? 'Lihat Ringkasan' : 'Ulangi',
           ),
           const SizedBox(height: AppSizes.padding * 2),
         ],

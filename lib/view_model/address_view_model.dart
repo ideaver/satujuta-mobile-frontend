@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
-import 'package:satujuta_gql_client/gql_address_service.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
-import 'package:satujuta_gql_client/operations/generated/city_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/district_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/province_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/subdistrict_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/city_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/district_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/province_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/subdistrict_find_many.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_address_service.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
-import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
 
 class AddressViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-  final network = locator<NetworkCheckerService>();
-  final userViewModel = locator<UserViewModel>();
+  TextEditingController searchCtrl = TextEditingController();
 
   List<Query$ProvinceFindMany$provinceFindMany>? provinceFindMany;
   List<Query$CityFindMany$cityFindMany>? cityFindMany;
@@ -42,11 +36,16 @@ class AddressViewModel extends ChangeNotifier {
   Future<void> getProvinces(NavigatorState navigator, {int skip = 0, String? contains}) async {
     var res = await GqlAddressService.provinceFindMany(
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.provinceFindMany != null && !res.hasException) {
-      provinceFindMany = res.parsedData!.provinceFindMany;
+      if (skip == 0) {
+        provinceFindMany = res.parsedData!.provinceFindMany;
+      } else {
+        provinceFindMany?.addAll(res.parsedData!.provinceFindMany ?? []);
+      }
+
       notifyListeners();
     } else {
       cl('[getProvinces].error = ${gqlErrorParser(res)}');
@@ -68,11 +67,16 @@ class AddressViewModel extends ChangeNotifier {
     var res = await GqlAddressService.cityFindMany(
       provinceId: provinceId,
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.cityFindMany != null && !res.hasException) {
-      cityFindMany = res.parsedData!.cityFindMany;
+      if (skip == 0) {
+        cityFindMany = res.parsedData!.cityFindMany;
+      } else {
+        cityFindMany?.addAll(res.parsedData!.cityFindMany ?? []);
+      }
+
       notifyListeners();
     } else {
       cl('[getCities].error = ${gqlErrorParser(res)}');
@@ -94,11 +98,16 @@ class AddressViewModel extends ChangeNotifier {
     var res = await GqlAddressService.districtFindMany(
       cityId: cityId,
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.districtFindMany != null && !res.hasException) {
-      districtFindMany = res.parsedData!.districtFindMany;
+      if (skip == 0) {
+        districtFindMany = res.parsedData!.districtFindMany;
+      } else {
+        districtFindMany?.addAll(res.parsedData!.districtFindMany ?? []);
+      }
+
       notifyListeners();
     } else {
       cl('[getDistrict].error = ${gqlErrorParser(res)}');
@@ -120,11 +129,16 @@ class AddressViewModel extends ChangeNotifier {
     var res = await GqlAddressService.subdistrictFindMany(
       districtId: districtId,
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.subdistrictFindMany != null && !res.hasException) {
-      subdistrictFindMany = res.parsedData!.subdistrictFindMany;
+      if (skip == 0) {
+        subdistrictFindMany = res.parsedData!.subdistrictFindMany;
+      } else {
+        subdistrictFindMany?.addAll(res.parsedData!.subdistrictFindMany ?? []);
+      }
+
       notifyListeners();
     } else {
       cl('[getSubdistrict].error = ${gqlErrorParser(res)}');
@@ -139,6 +153,14 @@ class AddressViewModel extends ChangeNotifier {
 
   void onSelectProvince(Query$ProvinceFindMany$provinceFindMany province) {
     selectedProvince = province;
+
+    cityFindMany = null;
+    districtFindMany = null;
+    subdistrictFindMany = null;
+    selectedCity = null;
+    selectedDistrict = null;
+    selectedSubdistrict = null;
+
     notifyListeners();
 
     cl('[onSelectProvince].province = ${province.id}: ${province.name}');
@@ -146,6 +168,12 @@ class AddressViewModel extends ChangeNotifier {
 
   void onSelectCity(Query$CityFindMany$cityFindMany city) {
     selectedCity = city;
+
+    districtFindMany = null;
+    subdistrictFindMany = null;
+    selectedDistrict = null;
+    selectedSubdistrict = null;
+
     notifyListeners();
 
     cl('[onSelectCity].city =  ${city.id}: ${city.name}');
@@ -153,6 +181,10 @@ class AddressViewModel extends ChangeNotifier {
 
   void onSelectDistrict(Query$DistrictFindMany$districtFindMany district) {
     selectedDistrict = district;
+
+    subdistrictFindMany = null;
+    selectedSubdistrict = null;
+
     notifyListeners();
 
     cl('[onSelectDistrict].district = ${district.id}: ${district.name}');

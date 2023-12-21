@@ -19,13 +19,13 @@ class DurationFormatter {
 
   static String formatDetailed(DateTime from, DateTime time) {
     return from.difference(time).inSeconds < 60
-        ? '${from.difference(time).inSeconds}sec'
+        ? '${from.difference(time).inSeconds} detik'
         : from.difference(time).inMinutes < 60
-            ? '${from.difference(time).inMinutes}min'
+            ? '${from.difference(time).inMinutes} menit'
             : from.difference(time).inHours < 24
-                ? '${from.difference(time).inHours}h'
+                ? '${from.difference(time).inHours} jam'
                 : from.difference(time).inDays < 365
-                    ? '${from.difference(time).inDays}d'
-                    : '${(from.difference(time).inDays / 365.25).floor()}y';
+                    ? '${from.difference(time).inDays} hari'
+                    : '${(from.difference(time).inDays / 365.25).floor()} tahun';
   }
 }

@@ -12,7 +12,6 @@ import '../../../widget/atom/app_text_fields_wrapper.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/login_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
-import '../main/main_view.dart';
 import '../register/register_view.dart';
 import 'reset_pass_view.dart';
 
@@ -49,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
       value: _loginViewModel,
       builder: (context, snapshot) {
         return Consumer<LoginViewModel>(
-          builder: (context, loginViewModel, _) {
+          builder: (context, model, _) {
             return Scaffold(
               appBar: appBar(),
               body: SingleChildScrollView(
@@ -58,8 +57,8 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     logo(),
                     welcomeText(),
-                    form(),
-                    loginButton(),
+                    form(model),
+                    loginButton(model),
                     registerTextButton(),
                   ],
                 ),
@@ -77,15 +76,11 @@ class _LoginViewState extends State<LoginView> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AppIconButton(
-            onPressed: () {
-              // TODO
-            },
+          const AppIconButton(
             imgIcon: AppAssets.lockIconPath,
           ),
           AppButton(
             onTap: () {
-              // TODO
               Navigator.pushNamed(context, ResetPassView.routeName);
             },
             textColor: AppColors.primary,
@@ -107,9 +102,9 @@ class _LoginViewState extends State<LoginView> {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSizes.padding * 2,
-        vertical: AppSizes.padding * 4,
+        vertical: AppSizes.padding * 3,
       ),
-      constraints: const BoxConstraints(maxWidth: 500),
+      constraints: const BoxConstraints(maxWidth: 500, maxHeight: 300),
       child: const AppImage(
         image: AppAssets.longLogoPath,
         imgProvider: ImgProvider.assetImage,
@@ -122,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
       children: [
         Text(
           'Selamat Datang',
-          style: AppTextStyle.bold(
+          style: AppTextStyle.extraBold(
             context,
             fontSize: 26,
           ),
@@ -140,12 +135,13 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget form() {
+  Widget form(LoginViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 2),
       child: AppTextFieldsWrapper(
         textFields: [
           AppTextField(
+            controller: model.emailController,
             suffixIcon: Image.asset(AppAssets.contactFormIconPath),
             lableText: 'Email',
           ),
@@ -155,13 +151,8 @@ class _LoginViewState extends State<LoginView> {
             height: 0,
           ),
           AppTextField(
+            controller: model.passwordController,
             type: AppTextFieldType.password,
-            suffixIcon: AppIconButton(
-              imgIcon: AppAssets.lockFormIconPath,
-              onPressed: () {
-                // TODO
-              },
-            ),
             lableText: 'Password',
           ),
         ],
@@ -169,16 +160,13 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget loginButton() {
+  Widget loginButton(LoginViewModel model) {
     return AppButton(
       text: 'Masuk',
       onTap: () {
-        // TODO
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          MainView.routeName,
-          (route) => false,
-        );
+        FocusScope.of(context).unfocus();
+        final navigator = Navigator.of(context);
+        model.onLogin(navigator);
       },
     );
   }
@@ -190,12 +178,11 @@ class _LoginViewState extends State<LoginView> {
         spacing: 2,
         children: [
           Text(
-            'Belum memiliki Akses?',
-            style: AppTextStyle.extraBold(context),
+            'Belum memiliki akun?',
+            style: AppTextStyle.bold(context, color: AppColors.baseLv3),
           ),
           InkWell(
             onTap: () {
-              // TODO
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 RegisterView.routeName,

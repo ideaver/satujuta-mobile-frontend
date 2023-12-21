@@ -6,15 +6,14 @@ import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/validator.dart';
 import '../../view_model/edit_profile_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_text_field.dart';
 import '../../widget/atom/app_text_fields_wrapper.dart';
 
 class EditPasswordView extends StatefulWidget {
-  const EditPasswordView({
-    Key? key,
-  }) : super(key: key);
+  const EditPasswordView({super.key});
 
   static const String routeName = '/edit-password';
 
@@ -100,7 +99,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
                 AppTextField(
                   controller: model.newPasswordCtrl,
                   type: AppTextFieldType.password,
-                  showVisibilityButton: false,
+                  showSuffixButton: false,
                   lableText: 'Password Baru',
                   onChanged: (val) {
                     setState(() {});
@@ -109,7 +108,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
                 AppTextField(
                   controller: model.confirmPasswordCtrl,
                   type: AppTextFieldType.password,
-                  showVisibilityButton: false,
+                  showSuffixButton: false,
                   lableText: 'Ulangi Password',
                   onChanged: (val) {
                     setState(() {});
@@ -145,9 +144,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
   }
 
   bool enableButton(EditProfileViewModel model) {
-    if (model.newPasswordCtrl.text.contains(RegExp(r'[A-Z]')) &&
-        model.newPasswordCtrl.text.length > 5 &&
-        model.newPasswordCtrl.text.contains(RegExp(r'[0-9]')) &&
+    if (Validator.isPasswordValid(model.newPasswordCtrl.text) &&
         model.newPasswordCtrl.text.isNotEmpty &&
         model.newPasswordCtrl.text == model.confirmPasswordCtrl.text) {
       return true;
@@ -157,9 +154,9 @@ class _EditPasswordViewState extends State<EditPasswordView> {
   }
 
   Widget validatorInfo(EditProfileViewModel model) {
-    bool isContainUppercase = model.newPasswordCtrl.text.contains(RegExp(r'[A-Z]'));
     bool isLengthMoreThan5 = model.newPasswordCtrl.text.length > 5;
-    bool isContainerNumber = model.newPasswordCtrl.text.contains(RegExp(r'[0-9]'));
+    bool isContainUppercase = Validator.isContainsUppercase(model.newPasswordCtrl.text);
+    bool isContainerNumber = Validator.isContainsNumber(model.newPasswordCtrl.text);
     bool isConfirmPassValid =
         model.newPasswordCtrl.text.isNotEmpty && model.newPasswordCtrl.text == model.confirmPasswordCtrl.text;
 
@@ -176,7 +173,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
               ),
               const SizedBox(width: 6),
               Text(
-                'Besar atau kecil karakter',
+                'Password menngandung karakter besar atau kecil',
                 style: AppTextStyle.medium(context),
               ),
             ],
@@ -194,7 +191,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
               ),
               const SizedBox(width: 6),
               Text(
-                '6 atau lebih karakter',
+                'Password 6 atau lebih karakter',
                 style: AppTextStyle.medium(context),
               ),
             ],
@@ -212,7 +209,7 @@ class _EditPasswordViewState extends State<EditPasswordView> {
               ),
               const SizedBox(width: 6),
               Text(
-                'Setidaknya 1 nomor',
+                'Password mengandung setidaknya 1 angka',
                 style: AppTextStyle.medium(context),
               ),
             ],

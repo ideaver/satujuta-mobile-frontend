@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/asset/app_icons.dart';
@@ -10,27 +9,30 @@ import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../app/const/app_consts.dart';
 import '../../../widget/atom/app_button.dart';
-import '../../../widget/atom/app_expansion_list_tile.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/date_formatter.dart';
+import '../../view_model/main_view_model.dart';
+import '../../view_model/member_list_view_model.dart';
 import '../../view_model/user_view_model.dart';
-import '../../widget/atom/app_custom_text.dart';
 import '../../widget/atom/app_icon_button.dart';
-import '../../widget/atom/app_separated.dart';
-import '../../widget/molecule/referral_Invitation/circle_user.dart';
+import '../../widget/atom/app_image.dart';
+import '../../widget/atom/app_snackbar.dart';
 import '../../widget/molecule/referral_Invitation/ref_invite_button.dart';
-import '../../widget/molecule/referral_Invitation/ref_text_line.dart';
-import '../register/components/reg_commission.dart';
 import '../settings/edit_profile_view.dart';
+import 'components/commission_transactions_list.dart';
+import 'components/point_transactions_list.dart';
+import 'components/reward_transactions_list.dart';
 
 class UserView extends StatefulWidget {
   final PageStateEnum pageState;
-  const UserView({Key? key, required this.pageState}) : super(key: key);
+  const UserView({super.key, required this.pageState});
 
   static const String viewAsMeRouteName = '/user';
 
   const UserView.viewAsMe({
-    Key? key,
+    super.key,
     this.pageState = PageStateEnum.viewAsMe,
-  }) : super(key: key);
+  });
 
   @override
   State<UserView> createState() => _UserViewState();
@@ -38,8 +40,6 @@ class UserView extends StatefulWidget {
 
 class _UserViewState extends State<UserView> with TickerProviderStateMixin {
   late TabController tabController;
-  bool isShow = true;
-  int a = 3;
 
   @override
   void initState() {
@@ -56,6 +56,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
+      appBar: appBar(),
       body: NestedScrollView(
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -71,7 +72,10 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
   AppBar appBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.baseLv7,
+      ),
+      backgroundColor: AppColors.baseLv7,
       title: title(),
     );
   }
@@ -125,12 +129,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
       automaticallyImplyLeading: false,
       expandedHeight: 420,
       flexibleSpace: FlexibleSpaceBar(
-        background: Column(
-          children: [
-            appBar(),
-            background(),
-          ],
-        ),
+        background: background(),
         expandedTitleScale: 1,
       ),
     );
@@ -143,7 +142,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
         child: Column(
           children: [
             wrapMyRefCode(model),
-            countMemberAndTask(),
+            countMemberAndTask(model),
             wrapInviteFriend(),
             tabBar(),
             tabBarViews(),
@@ -177,7 +176,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   AppImage(
-                    image: model.user!.avatarUrl ?? '',
+                    image: model.user!.avatarUrl ?? '-',
                     width: 150,
                     height: 150,
                     borderRadius: 100,
@@ -196,7 +195,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                       onTap: () {
                         // TODO
                       },
-                      text: '${model.userPoint} Poin',
+                      text: '${model.totalUserPoint} Poin',
                       fontSize: 12,
                       leftIcon: CustomIcon.coin_icon,
                       buttonColor: AppColors.yellow,
@@ -260,10 +259,16 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        const Icon(
-                          CustomIcon.copy_document,
-                          color: AppColors.primary,
-                        )
+                        AppIconButton(
+                          onPressed: () async {
+                            final navigator = Navigator.of(context);
+                            await Clipboard.setData(ClipboardData(text: model.user!.referralCode));
+                            AppSnackbar.show(navigator, title: 'Kode referral disalin ke clipboard');
+                          },
+                          icon: CustomIcon.copy_document,
+                          iconColor: AppColors.primary,
+                          iconSize: 18,
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -290,59 +295,138 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
     );
   }
 
-  Widget countMemberAndTask() {
+  Widget countMemberAndTask(UserViewModel model) {
     return Container(
       height: 170,
       margin: const EdgeInsets.symmetric(vertical: AppSizes.padding),
       child: Row(
         children: [
-          Expanded(child: countMember()),
+          Expanded(child: countMember(model)),
           const SizedBox(width: AppSizes.padding / 1.2),
-          taskTotal(),
+          taskTotal(model),
         ],
       ),
     );
   }
 
   Widget wrapInviteFriend() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-        color: AppColors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSizes.padding),
-        child: Container(
+    return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSizes.radius * 2),
+          color: AppColors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSizes.padding),
           child: Column(
             children: [
-              RefTextLine(
-                title: AppCustomText(
-                  text: 'Undang Teman Anda',
-                  style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
-                ),
-                gap: 8,
-                subTitle: AppCustomText(
-                  text: 'Lorem ipsum dolor sit amet, consectetur',
-                  style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
-                ),
+              const SizedBox(height: AppSizes.padding / 2),
+              Text(
+                'Undang Teman Anda',
+                style: AppTextStyle.bold(context, color: AppColors.base, fontSize: 20),
               ),
-              const AppSeparated(sizeWidth: 0, sizeHeight: 8),
+              const SizedBox(height: AppSizes.padding / 2),
+              Text(
+                'Undang lebih banyak teman Anda untuk mendapatkan lebih banyak point',
+                textAlign: TextAlign.center,
+                style: AppTextStyle.regular(context, color: AppColors.baseLv5, fontSize: 14),
+              ),
+              const SizedBox(height: AppSizes.padding / 2),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSizes.padding),
+                padding: const EdgeInsets.symmetric(vertical: AppSizes.padding / 2),
                 child: RefInviteButton(
-                  functionButton: () {},
-                  leadingButton: const CircleUser(
-                    imageFriend1: AppAssets.userImage1Path,
-                    imageFriend2: AppAssets.userImage2Path,
-                    imageFriend3: AppAssets.userImage3Path,
-                    countFriend: '9',
-                  ),
-                  textButton: 'Undang Lebih Banyak',
+                  onTap: () {
+                    final mainViewModel = locator<MainViewModel>();
+
+                    // Go to member page
+                    Navigator.pop(context);
+                    mainViewModel.onChangedPage(2);
+                  },
+                  leadingButton: userMemberThumbs(model),
+                  // leadingButton: const CircleUser(
+                  //   imageFriend1: AppAssets.userImage1Path,
+                  //   imageFriend2: AppAssets.userImage2Path,
+                  //   imageFriend3: AppAssets.userImage3Path,
+                  //   countFriend: '9',
+                  // ),
+                  textButton:
+                      model.userMembers == null || model.userMembers!.isEmpty ? 'Undang Teman' : 'Undang Lebih Banyak',
                 ),
               )
             ],
           ),
         ),
+      );
+    });
+  }
+
+  Widget userMemberThumbs(MemberListViewModel model) {
+    if (model.userMembers == null || model.userMembers!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return SizedBox(
+      width: 80,
+      height: 26,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ...List.generate(
+            model.userMembers!.length > 4 ? 4 : model.userMembers!.length,
+            (i) {
+              return Positioned(
+                left: i == 0 ? 0 : i * 18,
+                child: Container(
+                  width: 26,
+                  height: 26,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    border: Border.all(
+                      width: 2,
+                      color: AppColors.white,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: ClipOval(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        AppImage(
+                          image: model.userMembers?[i].avatarUrl ?? '-',
+                          width: 26,
+                          height: 26,
+                          backgroundColor: AppColors.baseLv7,
+                          errorWidget: const Icon(
+                            Icons.person_rounded,
+                            color: AppColors.baseLv4,
+                            size: 16,
+                          ),
+                        ),
+                        i < 4
+                            ? const SizedBox.shrink()
+                            : Container(
+                                width: 26,
+                                height: 26,
+                                color: AppColors.base.withOpacity(0.54),
+                                child: Center(
+                                  child: Text(
+                                    '+${model.userMembers!.length - 4}',
+                                    style: AppTextStyle.bold(
+                                      context,
+                                      fontSize: 10,
+                                      color: AppColors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        ],
       ),
     );
   }
@@ -434,269 +518,16 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
 
   Widget tabBarViews() {
     return AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: tabController.index == 0
-            ? poinItems()
-            : tabController.index == 1
-                ? const RegCommission()
-                : rewardItems());
-  }
-
-  Widget rewardItems() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
-      child: AppExpansionListTile(
-        title: 'Riwayat Penerimaan Hadiah',
-        icon: Icons.access_time_sharp,
-        expand: true,
-        children: [
-          ...List.generate(a, (i) {
-            return rewardItemCard(i);
-          }),
-          showButton(() {
-            setState(() {
-              isShow ? a = 5 : a = 3;
-              isShow ? isShow = false : isShow = true;
-            });
-          }),
-        ],
-      ),
+      duration: const Duration(milliseconds: 300),
+      child: tabController.index == 0
+          ? const PointTransactionsList()
+          : tabController.index == 1
+              ? const CommissionTransactionsList()
+              : const RewardTransactionsList(),
     );
   }
 
-  Widget poinItems() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
-      child: AppExpansionListTile(
-        title: 'Riwayat Poin',
-        icon: Icons.access_time_sharp,
-        expand: true,
-        children: [
-          ...List.generate(a, (i) {
-            return poinItemCard(i);
-          }),
-          showButton(() {
-            setState(() {
-              isShow ? a = 5 : a = 3;
-              isShow ? isShow = false : isShow = true;
-            });
-          }),
-        ],
-      ),
-    );
-  }
-
-// ===========
-
-  Widget rewardItemCard(int i) {
-    return Container(
-      margin: EdgeInsets.only(bottom: i == 5 ? 0 : AppSizes.padding / 4),
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 4,
-                          color: AppColors.baseLv8,
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.wallet_giftcard_rounded,
-                        color: AppColors.white,
-                        size: 12,
-                      ),
-                    ),
-                    const SizedBox(width: AppSizes.padding / 2),
-                    Text(
-                      i == 0 ? 'Tiket Ke Singapore' : 'Tiket Ke Turkey',
-                      style: AppTextStyle.extraBold(
-                        context,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding / 4),
-          Container(
-            padding: const EdgeInsets.all(AppSizes.padding / 2.7),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.access_time_sharp,
-                  size: 15,
-                  color: AppColors.baseLv4,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  '1 Tahun Yang lalu',
-                  style: AppTextStyle.regular(
-                    context,
-                    fontSize: 12,
-                    color: AppColors.baseLv4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget poinItemCard(int i) {
-    return Container(
-      margin: EdgeInsets.only(bottom: i == 5 ? 0 : AppSizes.padding / 4),
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: AppColors.yellow,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 4,
-                          color: AppColors.baseLv8,
-                        ),
-                      ),
-                      child: const Icon(
-                        CustomIcon.coin_icon,
-                        color: AppColors.white,
-                        size: 12,
-                      ),
-                    ),
-                    const SizedBox(width: AppSizes.padding / 2),
-                    Text(
-                      i == 0 ? 'Undang Referral' : 'Mengundang Member Baru',
-                      style: AppTextStyle.extraBold(
-                        context,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.all(AppSizes.padding / 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.access_time_sharp,
-                      size: 15,
-                      color: AppColors.baseLv4,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      '20/7/2023',
-                      style: AppTextStyle.regular(
-                        context,
-                        fontSize: 12,
-                        color: AppColors.baseLv4,
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSizes.padding / 2,
-                    vertical: AppSizes.padding / 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Text(
-                    '+1 Point',
-                    style: AppTextStyle.bold(
-                      context,
-                      fontSize: 12,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget showButton(dynamic functionButton) {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.padding / 1.5),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: ElevatedButton(
-        onPressed: functionButton,
-        style: ButtonStyle(
-          visualDensity: VisualDensity.compact,
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          elevation: MaterialStateProperty.all(0),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              isShow ? 'Tampilkan Semua' : 'Sembunyikan ',
-              style: AppTextStyle.bold(context, fontSize: 14, color: AppColors.primary),
-            ),
-            const SizedBox(
-              width: AppSizes.height,
-            ),
-            Icon(
-              isShow ? Icons.arrow_downward : Icons.arrow_upward,
-              size: AppSizes.height,
-              color: AppColors.primary,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget countMember() {
+  Widget countMember(UserViewModel model) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
@@ -725,7 +556,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                   ),
                   const SizedBox(height: AppSizes.padding / 2),
                   Text(
-                    '20',
+                    '${model.totalReferredUser}',
                     style: AppTextStyle.extraBold(
                       context,
                       fontSize: 24,
@@ -736,7 +567,11 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
               const SizedBox(width: AppSizes.padding / 2),
               AppIconButton(
                 onPressed: () {
-                  // TODO
+                  final mainViewModel = locator<MainViewModel>();
+
+                  // Go to member page
+                  Navigator.pop(context);
+                  mainViewModel.onChangedPage(2);
                 },
                 icon: CustomIcon.inventory,
                 iconSize: 32,
@@ -750,7 +585,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
     );
   }
 
-  Widget taskTotal() {
+  Widget taskTotal(UserViewModel model) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(

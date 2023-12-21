@@ -21,7 +21,11 @@ class AppTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final TextInputType? keyboardtype;
   final bool enabled;
-  final bool showVisibilityButton;
+  final bool showSuffixButton;
+  final bool showCounter;
+  final int? minLines;
+  final int? maxLines;
+  final int? maxLength;
   final Color? fillColor;
   final Color disabledColor;
   final Function()? onTap;
@@ -33,6 +37,7 @@ class AppTextField extends StatefulWidget {
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focus;
 
   const AppTextField({
     super.key,
@@ -43,8 +48,12 @@ class AppTextField extends StatefulWidget {
     this.suffixIcon,
     this.keyboardtype,
     this.enabled = true,
-    this.showVisibilityButton = true,
+    this.showSuffixButton = true,
+    this.showCounter = false,
+    this.minLines,
     this.onTap,
+    this.maxLines = 1,
+    this.maxLength,
     this.onChanged,
     this.onEditingComplete,
     this.padding,
@@ -55,6 +64,7 @@ class AppTextField extends StatefulWidget {
     this.inputFormatters,
     this.fillColor,
     this.disabledColor = AppColors.baseLv4,
+    this.focus,
   });
 
   @override
@@ -84,17 +94,22 @@ class _AppTextFieldState extends State<AppTextField> {
           controller: widget.controller,
           enabled: widget.enabled,
           obscureText: _obsecureText,
+          minLines: widget.minLines,
+          maxLines: widget.type == AppTextFieldType.password ? 1 : widget.maxLines,
+          maxLength: widget.maxLength ?? (widget.type == AppTextFieldType.password ? 14 : widget.maxLength),
           onChanged: widget.onChanged,
           onEditingComplete: widget.onEditingComplete,
           keyboardType: keyboardType(),
           textInputAction: widget.textInputAction,
           inputFormatters: inputFormatters(),
+          focusNode: widget.focus,
           style: AppTextStyle.medium(
             context,
             color: widget.enabled ? AppColors.base : widget.disabledColor,
             fontSize: 16,
           ),
           decoration: InputDecoration(
+            counterText: widget.showCounter ? null : '',
             labelText: widget.lableText,
             prefixIcon: widget.prefixIcon,
             suffixIcon: suffixIconWidget(),
@@ -151,8 +166,12 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   Widget? suffixIconWidget() {
-    if (widget.type == AppTextFieldType.password && widget.showVisibilityButton) {
+    if (widget.type == AppTextFieldType.password && widget.showSuffixButton) {
       return textVisibilityIconButton();
+    }
+
+    if (widget.type == AppTextFieldType.search && widget.showSuffixButton) {
+      return cancelSearchButton();
     }
 
     return widget.suffixIcon;
@@ -169,6 +188,20 @@ class _AppTextFieldState extends State<AppTextField> {
         _obsecureText ? Icons.visibility_off_rounded : Icons.remove_red_eye_rounded,
         // color: AppColors.baseLv5,
         // size: widget.iconsSize,
+      ),
+    );
+  }
+
+  Widget cancelSearchButton() {
+    return GestureDetector(
+      onTap: () {
+        widget.focus?.unfocus();
+        widget.controller?.clear();
+      },
+      child: const Icon(
+        Icons.cancel_rounded,
+        color: AppColors.baseLv5,
+        size: 24,
       ),
     );
   }

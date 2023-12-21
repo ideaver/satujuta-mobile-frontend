@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -22,6 +23,10 @@ class _OnboardingViewState extends State<OnboardingView> {
   final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: AppColors.white),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: Column(

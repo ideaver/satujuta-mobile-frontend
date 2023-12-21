@@ -49,7 +49,7 @@ class RefButtonWithCustomIcon extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 child: Icon(
                   icon,
-                  size: 35,
+                  size: 24,
                   color: Colors.white,
                 ),
               )

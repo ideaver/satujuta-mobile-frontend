@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
+import '../app/service/auth/auth_service.dart';
+import '../app/utility/console_log.dart';
+import '../view/main/main_view.dart';
 import '../widget/atom/app_dialog.dart';
+import '../widget/atom/app_snackbar.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-  final network = locator<NetworkCheckerService>();
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Future<bool> login() async {
-    // TODO
-    return true;
-  }
+  Future<void> onLogin(NavigatorState navigator) async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      AppSnackbar.show(navigator, title: "Email dan password tidak boleh kosong");
+      return;
+    }
 
-  void showLoginErrorDialog(NavigatorState navigator, {String? error, String? customMessage}) {
-    var errorMessage = error.toString().length > 50 ? error.toString().substring(0, 50) : error.toString();
+    AppDialog.showDialogProgress(navigator);
 
-    var defaultMessage = "Something went wrong, please contact your system administrator or try restart the app";
-
-    var message = customMessage ?? defaultMessage;
-
-    logOut(navigator);
-
-    showDialog(
-      context: navigator.context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AppDialogWidget(
-          title: 'Oops! Something Went Wrong',
-          text: '$message\n\n$errorMessage',
-        );
-      },
+    var res = await AuthService.login(
+      email: emailController.text,
+      password: passwordController.text,
     );
-  }
 
-  void logOut(NavigatorState navigator) async {}
+    if (res == null) {
+      navigator.pop();
+      navigator.pushNamedAndRemoveUntil(
+        MainView.routeName,
+        (route) => false,
+      );
+    } else {
+      cl('[onLogin].error $res');
+      navigator.pop();
+      AppDialog.showErrorDialog(navigator, message: res);
+    }
+  }
 }

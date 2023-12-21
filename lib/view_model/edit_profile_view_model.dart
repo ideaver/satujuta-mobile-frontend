@@ -1,28 +1,23 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_snackbar.dart';
-import 'package:satujuta_gql_client/gql_account_service.dart';
-import 'package:satujuta_gql_client/gql_error_parser.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/account_update_one.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/account_update_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_update_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_account_service.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
+import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/locator/service_locator.dart';
-import '../app/service/network_checker/network_checker_service.dart';
 import '../app/utility/console_log.dart';
+import '../app/utility/validator.dart';
+import '../widget/atom/app_dialog.dart';
+import '../widget/atom/app_snackbar.dart';
 import 'address_view_model.dart';
+import 'user_view_model.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
-  final network = locator<NetworkCheckerService>();
   final userViewModel = locator<UserViewModel>();
   final addressViewModel = locator<AddressViewModel>();
-
-  Mutation$UserUpdateOne$userUpdateOne? user;
 
   String? avatarUrl;
 
@@ -58,34 +53,31 @@ class EditProfileViewModel extends ChangeNotifier {
       return;
     }
 
-    user = Mutation$UserUpdateOne$userUpdateOne.fromJson(
-      userViewModel.user!.toJson(),
-    );
+    avatarUrl = userViewModel.user!.avatarUrl;
 
-    avatarUrl = user!.avatarUrl;
+    firstNameCtrl.text = userViewModel.user!.firstName;
+    lastNameCtrl.text = userViewModel.user!.lastName ?? '';
+    addressNameCtrl.text = userViewModel.user!.address.subdistrict.name;
+    provinceCtrl.text = userViewModel.user!.address.subdistrict.district.city.province.name;
+    cityCtrl.text = userViewModel.user!.address.subdistrict.district.city.name;
+    districtCtrl.text = userViewModel.user!.address.subdistrict.district.name;
+    subdistrictCtrl.text = userViewModel.user!.address.subdistrict.name;
+    postalCodeCtrl.text = userViewModel.user!.address.subdistrict.postalCode;
 
-    firstNameCtrl.text = user!.firstName;
-    lastNameCtrl.text = user!.lastName ?? '';
-    addressNameCtrl.text = user!.address.name;
-    provinceCtrl.text = user!.address.province.name;
-    cityCtrl.text = user!.address.city.name;
-    districtCtrl.text = user!.address.district.name;
-    subdistrictCtrl.text = user!.address.subdistrict.name;
-    postalCodeCtrl.text = user!.address.subdistrict.postalCode;
+    provinceId = userViewModel.user!.address.subdistrict.district.city.province.id;
+    cityId = userViewModel.user!.address.subdistrict.district.city.id;
+    districtId = userViewModel.user!.address.subdistrict.district.id;
+    subdistrictId = userViewModel.user!.address.subdistrict.id;
 
-    provinceId = user!.address.province.id;
-    cityId = user!.address.city.id;
-    districtId = user!.address.district.id;
-    subdistrictId = user!.address.subdistrict.id;
+    whatsappNumberCtrl.text = userViewModel.user!.whatsappNumber;
+    emailCtrl.text = userViewModel.user!.email;
+    // password.text =  userViewModel.user!.password;
+    // confirmPassword.text =  userViewModel.user!.firstName;
 
-    whatsappNumberCtrl.text = user!.whatsappNumber;
-    emailCtrl.text = user!.email;
-    // password.text = user!.password;
-    // confirmPassword.text = user!.firstName;
+    referralCodeCtrl.text = userViewModel.user!.referralCode;
 
-    referralCodeCtrl.text = user!.referralCode;
-
-    var account = user!.accounts?.where((e) => e.accountCategory == Enum$AccountCategory.BANK).firstOrNull;
+    var account =
+        userViewModel.user!.accounts?.where((e) => e.accountCategory == Enum$AccountCategory.BANK).firstOrNull;
     if (account != null) {
       bankNameCtrl.text = account.name;
       bankAccountNumberCtrl.text = "${(account.accountNumber ?? 0).toInt()}";
@@ -94,7 +86,7 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   void onTapUpdateProfile(NavigatorState navigator) async {
-    bool isValid = await updateProfileValidator(navigator);
+    bool isValid = updateProfileValidator(navigator);
 
     if (isValid) {
       AppDialog.showDialogProgress(navigator);
@@ -142,9 +134,8 @@ class EditProfileViewModel extends ChangeNotifier {
       } else {
         cl('[onTapUpdatePassword].resProfile.error = $errRes');
         navigator.pop();
-        AppDialog.showFailedDialog(
+        AppDialog.showErrorDialog(
           navigator,
-          subtitle: "Password lama yang kamu masukkan salah",
           error: "errRes: $errRes",
         );
       }
@@ -155,7 +146,7 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   bool updateProfileValidator(NavigatorState navigator) {
-    if (user == null) {
+    if (userViewModel.user == null) {
       cl('[updateProfile].user null');
       return false;
     }
@@ -186,10 +177,10 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   bool updatePasswordValidator() {
-    if (newPasswordCtrl.text.contains(RegExp(r'[A-Z]')) &&
+    if (newPasswordCtrl.text.isNotEmpty &&
         newPasswordCtrl.text.length > 5 &&
-        newPasswordCtrl.text.contains(RegExp(r'[0-9]')) &&
-        newPasswordCtrl.text.isNotEmpty &&
+        Validator.isContainsUppercase(newPasswordCtrl.text) &&
+        Validator.isContainsNumber(newPasswordCtrl.text) &&
         newPasswordCtrl.text == confirmPasswordCtrl.text) {
       return true;
     } else {
@@ -201,53 +192,50 @@ class EditProfileViewModel extends ChangeNotifier {
     var address = Mutation$UserUpdateOne$userUpdateOne$address(
       id: 0,
       name: addressNameCtrl.text,
-      province: Mutation$UserUpdateOne$userUpdateOne$address$province(
-        id: provinceId!,
-        name: provinceCtrl.text,
-      ),
-      city: Mutation$UserUpdateOne$userUpdateOne$address$city(
-        id: cityId!,
-        name: cityCtrl.text,
-      ),
-      district: Mutation$UserUpdateOne$userUpdateOne$address$district(
-        id: districtId!,
-        name: districtCtrl.text,
-      ),
       subdistrict: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict(
         id: subdistrictId!,
         name: subdistrictCtrl.text,
         postalCode: postalCodeCtrl.text,
+        district: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district(
+          id: districtId!,
+          name: districtCtrl.text,
+          city: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district$city(
+            id: cityId!,
+            name: cityCtrl.text,
+            province: Mutation$UserUpdateOne$userUpdateOne$address$subdistrict$district$city$province(
+              id: provinceId!,
+              name: provinceCtrl.text,
+            ),
+          ),
+        ),
       ),
     );
 
     cl('[updateUserProfile].address = ${address.toJson()}');
 
     var updateUser = Mutation$UserUpdateOne$userUpdateOne(
-      id: user!.id,
+      id: userViewModel.user!.id,
       firstName: firstNameCtrl.text,
       lastName: lastNameCtrl.text,
       email: emailCtrl.text,
-      userRole: user!.userRole,
-      userType: user!.userType,
+      userRole: userViewModel.user!.userRole,
+      userType: userViewModel.user!.userType,
       avatarUrl: avatarUrl,
       whatsappNumber: whatsappNumberCtrl.text,
-      status: user!.status,
-      theme: user!.theme,
+      status: userViewModel.user!.status,
+      theme: userViewModel.user!.theme,
       address: address,
-      referralCode: user!.referralCode,
-      createdAt: user!.createdAt,
+      referralCode: userViewModel.user!.referralCode,
+      // createdAt:  userViewModel.user!.createdAt,
       updatedAt: DateTime.now().toIso8601String(),
     );
 
-    var res = await GqlUserService.userUpdateOne(updateUser);
+    var res = await GqlUserService.userUpdateOne(user: updateUser);
 
     cl('[updateProfile].res = $res');
 
     if (res.parsedData?.userUpdateOne != null && !res.hasException) {
-      user = res.parsedData!.userUpdateOne;
-      notifyListeners();
-
-      cl('[updateProfile].user = ${user?.toJson()}');
+      cl('[updateProfile].user = ${res.parsedData!.userUpdateOne?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);
@@ -260,6 +248,7 @@ class EditProfileViewModel extends ChangeNotifier {
       name: bankNameCtrl.text,
       accountNumber: double.tryParse(bankAccountNumberCtrl.text),
       accountCategory: Enum$AccountCategory.BANK,
+      createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),
     );
 
@@ -268,7 +257,7 @@ class EditProfileViewModel extends ChangeNotifier {
     cl('[updateUserAccount].res = $res');
 
     if (res.parsedData?.accountUpdateOne != null && !res.hasException) {
-      cl('[updateUserAccount].user = ${user?.toJson()}');
+      cl('[updateUserAccount].user = ${res.parsedData!.accountUpdateOne?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);
@@ -276,23 +265,67 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   Future<String?> updateUserPassword(NavigatorState navigator) async {
-    var userId = user!.id;
+    var userId = userViewModel.user!.id;
     var currentPassword = passwordCtrl.text;
     var newPassword = newPasswordCtrl.text;
 
     var res = await GqlUserService.passwordUpdateFromUserUpdatedOne(
-      userId,
-      currentPassword,
-      newPassword,
+      userId: userId,
+      currentPassword: currentPassword,
+      newPassword: newPassword,
     );
 
     cl('[updateUserPassword].res = $res');
 
     if (res.parsedData?.userUpdateOne != null && !res.hasException) {
-      cl('[updateUserPassword].user = ${user?.toJson()}');
+      cl('[updateUserPassword].user = ${res.parsedData?.userUpdateOne?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);
     }
+  }
+
+  // TODO API NOT AVAILABLE
+  Future<void> uploadUserAvatar(
+    String avatar,
+    NavigatorState navigator,
+  ) async {
+    // AppDialog.showDialogProgress(navigator);
+
+    // final imageFile = File(avatar);
+    // final imageBytes = await imageFile.readAsBytes();
+
+    // var multipartFile = await MultipartFile.fromPath(
+    //   'file',
+    //   imageFile.path,
+    //   filename: '${DateTime.now().second}.jpg',
+    //   contentType: MediaType("image", "jpg"),
+    // );
+
+    // var res = await GqlUserService.userUpdateOneAvatarUrlAvatarUrl(
+    //   userId: userViewModel.user!.id,
+    //   multipartFile: multipartFile,
+    // );
+
+    // if (res.parsedData?.userUpdateOneAvatarUrl != null && !res.hasException) {
+    //   navigator.pop();
+
+    //   avatarUrl = res.parsedData!.userUpdateOneAvatarUrl;
+    //   notifyListeners();
+
+    //   AppSnackbar.show(navigator, title: "Foto profil berhasil diupload");
+    // } else {
+    //   navigator.pop();
+
+    //   AppSnackbar.show(
+    //     navigator,
+    //     title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
+    //   );
+
+    //   cl('[uploadUserAvatar].error = ${gqlErrorParser(res)}');
+    // }
+
+    // Refresh user data
+    // userViewModel.getUser();
   }
 }

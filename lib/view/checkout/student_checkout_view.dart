@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -10,7 +13,11 @@ import '../../../widget/atom/app_gradient_text.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_widget_list_wrapper.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/checkout_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
+import '../../widget/organism/payment_method/payment_method_list_modal.dart';
+import '../main/main_view.dart';
 
 class StudentCheckoutView extends StatefulWidget {
   const StudentCheckoutView({Key? key}) : super(key: key);
@@ -22,23 +29,38 @@ class StudentCheckoutView extends StatefulWidget {
 }
 
 class _StudentCheckoutViewState extends State<StudentCheckoutView> {
-  bool isOrderItemsShowed = true;
-  bool isOrderShipmentShowed = true;
+  final _checkoutViewModel = locator<CheckoutViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            sliverAppBarWidget(),
-          ];
-        },
-        body: body(),
-      ),
-      bottomSheet: bottomButton(),
-    );
+    // TODO ORDER DATA
+
+    // final orderId = ModalRoute.of(context)?.settings.arguments as int?;
+
+    // if (orderId != null) {
+    //   _checkoutViewModel.getOrder(orderId);
+    // } else {
+    //   Navigator.pop(context);
+    // }
+
+    return ChangeNotifierProvider.value(
+        value: _checkoutViewModel,
+        builder: (context, snapshot) {
+          return Consumer<CheckoutViewModel>(builder: (context, model, _) {
+            return Scaffold(
+              body: NestedScrollView(
+                physics: const BouncingScrollPhysics(),
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    sliverAppBarWidget(),
+                  ];
+                },
+                body: body(),
+              ),
+              bottomSheet: bottomButton(model),
+            );
+          });
+        });
   }
 
   SliverAppBar sliverAppBarWidget() {
@@ -181,14 +203,20 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                       size: 12,
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      "00:30:25",
-                      style: AppTextStyle.bold(
-                        context,
-                        fontSize: 12,
-                        color: AppColors.red,
-                      ),
-                    )
+                    CountdownTimer(
+                      // TODO DUE TIME
+                      endTime: DateTime.now().add(const Duration(hours: 24)).millisecondsSinceEpoch,
+                      widgetBuilder: (context, duration) {
+                        return Text(
+                          "${duration?.hours ?? 0}:${duration?.min ?? 0}:${duration?.sec ?? 0}",
+                          style: AppTextStyle.bold(
+                            context,
+                            fontSize: 12,
+                            color: AppColors.red,
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -506,10 +534,10 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
     );
   }
 
-  Widget bottomButton() {
+  Widget bottomButton(CheckoutViewModel model) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.padding),
-      height: 94,
+      // height: 70,
       decoration: const BoxDecoration(
         color: AppColors.white,
         boxShadow: [
@@ -520,168 +548,85 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
           ),
         ],
       ),
-      child: AppButton(
-        text: 'Pilih Metode Pembayaran',
-        onTap: () {
-          AppModal.show(
-            context: context,
-            title: 'Pilih Metode Pembayaran',
-            child: paymentMethodList(),
-          );
-        },
-      ),
-    );
-  }
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          model.selectedPaymentMethod != null
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: AppSizes.padding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Metode Pembayaran',
+                        style: AppTextStyle.semiBold(context),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          var method = await AppModal.show(
+                            context: context,
+                            title: 'Pilih Metode Pembayaran',
+                            child: const PaymentMethodListModal(),
+                          );
 
-  Widget paymentMethodList() {
-    return Column(
-      children: [
-        orderStatus(),
-        Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height - 280,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                AppExpansionListTile(
-                  title: 'Transfer Bank',
-                  icon: Icons.credit_card,
-                  expand: true,
-                  children: [
-                    ...List.generate(5, (index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(AppSizes.radius),
-                        ),
-                        child: RadioListTile(
-                          value: null,
-                          groupValue: null,
-                          onChanged: (value) {},
-                          title: Row(
-                            children: [
-                              const SizedBox(
-                                width: 50,
-                                child: AppImage(
-                                  image: AppAssets.bankMandiriImgPath,
-                                  imgProvider: ImgProvider.assetImage,
-                                ),
+                          if (method != null) {
+                            model.onSelectPaymentMethod(method);
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            AppImage(
+                              image: model.selectedPaymentMethod!.logoUrl,
+                              width: 32,
+                              height: 24,
+                              backgroundColor: AppColors.baseLv6,
+                              borderRadius: 8,
+                              errorWidget: const Icon(
+                                CupertinoIcons.building_2_fill,
+                                color: AppColors.baseLv4,
+                                size: 12,
                               ),
-                              const SizedBox(width: AppSizes.padding),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Bank Mandiri',
-                                    style: AppTextStyle.bold(context),
-                                  ),
-                                  const SizedBox(height: AppSizes.padding / 2),
-                                  Text(
-                                    'Admin Fee Rp 2.500',
-                                    style: AppTextStyle.regular(
-                                      context,
-                                      fontSize: 12,
-                                      color: AppColors.baseLv4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          activeColor: AppColors.primary,
-                          contentPadding: const EdgeInsets.fromLTRB(
-                            AppSizes.padding,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppSizes.radius),
-                          ),
-                          controlAffinity: ListTileControlAffinity.trailing,
+                            ),
+                            const SizedBox(width: AppSizes.padding / 2),
+                            Text(
+                              model.selectedPaymentMethod?.name ?? "-",
+                              style: AppTextStyle.extraBold(context),
+                            ),
+                          ],
                         ),
-                      );
-                    })
-                  ],
-                ),
-                const SizedBox(height: AppSizes.padding),
-                AppExpansionListTile(
-                  title: 'Virtual Account',
-                  icon: Icons.credit_card,
-                  expand: true,
-                  children: [
-                    ...List.generate(5, (index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(AppSizes.radius),
-                        ),
-                        child: RadioListTile(
-                          value: null,
-                          groupValue: null,
-                          onChanged: (value) {},
-                          title: Row(
-                            children: [
-                              const SizedBox(
-                                width: 50,
-                                child: AppImage(
-                                  image: AppAssets.bankMandiriImgPath,
-                                  imgProvider: ImgProvider.assetImage,
-                                ),
-                              ),
-                              const SizedBox(width: AppSizes.padding),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Bank Mandiri',
-                                    style: AppTextStyle.bold(context),
-                                  ),
-                                  const SizedBox(height: AppSizes.padding / 2),
-                                  Text(
-                                    'Admin Fee Rp 2.500',
-                                    style: AppTextStyle.regular(
-                                      context,
-                                      fontSize: 12,
-                                      color: AppColors.baseLv4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          activeColor: AppColors.primary,
-                          contentPadding: const EdgeInsets.fromLTRB(
-                            AppSizes.padding,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                            AppSizes.padding / 1.8,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppSizes.radius),
-                          ),
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      );
-                    })
-                  ],
+                      ),
+                    ],
+                  ),
                 )
-              ],
-            ),
+              : const SizedBox.shrink(),
+          AppButton(
+            onTap: () async {
+              if (model.selectedPaymentMethod == null) {
+                var method = await AppModal.show(
+                  context: context,
+                  title: 'Pilih Metode Pembayaran',
+                  child: const PaymentMethodListModal(),
+                );
+
+                if (method != null) {
+                  model.onSelectPaymentMethod(method);
+                }
+              } else {
+                // TODO HANDLE ORDER SUMMARY
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  MainView.routeName,
+                  (route) => false,
+                );
+              }
+            },
+            buttonColor: model.selectedPaymentMethod == null ? AppColors.primary : AppColors.greenLv1,
+            height: 54,
+            padding: EdgeInsets.zero,
+            text: model.selectedPaymentMethod == null ? 'Pilih Metode Pembayaran' : 'Bayar',
           ),
-        ),
-        const SizedBox(height: AppSizes.padding),
-        AppButton(
-          onTap: () {
-            // TODO
-            Navigator.pop(context);
-          },
-          text: 'Pilih',
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
