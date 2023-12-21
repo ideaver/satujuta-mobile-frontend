@@ -1,12 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/point_transaction_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/reward_claim_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/transaction_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/reward_claim_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/transaction_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_find_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -22,8 +21,9 @@ class UserViewModel extends ChangeNotifier {
   int totalUserPoint = 0;
   double totalUserCommission = 0;
 
-  List<Query$PointTransactionFindMany$pointTransactionFindMany>? userPointTransactions;
-  List<Query$TransactionFindMany$transactionFindMany>? userCommissionTransactions;
+  // TODO API UNAVAILABLE
+  // List<Query$PointTransactionFindMany$pointTransactionFindMany>? userPointTransactions;
+  List<Query$TransactionFindManyByAccountId$transactionFindMany>? userCommissionTransactions;
   List<Query$RewardClaimFindManyByUserId$rewardClaimFindMany>? userClaimedRewards;
 
   void resetState() {
@@ -96,7 +96,7 @@ class UserViewModel extends ChangeNotifier {
     var res = await GqlUserService.countUserOfStudentWithinReferredId(userId: user!.id);
 
     if (res.parsedData?.userCount != null && !res.hasException) {
-      totalUserStudent = res.parsedData!.userCount;
+      totalUserStudent = (res.parsedData!.userCount ?? 0).toInt();
       notifyListeners();
     } else {
       cl('[countUserStudent].error = ${gqlErrorParser(res)}');
@@ -109,16 +109,17 @@ class UserViewModel extends ChangeNotifier {
       return;
     }
 
-    var res = await GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
-      userId: user!.id,
-    );
+    // TODO API UNAVAILABLE
+    // var res = await GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
+    //   userId: user!.id,
+    // );
 
-    if (res.parsedData?.pointTransactionFindFirst?.currentBalance != null && !res.hasException) {
-      totalUserPoint = (res.parsedData!.pointTransactionFindFirst?.currentBalance ?? 0).toInt();
-      notifyListeners();
-    } else {
-      cl('[getUserPoint].error = ${gqlErrorParser(res)}');
-    }
+    // if (res.parsedData?.pointTransactionFindFirst?.currentBalance != null && !res.hasException) {
+    //   totalUserPoint = (res.parsedData!.pointTransactionFindFirst?.currentBalance ?? 0).toInt();
+    //   notifyListeners();
+    // } else {
+    //   cl('[getUserPoint].error = ${gqlErrorParser(res)}');
+    // }
   }
 
   Future<void> getUserCommission() async {
@@ -147,21 +148,22 @@ class UserViewModel extends ChangeNotifier {
       return;
     }
 
-    var res = await GqlUserService.pointTransactionFindMany(
-      userId: user!.id,
-      skip: skip,
-    );
+    // TODO API UNAVAILABLE
+    // var res = await GqlUserService.pointTransactionFindMany(
+    //   userId: user!.id,
+    //   skip: skip,
+    // );
 
-    if (res.parsedData?.pointTransactionFindMany != null && !res.hasException) {
-      if (skip == 0) {
-        userPointTransactions = res.parsedData!.pointTransactionFindMany ?? [];
-      } else {
-        userPointTransactions?.addAll(res.parsedData!.pointTransactionFindMany ?? []);
-      }
-      notifyListeners();
-    } else {
-      cl('[getUserPointTransactions].error = ${gqlErrorParser(res)}');
-    }
+    // if (res.parsedData?.pointTransactionFindMany != null && !res.hasException) {
+    //   if (skip == 0) {
+    //     userPointTransactions = res.parsedData!.pointTransactionFindMany ?? [];
+    //   } else {
+    //     userPointTransactions?.addAll(res.parsedData!.pointTransactionFindMany ?? []);
+    //   }
+    //   notifyListeners();
+    // } else {
+    //   cl('[getUserPointTransactions].error = ${gqlErrorParser(res)}');
+    // }
   }
 
   Future<void> getUserCommissionTransactions({
@@ -172,7 +174,7 @@ class UserViewModel extends ChangeNotifier {
       return;
     }
 
-    var res = await GqlUserService.transactionFindMany(
+    var res = await GqlUserService.transactionFindManyByAccountId(
       fromAccountId: userAccountBank!.id,
       skip: skip,
     );

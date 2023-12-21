@@ -1,14 +1,10 @@
-import 'dart:io';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:satujuta_gql_client/gql_account_service.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/account_update_one.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/account_update_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_update_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_account_service.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/locator/service_locator.dart';
@@ -90,7 +86,7 @@ class EditProfileViewModel extends ChangeNotifier {
   }
 
   void onTapUpdateProfile(NavigatorState navigator) async {
-    bool isValid = await updateProfileValidator(navigator);
+    bool isValid = updateProfileValidator(navigator);
 
     if (isValid) {
       AppDialog.showDialogProgress(navigator);
@@ -239,7 +235,7 @@ class EditProfileViewModel extends ChangeNotifier {
     cl('[updateProfile].res = $res');
 
     if (res.parsedData?.userUpdateOne != null && !res.hasException) {
-      cl('[updateProfile].user = ${res.parsedData!.userUpdateOne.toJson()}');
+      cl('[updateProfile].user = ${res.parsedData!.userUpdateOne?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);
@@ -252,6 +248,7 @@ class EditProfileViewModel extends ChangeNotifier {
       name: bankNameCtrl.text,
       accountNumber: double.tryParse(bankAccountNumberCtrl.text),
       accountCategory: Enum$AccountCategory.BANK,
+      createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),
     );
 
@@ -260,7 +257,7 @@ class EditProfileViewModel extends ChangeNotifier {
     cl('[updateUserAccount].res = $res');
 
     if (res.parsedData?.accountUpdateOne != null && !res.hasException) {
-      cl('[updateUserAccount].user = ${res.parsedData?.accountUpdateOne.toJson()}');
+      cl('[updateUserAccount].user = ${res.parsedData!.accountUpdateOne?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);
@@ -281,53 +278,54 @@ class EditProfileViewModel extends ChangeNotifier {
     cl('[updateUserPassword].res = $res');
 
     if (res.parsedData?.userUpdateOne != null && !res.hasException) {
-      cl('[updateUserPassword].user = ${res.parsedData?.userUpdateOne.toJson()}');
+      cl('[updateUserPassword].user = ${res.parsedData?.userUpdateOne?.toJson()}');
       return null;
     } else {
       return gqlErrorParser(res);
     }
   }
 
+  // TODO API NOT AVAILABLE
   Future<void> uploadUserAvatar(
     String avatar,
     NavigatorState navigator,
   ) async {
-    AppDialog.showDialogProgress(navigator);
+    // AppDialog.showDialogProgress(navigator);
 
-    final imageFile = File(avatar);
+    // final imageFile = File(avatar);
     // final imageBytes = await imageFile.readAsBytes();
 
-    var multipartFile = await MultipartFile.fromPath(
-      'file',
-      imageFile.path,
-      filename: '${DateTime.now().second}.jpg',
-      contentType: MediaType("image", "jpg"),
-    );
+    // var multipartFile = await MultipartFile.fromPath(
+    //   'file',
+    //   imageFile.path,
+    //   filename: '${DateTime.now().second}.jpg',
+    //   contentType: MediaType("image", "jpg"),
+    // );
 
-    var res = await GqlUserService.userUpdateOneAvatarUrlAvatarUrl(
-      userId: userViewModel.user!.id,
-      multipartFile: multipartFile,
-    );
+    // var res = await GqlUserService.userUpdateOneAvatarUrlAvatarUrl(
+    //   userId: userViewModel.user!.id,
+    //   multipartFile: multipartFile,
+    // );
 
-    if (res.parsedData?.userUpdateOneAvatarUrl != null && !res.hasException) {
-      navigator.pop();
+    // if (res.parsedData?.userUpdateOneAvatarUrl != null && !res.hasException) {
+    //   navigator.pop();
 
-      avatarUrl = res.parsedData!.userUpdateOneAvatarUrl;
-      notifyListeners();
+    //   avatarUrl = res.parsedData!.userUpdateOneAvatarUrl;
+    //   notifyListeners();
 
-      AppSnackbar.show(navigator, title: "Foto profil berhasil diupload");
-    } else {
-      navigator.pop();
+    //   AppSnackbar.show(navigator, title: "Foto profil berhasil diupload");
+    // } else {
+    //   navigator.pop();
 
-      AppSnackbar.show(
-        navigator,
-        title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
-      );
+    //   AppSnackbar.show(
+    //     navigator,
+    //     title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
+    //   );
 
-      cl('[uploadUserAvatar].error = ${gqlErrorParser(res)}');
-    }
+    //   cl('[uploadUserAvatar].error = ${gqlErrorParser(res)}');
+    // }
 
     // Refresh user data
-    userViewModel.getUser();
+    // userViewModel.getUser();
   }
 }

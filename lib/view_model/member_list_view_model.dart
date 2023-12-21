@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/locator/service_locator.dart';
@@ -95,9 +95,9 @@ class MemberListViewModel extends ChangeNotifier {
   }
 
   Future<String?> deleteMember(String userId) async {
-    var res = await GqlUserService.userRemoveOne(userId: userId);
+    var res = await GqlUserService.userDelete(userId: userId);
 
-    if (res.parsedData?.userRemove != null && !res.hasException) {
+    if (res.parsedData?.userDelete != null && !res.hasException) {
       return null;
     } else {
       cl('[deleteMember].error = ${gqlErrorParser(res)}');

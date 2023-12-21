@@ -984,7 +984,11 @@ packages:
   satujuta_gql_client:
     dependency: "direct main"
     description:
+<<<<<<< HEAD
       path: "../satujuta-gql-client"
+=======
+      path: "../satujuta_graphql_client"
+>>>>>>> main
       relative: true
     source: path
     version: "1.0.0"

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_address_service.dart';
-import 'package:satujuta_gql_client/operations/generated/city_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/district_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/province_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/subdistrict_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/city_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/district_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/province_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/subdistrict_find_many.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_address_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
@@ -36,7 +36,7 @@ class AddressViewModel extends ChangeNotifier {
   Future<void> getProvinces(NavigatorState navigator, {int skip = 0, String? contains}) async {
     var res = await GqlAddressService.provinceFindMany(
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.provinceFindMany != null && !res.hasException) {
@@ -67,7 +67,7 @@ class AddressViewModel extends ChangeNotifier {
     var res = await GqlAddressService.cityFindMany(
       provinceId: provinceId,
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.cityFindMany != null && !res.hasException) {
@@ -98,7 +98,7 @@ class AddressViewModel extends ChangeNotifier {
     var res = await GqlAddressService.districtFindMany(
       cityId: cityId,
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.districtFindMany != null && !res.hasException) {
@@ -129,7 +129,7 @@ class AddressViewModel extends ChangeNotifier {
     var res = await GqlAddressService.subdistrictFindMany(
       districtId: districtId,
       skip: skip,
-      contains: contains,
+      contains: contains ?? '',
     );
 
     if (res.parsedData?.subdistrictFindMany != null && !res.hasException) {

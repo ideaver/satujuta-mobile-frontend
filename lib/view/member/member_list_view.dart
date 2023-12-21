@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_find_many.graphql.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -476,31 +475,51 @@ class _MemberListViewState extends State<MemberListView> {
     );
   }
 
+  // TODO API UNAVAILABLE
   Widget memberPoints(String userId) {
-    return FutureBuilder(
-      future: GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
-        userId: userId,
-      ),
-      builder: (context, snapshot) {
-        return Row(
-          children: [
-            const Icon(
-              Icons.stars,
-              size: 18,
-              color: AppColors.yellow,
-            ),
-            const SizedBox(width: AppSizes.padding / 4),
-            Text(
-              '${(snapshot.data?.parsedData?.pointTransactionFindFirst?.currentBalance ?? 0).toInt()} Poin',
-              style: AppTextStyle.medium(
-                context,
-                fontSize: 12,
-                color: AppColors.baseLv4,
-              ),
-            ),
-          ],
-        );
-      },
+    // return FutureBuilder(
+    //   future: GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
+    //     userId: userId,
+    //   ),
+    //   builder: (context, snapshot) {
+    //     return Row(
+    //       children: [
+    //         const Icon(
+    //           Icons.stars,
+    //           size: 18,
+    //           color: AppColors.yellow,
+    //         ),
+    //         const SizedBox(width: AppSizes.padding / 4),
+    //         Text(
+    //           '${(snapshot.data?.parsedData?.pointTransactionFindFirst?.currentBalance ?? 0).toInt()} Poin',
+    //           style: AppTextStyle.medium(
+    //             context,
+    //             fontSize: 12,
+    //             color: AppColors.baseLv4,
+    //           ),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
+
+    return Row(
+      children: [
+        const Icon(
+          Icons.stars,
+          size: 18,
+          color: AppColors.yellow,
+        ),
+        const SizedBox(width: AppSizes.padding / 4),
+        Text(
+          'xx Poin',
+          style: AppTextStyle.medium(
+            context,
+            fontSize: 12,
+            color: AppColors.baseLv4,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_auth_service.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_auth_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../../../model/auth_model.dart';

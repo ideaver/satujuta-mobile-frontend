@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/graphql_service.dart';
+import 'package:satujuta_gql_client/services/graphql_service.dart';
 
 import 'app/locale/app_locale.dart';
 import 'app/route/app_routes.dart';
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         initialRoute: MainView.routeName,
         routes: AppRoutes.routes,
-        // home: const SplashView(),
+        // home: const CheckoutView(),
         locale: AppLocale.defaultLocale,
         supportedLocales: AppLocale.supportedLocales,
         localizationsDelegates: AppLocale.localizationsDelegates,

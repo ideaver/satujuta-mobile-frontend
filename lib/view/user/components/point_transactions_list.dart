@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/operations/generated/point_transaction_find_many.graphql.dart';
 
 import '../../../app/asset/app_icons.dart';
 import '../../../app/theme/app_colors.dart';
@@ -8,11 +7,10 @@ import '../../../app/theme/app_sizes.dart';
 import '../../../app/theme/app_text_style.dart';
 import '../../../app/utility/date_formatter.dart';
 import '../../../view_model/user_view_model.dart';
-import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class PointTransactionsList extends StatefulWidget {
-  const PointTransactionsList({super.key}) ;
+  const PointTransactionsList({super.key});
 
   @override
   State<PointTransactionsList> createState() => _PointTransactionsListState();
@@ -26,59 +24,63 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserViewModel>(builder: (context, model, _) {
-      if (model.userPointTransactions == null) {
-        return const Padding(
-          padding: EdgeInsets.all(AppSizes.padding * 2),
-          child: AppProgressIndicator(),
-        );
-      }
+      // TODO API UNAVAILABLE
 
-      if (model.userPointTransactions!.isEmpty) {
-        return Padding(
-          padding: const EdgeInsets.all(AppSizes.padding * 2),
-          child: Text(
-            '(Riwayat poin Kosong)',
-            style: AppTextStyle.bold(context, color: AppColors.baseLv4),
-          ),
-        );
-      }
+      // if (model.userPointTransactions == null) {
+      //   return const Padding(
+      //     padding: EdgeInsets.all(AppSizes.padding * 2),
+      //     child: AppProgressIndicator(),
+      //   );
+      // }
 
-      skip = model.userPointTransactions!.length - 1;
-
+      // if (model.userPointTransactions!.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
-        child: AppExpansionListTile(
-          title: 'Riwayat Poin',
-          icon: Icons.access_time_sharp,
-          expand: true,
-          children: [
-            ...List.generate(model.userPointTransactions!.length, (i) {
-              return poinItemCard(model.userPointTransactions![i]);
-            }),
-            lastSkip == skip
-                ? const SizedBox.shrink()
-                : loadMoreButton(
-                    onTap: () async {
-                      isLoadingMore = true;
-                      setState(() {});
-
-                      var currSkip = model.userPointTransactions!.length;
-                      await model.getUserPointTransactions(skip: skip);
-
-                      isLoadingMore = false;
-                      lastSkip = currSkip;
-                      setState(() {});
-                    },
-                  ),
-          ],
+        padding: const EdgeInsets.all(AppSizes.padding * 2),
+        child: Text(
+          '(Riwayat poin Kosong)',
+          style: AppTextStyle.bold(context, color: AppColors.baseLv4),
         ),
       );
+      // }
+
+      // skip = model.userPointTransactions!.length - 1;
+
+      // return Padding(
+      //   padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
+      //   child: AppExpansionListTile(
+      //     title: 'Riwayat Poin',
+      //     icon: Icons.access_time_sharp,
+      //     expand: true,
+      //     children: [
+      //       ...List.generate(model.userPointTransactions!.length, (i) {
+      //         // return poinItemCard(model.userPointTransactions![i]);
+      //         return poinItemCard();
+      //       }),
+      //       lastSkip == skip
+      //           ? const SizedBox.shrink()
+      //           : loadMoreButton(
+      //               onTap: () async {
+      //                 isLoadingMore = true;
+      //                 setState(() {});
+
+      //                 var currSkip = model.userPointTransactions!.length;
+      //                 await model.getUserPointTransactions(skip: skip);
+
+      //                 isLoadingMore = false;
+      //                 lastSkip = currSkip;
+      //                 setState(() {});
+      //               },
+      //             ),
+      //     ],
+      //   ),
+      // );
     });
   }
 
+  // TODO API UNAVAILABLE
   Widget poinItemCard(
-    Query$PointTransactionFindMany$pointTransactionFindMany point,
-  ) {
+      // Query$PointTransactionFindMany$pointTransactionFindMany point,
+      ) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -113,7 +115,8 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
                     ),
                     const SizedBox(width: AppSizes.padding / 2),
                     Text(
-                      point.pointType.name,
+                      // point.pointType.name,
+                      'XXXX',
                       style: AppTextStyle.extraBold(
                         context,
                         fontSize: 16,
@@ -140,7 +143,8 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
                       width: 8,
                     ),
                     Text(
-                      DateFormatter.slashDate(point.createdAt),
+                      // DateFormatter.slashDate(point.createdAt),
+                      DateFormatter.slashDate(DateTime.now().toIso8601String()),
                       style: AppTextStyle.regular(
                         context,
                         fontSize: 12,
@@ -159,7 +163,8 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Text(
-                    '+${point.amount} Point',
+                    // '+${point.amount} Point',
+                    '+XX Point',
                     style: AppTextStyle.bold(
                       context,
                       fontSize: 12,

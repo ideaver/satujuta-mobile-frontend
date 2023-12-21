@@ -10,7 +10,7 @@ import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class CommissionTransactionsList extends StatefulWidget {
-  const CommissionTransactionsList({super.key}) ;
+  const CommissionTransactionsList({super.key});
 
   @override
   State<CommissionTransactionsList> createState() => _CommissionTransactionsListState();
@@ -41,7 +41,8 @@ class _CommissionTransactionsListState extends State<CommissionTransactionsList>
         );
       }
 
-      skip = model.userPointTransactions!.length - 1;
+      // TODO API UNAVAILABLE
+      // skip = model.userPointTransactions!.length - 1;
 
       return Padding(
         padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
@@ -60,12 +61,14 @@ class _CommissionTransactionsListState extends State<CommissionTransactionsList>
                       isLoadingMore = true;
                       setState(() {});
 
-                      var currSkip = model.userPointTransactions!.length;
+                      // TODO API UNAVAILABLE
+                      // var currSkip = model.userPointTransactions!.length;
 
-                      model.getUserCommissionTransactions(skip: model.userPointTransactions!.length - 1);
+                      // model.getUserCommissionTransactions(skip: model.userPointTransactions!.length - 1);
 
                       isLoadingMore = false;
-                      lastSkip = currSkip;
+                      // TODO API UNAVAILABLE
+                      // lastSkip = currSkip;
                       setState(() {});
                     },
                   ),

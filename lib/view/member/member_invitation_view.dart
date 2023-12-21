@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/gql_faq_service.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_faq_service.dart';
 
 import '../../../../app/asset/app_icons.dart';
 import '../../../../app/theme/app_colors.dart';

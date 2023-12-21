@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/operations/generated/order_find_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/order_find_one.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -526,7 +526,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    '${model.order!.shipping?.address.user?.whatsappNumber ?? '-'}',
+                    model.order!.shipping?.address.user?.whatsappNumber ?? '-',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.medium(context),

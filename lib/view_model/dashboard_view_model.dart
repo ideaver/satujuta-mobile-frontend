@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/get_account_balance_by_custom_period.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/get_account_balance_by_custom_period.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../../../app/const/app_consts.dart';
@@ -22,11 +22,11 @@ class DashboardViewModel extends ChangeNotifier {
   List<ChartModel> chartData = [];
 
   void resetState() {
-   totalUserCommission = 0;
-   periodicUserCommissions = null;
-   startDate = DateTime.now();
-   endDate = DateTime.now();
-   selectedPeriod = Enum$Period.MONTHLY;
+    totalUserCommission = 0;
+    periodicUserCommissions = null;
+    startDate = DateTime.now();
+    endDate = DateTime.now();
+    selectedPeriod = Enum$Period.MONTHLY;
   }
 
   void onChangedPeriod(Enum$Period period) {

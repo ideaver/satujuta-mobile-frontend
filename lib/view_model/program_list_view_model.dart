@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_program_service.dart';
-import 'package:satujuta_gql_client/operations/generated/program_category_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/program_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/program_category_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/program_find_many.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_program_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
@@ -10,7 +10,6 @@ class ProgramListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
 
   List<Query$ProgramCategoryFindMany$programCategoryFindMany>? programCategories;
-  
   Query$ProgramCategoryFindMany$programCategoryFindMany? selectedCategory;
 
   List<Query$ProgramFindMany$programFindMany>? programFindMany;

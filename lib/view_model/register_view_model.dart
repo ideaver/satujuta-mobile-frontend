@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:satujuta_gql_client/gql_user_service.dart';
-import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/user_create_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/hotel_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/school_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_create_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/service/auth/auth_service.dart';
@@ -25,7 +23,7 @@ class RegisterViewModel extends ChangeNotifier {
 
   late TabController tabController;
 
-  Mutation$UserCreate$userCreateOne? createdUser;
+  Mutation$UserCreateOne$userCreateOne? createdUser;
 
   File? avatar;
 
@@ -52,7 +50,7 @@ class RegisterViewModel extends ChangeNotifier {
   TextEditingController bankNameCtrl = TextEditingController();
   TextEditingController bankAccountNumberCtrl = TextEditingController();
 
-  Query$SchoolFindMany$schoolFindMany? selectedSchool;
+  Query$SchoolFindManyByName$schoolFindMany? selectedSchool;
   Query$HotelFindMany$hotelFindMany? selectedHotel;
   TextEditingController schoolNameCtrl = TextEditingController();
   TextEditingController hotelNameCtrl = TextEditingController();
@@ -109,20 +107,20 @@ class RegisterViewModel extends ChangeNotifier {
   }
 
   Future<String?> registerUser(NavigatorState navigator) async {
-    var address = Mutation$UserCreate$userCreateOne$address(
+    var address = Mutation$UserCreateOne$userCreateOne$address(
       id: 0,
       name: addressNameCtrl.text,
-      subdistrict: Mutation$UserCreate$userCreateOne$address$subdistrict(
+      subdistrict: Mutation$UserCreateOne$userCreateOne$address$subdistrict(
         id: subdistrictId!,
         name: subdistrictCtrl.text,
         postalCode: postalCodeCtrl.text,
-        district: Mutation$UserCreate$userCreateOne$address$subdistrict$district(
+        district: Mutation$UserCreateOne$userCreateOne$address$subdistrict$district(
           id: districtId!,
           name: districtCtrl.text,
-          city: Mutation$UserCreate$userCreateOne$address$subdistrict$district$city(
+          city: Mutation$UserCreateOne$userCreateOne$address$subdistrict$district$city(
             id: cityId!,
             name: cityCtrl.text,
-            province: Mutation$UserCreate$userCreateOne$address$subdistrict$district$city$province(
+            province: Mutation$UserCreateOne$userCreateOne$address$subdistrict$district$city$province(
               id: provinceId!,
               name: provinceCtrl.text,
             ),
@@ -133,17 +131,17 @@ class RegisterViewModel extends ChangeNotifier {
 
     cl('[registerUser].address = ${address.toJson()}');
 
-    var referredBy = Mutation$UserCreate$userCreateOne$referredBy(
+    var referredBy = Mutation$UserCreateOne$userCreateOne$referredBy(
       id: "",
       firstName: "",
       lastName: "",
       referralCode: referralCodeCtrl.text,
     );
 
-    var school = Mutation$UserCreate$userCreateOne$school(
+    var school = Mutation$UserCreateOne$userCreateOne$school(
       id: selectedSchool!.id,
       name: selectedSchool!.name,
-      address: Mutation$UserCreate$userCreateOne$school$address(
+      address: Mutation$UserCreateOne$userCreateOne$school$address(
         name: selectedSchool!.address.name,
         subdistrictId: selectedSchool!.address.subdistrict.id,
       ),
@@ -151,16 +149,16 @@ class RegisterViewModel extends ChangeNotifier {
       updatedAt: DateTime.now().toIso8601String(),
     );
 
-    var multipartFile = avatar != null
-        ? await MultipartFile.fromPath(
-            'file',
-            avatar!.path,
-            filename: '${DateTime.now().second}.jpg',
-            contentType: MediaType("image", "jpg"),
-          )
-        : null;
+    // var multipartFile = avatar != null
+    //     ? await MultipartFile.fromPath(
+    //         'file',
+    //         avatar!.path,
+    //         filename: '${DateTime.now().second}.jpg',
+    //         contentType: MediaType("image", "jpg"),
+    //       )
+    //     : null;
 
-    var userData = Mutation$UserCreate$userCreateOne(
+    var userData = Mutation$UserCreateOne$userCreateOne(
       id: "",
       firstName: firstNameCtrl.text,
       lastName: lastNameCtrl.text,
@@ -182,7 +180,7 @@ class RegisterViewModel extends ChangeNotifier {
     var res = await GqlUserService.userCreateOne(
       user: userData,
       userPassword: passwordCtrl.text,
-      avatarFile: multipartFile,
+      // avatarFile: multipartFile,
     );
 
     cl('[registerUser].res = $res');

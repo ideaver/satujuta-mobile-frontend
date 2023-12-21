@@ -9,7 +9,7 @@ import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class RewardTransactionsList extends StatefulWidget {
-  const RewardTransactionsList({super.key}) ;
+  const RewardTransactionsList({super.key});
 
   @override
   State<RewardTransactionsList> createState() => _RewardTransactionsListState();
@@ -40,7 +40,8 @@ class _RewardTransactionsListState extends State<RewardTransactionsList> {
         );
       }
 
-      skip = model.userPointTransactions!.length - 1;
+      // TODO API UNAVAILABLE
+      // skip = model.userPointTransactions!.length - 1;
 
       return Padding(
         padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
@@ -59,11 +60,13 @@ class _RewardTransactionsListState extends State<RewardTransactionsList> {
                       isLoadingMore = true;
                       setState(() {});
 
-                      var currSkip = model.userPointTransactions!.length;
+                      // TODO API UNAVAILABLE
+                      // var currSkip = model.userPointTransactions!.length;
                       model.getUserClaimedRewards(skip: model.userClaimedRewards!.length - 1);
 
                       isLoadingMore = false;
-                      lastSkip = currSkip;
+                      // TODO API UNAVAILABLE
+                      // lastSkip = currSkip;
                       setState(() {});
                     },
                   ),

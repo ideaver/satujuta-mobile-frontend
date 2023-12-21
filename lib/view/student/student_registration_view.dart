@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/operations/generated/hotel_find_many.graphql.dart';
-import 'package:satujuta_gql_client/operations/generated/user_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/hotel_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_find_many.graphql.dart';
 
 import '../../../app/asset/app_assets.dart';
 import '../../../app/theme/app_colors.dart';

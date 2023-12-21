@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_school_service.dart';
-import 'package:satujuta_gql_client/operations/generated/school_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/school_find_many.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_school_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
@@ -8,9 +8,9 @@ import '../app/utility/console_log.dart';
 class SchoolListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
 
-  List<Query$SchoolFindMany$schoolFindMany>? schoolFindMany;
+  List<Query$SchoolFindManyByName$schoolFindMany>? schoolFindMany;
 
-  Query$SchoolFindMany$schoolFindMany? selectedSchool;
+  Query$SchoolFindManyByName$schoolFindMany? selectedSchool;
 
   void resetState() {
     schoolFindMany = null;
@@ -44,7 +44,7 @@ class SchoolListViewModel extends ChangeNotifier {
     cl('[getSchools].schoolFindMany.length = ${schoolFindMany?.length}');
   }
 
-  void onSelectSchool(Query$SchoolFindMany$schoolFindMany school) {
+  void onSelectSchool(Query$SchoolFindManyByName$schoolFindMany school) {
     selectedSchool = school;
     notifyListeners();
 

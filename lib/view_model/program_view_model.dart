@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/operations/generated/user_update_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_update_one.graphql.dart';
 
 class ProgramViewModel extends ChangeNotifier {
   Mutation$UserUpdateOne$userUpdateOne? user;

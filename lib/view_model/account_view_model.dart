@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/gql_account_service.dart';
-import 'package:satujuta_gql_client/operations/generated/bank_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/bank_find_many.graphql.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_account_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
