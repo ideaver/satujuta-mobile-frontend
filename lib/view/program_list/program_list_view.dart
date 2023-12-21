@@ -61,11 +61,8 @@ class _ProgramListViewState extends State<ProgramListView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
-<<<<<<< HEAD
-        physics: const BouncingScrollPhysics(),
-=======
         controller: scrollController,
->>>>>>> main
+        physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             sliverAppBarWidget(),
@@ -204,17 +201,9 @@ class _ProgramListViewState extends State<ProgramListView> {
           padding: const EdgeInsets.symmetric(vertical: 6),
           radius: const Radius.circular(100),
           child: ListView.builder(
-<<<<<<< HEAD
-            controller: scrollController,
             shrinkWrap: true,
             itemCount: model.programFindMany!.length,
             padding: const EdgeInsets.all(AppSizes.padding),
-=======
-            shrinkWrap: true,
-            itemCount: model.programFindMany!.length,
-            padding: const EdgeInsets.all(AppSizes.padding),
-            physics: const ClampingScrollPhysics(),
->>>>>>> main
             itemBuilder: (context, i) {
               return programCard(i, model);
             },
@@ -231,13 +220,8 @@ class _ProgramListViewState extends State<ProgramListView> {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-<<<<<<< HEAD
-        boxShadow: [
-          const BoxShadow(
-=======
         boxShadow: const [
           BoxShadow(
->>>>>>> main
             color: Colors.black12,
             offset: Offset(4, 4),
             blurRadius: 22,
