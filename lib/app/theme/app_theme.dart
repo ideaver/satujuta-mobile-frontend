@@ -118,7 +118,9 @@ class AppTheme {
     );
 
     final ThemeData base = ThemeData.light();
-    return base.copyWith(
+
+    return ThemeData(
+      useMaterial3: false,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -166,7 +168,9 @@ class AppTheme {
     );
 
     final ThemeData base = ThemeData.dark();
-    return base.copyWith(
+
+    return ThemeData(
+      useMaterial3: false,
       appBarTheme: AppBarTheme(
         color: Colors.grey[700],
         elevation: 0,

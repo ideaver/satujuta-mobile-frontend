@@ -58,33 +58,44 @@ class _MemberListViewState extends State<MemberListView> {
     _memberListViewModel.searchFocusNode = FocusNode();
     _memberListViewModel.searchFocusNode.addListener(_memberListViewModel.focusListener);
     scrollController.addListener(scrollListener);
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _memberListViewModel.getAllUserMembers();
-    });
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _memberListViewModel.searchCtrl.dispose();
-    _memberListViewModel.searchFocusNode.dispose();
-    scrollController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _memberListViewModel.searchCtrl.dispose();
+  //   _memberListViewModel.searchFocusNode.dispose();
+  //   scrollController.dispose();
+  //   super.dispose();
+  // }
 
   void scrollListener() {
     if (scrollController.offset == scrollController.position.maxScrollExtent) {
       _memberListViewModel.getAllUserMembers(
         skip: _memberListViewModel.userMembers?.length ?? 0,
         contains: _memberListViewModel.searchCtrl.text,
+        user: _memberListViewModel.userData,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = ModalRoute.of(context)?.settings.arguments as Query$UserFindMany$userFindMany?;
+
     return Consumer<MemberListViewModel>(builder: (context, model, _) {
+      // View other user member
+      if (user != null) {
+        if (model.userMembers == null) {
+          model.getAllUserMembers(user: user);
+        }
+      } else {
+        // View my member
+        if (model.userMembers == null) {
+          model.getAllUserMembers();
+        }
+      }
+
       if (model.userMembers == null) {
         return const Scaffold(body: AppProgressIndicator());
       }
@@ -109,7 +120,6 @@ class _MemberListViewState extends State<MemberListView> {
   }
 
   Widget title() {
-    // TODO CONSUME OTHER USER MEMBER DATA
     return Consumer<MemberListViewModel>(builder: (context, model, _) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +140,7 @@ class _MemberListViewState extends State<MemberListView> {
                           ),
                         ),
                         Text(
-                          'Robert Meijer',
+                          '${model.userData?.firstName} ${model.userData?.lastName}',
                           style: AppTextStyle.bold(context, fontSize: 18),
                         ),
                       ],
@@ -357,7 +367,15 @@ class _MemberListViewState extends State<MemberListView> {
             ? model.userMembersActive
             : model.userMembersInactive;
 
-    if (members == null || members.isEmpty) {
+    if (members == null) {
+      return const Expanded(
+        child: SingleChildScrollView(
+          child: AppProgressIndicator(),
+        ),
+      );
+    }
+
+    if (members.isEmpty) {
       return const Expanded(
         child: SingleChildScrollView(
           child: AppNotFoundWidget(
@@ -370,6 +388,7 @@ class _MemberListViewState extends State<MemberListView> {
 
     return Expanded(
       child: RawScrollbar(
+        controller: scrollController,
         padding: const EdgeInsets.symmetric(vertical: 6),
         radius: const Radius.circular(100),
         child: SingleChildScrollView(
@@ -389,88 +408,101 @@ class _MemberListViewState extends State<MemberListView> {
   }
 
   Widget memberCard(int i, Query$UserFindMany$userFindMany member, MemberListViewModel model) {
-    return Container(
-      margin: EdgeInsets.only(top: i == 0 ? 0 : AppSizes.padding / 4),
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                  width: 52,
-                  height: 52,
-                  decoration: const BoxDecoration(
-                    color: AppColors.baseLv7,
-                    shape: BoxShape.circle,
-                  ),
-                  child: ClipOval(
-                    child: AppImage(
-                      image: member.avatarUrl ?? '-',
-                      width: 52,
-                      height: 52,
-                      backgroundColor: AppColors.baseLv7,
-                      errorWidget: const Icon(
-                        Icons.person_rounded,
-                        color: AppColors.baseLv4,
-                        size: 26,
+    return GestureDetector(
+      onTap: () async {
+        // Always reset states when opening this page
+        // Data will be initialize under build() Widget
+        model.resetState();
+        await Navigator.pushNamed(context, MemberListView.viewAsOtherRouteName, arguments: member);
+
+        // Re initialize current user members
+        model.resetState();
+        setState(() {});
+        model.getAllUserMembers();
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: i == 0 ? 0 : AppSizes.padding / 4),
+        padding: const EdgeInsets.all(AppSizes.padding),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppSizes.radius),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Container(
+                    width: 52,
+                    height: 52,
+                    decoration: const BoxDecoration(
+                      color: AppColors.baseLv7,
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipOval(
+                      child: AppImage(
+                        image: member.avatarUrl ?? '-',
+                        width: 52,
+                        height: 52,
+                        backgroundColor: AppColors.baseLv7,
+                        errorWidget: const Icon(
+                          Icons.person_rounded,
+                          color: AppColors.baseLv4,
+                          size: 26,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSizes.padding / 1.5),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${member.firstName} ${member.lastName}',
-                        style: AppTextStyle.extraBold(
-                          context,
-                          fontSize: 16,
+                  const SizedBox(width: AppSizes.padding / 1.5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${member.firstName} ${member.lastName}',
+                          style: AppTextStyle.extraBold(
+                            context,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSizes.padding / 4),
-                      Text(
-                        'Bergabung ${DateFormatter.slashDate(member.createdAt)}',
-                        style: AppTextStyle.regular(
-                          context,
-                          fontSize: 12,
-                          color: AppColors.baseLv4,
+                        const SizedBox(height: AppSizes.padding / 4),
+                        Text(
+                          'Bergabung ${DateFormatter.slashDate(member.createdAt)}',
+                          style: AppTextStyle.regular(
+                            context,
+                            fontSize: 12,
+                            color: AppColors.baseLv4,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSizes.padding / 3),
-                      memberPoints(member.id),
-                    ],
+                        const SizedBox(height: AppSizes.padding / 3),
+                        memberPoints(member.id),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: AppSizes.padding / 2),
-          AppButton(
-            onTap: () {
-              // TODO
-            },
-            text: '${member.$_count.referredUsers}',
-            fontSize: 14,
-            textColor: AppColors.base,
-            buttonColor: AppColors.white,
-            borderWidth: 1,
-            borderColor: AppColors.baseLv6,
-            leftIcon: Icons.person_2_outlined,
-            rightIcon: Icons.arrow_forward_ios_rounded,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.padding / 2,
-              vertical: AppSizes.padding / 4,
+            const SizedBox(width: AppSizes.padding / 2),
+            AppButton(
+              onTap: () {
+                // TODO
+              },
+              text: '${member.$_count.referredUsers}',
+              fontSize: 14,
+              textColor: AppColors.base,
+              buttonColor: AppColors.white,
+              borderWidth: 1,
+              borderColor: AppColors.baseLv6,
+              leftIcon: Icons.person_2_outlined,
+              rightIcon: Icons.arrow_forward_ios_rounded,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSizes.padding / 2,
+                vertical: AppSizes.padding / 4,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

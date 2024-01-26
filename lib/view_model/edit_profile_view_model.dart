@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/account_update_one.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/user_update_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
@@ -290,8 +291,9 @@ class EditProfileViewModel extends ChangeNotifier {
     String avatar,
     NavigatorState navigator,
   ) async {
-    // AppDialog.showDialogProgress(navigator);
+    AppDialog.showDialogProgress(navigator);
 
+    // TODO API UPLOAD FILE NOT AVAILABLE
     // final imageFile = File(avatar);
     // final imageBytes = await imageFile.readAsBytes();
 
@@ -302,30 +304,31 @@ class EditProfileViewModel extends ChangeNotifier {
     //   contentType: MediaType("image", "jpg"),
     // );
 
-    // var res = await GqlUserService.userUpdateOneAvatarUrlAvatarUrl(
-    //   userId: userViewModel.user!.id,
-    //   multipartFile: multipartFile,
-    // );
+    var res = await GqlUserService.userUpdateOneAvatarUrl(
+      userId: userViewModel.user!.id,
+      url: randomImage,
+      // multipartFile: multipartFile,
+    );
 
-    // if (res.parsedData?.userUpdateOneAvatarUrl != null && !res.hasException) {
-    //   navigator.pop();
+    if (res.parsedData?.userUpdateOne != null && !res.hasException) {
+      navigator.pop();
 
-    //   avatarUrl = res.parsedData!.userUpdateOneAvatarUrl;
-    //   notifyListeners();
+      avatarUrl = res.parsedData!.userUpdateOne?.avatarUrl;
+      notifyListeners();
 
-    //   AppSnackbar.show(navigator, title: "Foto profil berhasil diupload");
-    // } else {
-    //   navigator.pop();
+      AppSnackbar.show(navigator, title: "Foto profil berhasil diupload");
+    } else {
+      navigator.pop();
 
-    //   AppSnackbar.show(
-    //     navigator,
-    //     title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
-    //   );
+      AppSnackbar.show(
+        navigator,
+        title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
+      );
 
-    //   cl('[uploadUserAvatar].error = ${gqlErrorParser(res)}');
-    // }
+      cl('[uploadUserAvatar].error = ${gqlErrorParser(res)}');
+    }
 
     // Refresh user data
-    // userViewModel.getUser();
+    userViewModel.getUser();
   }
 }

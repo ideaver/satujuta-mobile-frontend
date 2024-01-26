@@ -1,14 +1,13 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 import '../../app/asset/app_assets.dart';
 import '../../app/theme/app_colors.dart';
-import '../../app/utility/console_log.dart';
 import 'app_progress_indicator.dart';
 
 // App Image Widget
@@ -118,7 +117,7 @@ class _AppImageState extends State<AppImage> {
   }
 
   Widget networkImage() {
-    return OptimizedCacheImage(
+    return CachedNetworkImage(
       imageUrl: widget.image,
       fit: widget.fit ?? BoxFit.cover,
       fadeInDuration: const Duration(milliseconds: 200),
@@ -128,8 +127,8 @@ class _AppImageState extends State<AppImage> {
       errorWidget: (context, object, stack) {
         if (_imgErrorAttempt <= _maxAttempt) {
           _imgErrorAttempt += 1;
-          cl('IMAGE LOAD ERROR, ATTEMP = $_imgErrorAttempt');
-          cl('IMAGE LOAD ERROR = $object');
+          // cl('IMAGE LOAD ERROR, ATTEMP = $_imgErrorAttempt');
+          // cl('IMAGE LOAD ERROR = $object');
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {});

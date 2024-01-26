@@ -17,6 +17,8 @@ class MemberListViewModel extends ChangeNotifier {
   FocusNode searchFocusNode = FocusNode();
   bool isSearchFocus = false;
 
+  Query$UserFindMany$userFindMany? userData;
+
   List<Query$UserFindMany$userFindMany>? userMembers;
   List<Query$UserFindMany$userFindMany>? userMembersActive;
   List<Query$UserFindMany$userFindMany>? userMembersInactive;
@@ -27,6 +29,7 @@ class MemberListViewModel extends ChangeNotifier {
 
   void resetState() {
     isSearchFocus = false;
+    userData = null;
     userMembers = null;
     userMembersActive = null;
     userMembersInactive = null;
@@ -45,14 +48,22 @@ class MemberListViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> getAllUserMembers({int skip = 0, String contains = ""}) async {
-    if (userViewModel.user == null) {
+  Future<void> getAllUserMembers({
+    Query$UserFindMany$userFindMany? user,
+    int skip = 0,
+    String contains = "",
+  }) async {
+    if (user == null && userViewModel.user == null) {
       cl('[getAllUserMembers].user null');
       return;
     }
 
-    var res = await GqlUserService.referredUserFindManyByReferrerId(
-      userViewModel.user!.id,
+    // Initialize user data for pageState = PageStateEnum.viewAsOther
+    userData ??= user;
+
+
+    var res = await GqlUserService.userFindManyByReferrerId(
+      userData != null ? userData!.id : userViewModel.user!.id,
       skip: skip,
       contains: contains,
     );

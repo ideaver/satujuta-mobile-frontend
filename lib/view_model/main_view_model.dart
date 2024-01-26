@@ -7,6 +7,7 @@ import '../app/utility/console_log.dart';
 import '../widget/atom/app_dialog.dart';
 import 'member_list_view_model.dart';
 import 'program_list_view_model.dart';
+import 'reward_list_view_model.dart';
 import 'user_view_model.dart';
 
 class MainViewModel extends ChangeNotifier {
@@ -14,6 +15,7 @@ class MainViewModel extends ChangeNotifier {
   final network = locator<NetworkCheckerService>();
   final userViewModel = locator<UserViewModel>();
   final programListViewModel = locator<ProgramListViewModel>();
+  final rewardListViewModel = locator<RewardListViewModel>();
   final memberListViewModel = locator<MemberListViewModel>();
 
   bool isChecking = true;
@@ -73,6 +75,7 @@ class MainViewModel extends ChangeNotifier {
         }
 
         await programListViewModel.getAllPrograms();
+        await rewardListViewModel.getAllRewards();
         await memberListViewModel.getAllUserMembers();
       }
     } catch (e) {

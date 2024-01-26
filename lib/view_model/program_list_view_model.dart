@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/app/service/locator/service_locator.dart';
+import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/program_category_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/program_find_many.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_program_service.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
@@ -47,7 +51,7 @@ class ProgramListViewModel extends ChangeNotifier {
   }
 
   Future<void> getAllProgramCategories() async {
-    var res = await GqlProgramService.programCategoryFindMany();
+    var res = await GqlProgramService.rogramCategoryFindManyWhereProgramNotNull();
 
     if (res.parsedData?.programCategoryFindMany != null && !res.hasException) {
       programCategories = res.parsedData?.programCategoryFindMany;
@@ -56,6 +60,26 @@ class ProgramListViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<void> joinProgram(NavigatorState navigator, int programId) async {
+    AppDialog.showDialogProgress(navigator);
+
+    final userViewModel = locator<UserViewModel>();
+
+    var res = await GqlUserService.userUpdateOneOfProgramParticipation(
+      programId: programId,
+      userId: userViewModel.user!.id,
+    );
+
+    navigator.pop();
+
+    if (res.parsedData?.userUpdateOne != null && !res.hasException) {
+      cl('[joinProgram].error = ${res.parsedData?.userUpdateOne?.toJson()}');
+      getAllPrograms();
+    } else {
+      cl('[joinProgram].error = ${gqlErrorParser(res)}');
+    }
   }
 
   void onSelectCategory(

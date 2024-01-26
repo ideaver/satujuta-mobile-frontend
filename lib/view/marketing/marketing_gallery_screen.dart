@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/asset/app_icons.dart';
@@ -7,6 +8,8 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
+import '../../app/service/locator/service_locator.dart';
+import '../../view_model/marketing_list_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 
 class MarketingGalleryView extends StatefulWidget {
@@ -21,24 +24,48 @@ class MarketingGalleryView extends StatefulWidget {
 }
 
 class _MarketingGalleryViewState extends State<MarketingGalleryView> {
-  int selectedCategory = -1;
+  // List<String> photos = [
+  //   AppAssets.randomPhotos1Path,
+  //   AppAssets.randomPhotos2Path,
+  //   AppAssets.randomPhotos3Path,
+  //   AppAssets.randomPhotos4Path,
+  //   AppAssets.randomPhotos1Path,
+  //   AppAssets.randomPhotos2Path,
+  //   AppAssets.randomPhotos3Path,
+  //   AppAssets.randomPhotos4Path,
+  // ];
 
-  List<String> categories = [
-    'Foto',
-    'Video',
-    'File',
-  ];
+  final scrollController = ScrollController();
 
-  List<String> photos = [
-    AppAssets.randomPhotos1Path,
-    AppAssets.randomPhotos2Path,
-    AppAssets.randomPhotos3Path,
-    AppAssets.randomPhotos4Path,
-    AppAssets.randomPhotos1Path,
-    AppAssets.randomPhotos2Path,
-    AppAssets.randomPhotos3Path,
-    AppAssets.randomPhotos4Path,
-  ];
+  final _marketingListViewModel = locator<MarketingListViewModel>();
+
+  @override
+  void initState() {
+    _marketingListViewModel.searchCtrl = TextEditingController();
+    scrollController.addListener(scrollListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _marketingListViewModel.initFileListView();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _marketingListViewModel.searchCtrl.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollListener() {
+    // final navigator = Navigator.of(context);
+
+    if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      _marketingListViewModel.getAllFiles(
+        skip: _marketingListViewModel.fileFindMany?.length ?? 0,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,29 +119,36 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
   PreferredSizeWidget tabBar() {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 70),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSizes.padding,
-          vertical: AppSizes.padding,
-        ),
-        child: Row(
-          children: [
-            tabWidget(-1),
-            ...List.generate(categories.length, (i) {
-              return tabWidget(i);
-            })
-          ],
-        ),
-      ),
+      child: Consumer<MarketingListViewModel>(builder: (context, model, _) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.padding,
+            vertical: AppSizes.padding,
+          ),
+          child: Row(
+            children: [
+              tabWidget(model, -1),
+              ...List.generate(model.categories.length, (i) {
+                return tabWidget(model, i);
+              })
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  Widget tabWidget(int i) {
+  Widget tabWidget(MarketingListViewModel model, int i) {
     return GestureDetector(
       onTap: () {
-        selectedCategory = i;
-        setState(() {});
+        final navigator = Navigator.of(context);
+
+        if (i >= 0) {
+          model.onSelectCategory(navigator, model.categories[i], i);
+        } else {
+          model.onSelectCategory(navigator, null, i);
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(right: AppSizes.padding / 2),
@@ -123,7 +157,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
           horizontal: AppSizes.padding,
         ),
         decoration: BoxDecoration(
-          color: selectedCategory == i ? AppColors.primary : AppColors.white,
+          color: model.selectedTabIndex == i ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Row(
@@ -134,15 +168,15 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
                     child: Icon(
                       Icons.dashboard_outlined,
                       size: 16,
-                      color: selectedCategory == -1 ? AppColors.white : AppColors.base,
+                      color: model.selectedTabIndex == i ? AppColors.white : AppColors.base,
                     ),
                   )
                 : const SizedBox.shrink(),
             Text(
-              i == -1 ? 'Semua' : categories[i],
+              i == -1 ? 'Semua' : model.categories[i]['name'] ?? '',
               style: AppTextStyle.semiBold(
                 context,
-                color: selectedCategory == i ? AppColors.white : AppColors.base,
+                color: model.selectedTabIndex == i ? AppColors.white : AppColors.base,
               ),
             ),
           ],
@@ -152,46 +186,50 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
   }
 
   Widget body() {
-    if (selectedCategory == 0) {
-      return Padding(
-        padding: const EdgeInsets.only(
-          left: AppSizes.padding,
-          right: AppSizes.padding,
-        ),
-        child: photoCard(),
-      );
-    } else if (selectedCategory == 1) {
-      return Padding(
-        padding: const EdgeInsets.only(
-          left: AppSizes.padding,
-          right: AppSizes.padding,
-        ),
-        child: videoCard(),
-      );
-    } else if (selectedCategory == 2) {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: AppSizes.padding,
-          left: AppSizes.padding,
-          right: AppSizes.padding,
-        ),
-        child: Column(
-          children: [
-            ...List.generate(4, (i) {
-              return fileCard(i);
-            })
-          ],
-        ),
-      );
-    }
+    return Consumer<MarketingListViewModel>(builder: (context, model, _) {
+      if (model.selectedTabIndex == 0) {
+        return Padding(
+          padding: const EdgeInsets.only(
+            left: AppSizes.padding,
+            right: AppSizes.padding,
+          ),
+          child: photoCard(model),
+        );
+      } else if (model.selectedTabIndex == 1) {
+        return Padding(
+          padding: const EdgeInsets.only(
+            left: AppSizes.padding,
+            right: AppSizes.padding,
+          ),
+          child: videoCard(model),
+        );
+      } else if (model.selectedTabIndex == 2) {
+        return Padding(
+          padding: const EdgeInsets.only(
+            top: AppSizes.padding,
+            left: AppSizes.padding,
+            right: AppSizes.padding,
+          ),
+          child: Column(
+            children: model.fileFindMany == null
+                ? []
+                : [
+                    ...List.generate(model.fileFindMany!.length, (i) {
+                      return fileCard(i, model);
+                    })
+                  ],
+          ),
+        );
+      }
 
-    return const AppNotFoundWidget(
-      title: 'Maaf, Saat Ini Belum Ada Program Tersedia',
-      subtitle: 'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
-    );
+      return const AppNotFoundWidget(
+        title: 'Maaf, Saat Ini Belum Ada Program Tersedia',
+        subtitle: 'Kami akan segera menambahkan program dan akan kami beritahukan lewat pemberitahuan',
+      );
+    });
   }
 
-  Widget fileCard(int i) {
+  Widget fileCard(int i, MarketingListViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSizes.padding / 4),
       child: Ink(
@@ -219,7 +257,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      i == 0 ? 'Data Administrasi' : 'Keamanan Data Bab $i',
+                      model.fileFindMany?[i].name ?? '',
                       style: AppTextStyle.bold(
                         context,
                       ),
@@ -227,7 +265,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
                     Padding(
                       padding: const EdgeInsets.only(top: AppSizes.height / 2),
                       child: Text(
-                        '230,40 KB',
+                        '${(model.fileFindMany?[i].filesize ?? 0) / 1024} KB',
                         style: AppTextStyle.regular(
                           context,
                           fontSize: 12,
@@ -261,10 +299,16 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
     );
   }
 
-  Widget videoCard() {
+  Widget videoCard(MarketingListViewModel model) {
+    if (model.fileFindMany == null) {
+      return const AppNotFoundWidget(
+        title: 'Maaf, Saat Ini Belum Ada Video Tersedia',
+      );
+    }
+
     return GridView.count(
       crossAxisCount: 2,
-      children: List.generate(8, (index) {
+      children: List.generate(model.fileFindMany!.length, (index) {
         return Padding(
           padding: const EdgeInsets.all(AppSizes.padding / 4),
           child: InkWell(
@@ -279,7 +323,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    photos[index],
+                    model.fileFindMany![index].url,
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -307,10 +351,16 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
     );
   }
 
-  Widget photoCard() {
+  Widget photoCard(MarketingListViewModel model) {
+    if (model.fileFindMany == null) {
+      return const AppNotFoundWidget(
+        title: 'Maaf, Saat Ini Belum Ada Foto Tersedia',
+      );
+    }
+
     return GridView.count(
       crossAxisCount: 2,
-      children: List.generate(8, (index) {
+      children: List.generate(model.fileFindMany!.length, (index) {
         return Padding(
           padding: const EdgeInsets.all(AppSizes.padding / 4),
           child: InkWell(
@@ -325,7 +375,7 @@ class _MarketingGalleryViewState extends State<MarketingGalleryView> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    photos[index],
+                    model.fileFindMany![index].url,
                   ),
                   fit: BoxFit.cover,
                 ),

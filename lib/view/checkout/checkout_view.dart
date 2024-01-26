@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_gql_client/operations/mobile/generated/order_find_one.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/order_find_first_by_user_id.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -35,21 +35,29 @@ class _CheckoutViewState extends State<CheckoutView> {
   final _checkoutViewModel = locator<CheckoutViewModel>();
 
   @override
-  Widget build(BuildContext context) {
-    final orderId = ModalRoute.of(context)?.settings.arguments as int?;
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _checkoutViewModel.getLatestOrder();
+    });
+    super.initState();
+  }
 
-    if (orderId != null) {
-      _checkoutViewModel.getOrder(orderId);
-    } else {
-      Navigator.pop(context);
-    }
+  @override
+  Widget build(BuildContext context) {
+    // final orderId = ModalRoute.of(context)?.settings.arguments as int?;
+
+    // if (orderId != null) {
+    //   _checkoutViewModel.getLatestOrder();
+    // } else {
+    //   Navigator.pop(context);
+    // }
 
     return ChangeNotifierProvider.value(
       value: _checkoutViewModel,
       builder: (context, snapshot) {
         return Consumer<CheckoutViewModel>(
           builder: (context, model, _) {
-            if (model.order == null) {
+            if (model.latestOrder == null) {
               return const Scaffold(body: AppProgressIndicator());
             }
 
@@ -287,7 +295,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ],
                   ),
                   Text(
-                    model.order?.id.toString() ?? '-',
+                    model.latestOrder?.id.toString() ?? '-',
                     style: AppTextStyle.bold(context),
                   ),
                 ],
@@ -326,7 +334,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ],
                   ),
                   Text(
-                    DateFormatter.normal(model.order!.createdAt),
+                    DateFormatter.normal(model.latestOrder!.createdAt),
                     style: AppTextStyle.bold(context),
                   ),
                 ],
@@ -342,19 +350,19 @@ class _CheckoutViewState extends State<CheckoutView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppExpansionListTile(
-        title: '${model.order!.cart?.length ?? 0} Item Order',
+        title: '${model.latestOrder!.cart?.length ?? 0} Item Order',
         icon: Icons.timelapse_rounded,
         expand: true,
         children: [
-          ...List.generate(model.order!.cart!.length, (i) {
-            return orderItemCard(model.order!.cart![i], i);
+          ...List.generate(model.latestOrder!.cart!.length, (i) {
+            return orderItemCard(model.latestOrder!.cart![i], i);
           }),
         ],
       ),
     );
   }
 
-  Widget orderItemCard(Query$OrderFindOne$orderFindOne$cart cart, int i) {
+  Widget orderItemCard(Query$OrderFindFirstByUserId$orderFindFirst$cart cart, int i) {
     return Container(
       margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -438,7 +446,7 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   Widget orderShipment(CheckoutViewModel model) {
-    if (model.order!.shipping == null) {
+    if (model.latestOrder!.shipping == null) {
       return const SizedBox.shrink();
     }
 
@@ -486,7 +494,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(width: AppSizes.padding / 2),
                     Expanded(
                       child: Text(
-                        '${model.order!.shipping?.address.user?.firstName ?? '-'} ${model.order!.shipping?.address.user?.lastName ?? ''}',
+                        '${model.latestOrder!.shipping?.address.user?.firstName ?? '-'} ${model.latestOrder!.shipping?.address.user?.lastName ?? ''}',
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.extraBold(context),
@@ -526,7 +534,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    model.order!.shipping?.address.user?.whatsappNumber ?? '-',
+                    model.latestOrder!.shipping?.address.user?.whatsappNumber ?? '-',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.medium(context),
@@ -551,7 +559,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  '${model.order!.shipping?.address.name ?? '-'}, ${model.order!.shipping?.address.user?.address.subdistrict.district.city.name ?? '-'}, ${model.order!.shipping?.address.user?.address.subdistrict.district.city.province.name ?? '-'}, Indonesia',
+                  '${model.latestOrder!.shipping?.address.name ?? '-'}, ${model.latestOrder!.shipping?.address.user?.address.subdistrict.district.city.name ?? '-'}, ${model.latestOrder!.shipping?.address.user?.address.subdistrict.district.city.province.name ?? '-'}, Indonesia',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -570,7 +578,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  model.order!.shipping?.address.user?.address.subdistrict.postalCode ?? '-',
+                  model.latestOrder!.shipping?.address.user?.address.subdistrict.postalCode ?? '-',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -610,7 +618,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(width: AppSizes.padding / 2),
                     Expanded(
                       child: Text(
-                        model.order!.shipping?.courier ?? '-',
+                        model.latestOrder!.shipping?.courier ?? '-',
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.extraBold(context),
@@ -650,7 +658,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   ),
                   const SizedBox(width: AppSizes.padding / 2),
                   Text(
-                    model.order!.shipping?.estimatedTime ?? '-',
+                    model.latestOrder!.shipping?.estimatedTime ?? '-',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.medium(context),
@@ -675,7 +683,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               const SizedBox(width: AppSizes.padding / 2),
               Expanded(
                 child: Text(
-                  'Pengiriman Tanggal: ${model.order!.shipping != null ? DateFormatter.normal(model.order!.shipping?.deliveryDate ?? '') : '-'}',
+                  'Pengiriman Tanggal: ${model.latestOrder!.shipping != null ? DateFormatter.normal(model.latestOrder!.shipping?.deliveryDate ?? '') : '-'}',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -698,7 +706,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     const SizedBox(width: AppSizes.padding / 2),
                     Expanded(
                       child: Text(
-                        'No. Resi: ${model.order!.shipping?.trackingNo ?? '-'} \n Paket akan dikirim setelah pembayaran',
+                        'No. Resi: ${model.latestOrder!.shipping?.trackingNo ?? '-'} \n Paket akan dikirim setelah pembayaran',
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.medium(context),
@@ -726,7 +734,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               Expanded(
                 child: Text(
                   // TODO BIAYA ONGKIR
-                  'Biaya Ongkir:  ${model.order!.shipping?.trackingNo ?? '-'}',
+                  'Biaya Ongkir:  ${model.latestOrder!.shipping?.trackingNo ?? '-'}',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.medium(context),
@@ -768,7 +776,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ],
                   ),
                   Text(
-                    "${model.order!.invoice.id}",
+                    "${model.latestOrder!.invoice.id}",
                     style: AppTextStyle.extraBold(context),
                   ),
                 ],
@@ -789,7 +797,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     style: AppTextStyle.regular(context),
                   ),
                   Text(
-                    CurrencyFormatter.format(model.order!.invoice.amount),
+                    CurrencyFormatter.format(model.latestOrder!.invoice.amount),
                     style: AppTextStyle.regular(context),
                   ),
                 ],
@@ -810,7 +818,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     style: AppTextStyle.regular(context),
                   ),
                   Text(
-                    CurrencyFormatter.format(model.order!.invoice.adminFee),
+                    CurrencyFormatter.format(model.latestOrder!.invoice.adminFee),
                     style: AppTextStyle.regular(context),
                   ),
                 ],
@@ -831,7 +839,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     style: AppTextStyle.extraBold(context),
                   ),
                   Text(
-                    CurrencyFormatter.format(model.order!.invoice.amount + model.order!.invoice.adminFee),
+                    CurrencyFormatter.format(model.latestOrder!.invoice.amount + model.latestOrder!.invoice.adminFee),
                     style: AppTextStyle.extraBold(context),
                   ),
                 ],

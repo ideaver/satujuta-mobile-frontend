@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -47,12 +48,9 @@ class _DashboardViewState extends State<DashboardView> {
       return Scaffold(
         backgroundColor: AppColors.baseLv7,
         appBar: appBar(userViewModel),
-        body: WillPopScope(
-          onWillPop: () async {
-            Navigator.pop(context);
-
-            return false;
-          },
+        body: PopScope(
+          canPop: true,
+          onPopInvoked: (val) {},
           child: body(userViewModel),
         ),
       );
@@ -402,14 +400,39 @@ class _DashboardViewState extends State<DashboardView> {
           ),
           const SizedBox(height: AppSizes.padding / 2),
           SizedBox(
-            width: 160,
+            width: userViewModel.isCommisionClaimed ? null : 160,
             child: AppButton(
               onTap: () {
-                // TODO
+                // TODO TEMPORARY IMPLEMENTATION
+                final navigator = Navigator.of(context);
+                AppDialog.show(
+                  navigator,
+                  title: 'Cairkan Komisi',
+                  text: 'Apakah anda yakin ingin mencairkan komisi anda?',
+                  showButtons: true,
+                  rightButtonText: 'Cairkan',
+                  leftButtonText: 'Batal',
+                  onTapRightButton: () {
+                    navigator.pop();
+                    AppDialog.showDialogProgress(navigator);
+                    Future.delayed(const Duration(seconds: 1), () {
+                      navigator.pop();
+                      AppDialog.showSuccessDialog(
+                        navigator,
+                        title: 'Berhasil',
+                        subtitle:
+                            'Permintaan pencairan komisi telah diproses, harap menunggu 1x24 jam dana masuk ke rekening anda.',
+                      );
+                      userViewModel.isCommisionClaimed = true;
+                      userViewModel.notifyListeners();
+                    });
+                  },
+                );
               },
-              text: 'Cairkan Komisi',
+              text: userViewModel.isCommisionClaimed ? 'Sedang Proses Pencairan' : 'Cairkan Komisi',
+              enable: !userViewModel.isCommisionClaimed,
               fontSize: 14,
-              leftIcon: Icons.stars,
+              leftIcon: userViewModel.isCommisionClaimed ? Icons.timelapse_sharp : Icons.stars,
               iconColor: AppColors.yellow,
               padding: const EdgeInsets.all(AppSizes.padding / 2),
             ),

@@ -30,7 +30,7 @@ class _SettingsViewState extends State<SettingsView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             sliverAppBarWidget(),
@@ -116,7 +116,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget settingListItems() {
     return Container(
-      margin: const EdgeInsets.only(top: AppSizes.padding * 1.5),
+      margin: const EdgeInsets.only(top: AppSizes.padding / 2),
       child: Column(
         children: [
           SettingItem(

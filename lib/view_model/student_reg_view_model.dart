@@ -128,7 +128,6 @@ class StudentRegViewModel extends ChangeNotifier {
         if (viewState == StudentRegViewState.create) {
           navigator.pushReplacementNamed(
             StudentRegStatus.successRouteName,
-            arguments: true,
           );
         }
       } else {

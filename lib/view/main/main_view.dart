@@ -11,6 +11,7 @@ import '../dashboard/dashboard_view.dart';
 import '../member/member_list_view.dart';
 import '../onboarding/onboarding_view.dart';
 import '../program_list/program_list_view.dart';
+import '../reward_list/reward_list_view.dart';
 import '../settings/settings_view.dart';
 import '../splash/splash_view.dart';
 
@@ -27,7 +28,8 @@ class _MainViewState extends State<MainView> {
   List<IconData> navButtonIcons = [
     CustomIcon.dashboard_icon,
     CustomIcon.layer_icon,
-    CustomIcon.contact_group_icon,
+    Icons.campaign_rounded,
+    Icons.people_alt_outlined,
     CustomIcon.settings_icon,
   ];
 
@@ -79,9 +81,12 @@ class _MainViewState extends State<MainView> {
       return const ProgramListView();
     }
     if (i == 2) {
-      return const MemberListView(pageState: PageStateEnum.viewAsMe);
+      return const RewardListView();
     }
     if (i == 3) {
+      return const MemberListView(pageState: PageStateEnum.viewAsMe);
+    }
+    if (i == 4) {
       return const SettingsView();
     }
 

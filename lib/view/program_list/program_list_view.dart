@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -8,6 +10,7 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
+import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../app/utility/date_formatter.dart';
 import '../../app/utility/duration_formatter.dart';
@@ -102,7 +105,7 @@ class _ProgramListViewState extends State<ProgramListView> {
       child: Row(
         children: [
           const Icon(
-            Icons.campaign_rounded,
+            CustomIcon.layer_icon,
           ),
           const SizedBox(width: AppSizes.padding / 2),
           Text(
@@ -213,111 +216,136 @@ class _ProgramListViewState extends State<ProgramListView> {
     );
   }
 
-  Widget programCard(int i, ProgramListViewModel model) {
-    return Container(
-      margin: EdgeInsets.only(bottom: i < model.programFindMany!.length - 1 ? AppSizes.padding : AppSizes.padding * 6),
-      padding: const EdgeInsets.all(AppSizes.padding),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            offset: Offset(4, 4),
-            blurRadius: 22,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 1.5,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-              child: AppImage(
-                image: model.programFindMany![i].Images?.first.url ?? '',
+  Widget programCard(int i, ProgramListViewModel programViewModel) {
+    return Consumer<UserViewModel>(builder: (context, userViewModel, _) {
+      bool isJoined =
+          programViewModel.programFindMany![i].participant?.where((e) => e.id == userViewModel.user!.id).firstOrNull !=
+              null;
+
+      return Container(
+        margin: EdgeInsets.only(
+            bottom: i < programViewModel.programFindMany!.length - 1 ? AppSizes.padding : AppSizes.padding * 6),
+        padding: const EdgeInsets.all(AppSizes.padding),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppSizes.radius * 2),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(4, 4),
+              blurRadius: 22,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 1.5,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppSizes.radius * 2),
+                child: AppImage(
+                  image: programViewModel.programFindMany![i].Images?.first.url ?? '',
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Text(
-            model.programFindMany![i].name,
-            style: AppTextStyle.bold(context, fontSize: 16),
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.timelapse_rounded,
-                    size: 12,
-                    color: AppColors.baseLv4,
-                  ),
-                  const SizedBox(width: AppSizes.padding / 4),
-                  Text(
-                    model.programFindMany![i].dueDate != null &&
-                            !DateTime.parse(model.programFindMany![i].dueDate!).difference(DateTime.now()).isNegative
-                        ? '${DurationFormatter.formatDetailed(DateTime.parse(model.programFindMany![i].dueDate!), DateTime.now())} lagi'
-                        : 'Sudah Berakhir',
-                    style: AppTextStyle.regular(
-                      context,
-                      fontSize: 12,
-                      color: AppColors.baseLv4,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_month_outlined,
-                    size: 12,
-                    color: AppColors.baseLv4,
-                  ),
-                  const SizedBox(width: AppSizes.padding / 4),
-                  Text(
-                    model.programFindMany![i].dueDate != null
-                        ? DateFormatter.slashDate(model.programFindMany![i].dueDate!)
-                        : '-',
-                    style: AppTextStyle.regular(
-                      context,
-                      fontSize: 12,
-                      color: AppColors.baseLv4,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSizes.padding),
-          Text(
-            model.programFindMany![i].description,
-            style: AppTextStyle.regular(context, fontSize: 14),
-          ),
-          const SizedBox(height: AppSizes.padding),
-          SizedBox(
-            width: 100,
-            child: AppButton(
-              onTap: () {
-                // TODO
-              },
-              text: 'Join',
-              fontSize: 12,
-              rightIcon: Icons.arrow_right_alt_rounded,
-              buttonColor: AppColors.white,
-              textColor: AppColors.base,
-              padding: const EdgeInsets.symmetric(
-                vertical: AppSizes.padding / 2,
-                horizontal: AppSizes.padding,
-              ),
-              borderWidth: 2,
+            const SizedBox(height: AppSizes.padding),
+            Text(
+              programViewModel.programFindMany![i].name,
+              style: AppTextStyle.bold(context, fontSize: 16),
             ),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(height: AppSizes.padding),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.timelapse_rounded,
+                      size: 12,
+                      color: AppColors.baseLv4,
+                    ),
+                    const SizedBox(width: AppSizes.padding / 4),
+                    Text(
+                      programViewModel.programFindMany![i].dueDate != null &&
+                              !DateTime.parse(programViewModel.programFindMany![i].dueDate!)
+                                  .difference(DateTime.now())
+                                  .isNegative
+                          ? '${DurationFormatter.formatDetailed(DateTime.parse(programViewModel.programFindMany![i].dueDate!), DateTime.now())} lagi'
+                          : 'Sudah Berakhir',
+                      style: AppTextStyle.regular(
+                        context,
+                        fontSize: 12,
+                        color: AppColors.baseLv4,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_month_outlined,
+                      size: 12,
+                      color: AppColors.baseLv4,
+                    ),
+                    const SizedBox(width: AppSizes.padding / 4),
+                    Text(
+                      programViewModel.programFindMany![i].dueDate != null
+                          ? DateFormatter.slashDate(programViewModel.programFindMany![i].dueDate!)
+                          : '-',
+                      style: AppTextStyle.regular(
+                        context,
+                        fontSize: 12,
+                        color: AppColors.baseLv4,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.padding),
+            Text(
+              programViewModel.programFindMany![i].description,
+              style: AppTextStyle.regular(context, fontSize: 14),
+            ),
+            const SizedBox(height: AppSizes.padding),
+            Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                  child: AppButton(
+                    onTap: () {
+                      final navigator = Navigator.of(context);
+                      programViewModel.joinProgram(navigator, programViewModel.programFindMany![i].id);
+                    },
+                    enable: !isJoined,
+                    text: isJoined ? 'Berhasil' : 'Join',
+                    fontSize: 12,
+                    rightIcon: isJoined ? null : Icons.arrow_right_alt_rounded,
+                    buttonColor: isJoined ? AppColors.greenLv1 : AppColors.white,
+                    disabledButtonColor: AppColors.greenLv1,
+                    textColor: isJoined ? AppColors.white : AppColors.base,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSizes.padding / 2,
+                      horizontal: AppSizes.padding,
+                    ),
+                    borderWidth: 2,
+                  ),
+                ),
+                isJoined
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: AppSizes.padding / 2),
+                        child: Text(
+                          '${programViewModel.programFindMany![i].$_count.participant} Peminat',
+                          style: AppTextStyle.semiBold(context, fontSize: 12),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

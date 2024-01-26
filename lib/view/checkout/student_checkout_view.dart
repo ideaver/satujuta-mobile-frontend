@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/utility/currency_formatter.dart';
+import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -32,17 +34,15 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
   final _checkoutViewModel = locator<CheckoutViewModel>();
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _checkoutViewModel.getLatestOrder();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TODO ORDER DATA
-
-    // final orderId = ModalRoute.of(context)?.settings.arguments as int?;
-
-    // if (orderId != null) {
-    //   _checkoutViewModel.getOrder(orderId);
-    // } else {
-    //   Navigator.pop(context);
-    // }
-
     return ChangeNotifierProvider.value(
         value: _checkoutViewModel,
         builder: (context, snapshot) {
@@ -55,7 +55,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     sliverAppBarWidget(),
                   ];
                 },
-                body: body(),
+                body: body(model),
               ),
               bottomSheet: bottomButton(model),
             );
@@ -140,22 +140,22 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
     );
   }
 
-  Widget body() {
+  Widget body(CheckoutViewModel model) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSizes.padding),
       child: Column(
         children: [
-          orderStatus(),
-          orderInfo(),
-          orderItems(),
-          orderPricing(),
+          orderStatus(model),
+          orderInfo(model),
+          orderItems(model),
+          orderPricing(model),
           const SizedBox(height: 100),
         ],
       ),
     );
   }
 
-  Widget orderStatus() {
+  Widget orderStatus(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: Container(
@@ -242,7 +242,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
     );
   }
 
-  Widget orderInfo() {
+  Widget orderInfo(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppWidgetListWrapper(
@@ -280,7 +280,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     ],
                   ),
                   Text(
-                    '#123456789',
+                    '${model.latestOrder?.id ?? "-"}',
                     style: AppTextStyle.bold(context),
                   ),
                 ],
@@ -319,7 +319,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     ],
                   ),
                   Text(
-                    '24 Agustus 2023',
+                    DateFormatter.normal(model.latestOrder?.createdAt ?? ''),
                     style: AppTextStyle.bold(context),
                   ),
                 ],
@@ -331,25 +331,31 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
     );
   }
 
-  Widget orderItems() {
+  Widget orderItems(CheckoutViewModel model) {
+    if (model.latestOrder?.cart == null) {
+      return const SizedBox.shrink();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppExpansionListTile(
         title: 'Item Order',
         icon: Icons.timelapse_rounded,
         expand: true,
-        children: [
-          ...List.generate(1, (i) {
-            return orderItemCard(i);
-          }),
-        ],
+        children: model.latestOrder!.cart == null
+            ? []
+            : [
+                ...List.generate(model.latestOrder!.cart!.length, (i) {
+                  return orderItemCard(model, i);
+                }),
+              ],
       ),
     );
   }
 
-  Widget orderItemCard(int i) {
+  Widget orderItemCard(CheckoutViewModel model, int i) {
     return Container(
-      margin: EdgeInsets.only(bottom: i == 3 ? 0 : AppSizes.padding / 4),
+      margin: const EdgeInsets.only(bottom: AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -385,7 +391,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        i == 0 ? 'Registrasi Siswa' : 'Hotel Borobudur',
+                        model.latestOrder!.cart?[i].membershipItem?.name ?? '-',
                         style: AppTextStyle.extraBold(
                           context,
                           fontSize: 16,
@@ -393,7 +399,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                       ),
                       const SizedBox(height: AppSizes.padding / 4),
                       Text(
-                        i == 0 ? 'Kuantitas 14 Orang' : 'Kuantitas 14 Orang',
+                        'Kuantitas ${model.latestOrder!.cart?[i].quantity ?? '-'} Orang',
                         style: AppTextStyle.regular(
                           context,
                           fontSize: 12,
@@ -417,7 +423,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
               borderRadius: BorderRadius.circular(100),
             ),
             child: Text(
-              i == 0 ? 'Rp. 1.000.000' : 'FREE',
+              CurrencyFormatter.format(model.latestOrder!.cart?[i].membershipItem?.price ?? 0),
               style: AppTextStyle.bold(
                 context,
                 fontSize: 12,
@@ -430,7 +436,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
     );
   }
 
-  Widget orderPricing() {
+  Widget orderPricing(CheckoutViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
       child: AppWidgetListWrapper(
@@ -459,7 +465,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     ],
                   ),
                   Text(
-                    '#22112211',
+                    '${model.latestOrder?.invoice.id ?? "-"}',
                     style: AppTextStyle.extraBold(context),
                   ),
                 ],
@@ -480,7 +486,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     style: AppTextStyle.regular(context),
                   ),
                   Text(
-                    'Rp. 1.000.000',
+                    CurrencyFormatter.format(model.latestOrder?.invoice.amount ?? 0),
                     style: AppTextStyle.regular(context),
                   ),
                 ],
@@ -501,7 +507,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     style: AppTextStyle.regular(context),
                   ),
                   Text(
-                    'Rp. 5000',
+                    CurrencyFormatter.format(model.latestOrder?.invoice.adminFee ?? 0),
                     style: AppTextStyle.regular(context),
                   ),
                 ],
@@ -522,7 +528,9 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
                     style: AppTextStyle.extraBold(context),
                   ),
                   Text(
-                    'Rp. 1.000.5000',
+                    CurrencyFormatter.format(
+                      (model.latestOrder?.invoice.amount ?? 0) + (model.latestOrder?.invoice.adminFee ?? 0),
+                    ),
                     style: AppTextStyle.extraBold(context),
                   ),
                 ],

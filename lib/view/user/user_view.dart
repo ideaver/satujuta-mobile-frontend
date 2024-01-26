@@ -302,8 +302,8 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
       child: Row(
         children: [
           Expanded(child: countMember(model)),
-          const SizedBox(width: AppSizes.padding / 1.2),
-          taskTotal(model),
+          // const SizedBox(width: AppSizes.padding / 1.2),
+          // taskTotal(model),
         ],
       ),
     );
@@ -340,7 +340,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
 
                     // Go to member page
                     Navigator.pop(context);
-                    mainViewModel.onChangedPage(2);
+                    mainViewModel.onChangedPage(3);
                   },
                   leadingButton: userMemberThumbs(model),
                   // leadingButton: const CircleUser(
@@ -547,7 +547,7 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'JUMLAH\nMEMBER',
+                    'JUMLAH MEMBER',
                     style: AppTextStyle.bold(
                       context,
                       fontSize: 14,
@@ -571,11 +571,11 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
 
                   // Go to member page
                   Navigator.pop(context);
-                  mainViewModel.onChangedPage(2);
+                  mainViewModel.onChangedPage(3);
                 },
-                icon: CustomIcon.inventory,
+                icon: CustomIcon.contact_group_icon,
                 iconSize: 32,
-                backgroundColor: AppColors.baseLv6,
+                backgroundColor: AppColors.baseLv7,
                 padding: const EdgeInsets.all(AppSizes.padding / 2),
               ),
             ],
@@ -634,6 +634,4 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
       ),
     );
   }
-
-  // =======
 }

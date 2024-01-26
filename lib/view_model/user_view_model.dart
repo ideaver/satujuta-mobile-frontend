@@ -26,6 +26,9 @@ class UserViewModel extends ChangeNotifier {
   List<Query$TransactionFindManyByAccountId$transactionFindMany>? userCommissionTransactions;
   List<Query$RewardClaimFindManyByUserId$rewardClaimFindMany>? userClaimedRewards;
 
+  // TODO REMOVE TEMPORARY IMPLEMENTATION
+  bool isCommisionClaimed = false;
+
   void resetState() {
     user = null;
   }

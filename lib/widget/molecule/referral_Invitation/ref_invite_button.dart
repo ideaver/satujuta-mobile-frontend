@@ -36,14 +36,16 @@ class RefInviteButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             leadingButton!,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding / 3),
-              child: Text(
-                textButton!,
-                style: AppTextStyle.regular(
-                  context,
-                  color: AppColors.base,
-                  fontSize: 14,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.padding / 4),
+                child: Text(
+                  textButton!,
+                  style: AppTextStyle.regular(
+                    context,
+                    color: AppColors.base,
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ),
