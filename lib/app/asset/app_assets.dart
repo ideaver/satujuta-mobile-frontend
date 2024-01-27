@@ -142,4 +142,6 @@ class AppAssets {
   static const checkIconPath = '${_baseIconPath}check-icon.png';
   static const uncheckIconPath = '${_baseIconPath}uncheck-icon.png';
   static const fileIconPath = '${_baseIconPath}file-icon.png';
+  static const fileVideIconPath = '${_baseIconPath}video-icon.png';
+  static const filePhotoIconPath = '${_baseIconPath}photo-icon.png';
 }

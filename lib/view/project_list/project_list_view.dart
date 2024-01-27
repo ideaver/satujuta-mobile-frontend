@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:satujuta_app_mobile/app/theme/app_sizes.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_button.dart';
 import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
@@ -7,7 +6,6 @@ import 'package:satujuta_app_mobile/widget/atom/app_not_found_widget.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text_style.dart';
-
 
 class ProjectListView extends StatefulWidget {
   const ProjectListView({Key? key}) : super(key: key);
@@ -151,8 +149,8 @@ class _ProjectListViewState extends State<ProjectListView> {
   Widget body() {
     if (selectedCategory == 0) {
       return const AppNotFoundWidget(
-        title: 'Maaf, Belum Ada Reward Tersedia Untuk Kamu',
-        subtitle: 'Kamu bisa kumpulkan banyak poin untuk mendapatkan hadiah yang menarik',
+        title: 'Maaf, Belum Ada Project Tersedia Untuk Kamu',
+        subtitle: 'Kami akan segera menambahkan project dan akan kami beritahukan lewat pemberitahuan',
       );
     }
 
@@ -176,8 +174,8 @@ class _ProjectListViewState extends State<ProjectListView> {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black12,
             offset: Offset(4, 4),
             blurRadius: 22,
@@ -300,7 +298,7 @@ class _ProjectListViewState extends State<ProjectListView> {
               ),
               const SizedBox(width: AppSizes.padding / 2),
               Text(
-                '${1}${i} Investor',
+                '${1}$i Investor',
                 style: AppTextStyle.medium(
                   context,
                   fontSize: 14,
@@ -377,7 +375,7 @@ class AppProgress extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  labelRight != null ? labelRight! : '${percent}%',
+                  labelRight != null ? labelRight! : '$percent%',
                   style: labelRightStyle ??
                       AppTextStyle.bold(
                         context,

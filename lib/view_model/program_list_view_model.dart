@@ -83,7 +83,6 @@ class ProgramListViewModel extends ChangeNotifier {
   }
 
   void onSelectCategory(
-    NavigatorState navigator,
     Query$ProgramCategoryFindMany$programCategoryFindMany? category,
     int tabIndex,
   ) {

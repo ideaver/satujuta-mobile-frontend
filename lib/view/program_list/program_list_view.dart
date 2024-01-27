@@ -143,12 +143,10 @@ class _ProgramListViewState extends State<ProgramListView> {
   Widget tabWidget(ProgramListViewModel model, int i) {
     return GestureDetector(
       onTap: () {
-        final navigator = Navigator.of(context);
-
         if (i >= 0) {
-          model.onSelectCategory(navigator, model.programCategories![i], i);
+          model.onSelectCategory(model.programCategories![i], i);
         } else {
-          model.onSelectCategory(navigator, null, i);
+          model.onSelectCategory(null, i);
         }
       },
       child: Container(
@@ -245,7 +243,13 @@ class _ProgramListViewState extends State<ProgramListView> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSizes.radius * 2),
                 child: AppImage(
-                  image: programViewModel.programFindMany![i].Images?.first.url ?? '',
+                  image: programViewModel.programFindMany![i].Images?.firstOrNull?.url ?? '',
+                  backgroundColor: AppColors.baseLv7,
+                  errorWidget: const Icon(
+                    CustomIcon.layer_icon,
+                    color: AppColors.baseLv4,
+                    size: 32,
+                  ),
                 ),
               ),
             ),

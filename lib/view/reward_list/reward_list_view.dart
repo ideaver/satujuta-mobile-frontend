@@ -10,6 +10,7 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_image.dart';
 import '../../../widget/atom/app_not_found_widget.dart';
+import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/reward_list_view_model.dart';
 import '../../widget/atom/app_progress_indicator.dart';
@@ -253,6 +254,9 @@ class _RewardListViewState extends State<RewardListView> {
 
       bool isClaimed =
           model.rewardFindMany![i].RewardClaim?.where((e) => e.user.id == userViewModel.user!.id).firstOrNull != null;
+
+      bool isCanBeClaim = userViewModel.totalUserPoint >= model.rewardFindMany![i].pointCost;
+
       return Container(
         margin: EdgeInsets.only(bottom: i < model.rewardFindMany!.length - 1 ? AppSizes.padding : AppSizes.padding * 6),
         padding: const EdgeInsets.all(AppSizes.padding),
@@ -274,8 +278,14 @@ class _RewardListViewState extends State<RewardListView> {
               aspectRatio: 1.5,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-                child: const AppImage(
-                  image: randomImage,
+                child: AppImage(
+                  image: model.rewardFindMany?[i].images?.firstOrNull?.url ?? '',
+                  backgroundColor: AppColors.baseLv7,
+                  errorWidget: const Icon(
+                    CustomIcon.layer_icon,
+                    color: AppColors.baseLv4,
+                    size: 32,
+                  ),
                 ),
               ),
             ),
@@ -391,7 +401,9 @@ class _RewardListViewState extends State<RewardListView> {
                 final navigator = Navigator.of(context);
                 model.claimReward(navigator, model.rewardFindMany![i].id);
               },
-              enable: !isClaimed,
+              enable: !isClaimed && isCanBeClaim,
+              disabledButtonColor: AppColors.baseLv6,
+              disabledTextColor: AppColors.baseLv5,
               text: 'Klaim Reward',
             ),
           ],

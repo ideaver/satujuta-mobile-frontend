@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -237,8 +238,8 @@ class _HotelPickerState extends State<HotelPicker> {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppSizes.radius * 2),
-          boxShadow: [
-            const BoxShadow(
+          boxShadow: const [
+            BoxShadow(
               color: Colors.black12,
               offset: Offset(4, 4),
               blurRadius: 22,
@@ -287,11 +288,11 @@ class _HotelPickerState extends State<HotelPicker> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSizes.radius * 2),
                 child: AppImage(
-                  image: model.hotelFindMany![i].images?.first.url ?? '',
+                  image: model.hotelFindMany![i].images?.firstOrNull?.url ?? '',
                   backgroundColor: AppColors.baseLv7,
                   errorWidget: const Icon(
                     CupertinoIcons.building_2_fill,
-                    color: AppColors.baseLv4,
+                    color: AppColors.baseLv5,
                     size: 32,
                   ),
                 ),
@@ -306,9 +307,9 @@ class _HotelPickerState extends State<HotelPicker> {
             Row(
               children: [
                 ...List.generate(5, (index) {
-                  return const Icon(
+                  return Icon(
                     Icons.star,
-                    color: Colors.amber,
+                    color: model.hotelFindMany![i].rating > index ? AppColors.yellow : AppColors.baseLv6,
                     size: 18,
                   );
                 })

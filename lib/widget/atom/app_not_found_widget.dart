@@ -41,7 +41,7 @@ class AppNotFoundWidget extends StatelessWidget {
           ),
           const SizedBox(height: AppSizes.padding / 2),
           Text(
-            subtitle ?? "Try again later",
+            subtitle ?? "",
             textAlign: TextAlign.center,
             style: AppTextStyle.regular(
               context,

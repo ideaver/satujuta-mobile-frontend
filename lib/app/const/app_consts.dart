@@ -1,3 +1,8 @@
+import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
+
+import '../../model/menu_item_model.dart';
+import '../asset/app_assets.dart';
+
 enum PageStateEnum {
   create,
   edit,
@@ -47,4 +52,46 @@ String getMonthName(int value) {
     default:
       return '';
   }
+}
+
+List<MenuItemModel> fileTypeDropdownItems = [
+  MenuItemModel(
+    text: 'Semua',
+    value: null,
+  ),
+  MenuItemModel(
+    text: "PDF",
+    value: Enum$FileType.PDF.name,
+  ),
+  MenuItemModel(
+    text: "JPG",
+    value: Enum$FileType.JPG.name,
+  ),
+  MenuItemModel(
+    text: "PNG",
+    value: Enum$FileType.PNG.name,
+  ),
+  MenuItemModel(
+    text: "MP4",
+    value: Enum$FileType.MP4.name,
+  ),
+];
+
+String fileTypeIconSelector(MenuItemModel? fileType) {
+  // File
+  if (fileType?.value == fileTypeDropdownItems[1].value) {
+    return AppAssets.fileIconPath;
+  }
+
+  // Image
+  if (fileType?.value == fileTypeDropdownItems[2].value || fileType?.value == fileTypeDropdownItems[3].value) {
+    return AppAssets.filePhotoIconPath;
+  }
+
+  // Video
+  if (fileType?.value == fileTypeDropdownItems[5].value) {
+    return AppAssets.fileVideIconPath;
+  }
+
+  return AppAssets.fileIconPath;
 }
