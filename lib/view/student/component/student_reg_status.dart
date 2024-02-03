@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/user_create_one.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';
-import '../../../../app/asset/app_icons.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
 import '../../../../app/theme/app_text_style.dart';
@@ -14,11 +14,7 @@ import '../../../app/service/locator/service_locator.dart';
 import '../../../app/theme/app_shadows.dart';
 import '../../../app/theme/app_theme.dart';
 import '../../../view_model/member_list_view_model.dart';
-import '../../../widget/atom/app_dialog.dart';
-import '../../../widget/atom/app_icon_button.dart';
-import '../../../widget/atom/app_progress_indicator.dart';
 import '../../checkout/student_checkout_view.dart';
-import '../student_registration_view.dart';
 
 class StudentRegStatus extends StatefulWidget {
   final bool isSuccess;
@@ -45,9 +41,9 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      memberListViewModel.getAllUserMembers();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   memberListViewModel.getAllUserMembers();
+    // });
     super.initState();
   }
 
@@ -74,9 +70,9 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      AppTheme.lightOverlayStyle..copyWith(statusBarColor: AppColors.white),
-    );
+    SystemChrome.setSystemUIOverlayStyle(AppTheme.lightOverlayStyle..copyWith(statusBarColor: AppColors.white));
+
+    final createdUsers = ModalRoute.of(context)?.settings.arguments as List<Mutation$UserCreateOne$userCreateOne>;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -108,7 +104,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
                   ),
                 ),
                 const SizedBox(height: AppSizes.padding * 2),
-                listStudentCard(),
+                listStudentCard(createdUsers),
                 // const SizedBox(height: AppSizes.padding * 2),
                 // validationButton(),
                 const SizedBox(height: AppSizes.padding * 4),
@@ -121,39 +117,40 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
     );
   }
 
-  Widget listStudentCard() {
+  Widget listStudentCard(List<Mutation$UserCreateOne$userCreateOne> createdUsers) {
     return Consumer<MemberListViewModel>(builder: (context, model, _) {
-      if (model.userStudentsInactive == null) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(vertical: AppSizes.padding * 2),
-          child: AppProgressIndicator(),
-        );
-      }
+      // if (model.userStudentsInactive == null) {
+      //   return const Padding(
+      //     padding: EdgeInsets.symmetric(vertical: AppSizes.padding * 2),
+      //     child: AppProgressIndicator(),
+      //   );
+      // }
 
-      if (model.userStudentsInactive!.isEmpty) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 2),
-          child: Text(
-            '(Kosong)',
-            style: AppTextStyle.bold(context, color: AppColors.baseLv4),
-          ),
-        );
-      }
+      // if (model.userStudentsInactive!.isEmpty) {
+      //   return Padding(
+      //     padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 2),
+      //     child: Text(
+      //       '(Kosong)',
+      //       style: AppTextStyle.bold(context, color: AppColors.baseLv4),
+      //     ),
+      //   );
+      // }
 
       return AppExpansionListTile(
         icon: Icons.access_time_sharp,
         expand: true,
-        title: '${model.userStudentsInactive!.length} Siswa Siap Didaftarkan',
+        // title: '${model.userStudentsInactive!.length} Siswa Siap Didaftarkan',
+        title: '1 Siswa Siap Didaftarkan',
         onChanged: expandCollapse,
         children: [
-          studentList(model),
-          expandCollapseButton(),
+          studentList(model, createdUsers),
+          // expandCollapseButton(),
         ],
       );
     });
   }
 
-  Widget studentList(MemberListViewModel model) {
+  Widget studentList(MemberListViewModel model, List<Mutation$UserCreateOne$userCreateOne> createdUsers) {
     return Container(
       constraints: BoxConstraints(maxHeight: isShow ? AppSizes.screenSize.height / 2 : 112),
       child: RawScrollbar(
@@ -164,8 +161,8 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
           physics: isShow ? const ScrollPhysics() : const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
-              ...List.generate(model.userStudentsInactive!.length, (i) {
-                return studentCard(model, i);
+              ...List.generate(createdUsers.length, (i) {
+                return studentCard(model, i, createdUsers);
               }),
             ],
           ),
@@ -174,7 +171,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
     );
   }
 
-  Widget studentCard(MemberListViewModel model, int i) {
+  Widget studentCard(MemberListViewModel model, int i, List<Mutation$UserCreateOne$userCreateOne> createdUsers) {
     return Container(
       margin: EdgeInsets.only(
         top: i == 0 ? AppSizes.padding / 4 : 0,
@@ -192,7 +189,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${model.userStudentsInactive![i].firstName} ${model.userStudentsInactive![i].lastName}',
+                '${createdUsers[i].firstName} ${createdUsers[i].lastName}',
                 style: AppTextStyle.extraBold(
                   context,
                   fontSize: 16,
@@ -200,7 +197,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               ),
               const SizedBox(height: AppSizes.padding / 4),
               Text(
-                model.userStudentsInactive![i].whatsappNumber,
+                createdUsers[i].whatsappNumber,
                 style: AppTextStyle.regular(
                   context,
                   fontSize: 12,
@@ -209,7 +206,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               ),
               const SizedBox(height: AppSizes.padding / 2),
               Text(
-                model.userStudentsInactive![i].address.name,
+                createdUsers[i].address.name,
                 style: AppTextStyle.regular(
                   context,
                   fontSize: 12,
@@ -218,46 +215,46 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               ),
             ],
           ),
-          Row(
-            children: [
-              AppIconButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    StudentRegistrationView.editRouteName,
-                    arguments: model.userStudentsInactive![i],
-                  );
-                },
-                icon: CustomIcon.edit_icon,
-                backgroundColor: AppColors.baseLv6,
-                padding: const EdgeInsets.all(AppSizes.padding / 2),
-                iconColor: AppColors.base,
-                iconSize: 18,
-              ),
-              const SizedBox(width: AppSizes.padding / 2),
-              AppIconButton(
-                onPressed: () {
-                  final navigator = Navigator.of(context);
-                  AppDialog.show(
-                    navigator,
-                    title: "Konfirmasi",
-                    text: "Apakah kamu yakin ingin menghapus siswa ini?",
-                    rightButtonText: "Hapus",
-                    leftButtonText: "Batal",
-                    onTapRightButton: () {
-                      navigator.pop();
-                      model.onTapDeleteMember(navigator, model.userStudentsInactive![i].id);
-                    },
-                  );
-                },
-                icon: CustomIcon.trash_icon,
-                backgroundColor: AppColors.baseLv6,
-                padding: const EdgeInsets.all(AppSizes.padding / 2),
-                iconColor: AppColors.base,
-                iconSize: 18,
-              )
-            ],
-          )
+          // Row(
+          //   children: [
+          //     AppIconButton(
+          //       onPressed: () {
+          //         Navigator.pushNamed(
+          //           context,
+          //           StudentRegistrationView.editRouteName,
+          //           arguments: createdUsers[i],
+          //         );
+          //       },
+          //       icon: CustomIcon.edit_icon,
+          //       backgroundColor: AppColors.baseLv6,
+          //       padding: const EdgeInsets.all(AppSizes.padding / 2),
+          //       iconColor: AppColors.base,
+          //       iconSize: 18,
+          //     ),
+          //     const SizedBox(width: AppSizes.padding / 2),
+          //     AppIconButton(
+          //       onPressed: () {
+          //         final navigator = Navigator.of(context);
+          //         AppDialog.show(
+          //           navigator,
+          //           title: "Konfirmasi",
+          //           text: "Apakah kamu yakin ingin menghapus siswa ini?",
+          //           rightButtonText: "Hapus",
+          //           leftButtonText: "Batal",
+          //           onTapRightButton: () {
+          //             navigator.pop();
+          //             model.onTapDeleteMember(navigator, createdUsers[i].id);
+          //           },
+          //         );
+          //       },
+          //       icon: CustomIcon.trash_icon,
+          //       backgroundColor: AppColors.baseLv6,
+          //       padding: const EdgeInsets.all(AppSizes.padding / 2),
+          //       iconColor: AppColors.base,
+          //       iconSize: 18,
+          //     )
+          //   ],
+          // )
         ],
       ),
     );
@@ -297,7 +294,7 @@ class _StudentRegStatusState extends State<StudentRegStatus> {
               onTap: () {
                 Navigator.pushReplacementNamed(context, StudentCheckoutView.routeName);
               },
-              text: 'Bayar',
+              text: 'Lanjut Ke Pembayaran',
               padding: EdgeInsets.zero,
               borderRadius: BorderRadius.circular(100),
               // borderRadius: const BorderRadius.only(

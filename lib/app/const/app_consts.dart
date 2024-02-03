@@ -95,3 +95,78 @@ String fileTypeIconSelector(MenuItemModel? fileType) {
 
   return AppAssets.fileIconPath;
 }
+
+List<Map<String, String>> supportedBanks = [
+  {
+    "account_number": "",
+    "account_type": "bank_account",
+    "bank_code": "bni",
+    "account_holder": "",
+    "name": "Bank BNI",
+    "icon": AppAssets.bankBNIImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "bank_account",
+    "bank_code": "bri",
+    "account_holder": "",
+    "name": "Bank BRI",
+    "icon": AppAssets.bankBRIImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "bank_account",
+    "bank_code": "bca",
+    "account_holder": "",
+    "name": "Bank BCA",
+    "icon": AppAssets.bankBCAImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "bank_account",
+    "bank_code": "mandiri",
+    "account_holder": "",
+    "name": "Bank Mandiri",
+    "icon": AppAssets.bankMandiriImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "virtual_account",
+    "bank_code": "bni",
+    "account_holder": "",
+    "name": "Bank BNI",
+    "icon": AppAssets.bankBNIImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "virtual_account",
+    "bank_code": "bri",
+    "account_holder": "",
+    "name": "Bank BRI",
+    "icon": AppAssets.bankBRIImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "virtual_account",
+    "bank_code": "mandiri",
+    "account_holder": "",
+    "name": "Bank Mandiri",
+    "icon": AppAssets.bankMandiriImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "wallet_account",
+    "bank_code": "dana",
+    "account_holder": "",
+    "name": "DANA",
+    "icon": AppAssets.ewalDanaImgPath,
+  },
+  {
+    "account_number": "",
+    "account_type": "wallet_account",
+    "bank_code": "ovo",
+    "account_holder": "",
+    "name": "OVO",
+    "icon": AppAssets.ewalOvoImgPath,
+  },
+];

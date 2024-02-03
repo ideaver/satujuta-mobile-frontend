@@ -46,6 +46,8 @@ class StudentRegViewModel extends ChangeNotifier {
   TextEditingController hotelNameCtrl = TextEditingController();
   // TextEditingController passwordCtrl = TextEditingController();
 
+  Mutation$UserCreateOne$userCreateOne? createdUser;
+
   void clearState() {
     studentId = null;
 
@@ -126,8 +128,10 @@ class StudentRegViewModel extends ChangeNotifier {
         }
 
         if (viewState == StudentRegViewState.create) {
+          // TODO LIST createdUser
           navigator.pushReplacementNamed(
             StudentRegStatus.successRouteName,
+            arguments: [createdUser!],
           );
         }
       } else {
@@ -231,6 +235,7 @@ class StudentRegViewModel extends ChangeNotifier {
     cl('[registerStudent].res = $res');
 
     if (res.parsedData?.userCreateOne != null && !res.hasException) {
+      createdUser = res.parsedData?.userCreateOne;
       cl('[registerStudent].student = ${res.parsedData!.userCreateOne?.toJson()}');
       return null;
     } else {

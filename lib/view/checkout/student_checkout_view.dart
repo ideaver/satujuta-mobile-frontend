@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
@@ -12,14 +11,10 @@ import '../../../../app/theme/app_text_style.dart';
 import '../../../widget/atom/app_button.dart';
 import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_gradient_text.dart';
-import '../../../widget/atom/app_image.dart';
-import '../../../widget/atom/app_modal.dart';
 import '../../../widget/atom/app_widget_list_wrapper.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/checkout_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
-import '../../widget/organism/payment_method/payment_method_list_modal.dart';
-import '../main/main_view.dart';
 
 class StudentCheckoutView extends StatefulWidget {
   const StudentCheckoutView({Key? key}) : super(key: key);
@@ -559,79 +554,79 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          model.selectedPaymentMethod != null
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: AppSizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Metode Pembayaran',
-                        style: AppTextStyle.semiBold(context),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          var method = await AppModal.show(
-                            context: context,
-                            title: 'Pilih Metode Pembayaran',
-                            child: const PaymentMethodListModal(),
-                          );
+          // model.selectedPaymentMethod != null
+          //     ? Padding(
+          //         padding: const EdgeInsets.only(bottom: AppSizes.padding),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Text(
+          //               'Metode Pembayaran',
+          //               style: AppTextStyle.semiBold(context),
+          //             ),
+          //             GestureDetector(
+          //               onTap: () async {
+          //                 var method = await AppModal.show(
+          //                   context: context,
+          //                   title: 'Pilih Metode Pembayaran',
+          //                   child: const PaymentMethodListModal(),
+          //                 );
 
-                          if (method != null) {
-                            model.onSelectPaymentMethod(method);
-                          }
-                        },
-                        child: Row(
-                          children: [
-                            AppImage(
-                              image: model.selectedPaymentMethod!.logoUrl,
-                              width: 32,
-                              height: 24,
-                              backgroundColor: AppColors.baseLv6,
-                              borderRadius: 8,
-                              errorWidget: const Icon(
-                                CupertinoIcons.building_2_fill,
-                                color: AppColors.baseLv4,
-                                size: 12,
-                              ),
-                            ),
-                            const SizedBox(width: AppSizes.padding / 2),
-                            Text(
-                              model.selectedPaymentMethod?.name ?? "-",
-                              style: AppTextStyle.extraBold(context),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox.shrink(),
+          //                 if (method != null) {
+          //                   model.onSelectPaymentMethod(method);
+          //                 }
+          //               },
+          //               child: Row(
+          //                 children: [
+          //                   AppImage(
+          //                     // image: model.selectedPaymentMethod!.logoUrl,
+          //                     image: model.selectedPaymentMethod?['icon'] ?? "-",
+          //                     imgProvider: ImgProvider.assetImage,
+          //                     width: 32,
+          //                     height: 24,
+          //                     backgroundColor: AppColors.baseLv6,
+          //                     borderRadius: 8,
+          //                     errorWidget: const Icon(
+          //                       CupertinoIcons.building_2_fill,
+          //                       color: AppColors.baseLv4,
+          //                       size: 12,
+          //                     ),
+          //                   ),
+          //                   const SizedBox(width: AppSizes.padding / 2),
+          //                   Text(
+          //                     model.selectedPaymentMethod?['name'] ?? "-",
+          //                     style: AppTextStyle.extraBold(context),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       )
+          //     : const SizedBox.shrink(),
           AppButton(
             onTap: () async {
-              if (model.selectedPaymentMethod == null) {
-                var method = await AppModal.show(
-                  context: context,
-                  title: 'Pilih Metode Pembayaran',
-                  child: const PaymentMethodListModal(),
-                );
+              // if (model.selectedPaymentMethod == null) {
+              //   var method = await AppModal.show(
+              //     context: context,
+              //     title: 'Pilih Metode Pembayaran',
+              //     child: const PaymentMethodListModal(),
+              //   );
 
-                if (method != null) {
-                  model.onSelectPaymentMethod(method);
-                }
-              } else {
-                // TODO HANDLE ORDER SUMMARY
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  MainView.routeName,
-                  (route) => false,
-                );
-              }
+              //   if (method != null) {
+              //     model.onSelectPaymentMethod(method);
+              //   }
+              // } else {
+              final navigator = Navigator.of(context);
+              model.onTapPay(navigator);
+              // TODO HANDLE ORDER SUMMARY
+              // }
             },
             buttonColor: model.selectedPaymentMethod == null ? AppColors.primary : AppColors.greenLv1,
             height: 54,
             padding: EdgeInsets.zero,
-            text: model.selectedPaymentMethod == null ? 'Pilih Metode Pembayaran' : 'Bayar',
+            // text: model.selectedPaymentMethod == null ? 'Pilih Metode Pembayaran' : 'Bayar',
+            text: 'Bayar',
           ),
         ],
       ),
