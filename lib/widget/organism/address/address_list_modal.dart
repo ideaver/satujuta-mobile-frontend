@@ -38,6 +38,7 @@ class _AddressListModalState extends State<AddressListModal> {
 
   @override
   void initState() {
+    addressViewModel.resetState();
     addressViewModel.searchCtrl = TextEditingController();
     scrollController.addListener(scrollListener);
 

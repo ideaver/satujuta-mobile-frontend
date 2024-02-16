@@ -9,13 +9,16 @@ import '../../../view_model/school_list_view_model.dart';
 import '../../atom/app_button.dart';
 import '../../atom/app_progress_indicator.dart';
 import '../../atom/app_text_field.dart';
+import '../../atom/app_text_fields_wrapper.dart';
 
 class SchoolListModal extends StatefulWidget {
   final int cityId;
+  final int subdistrictId;
 
   const SchoolListModal({
     super.key,
     required this.cityId,
+    required this.subdistrictId,
   });
 
   @override
@@ -34,6 +37,7 @@ class _SchoolListModalState extends State<SchoolListModal> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final navigator = Navigator.of(context);
+      schoolListViewModel.resetState();
       schoolListViewModel.getSchools(navigator, cityId: widget.cityId);
     });
 
@@ -61,22 +65,30 @@ class _SchoolListModalState extends State<SchoolListModal> {
 
   @override
   Widget build(BuildContext context) {
-    final navigator = Navigator.of(context);
-
     return Consumer<SchoolListViewModel>(builder: (context, model, _) {
-      return Column(
-        children: [
-          searchField(navigator, model),
-          const SizedBox(height: AppSizes.padding),
-          schoolList(model),
-          const SizedBox(height: AppSizes.padding),
-          chooseButton(model),
-        ],
-      );
+      return model.createMode ? createSchool(model) : selectSchool(model);
     });
   }
 
+  Widget selectSchool(SchoolListViewModel model) {
+    final navigator = Navigator.of(context);
+
+    return Column(
+      children: [
+        searchField(navigator, model),
+        const SizedBox(height: AppSizes.padding),
+        schoolList(model),
+        const SizedBox(height: AppSizes.padding),
+        bottomButton(model),
+      ],
+    );
+  }
+
   Widget searchField(NavigatorState navigator, SchoolListViewModel model) {
+    if (model.schoolFindMany == null || model.schoolFindMany!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
       decoration: BoxDecoration(
@@ -106,9 +118,10 @@ class _SchoolListModalState extends State<SchoolListModal> {
 
     if (model.schoolFindMany!.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(42),
         child: Text(
-          '(Kosong)',
+          'Tidak ada sekolah yang dapat ditampilkan',
+          textAlign: TextAlign.center,
           style: AppTextStyle.bold(context, color: AppColors.baseLv5),
         ),
       );
@@ -163,13 +176,60 @@ class _SchoolListModalState extends State<SchoolListModal> {
     );
   }
 
-  Widget chooseButton(SchoolListViewModel model) {
+  Widget createSchool(SchoolListViewModel model) {
+    return Column(
+      children: [
+        AppTextFieldsWrapper(
+          textFields: [
+            AppTextField(
+              controller: model.nameCtrl,
+              lableText: 'Nama Sekolah',
+              hintText: 'Masukkkan Nama Sekolah',
+              onChanged: (val) {
+                setState(() {});
+              },
+            ),
+            AppTextField(
+              controller: model.addressCtrl,
+              lableText: 'Alamat Sekolah',
+              hintText: 'Masukkkan alamat sekolah',
+              onChanged: (val) {
+                setState(() {});
+              },
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
+          child: AppButton(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              final navigator = Navigator.of(context);
+              model.onTapRegisterSchoolButton(
+                navigator,
+                widget.cityId,
+                widget.subdistrictId,
+              );
+            },
+            text: "Daftarkan Sekolah",
+            enable: model.nameCtrl.text.isNotEmpty && model.addressCtrl.text.isNotEmpty,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget bottomButton(SchoolListViewModel model) {
     return AppButton(
-      onTap: () {
-        Navigator.pop(context, model.selectedSchool);
+      onTap: () async {
+        if (model.schoolFindMany != null && model.schoolFindMany!.isNotEmpty) {
+          Navigator.pop(context, model.selectedSchool);
+        } else {
+          model.onTapCreateSchoolButton();
+        }
       },
-      enable: model.selectedSchool != null,
-      text: 'Pilih',
+      enable: model.schoolFindMany != null && model.schoolFindMany!.isNotEmpty ? model.selectedSchool != null : true,
+      text: model.schoolFindMany != null && model.schoolFindMany!.isNotEmpty ? 'Pilih' : 'Buat Sekolah',
     );
   }
 }
