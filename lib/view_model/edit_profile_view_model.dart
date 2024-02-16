@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
+import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/account_update_one.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/user_update_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_account_service.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_upload_service.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
@@ -130,7 +134,7 @@ class EditProfileViewModel extends ChangeNotifier {
         AppDialog.showSuccessDialog(
           navigator,
           title: 'Sukses!',
-          subtitle: 'Profil berhasil diperbarui',
+          subtitle: 'Password berhasil diperbarui',
         );
       } else {
         cl('[onTapUpdatePassword].resProfile.error = $errRes');
@@ -286,40 +290,32 @@ class EditProfileViewModel extends ChangeNotifier {
     }
   }
 
-  // TODO API NOT AVAILABLE
-  Future<void> uploadUserAvatar(
+  Future<void> updateUserAvatar(
     String avatar,
     NavigatorState navigator,
   ) async {
+    // Upload then set avatar url
+    await uploadUserAvatar(avatar, navigator);
+
+    cl(avatarUrl);
+
+    if (avatarUrl == null) {
+      return;
+    }
+
     AppDialog.showDialogProgress(navigator);
-
-    // TODO API UPLOAD FILE NOT AVAILABLE
-    // final imageFile = File(avatar);
-    // final imageBytes = await imageFile.readAsBytes();
-
-    // var multipartFile = await MultipartFile.fromPath(
-    //   'file',
-    //   imageFile.path,
-    //   filename: '${DateTime.now().second}.jpg',
-    //   contentType: MediaType("image", "jpg"),
-    // );
 
     var res = await GqlUserService.userUpdateOneAvatarUrl(
       userId: userViewModel.user!.id,
-      url: randomImage,
-      // multipartFile: multipartFile,
+      url: avatarUrl!,
     );
 
     if (res.parsedData?.userUpdateOne != null && !res.hasException) {
       navigator.pop();
-
-      avatarUrl = res.parsedData!.userUpdateOne?.avatarUrl;
-      notifyListeners();
-
       AppSnackbar.show(navigator, title: "Foto profil berhasil diupload");
     } else {
+      avatarUrl = null;
       navigator.pop();
-
       AppSnackbar.show(
         navigator,
         title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
@@ -330,5 +326,44 @@ class EditProfileViewModel extends ChangeNotifier {
 
     // Refresh user data
     userViewModel.getUser();
+  }
+
+  Future<void> uploadUserAvatar(
+    String avatar,
+    NavigatorState navigator,
+  ) async {
+    AppDialog.showDialogProgress(navigator);
+
+    final imageFile = File(avatar);
+    // final imageBytes = await imageFile.readAsBytes();
+
+    var multipartFile = await MultipartFile.fromPath(
+      'file',
+      imageFile.path,
+      filename: '${DateTime.now().second}.jpg',
+      contentType: MediaType("image", "jpg"),
+    );
+
+    var res = await GqlUploadService.uploadSingleFile(
+      userId: userViewModel.user!.id,
+      multipartFile: multipartFile,
+    );
+
+    if (res.parsedData?.uploadSingleFile != null && !res.hasException) {
+      navigator.pop();
+
+      avatarUrl = res.parsedData?.uploadSingleFile;
+      notifyListeners();
+    } else {
+      navigator.pop();
+
+      AppSnackbar.show(
+        navigator,
+        title: "Foto profil gagal diupload ${res.exception?.graphqlErrors.firstOrNull?.extensions?['code']}",
+      );
+
+      cl('[uploadUserAvatar].error = ${gqlErrorParser(res)}');
+    }
+    return;
   }
 }

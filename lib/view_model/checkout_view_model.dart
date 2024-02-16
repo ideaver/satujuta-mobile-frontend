@@ -109,7 +109,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
       await navigator.pushNamed(
         WebView.routeName,
-        arguments: bill!.link_url,
+        arguments: bill?.payment_url,
       );
 
       return null;
@@ -140,7 +140,7 @@ class CheckoutViewModel extends ChangeNotifier {
 
     String? errRes = await createBill(
       navigator,
-      title: '${latestOrder?.cart?.first.membershipItem?.name}',
+      title: '${latestOrder?.cart?.firstOrNull?.membershipItem?.name}',
       amount: latestOrder?.total.toInt() ?? 0,
       senderName: '${userViewModel.user!.firstName} ${userViewModel.user!.lastName}',
       senderEmail: userViewModel.user!.email,
@@ -152,13 +152,14 @@ class CheckoutViewModel extends ChangeNotifier {
 
     navigator.pop();
 
-    if (errRes == null) {
-      navigator.pushNamedAndRemoveUntil(
-        WebView.routeName,
-        (route) => false,
-      );
-    } else {
-      AppDialog.showErrorDialog(navigator, message: errRes);
-    }
+    // TODO UNCOMMENT ERROR HANDLER
+    // if (errRes == null) {
+    navigator.pushNamedAndRemoveUntil(
+      WebView.routeName,
+      (route) => false,
+    );
+    // } else {
+    //   AppDialog.showErrorDialog(navigator, message: errRes);
+    // }
   }
 }

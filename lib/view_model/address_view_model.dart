@@ -23,6 +23,7 @@ class AddressViewModel extends ChangeNotifier {
   Query$SubdistrictFindMany$subdistrictFindMany? selectedSubdistrict;
 
   void resetState() {
+    searchCtrl.clear();
     provinceFindMany = null;
     cityFindMany = null;
     districtFindMany = null;

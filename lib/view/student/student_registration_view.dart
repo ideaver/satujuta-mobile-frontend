@@ -242,6 +242,11 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 address.selectedCity = null;
                 address.selectedDistrict = null;
                 address.selectedSubdistrict = null;
+                // Reset School & Hotel
+                student.selectedSchool = null;
+                student.schoolNameCtrl.clear();
+                student.selectedHotel = null;
+                student.hotelNameCtrl.clear();
                 setState(() {});
               }
             },
@@ -280,6 +285,11 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 student.postalCodeCtrl.clear();
                 address.selectedDistrict = null;
                 address.selectedSubdistrict = null;
+                // Reset School & Hotel
+                student.selectedSchool = null;
+                student.schoolNameCtrl.clear();
+                student.selectedHotel = null;
+                student.hotelNameCtrl.clear();
                 setState(() {});
               }
             },
@@ -316,6 +326,11 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 student.subdistrictCtrl.clear();
                 student.postalCodeCtrl.clear();
                 address.selectedSubdistrict = null;
+                // Reset School & Hotel
+                student.selectedSchool = null;
+                student.schoolNameCtrl.clear();
+                student.selectedHotel = null;
+                student.hotelNameCtrl.clear();
                 setState(() {});
               }
             },
@@ -350,6 +365,11 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 student.subdistrictId = subdistrict.id;
                 student.subdistrictCtrl.text = subdistrict.name;
                 student.postalCodeCtrl.text = subdistrict.postalCode;
+                // Reset School & Hotel
+                student.selectedSchool = null;
+                student.schoolNameCtrl.clear();
+                student.selectedHotel = null;
+                student.hotelNameCtrl.clear();
                 setState(() {});
               }
             },
@@ -406,7 +426,10 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
               var school = await AppModal.show(
                 context: context,
                 title: 'Pilih Sekolah',
-                child: SchoolListModal(cityId: student.cityId!),
+                child: SchoolListModal(
+                  cityId: student.cityId!,
+                  subdistrictId: student.subdistrictId!,
+                ),
               );
 
               if (school != null) {

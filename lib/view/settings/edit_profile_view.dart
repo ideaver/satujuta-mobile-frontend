@@ -228,7 +228,7 @@ class _EditProfileViewState extends State<EditProfileView> with TickerProviderSt
                         );
 
                         if (croppedFile != null) {
-                          await model.uploadUserAvatar(croppedFile.path, navigator);
+                          await model.updateUserAvatar(croppedFile.path, navigator);
                         }
                       }
                     },
