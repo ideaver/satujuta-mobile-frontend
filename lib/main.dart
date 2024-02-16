@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         initialRoute: MainView.routeName,
         routes: AppRoutes.routes,
-        // home: const CheckoutView(),
+        // home: const StudentCheckoutView(),
         locale: AppLocale.defaultLocale,
         supportedLocales: AppLocale.supportedLocales,
         localizationsDelegates: AppLocale.localizationsDelegates,
