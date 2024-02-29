@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_progress_indicator.dart';
+import '../../widget/atom/app_progress_indicator.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 
 import '../../../../app/asset/app_assets.dart';

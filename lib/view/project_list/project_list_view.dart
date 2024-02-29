@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/app/theme/app_sizes.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_button.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_image.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_not_found_widget.dart';
 
 import '../../app/theme/app_colors.dart';
+import '../../app/theme/app_sizes.dart';
 import '../../app/theme/app_text_style.dart';
+import '../../widget/atom/app_button.dart';
+import '../../widget/atom/app_image.dart';
+import '../../widget/atom/app_not_found_widget.dart';
 
 class ProjectListView extends StatefulWidget {
   const ProjectListView({Key? key}) : super(key: key);

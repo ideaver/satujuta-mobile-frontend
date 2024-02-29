@@ -1,6 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
+import 'package:satujuta_app_mobile/model/webview_model.dart';
+import 'package:satujuta_app_mobile/view/main/main_view.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/get_all_bank_info.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/order_find_first_by_user_id.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_order_service.dart';
@@ -11,13 +12,15 @@ import '../app/service/locator/service_locator.dart';
 import '../app/service/storage/local_storage_service.dart';
 import '../app/utility/console_log.dart';
 import '../view/web_view/web_view.dart';
+import '../widget/atom/app_dialog.dart';
+import 'user_view_model.dart';
 
 class CheckoutViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();
 
   List<Query$GetAllBankInfo$getBankInfo>? bankInfoList;
   // String? selectedBankCode;
-  Map<String, String>? selectedPaymentMethod;
+  // Map<String, String>? selectedPaymentMethod;
   // Enum$BillSenderBankType? selectedPaymentMethod;
 
   Query$OrderFindFirstByUserId$orderFindFirst? latestOrder;
@@ -89,8 +92,8 @@ class CheckoutViewModel extends ChangeNotifier {
     required String senderEmail,
     required String senderPhoneNumber,
     required String senderAddress,
-    required String senderBank,
-    required String senderBankType,
+    String? senderBank,
+    String? senderBankType,
   }) async {
     var res = await GqlPaymentService.createBill(
       title: title,
@@ -107,9 +110,14 @@ class CheckoutViewModel extends ChangeNotifier {
       // TODO
       var bill = res.parsedData!.createBill;
 
+      cl(bill?.toJson());
+
       await navigator.pushNamed(
         WebView.routeName,
-        arguments: bill?.payment_url,
+        arguments: WebViewModel(
+          title: 'Pembayaran',
+          url: bill?.payment_url ?? 'https://${bill?.link_url}',
+        ),
       );
 
       return null;
@@ -120,10 +128,10 @@ class CheckoutViewModel extends ChangeNotifier {
     }
   }
 
-  void onSelectPaymentMethod(Map<String, String> method) {
-    selectedPaymentMethod = method;
-    notifyListeners();
-  }
+  // void onSelectPaymentMethod(Map<String, String> method) {
+  //   selectedPaymentMethod = method;
+  //   notifyListeners();
+  // }
 
   void onTapPay(NavigatorState navigator) async {
     // if (selectedPaymentMethod == null) {
@@ -146,20 +154,17 @@ class CheckoutViewModel extends ChangeNotifier {
       senderEmail: userViewModel.user!.email,
       senderPhoneNumber: userViewModel.user!.whatsappNumber,
       senderAddress: userViewModel.user!.address.name,
-      senderBank: selectedPaymentMethod?['bank_code'] ?? '',
-      senderBankType: selectedPaymentMethod?['account_type'] ?? '',
+      // senderBank: selectedPaymentMethod?['bank_code'] ?? '',
+      // senderBankType: selectedPaymentMethod?['account_type'] ?? '',
     );
 
     navigator.pop();
 
     // TODO UNCOMMENT ERROR HANDLER
-    // if (errRes == null) {
-    navigator.pushNamedAndRemoveUntil(
-      WebView.routeName,
-      (route) => false,
-    );
-    // } else {
-    //   AppDialog.showErrorDialog(navigator, message: errRes);
-    // }
+    if (errRes == null) {
+      navigator.pushNamedAndRemoveUntil(MainView.routeName, (route) => false);
+    } else {
+      AppDialog.showErrorDialog(navigator, message: errRes);
+    }
   }
 }

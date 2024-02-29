@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view/project_list/project_list_view.dart';
+import '../../view/project_list/project_list_view.dart';
 
 import '../../view/checkout/checkout_view.dart';
 import '../../view/checkout/student_checkout_view.dart';

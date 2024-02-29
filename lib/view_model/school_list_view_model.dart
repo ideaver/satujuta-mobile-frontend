@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
+import '../widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/school_find_many.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_school_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
