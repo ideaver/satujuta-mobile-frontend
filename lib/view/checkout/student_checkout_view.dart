@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
-import '../../app/utility/currency_formatter.dart';
-import '../../app/utility/date_formatter.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -13,6 +11,8 @@ import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_gradient_text.dart';
 import '../../../widget/atom/app_widget_list_wrapper.dart';
 import '../../app/service/locator/service_locator.dart';
+import '../../app/utility/currency_formatter.dart';
+import '../../app/utility/date_formatter.dart';
 import '../../view_model/checkout_view_model.dart';
 import '../../widget/atom/app_icon_button.dart';
 
@@ -622,7 +622,7 @@ class _StudentCheckoutViewState extends State<StudentCheckoutView> {
               // TODO HANDLE ORDER SUMMARY
               // }
             },
-            buttonColor: model.selectedPaymentMethod == null ? AppColors.primary : AppColors.greenLv1,
+            // buttonColor: model.selectedPaymentMethod == null ? AppColors.primary : AppColors.greenLv1,
             height: 54,
             padding: EdgeInsets.zero,
             // text: model.selectedPaymentMethod == null ? 'Pilih Metode Pembayaran' : 'Bayar',
