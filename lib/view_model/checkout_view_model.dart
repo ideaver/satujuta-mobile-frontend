@@ -1,6 +1,5 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:satujuta_app_mobile/view_model/user_view_model.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/get_all_bank_info.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/order_find_first_by_user_id.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_order_service.dart';
@@ -11,6 +10,8 @@ import '../app/service/locator/service_locator.dart';
 import '../app/service/storage/local_storage_service.dart';
 import '../app/utility/console_log.dart';
 import '../view/web_view/web_view.dart';
+import '../widget/atom/app_dialog.dart';
+import 'user_view_model.dart';
 
 class CheckoutViewModel extends ChangeNotifier {
   final userViewModel = locator<UserViewModel>();
@@ -153,13 +154,9 @@ class CheckoutViewModel extends ChangeNotifier {
     navigator.pop();
 
     // TODO UNCOMMENT ERROR HANDLER
-    // if (errRes == null) {
-    navigator.pushNamedAndRemoveUntil(
-      WebView.routeName,
-      (route) => false,
-    );
-    // } else {
-    //   AppDialog.showErrorDialog(navigator, message: errRes);
-    // }
+    if (errRes == null) {
+    } else {
+      AppDialog.showErrorDialog(navigator, message: errRes);
+    }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/app/utility/currency_formatter.dart';
-import 'package:satujuta_app_mobile/app/utility/date_formatter.dart';
+import '../../app/utility/currency_formatter.dart';
+import '../../app/utility/date_formatter.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';

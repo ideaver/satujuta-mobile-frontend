@@ -112,17 +112,16 @@ class UserViewModel extends ChangeNotifier {
       return;
     }
 
-    // TODO API UNAVAILABLE
-    // var res = await GqlUserService.getCurrentUserPointBalanceByUserIdFromPointTransactionFindFirst(
-    //   userId: user!.id,
-    // );
+    var res = await GqlUserService.getAccountBalanceOfUserPointFromUserId(
+      userId: user!.id,
+    );
 
-    // if (res.parsedData?.pointTransactionFindFirst?.currentBalance != null && !res.hasException) {
-    //   totalUserPoint = (res.parsedData!.pointTransactionFindFirst?.currentBalance ?? 0).toInt();
-    //   notifyListeners();
-    // } else {
-    //   cl('[getUserPoint].error = ${gqlErrorParser(res)}');
-    // }
+    if (res.parsedData?.getAccountBalanceOfUserPointFromUserId != null && !res.hasException) {
+      totalUserPoint = (res.parsedData!.getAccountBalanceOfUserPointFromUserId ?? 0).toInt();
+      notifyListeners();
+    } else {
+      cl('[getUserPoint].error = ${gqlErrorParser(res)}');
+    }
   }
 
   Future<void> getUserCommission() async {

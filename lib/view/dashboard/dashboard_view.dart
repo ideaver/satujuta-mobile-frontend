@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 
 import '../../../../app/asset/app_assets.dart';
 import '../../../../app/theme/app_colors.dart';
@@ -17,6 +16,7 @@ import '../../view_model/main_view_model.dart';
 import '../../view_model/member_list_view_model.dart';
 import '../../view_model/program_list_view_model.dart';
 import '../../view_model/user_view_model.dart';
+import '../../widget/atom/app_dialog.dart';
 import '../../widget/atom/app_icon_button.dart';
 import '../../widget/atom/app_progress_indicator.dart';
 import '../member/member_invitation_view.dart';
@@ -150,7 +150,7 @@ class _DashboardViewState extends State<DashboardView> {
         onTap: () async {
           final mainViewModel = locator<MainViewModel>();
           final memberListViewModel = locator<MemberListViewModel>();
-          mainViewModel.onChangedPage(2);
+          mainViewModel.onChangedPage(3);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             memberListViewModel.searchFocusNode.requestFocus();
           });
@@ -424,7 +424,7 @@ class _DashboardViewState extends State<DashboardView> {
                             'Permintaan pencairan komisi telah diproses, harap menunggu 1x24 jam dana masuk ke rekening anda.',
                       );
                       userViewModel.isCommisionClaimed = true;
-                      userViewModel.notifyListeners();
+                      setState(() {});
                     });
                   },
                 );
