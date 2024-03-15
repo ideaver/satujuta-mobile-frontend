@@ -43,9 +43,14 @@ class _UserViewState extends State<UserView> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    super.initState();
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(tabListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final userViewModel = locator<UserViewModel>();
+      userViewModel.getUser();
+    });
+    super.initState();
   }
 
   void tabListener() {

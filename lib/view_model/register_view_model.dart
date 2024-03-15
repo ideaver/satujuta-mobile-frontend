@@ -17,9 +17,11 @@ import '../view/hotel_picker/hotel_picker_view.dart';
 import '../widget/atom/app_dialog.dart';
 import '../widget/atom/app_snackbar.dart';
 import 'address_view_model.dart';
+import 'user_view_model.dart';
 
 class RegisterViewModel extends ChangeNotifier {
   final addressViewModel = locator<AddressViewModel>();
+  final userViewModel = locator<UserViewModel>();
 
   late TabController tabController;
 
@@ -75,6 +77,8 @@ class RegisterViewModel extends ChangeNotifier {
         var loginErrRes = await AuthService.login(email: emailCtrl.text, password: passwordCtrl.text);
 
         if (loginErrRes == null) {
+          await userViewModel.getUser();
+
           navigator.pop();
           selectHotel(navigator);
         } else {

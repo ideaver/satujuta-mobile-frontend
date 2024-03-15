@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:satujuta_gql_client/operations/mobile/generated/program_category_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/reward_find_many_scalar.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_reward_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
@@ -12,16 +11,16 @@ import 'user_view_model.dart';
 class RewardListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
 
-  List<Query$ProgramCategoryFindMany$programCategoryFindMany>? rewardCategories;
-  Query$ProgramCategoryFindMany$programCategoryFindMany? selectedCategory;
+  // List<Query$ProgramCategoryFindMany$programCategoryFindMany>? rewardCategories;
+  // Query$ProgramCategoryFindMany$programCategoryFindMany? selectedCategory;
 
   List<Query$RewardFindManyScalar$rewardFindMany>? rewardFindMany;
 
   int selectedTabIndex = -1;
 
   void resetState() {
-    rewardCategories = null;
-    selectedCategory = null;
+    // rewardCategories = null;
+    // selectedCategory = null;
     rewardFindMany = null;
     selectedTabIndex = -1;
   }
@@ -84,19 +83,22 @@ class RewardListViewModel extends ChangeNotifier {
     }
   }
 
-  void onSelectCategory(
-    NavigatorState navigator,
-    Query$ProgramCategoryFindMany$programCategoryFindMany? category,
-    int tabIndex,
-  ) {
-    selectedCategory = category;
+  void onSelectCategory(int tabIndex) {
+    final userViewModel = locator<UserViewModel>();
+
     selectedTabIndex = tabIndex;
     notifyListeners();
 
-    if (category != null) {
-      getAllRewards();
+    if (selectedTabIndex == 0) {
+      rewardFindMany = rewardFindMany?.where((e) => e.pointCost <= userViewModel.totalUserCommission).toList();
     }
 
-    cl('[onSelectCategory].selectedCategory =  ${selectedCategory?.id}: ${selectedCategory?.name}');
+    if (selectedTabIndex == 1) {
+      rewardFindMany = rewardFindMany?.where((e) => e.pointCost > userViewModel.totalUserCommission).toList();
+    }
+
+    notifyListeners();
+
+    cl('[onSelectCategory].selectedTabIndex =  $selectedTabIndex');
   }
 }

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app/theme/app_colors.dart';
@@ -316,9 +317,12 @@ class _HotelPickerState extends State<HotelPicker> {
               ],
             ),
             const SizedBox(height: AppSizes.padding),
-            Text(
+            HtmlWidget(
               model.hotelFindMany![i].description,
-              style: AppTextStyle.regular(context, fontSize: 14),
+              textStyle: AppTextStyle.regular(context, fontSize: 14),
+              // maxLines: 2,
+              // softWrap: true,
+              // overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: AppSizes.padding),
             AppButton(

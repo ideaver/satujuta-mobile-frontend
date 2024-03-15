@@ -49,15 +49,18 @@ class _RegisterViewState extends State<RegisterView> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            sliverAppBarWidget(),
-          ];
-        },
-        body: body(),
+    return ChangeNotifierProvider.value(
+      value: registerViewModel,
+      child: Scaffold(
+        body: NestedScrollView(
+          physics: const BouncingScrollPhysics(),
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              sliverAppBarWidget(),
+            ];
+          },
+          body: body(),
+        ),
       ),
     );
   }

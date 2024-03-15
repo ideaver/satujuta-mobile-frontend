@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../view_model/user_view_model.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_sizes.dart';
@@ -13,6 +12,7 @@ import '../../../widget/atom/app_not_found_widget.dart';
 import '../../app/asset/app_icons.dart';
 import '../../app/service/locator/service_locator.dart';
 import '../../view_model/reward_list_view_model.dart';
+import '../../view_model/user_view_model.dart';
 import '../../widget/atom/app_progress_indicator.dart';
 
 class RewardListView extends StatefulWidget {
@@ -29,9 +29,7 @@ class _RewardListViewState extends State<RewardListView> {
 
   final _programListViewModel = locator<RewardListViewModel>();
 
-  int selectedCategory = -1;
-
-  List<String> categories = [
+  List<String> tabs = [
     'Tersedia',
     'Belum Tersedia',
   ];
@@ -69,6 +67,7 @@ class _RewardListViewState extends State<RewardListView> {
     return Scaffold(
       backgroundColor: AppColors.baseLv7,
       body: NestedScrollView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
@@ -157,7 +156,7 @@ class _RewardListViewState extends State<RewardListView> {
         child: Row(
           children: [
             tabWidget(-1),
-            ...List.generate(categories.length, (i) {
+            ...List.generate(tabs.length, (i) {
               return tabWidget(i);
             })
           ],
@@ -167,55 +166,47 @@ class _RewardListViewState extends State<RewardListView> {
   }
 
   Widget tabWidget(int i) {
-    return GestureDetector(
-      onTap: () {
-        selectedCategory = i;
-        setState(() {});
-
-        // TODO API NOT AVAILABLE
-        // final navigator = Navigator.of(context);
-
-        // if (i >= 0) {
-        //   model.onSelectCategory(navigator, model.rewardCategories![i], i);
-        // } else {
-        //   model.onSelectCategory(navigator, null, i);
-        // }
-      },
-      child: Container(
-        margin: const EdgeInsets.only(right: AppSizes.padding / 2),
-        padding: const EdgeInsets.symmetric(
-          vertical: AppSizes.padding / 2,
-          horizontal: AppSizes.padding,
-        ),
-        decoration: BoxDecoration(
-          color: selectedCategory == i ? AppColors.primary : AppColors.white,
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: AppSizes.padding / 2),
-              child: Icon(
-                i == -1
-                    ? Icons.dashboard_outlined
-                    : i == 0
-                        ? Icons.check_circle
-                        : Icons.cancel,
-                size: 16,
-                color: selectedCategory == i ? AppColors.white : AppColors.base,
+    return Consumer<RewardListViewModel>(builder: (context, model, _) {
+      return GestureDetector(
+        onTap: () {
+          model.onSelectCategory(i);
+        },
+        child: Container(
+          margin: const EdgeInsets.only(right: AppSizes.padding / 2),
+          padding: const EdgeInsets.symmetric(
+            vertical: AppSizes.padding / 2,
+            horizontal: AppSizes.padding,
+          ),
+          decoration: BoxDecoration(
+            color: model.selectedTabIndex == i ? AppColors.primary : AppColors.white,
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: AppSizes.padding / 2),
+                child: Icon(
+                  i == -1
+                      ? Icons.dashboard_outlined
+                      : i == 0
+                          ? Icons.check_circle
+                          : Icons.cancel,
+                  size: 16,
+                  color: model.selectedTabIndex == i ? AppColors.white : AppColors.base,
+                ),
               ),
-            ),
-            Text(
-              i == -1 ? 'Semua' : categories[i],
-              style: AppTextStyle.semiBold(
-                context,
-                color: selectedCategory == i ? AppColors.white : AppColors.base,
+              Text(
+                i == -1 ? 'Semua' : tabs[i],
+                style: AppTextStyle.semiBold(
+                  context,
+                  color: model.selectedTabIndex == i ? AppColors.white : AppColors.base,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget body() {

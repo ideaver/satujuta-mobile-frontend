@@ -89,17 +89,25 @@ class _BankListModalState extends State<BankListModal> {
         },
         title: Row(
           children: [
-            AppImage(
-              image: model.bankFindMany![i].logoUrl,
-              width: 50,
-              errorWidget: const Icon(
-                CupertinoIcons.building_2_fill,
+            model.bankFindMany![i].logoUrl != null
+                ? Padding(
+                    padding: const EdgeInsets.only(right: AppSizes.padding),
+                    child: AppImage(
+                      image: model.bankFindMany![i].logoUrl!,
+                      width: 50,
+                      errorWidget: const Icon(
+                        CupertinoIcons.building_2_fill,
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+            Flexible(
+              child: Text(
+                model.bankFindMany![i].name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.bold(context),
               ),
-            ),
-            const SizedBox(width: AppSizes.padding),
-            Text(
-              model.bankFindMany![i].name,
-              style: AppTextStyle.bold(context),
             ),
           ],
         ),

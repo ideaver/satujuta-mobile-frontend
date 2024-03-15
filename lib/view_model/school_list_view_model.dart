@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/school_find_many.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_school_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 
 import '../app/utility/console_log.dart';
+import '../widget/atom/app_dialog.dart';
 
 class SchoolListViewModel extends ChangeNotifier {
   TextEditingController searchCtrl = TextEditingController();
@@ -13,6 +13,16 @@ class SchoolListViewModel extends ChangeNotifier {
 
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController addressCtrl = TextEditingController();
+  TextEditingController provinceCtrl = TextEditingController();
+  TextEditingController cityCtrl = TextEditingController();
+  TextEditingController districtCtrl = TextEditingController();
+  TextEditingController subdistrictCtrl = TextEditingController();
+  TextEditingController postalCodeCtrl = TextEditingController();
+
+  int? provinceId;
+  int? cityId;
+  int? districtId;
+  int? subdistrictId;
 
   List<Query$SchoolFindManyByName$schoolFindMany>? schoolFindMany;
 

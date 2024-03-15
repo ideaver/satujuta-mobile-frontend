@@ -88,6 +88,7 @@ class AuthService {
       auth = Auth(
         accessToken: res.parsedData!.authLogin!.accessToken,
         refreshToken: "",
+        userId: res.parsedData!.authLogin!.user.id,
       );
 
       LocalStorageService.writeAuthData(auth!);

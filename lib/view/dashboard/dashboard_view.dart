@@ -403,8 +403,22 @@ class _DashboardViewState extends State<DashboardView> {
             width: userViewModel.isCommisionClaimed ? null : 160,
             child: AppButton(
               onTap: () {
-                // TODO TEMPORARY IMPLEMENTATION
                 final navigator = Navigator.of(context);
+
+                if (userViewModel.totalUserCommission == 0) {
+                  AppDialog.show(
+                    navigator,
+                    title: 'Saldo Tidak Mencukupi',
+                    text: 'Saldo anda tidak mencukupi untuk melakukan pencairan',
+                    showButtons: true,
+                    rightButtonText: 'Tutup',
+                    onTapRightButton: () {
+                      navigator.pop();
+                    },
+                  );
+                  return;
+                }
+
                 AppDialog.show(
                   navigator,
                   title: 'Cairkan Komisi',
@@ -414,18 +428,7 @@ class _DashboardViewState extends State<DashboardView> {
                   leftButtonText: 'Batal',
                   onTapRightButton: () {
                     navigator.pop();
-                    AppDialog.showDialogProgress(navigator);
-                    Future.delayed(const Duration(seconds: 1), () {
-                      navigator.pop();
-                      AppDialog.showSuccessDialog(
-                        navigator,
-                        title: 'Berhasil',
-                        subtitle:
-                            'Permintaan pencairan komisi telah diproses, harap menunggu 1x24 jam dana masuk ke rekening anda.',
-                      );
-                      userViewModel.isCommisionClaimed = true;
-                      setState(() {});
-                    });
+                    userViewModel.onTapWithdrawalCommission(navigator);
                   },
                 );
               },

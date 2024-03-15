@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_app_mobile/app/const/app_consts.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/transaction_find_many_by_user_point_from_user_id.graphql.dart';
 
 import '../../../app/asset/app_icons.dart';
 import '../../../app/theme/app_colors.dart';
@@ -7,6 +9,7 @@ import '../../../app/theme/app_sizes.dart';
 import '../../../app/theme/app_text_style.dart';
 import '../../../app/utility/date_formatter.dart';
 import '../../../view_model/user_view_model.dart';
+import '../../../widget/atom/app_expansion_list_tile.dart';
 import '../../../widget/atom/app_progress_indicator.dart';
 
 class PointTransactionsList extends StatefulWidget {
@@ -24,63 +27,60 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserViewModel>(builder: (context, model, _) {
-      // TODO API UNAVAILABLE
+      if (model.userPointTransactions == null) {
+        return const Padding(
+          padding: EdgeInsets.all(AppSizes.padding * 2),
+          child: AppProgressIndicator(),
+        );
+      }
 
-      // if (model.userPointTransactions == null) {
-      //   return const Padding(
-      //     padding: EdgeInsets.all(AppSizes.padding * 2),
-      //     child: AppProgressIndicator(),
-      //   );
-      // }
+      if (model.userPointTransactions!.isEmpty) {
+        return Padding(
+          padding: const EdgeInsets.all(AppSizes.padding * 2),
+          child: Text(
+            '(Riwayat poin Kosong)',
+            style: AppTextStyle.bold(context, color: AppColors.baseLv4),
+          ),
+        );
+      }
 
-      // if (model.userPointTransactions!.isEmpty) {
+      skip = model.userPointTransactions!.length - 1;
+
       return Padding(
-        padding: const EdgeInsets.all(AppSizes.padding * 2),
-        child: Text(
-          '(Riwayat poin Kosong)',
-          style: AppTextStyle.bold(context, color: AppColors.baseLv4),
+        padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
+        child: AppExpansionListTile(
+          title: 'Riwayat Poin',
+          icon: Icons.access_time_sharp,
+          expand: true,
+          children: [
+            ...List.generate(model.userPointTransactions!.length, (i) {
+              // return poinItemCard(model.userPointTransactions![i]);
+              return poinItemCard(model.userPointTransactions![i]);
+            }),
+            lastSkip == skip
+                ? const SizedBox.shrink()
+                : loadMoreButton(
+                    onTap: () async {
+                      isLoadingMore = true;
+                      setState(() {});
+
+                      var currSkip = model.userPointTransactions!.length;
+                      await model.getUserPointTransactions(skip: skip);
+
+                      isLoadingMore = false;
+                      lastSkip = currSkip;
+                      setState(() {});
+                    },
+                  ),
+          ],
         ),
       );
-      // }
-
-      // skip = model.userPointTransactions!.length - 1;
-
-      // return Padding(
-      //   padding: const EdgeInsets.only(bottom: AppSizes.padding * 2),
-      //   child: AppExpansionListTile(
-      //     title: 'Riwayat Poin',
-      //     icon: Icons.access_time_sharp,
-      //     expand: true,
-      //     children: [
-      //       ...List.generate(model.userPointTransactions!.length, (i) {
-      //         // return poinItemCard(model.userPointTransactions![i]);
-      //         return poinItemCard();
-      //       }),
-      //       lastSkip == skip
-      //           ? const SizedBox.shrink()
-      //           : loadMoreButton(
-      //               onTap: () async {
-      //                 isLoadingMore = true;
-      //                 setState(() {});
-
-      //                 var currSkip = model.userPointTransactions!.length;
-      //                 await model.getUserPointTransactions(skip: skip);
-
-      //                 isLoadingMore = false;
-      //                 lastSkip = currSkip;
-      //                 setState(() {});
-      //               },
-      //             ),
-      //     ],
-      //   ),
-      // );
     });
   }
 
-  // TODO API UNAVAILABLE
   Widget poinItemCard(
-      // Query$PointTransactionFindMany$pointTransactionFindMany point,
-      ) {
+    Query$TransactionFindManyByUserPointFromUserId$transactionFindManyByUserPointFromUserId point,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSizes.padding / 4),
       padding: const EdgeInsets.all(AppSizes.padding),
@@ -115,8 +115,7 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
                     ),
                     const SizedBox(width: AppSizes.padding / 2),
                     Text(
-                      // point.pointType.name,
-                      'XXXX',
+                      "${point.amount}",
                       style: AppTextStyle.extraBold(
                         context,
                         fontSize: 16,
@@ -143,8 +142,8 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
                       width: 8,
                     ),
                     Text(
-                      // DateFormatter.slashDate(point.createdAt),
-                      DateFormatter.slashDate(DateTime.now().toIso8601String()),
+                      DateFormatter.slashDate(point.createdAt),
+                      // DateFormatter.slashDate(DateTime.now().toIso8601String()),
                       style: AppTextStyle.regular(
                         context,
                         fontSize: 12,
@@ -159,12 +158,13 @@ class _PointTransactionsListState extends State<PointTransactionsList> {
                     vertical: AppSizes.padding / 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.secondary,
+                    color: pointTransactionCategorySymbol(point.transactionCategory) == "+"
+                        ? AppColors.secondary
+                        : AppColors.red,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Text(
-                    // '+${point.amount} Point',
-                    '+XX Point',
+                    '${pointTransactionCategorySymbol(point.transactionCategory)}${point.amount} Point',
                     style: AppTextStyle.bold(
                       context,
                       fontSize: 12,

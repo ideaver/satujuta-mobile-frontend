@@ -170,3 +170,15 @@ List<Map<String, String>> supportedBanks = [
     "icon": AppAssets.ewalOvoImgPath,
   },
 ];
+
+String pointTransactionCategorySymbol(Enum$TransactionCategory transactionCategory) {
+  if (transactionCategory == Enum$TransactionCategory.INVESTMENT ||
+      transactionCategory == Enum$TransactionCategory.INVESTMENT_RETURN ||
+      transactionCategory == Enum$TransactionCategory.COMISSION_BONUS ||
+      transactionCategory == Enum$TransactionCategory.MEMBER_REGISTRATION ||
+      transactionCategory == Enum$TransactionCategory.REFERRING) {
+    return "+";
+  } else {
+    return "-";
+  }
+}

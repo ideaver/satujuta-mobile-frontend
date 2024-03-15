@@ -25,7 +25,7 @@ void setupServiceLocator() {
   locator.registerLazySingleton(() => NetworkCheckerService());
   locator.registerLazySingleton(() => MainViewModel());
   locator.registerLazySingleton(() => UserViewModel());
-  locator.registerLazySingleton(() => RegisterViewModel());
+  locator.registerFactory(() => RegisterViewModel());
   locator.registerLazySingleton(() => EditProfileViewModel());
   locator.registerLazySingleton(() => ProgramListViewModel());
   locator.registerLazySingleton(() => RewardListViewModel());

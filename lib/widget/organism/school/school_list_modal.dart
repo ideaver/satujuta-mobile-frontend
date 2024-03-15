@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,11 +6,16 @@ import '../../../app/service/locator/service_locator.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_sizes.dart';
 import '../../../app/theme/app_text_style.dart';
+import '../../../app/utility/console_log.dart';
+import '../../../view_model/address_view_model.dart';
 import '../../../view_model/school_list_view_model.dart';
 import '../../atom/app_button.dart';
+import '../../atom/app_modal.dart';
 import '../../atom/app_progress_indicator.dart';
+import '../../atom/app_snackbar.dart';
 import '../../atom/app_text_field.dart';
 import '../../atom/app_text_fields_wrapper.dart';
+import '../address/address_list_modal.dart';
 
 class SchoolListModal extends StatefulWidget {
   final int cityId;
@@ -177,46 +183,208 @@ class _SchoolListModalState extends State<SchoolListModal> {
   }
 
   Widget createSchool(SchoolListViewModel model) {
-    return Column(
-      children: [
-        AppTextFieldsWrapper(
-          textFields: [
-            AppTextField(
-              controller: model.nameCtrl,
-              lableText: 'Nama Sekolah',
-              hintText: 'Masukkkan Nama Sekolah',
-              onChanged: (val) {
-                setState(() {});
-              },
-            ),
-            AppTextField(
-              controller: model.addressCtrl,
-              lableText: 'Alamat Sekolah',
-              hintText: 'Masukkkan alamat sekolah',
-              onChanged: (val) {
-                setState(() {});
-              },
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
-          child: AppButton(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              final navigator = Navigator.of(context);
-              model.onTapRegisterSchoolButton(
-                navigator,
-                widget.cityId,
-                widget.subdistrictId,
-              );
-            },
-            text: "Daftarkan Sekolah",
-            enable: model.nameCtrl.text.isNotEmpty && model.addressCtrl.text.isNotEmpty,
+    final navigator = Navigator.of(context);
+
+    return Consumer<AddressViewModel>(builder: (context, address, _) {
+      return Column(
+        children: [
+          AppTextFieldsWrapper(
+            textFields: [
+              AppTextField(
+                controller: model.nameCtrl,
+                lableText: 'Nama Sekolah',
+                hintText: 'Masukkkan Nama Sekolah',
+                onChanged: (val) {
+                  setState(() {});
+                },
+              ),
+              AppTextField(
+                controller: model.addressCtrl,
+                lableText: 'Alamat Sekolah',
+                hintText: 'Masukkkan alamat sekolah',
+                onChanged: (val) {
+                  setState(() {});
+                },
+              ),
+              AppTextField(
+                enabled: false,
+                controller: model.provinceCtrl,
+                onTap: () async {
+                  FocusScope.of(context).unfocus();
+
+                  var province = await AppModal.show(
+                    context: context,
+                    title: 'Provinsi',
+                    child: const AddressListModal(
+                      type: AddressType.province,
+                      parentId: 0,
+                    ),
+                  );
+
+                  if (province != null) {
+                    cl(province);
+                    model.provinceId = province.id;
+                    model.provinceCtrl.text = province.name;
+                    model.cityCtrl.clear();
+                    model.districtCtrl.clear();
+                    model.subdistrictCtrl.clear();
+                    model.postalCodeCtrl.clear();
+                    address.selectedCity = null;
+                    address.selectedDistrict = null;
+                    address.selectedSubdistrict = null;
+                    setState(() {});
+                  }
+                },
+                suffixIcon: const Icon(
+                  Icons.keyboard_arrow_down,
+                ),
+                lableText: 'Provinsi',
+                hintText: "Jawa Timur",
+                disabledColor: AppColors.base,
+              ),
+              AppTextField(
+                enabled: false,
+                controller: model.cityCtrl,
+                onTap: () async {
+                  FocusScope.of(context).unfocus();
+
+                  if (model.provinceId == null) {
+                    AppSnackbar.show(navigator, title: 'Pilih provinsi terlebih dahulu');
+                    return;
+                  }
+
+                  var city = await AppModal.show(
+                    context: context,
+                    title: 'Kota',
+                    child: AddressListModal(
+                      type: AddressType.city,
+                      parentId: model.provinceId!,
+                    ),
+                  );
+
+                  if (city != null) {
+                    cl(city);
+                    model.cityId = city.id;
+                    model.cityCtrl.text = city.name;
+                    model.districtCtrl.clear();
+                    model.subdistrictCtrl.clear();
+                    model.postalCodeCtrl.clear();
+                    address.selectedDistrict = null;
+                    address.selectedSubdistrict = null;
+                    setState(() {});
+                  }
+                },
+                suffixIcon: const Icon(
+                  Icons.keyboard_arrow_down,
+                ),
+                lableText: 'Kota',
+                hintText: "Surabaya",
+                disabledColor: AppColors.base,
+              ),
+              AppTextField(
+                enabled: false,
+                controller: model.districtCtrl,
+                onTap: () async {
+                  FocusScope.of(context).unfocus();
+
+                  if (model.cityId == null) {
+                    AppSnackbar.show(navigator, title: 'Pilih kota terlebih dahulu');
+                    return;
+                  }
+
+                  var district = await AppModal.show(
+                    context: context,
+                    title: 'Kecamatan',
+                    child: AddressListModal(
+                      type: AddressType.district,
+                      parentId: model.cityId!,
+                    ),
+                  );
+
+                  if (district != null) {
+                    cl(district);
+                    model.districtId = district.id;
+                    model.districtCtrl.text = district.name;
+                    model.subdistrictCtrl.clear();
+                    model.postalCodeCtrl.clear();
+                    address.selectedSubdistrict = null;
+                    setState(() {});
+                  }
+                },
+                suffixIcon: const Icon(
+                  Icons.keyboard_arrow_down,
+                ),
+                lableText: 'Kecamatan',
+                disabledColor: AppColors.base,
+              ),
+              AppTextField(
+                enabled: false,
+                controller: model.subdistrictCtrl,
+                onTap: () async {
+                  FocusScope.of(context).unfocus();
+
+                  if (model.districtId == null) {
+                    AppSnackbar.show(navigator, title: 'Pilih kecamatan terlebih dahulu');
+                    return;
+                  }
+
+                  var subdistrict = await AppModal.show(
+                    context: context,
+                    title: 'Kelurahan',
+                    child: AddressListModal(
+                      type: AddressType.subdistrict,
+                      parentId: model.districtId!,
+                    ),
+                  );
+
+                  if (subdistrict != null) {
+                    cl(subdistrict);
+                    model.subdistrictId = subdistrict.id;
+                    model.subdistrictCtrl.text = subdistrict.name;
+                    model.postalCodeCtrl.text = subdistrict.postalCode;
+                    setState(() {});
+                  }
+                },
+                suffixIcon: const Icon(
+                  Icons.keyboard_arrow_down,
+                ),
+                lableText: 'Kelurahan',
+                disabledColor: AppColors.base,
+              ),
+              AppTextField(
+                enabled: false,
+                controller: model.postalCodeCtrl,
+                suffixIcon: const Icon(
+                  CupertinoIcons.map_pin_ellipse,
+                ),
+                lableText: 'Kode Pos',
+                hintText: "12345",
+                disabledColor: AppColors.baseLv4,
+              ),
+            ],
           ),
-        ),
-      ],
-    );
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSizes.padding * 1.5),
+            child: AppButton(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                final navigator = Navigator.of(context);
+                model.onTapRegisterSchoolButton(
+                  navigator,
+                  model.cityId!,
+                  model.subdistrictId!,
+                );
+              },
+              text: "Daftarkan Sekolah",
+              enable: model.nameCtrl.text.isNotEmpty &&
+                  model.addressCtrl.text.isNotEmpty &&
+                  model.cityId != null &&
+                  model.subdistrictId != null,
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   Widget bottomButton(SchoolListViewModel model) {

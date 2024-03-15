@@ -241,7 +241,7 @@ class _RegBiodataState extends State<RegBiodata> {
 
                         var school = await AppModal.show(
                           context: context,
-                          title: 'Pilih Sekolah',
+                          title: 'Sekolah',
                           child: SchoolListModal(
                             cityId: register.cityId!,
                             subdistrictId: register.subdistrictId!,

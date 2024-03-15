@@ -1,11 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:satujuta_app_mobile/widget/atom/app_dialog.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/reward_claim_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/transaction_find_many.graphql.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/transaction_find_many_by_user_point_from_user_id.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/user_find_many.graphql.dart';
 import 'package:satujuta_gql_client/operations/mobile/generated/user_find_one.graphql.dart';
 import 'package:satujuta_gql_client/schema/generated/schema.graphql.dart';
 import 'package:satujuta_gql_client/services/mobile/gql_user_service.dart';
+import 'package:satujuta_gql_client/services/mobile/gql_withdrawal_service.dart';
 import 'package:satujuta_gql_client/utils/gql_error_parser.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -21,16 +24,23 @@ class UserViewModel extends ChangeNotifier {
   int totalUserPoint = 0;
   double totalUserCommission = 0;
 
-  // TODO API UNAVAILABLE
-  // List<Query$PointTransactionFindMany$pointTransactionFindMany>? userPointTransactions;
+  List<Query$TransactionFindManyByUserPointFromUserId$transactionFindManyByUserPointFromUserId>? userPointTransactions;
   List<Query$TransactionFindManyByAccountId$transactionFindMany>? userCommissionTransactions;
   List<Query$RewardClaimFindManyByUserId$rewardClaimFindMany>? userClaimedRewards;
 
-  // TODO REMOVE TEMPORARY IMPLEMENTATION
+  // TODO CHECK LAST WITHDRAWAL REQUEST
   bool isCommisionClaimed = false;
 
   void resetState() {
     user = null;
+    userAccountBank = null;
+    totalReferredUser = 0;
+    totalUserStudent = 0;
+    totalUserPoint = 0;
+    totalUserCommission = 0;
+    userPointTransactions = null;
+    userCommissionTransactions = null;
+    userClaimedRewards = null;
   }
 
   Future<List<Query$UserFindMany$userFindMany>?> getAllUser({int skip = 0}) async {
@@ -117,7 +127,7 @@ class UserViewModel extends ChangeNotifier {
     );
 
     if (res.parsedData?.getAccountBalanceOfUserPointFromUserId != null && !res.hasException) {
-      totalUserPoint = (res.parsedData!.getAccountBalanceOfUserPointFromUserId ?? 0).toInt();
+      totalUserPoint = (res.parsedData!.getAccountBalanceOfUserPointFromUserId).toInt();
       notifyListeners();
     } else {
       cl('[getUserPoint].error = ${gqlErrorParser(res)}');
@@ -150,22 +160,21 @@ class UserViewModel extends ChangeNotifier {
       return;
     }
 
-    // TODO API UNAVAILABLE
-    // var res = await GqlUserService.pointTransactionFindMany(
-    //   userId: user!.id,
-    //   skip: skip,
-    // );
+    var res = await GqlUserService.transactionFindManyByUserPointFromUserId(
+      userId: user!.id,
+      skip: skip,
+    );
 
-    // if (res.parsedData?.pointTransactionFindMany != null && !res.hasException) {
-    //   if (skip == 0) {
-    //     userPointTransactions = res.parsedData!.pointTransactionFindMany ?? [];
-    //   } else {
-    //     userPointTransactions?.addAll(res.parsedData!.pointTransactionFindMany ?? []);
-    //   }
-    //   notifyListeners();
-    // } else {
-    //   cl('[getUserPointTransactions].error = ${gqlErrorParser(res)}');
-    // }
+    if (res.parsedData?.transactionFindManyByUserPointFromUserId != null && !res.hasException) {
+      if (skip == 0) {
+        userPointTransactions = res.parsedData!.transactionFindManyByUserPointFromUserId;
+      } else {
+        userPointTransactions?.addAll(res.parsedData!.transactionFindManyByUserPointFromUserId);
+      }
+      notifyListeners();
+    } else {
+      cl('[getUserPointTransactions].error = ${gqlErrorParser(res)}');
+    }
   }
 
   Future<void> getUserCommissionTransactions({
@@ -173,6 +182,8 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     if (userAccountBank == null) {
       cl('[getUserCommissionTransactions].userAccountBank null');
+      userCommissionTransactions = [];
+      notifyListeners();
       return;
     }
 
@@ -215,6 +226,53 @@ class UserViewModel extends ChangeNotifier {
       notifyListeners();
     } else {
       cl('[getUserClaimedRewards].error = ${gqlErrorParser(res)}');
+    }
+  }
+
+  Future<String?> withdrawalRequest() async {
+    if (user == null) {
+      cl('[withdrawalRequest].user null ');
+      return "User null";
+    }
+
+    if (totalUserCommission == 0) {
+      cl('[withdrawalRequest].totalUserCommission: $totalUserCommission ');
+      return "Commission can't zero";
+    }
+
+    var res = await GqlWithdrawalService.withdrawalRequestCreateOne(
+      userId: user!.id,
+      amount: totalUserCommission.toInt(),
+    );
+
+    cl('[withdrawalRequest].res = $res');
+
+    if (res.parsedData?.withdrawalRequestCreateOne != null && !res.hasException) {
+      isCommisionClaimed = true;
+      notifyListeners();
+
+      return null;
+    } else {
+      cl('[withdrawalRequest].error = ${gqlErrorParser(res)}');
+      return gqlErrorParser(res);
+    }
+  }
+
+  void onTapWithdrawalCommission(NavigatorState navigator) async {
+    AppDialog.showDialogProgress(navigator);
+
+    String? errRes = await withdrawalRequest();
+
+    navigator.pop();
+
+    if (errRes == null) {
+      AppDialog.showSuccessDialog(
+        navigator,
+        title: 'Berhasil',
+        subtitle: 'Permintaan pencairan komisi telah diproses, harap menunggu 1x24 jam dana masuk ke rekening anda.',
+      );
+    } else {
+      AppDialog.showErrorDialog(navigator, error: errRes);
     }
   }
 
