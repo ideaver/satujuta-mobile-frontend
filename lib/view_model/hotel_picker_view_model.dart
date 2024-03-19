@@ -96,6 +96,9 @@ class HotelPickerViewModel extends ChangeNotifier {
       skip: skip,
     );
 
+    cl('[getHotelsByProvinceId].res = $res');
+    cl('[getHotelsByProvinceId].provinceId = $provinceId');
+
     if (res.parsedData?.hotelFindMany != null && !res.hasException) {
       if (skip == 0) {
         hotelFindMany = res.parsedData!.hotelFindMany;

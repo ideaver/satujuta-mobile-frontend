@@ -243,8 +243,9 @@ class _RegBiodataState extends State<RegBiodata> {
                           context: context,
                           title: 'Sekolah',
                           child: SchoolListModal(
-                            cityId: register.cityId!,
-                            subdistrictId: register.subdistrictId!,
+                            selectedSchool: register.selectedSchool,
+                            // cityId: register.cityId!,
+                            // subdistrictId: register.subdistrictId!,
                           ),
                         );
 

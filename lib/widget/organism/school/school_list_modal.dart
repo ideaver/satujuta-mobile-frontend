@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:satujuta_gql_client/operations/mobile/generated/school_find_many.graphql.dart';
 
 import '../../../app/service/locator/service_locator.dart';
 import '../../../app/theme/app_colors.dart';
@@ -18,13 +19,13 @@ import '../../atom/app_text_fields_wrapper.dart';
 import '../address/address_list_modal.dart';
 
 class SchoolListModal extends StatefulWidget {
-  final int cityId;
-  final int subdistrictId;
+  final Query$SchoolFindManyByName$schoolFindMany? selectedSchool;
+  // final int cityId;
 
   const SchoolListModal({
     super.key,
-    required this.cityId,
-    required this.subdistrictId,
+    this.selectedSchool,
+    // required this.cityId,
   });
 
   @override
@@ -44,7 +45,11 @@ class _SchoolListModalState extends State<SchoolListModal> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final navigator = Navigator.of(context);
       schoolListViewModel.resetState();
-      schoolListViewModel.getSchools(navigator, cityId: widget.cityId);
+      schoolListViewModel.selectedSchool = widget.selectedSchool;
+      schoolListViewModel.getSchools(
+        navigator,
+        // cityId: widget.cityId,
+      );
     });
 
     super.initState();
@@ -62,7 +67,7 @@ class _SchoolListModalState extends State<SchoolListModal> {
     if (scrollController.offset == scrollController.position.maxScrollExtent) {
       schoolListViewModel.getSchools(
         navigator,
-        cityId: widget.cityId,
+        // cityId: widget.cityId,
         skip: schoolListViewModel.schoolFindMany?.length ?? 0,
         contains: schoolListViewModel.searchCtrl.text,
       );
@@ -107,7 +112,11 @@ class _SchoolListModalState extends State<SchoolListModal> {
         hintText: 'Cari Sekolah',
         onChanged: (val) async {
           if (val.length % 3 == 0) {
-            await model.getSchools(navigator, cityId: widget.cityId, contains: val);
+            await model.getSchools(
+              navigator,
+              // cityId: widget.cityId,
+              contains: val,
+            );
           }
         },
       ),

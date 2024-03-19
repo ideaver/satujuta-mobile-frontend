@@ -427,8 +427,9 @@ class _StudentRegistrationViewState extends State<StudentRegistrationView> {
                 context: context,
                 title: 'Pilih Sekolah',
                 child: SchoolListModal(
-                  cityId: student.cityId!,
-                  subdistrictId: student.subdistrictId!,
+                  selectedSchool: student.selectedSchool,
+                  // cityId: student.cityId!,
+                  // subdistrictId: student.subdistrictId!,
                 ),
               );
 

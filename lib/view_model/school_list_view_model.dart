@@ -39,15 +39,17 @@ class SchoolListViewModel extends ChangeNotifier {
 
   Future<void> getSchools(
     NavigatorState navigator, {
-    required int cityId,
+    // required int cityId,
     int skip = 0,
     String contains = "",
   }) async {
     var res = await GqlSchoolService.schoolFindManyByName(
-      cityId: cityId,
+      // cityId: cityId,
       skip: skip,
       contains: contains,
     );
+
+    cl('================ $cityId');
 
     if (res.parsedData?.schoolFindMany != null && !res.hasException) {
       if (skip == 0) {
@@ -106,7 +108,10 @@ class SchoolListViewModel extends ChangeNotifier {
       createMode = false;
       notifyListeners();
 
-      getSchools(navigator, cityId: cityId);
+      getSchools(
+        navigator,
+        // cityId: cityId,
+      );
     } else {
       AppDialog.showErrorDialog(navigator, message: errorRes);
     }
